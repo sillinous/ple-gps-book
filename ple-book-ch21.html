@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 21 — AI Governance & Algorithmic Accountability (GPS 14.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --novel: #7F77DD; --novel-dim: rgba(127,119,221,0.08);
+    --novel-text: #b0aaf0; --novel-border: rgba(127,119,221,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(55,138,221,0.12); --m4t: #7ab8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+
+  /* Part V entry banner */
+  .part-entry { margin-bottom: 52px; padding: 28px 32px; background: var(--novel-dim); border: 1px solid var(--novel-border); border-radius: 8px; }
+  .part-entry-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 10px; opacity: 0.8; }
+  .part-entry-title { font-family: 'Crimson Pro', serif; font-size: 1.4rem; font-weight: 300; color: var(--text-primary); margin-bottom: 10px; line-height: 1.3; }
+  .part-entry-body { font-family: 'Outfit', sans-serif; font-size: 0.78rem; color: var(--text-muted); line-height: 1.7; }
+
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.novel { background: var(--novel-dim); color: var(--novel-text); border: 1px solid var(--novel-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--novel); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--novel-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--novel); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--novel); background: var(--novel-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--novel-text); }
+  .pullquote p::after { content: '\201D'; color: var(--novel-text); }
+
+  /* AI risk spectrum */
+  .risk-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .risk-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .risk-row { display: grid; grid-template-columns: 110px 1fr 1fr; border-bottom: 1px solid var(--border-subtle); }
+  .risk-row:last-child { border-bottom: none; }
+  .risk-row.head { background: var(--bg-secondary); }
+  .risk-cell { padding: 13px 16px; font-family: 'Outfit', sans-serif; font-size: 0.74rem; color: var(--text-secondary); line-height: 1.55; border-right: 1px solid var(--border-subtle); }
+  .risk-cell:last-child { border-right: none; }
+  .risk-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .risk-cell.level { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; }
+  .level-low { color: var(--m3t); }
+  .level-med { color: var(--m2t); }
+  .level-high { color: #e88; }
+  .level-crit { color: #f66; }
+
+  /* Governance requirements by deployment tier */
+  .tier-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--novel); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .tier-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--novel-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .tier-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .tier-row:last-child { border-bottom: none; }
+  .tier-label { width: 100px; min-width: 100px; padding: 14px 12px; border-right: 1px solid var(--border-subtle); background: var(--novel-dim); display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+  .tier-name { font-family: 'Crimson Pro', serif; font-size: 0.88rem; font-weight: 600; color: var(--novel-text); line-height: 1.2; }
+  .tier-num { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); letter-spacing: 0.06em; }
+  .tier-content { padding: 14px 18px; flex: 1; border-right: 1px solid var(--border-subtle); }
+  .tier-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .tier-reqs { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; }
+  .tier-reqs strong { color: var(--novel-text); font-weight: 500; opacity: 0.85; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--novel); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--novel-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--novel-text); border-right: 1px solid var(--border-subtle); background: var(--novel-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--novel-text); border-right: 1px solid var(--border-subtle); background: var(--novel-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--novel-dim); color: var(--novel-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--novel-dim); border-bottom: 1px solid var(--novel-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--novel-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--novel-text); font-weight: 500; }
+
+  /* Sequence */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--novel); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--novel-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--novel-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-entry">
+    <div class="part-entry-label">Entering Part V · Novel categories</div>
+    <div class="part-entry-title">Three processes that conventional institutional frameworks have not yet developed — because the conditions that require them are new</div>
+    <div class="part-entry-body">The sixteen GPS categories are grouped in three tiers. The civic operating tier (Categories 1–6) and the institutional support tier (Categories 7–13) are adaptations of existing institutional practice frameworks — the APQC Process Classification Framework translated into solidarity economy contexts. The novel tier (Categories 14–16) is original: governance domains that post-labor economic transition has created and that no existing framework adequately addresses. They are novel not because they are theoretical but because they address real and immediate governance challenges — algorithmic systems making decisions about community members' lives, the design of institutions specifically for human flourishing rather than economic output, and the participatory democracy infrastructure that makes post-labor governance meaningful rather than nominal. The chapters that follow are necessarily more speculative than their predecessors. Practice in these domains is emerging, not established. The frameworks offered here are the best available syntheses of that emerging practice, not final formulations of settled knowledge.</div>
+  </div>
+
+  <div class="part-eyebrow">Part V · Novel categories</div>
+  <div class="chapter-eyebrow">Chapter 21 · GPS Category 14.0</div>
+  <h1 class="chapter-title">AI governance &amp; algorithmic accountability</h1>
+  <p class="chapter-subtitle">When machines make decisions about people's lives — the governance architecture that ensures algorithmic systems in post-labor institutions are transparent, contestable, and accountable to the communities they affect</p>
+  <div class="cat-meta">
+    <span class="cat-pill novel">Novel Category</span>
+    <span class="cat-pill novel">Algorithmic accountability</span>
+    <span class="cat-pill novel">No APQC analog</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">20 processes</span>
+    <span class="cat-pill neutral">13 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>There is something fundamentally new happening in the governance of decisions about people's lives. For most of human institutional history, consequential decisions — about housing, about employment, about access to services, about creditworthiness, about eligibility for support — were made by human beings who could be questioned, contested, and held accountable. The decisions were often wrong, often biased, often unfair; but the human decision-maker was, in principle, reachable. The decision could be appealed. The criteria could be demanded. The reasoning could be examined and, sometimes, changed. Algorithmic systems that make or substantially influence these same decisions introduce something categorically different: decision-making at scale, at speed, and through processes whose internal logic is often opaque to the people affected by them, to the institutions that deploy them, and sometimes to the engineers who built them.</p>
+
+    <p>Category 14.0 is novel in the GPS framework precisely because this governance challenge is new. The APQC Process Classification Framework, developed for enterprise process management, has no category for algorithmic accountability — not because the APQC's designers overlooked it, but because the widespread deployment of consequential algorithmic systems in community-facing institutional contexts was not, in 1992, a governance challenge that existed at the scale it does now. Post-labor institutions operating in 2024 and beyond deploy algorithmic systems — for service eligibility screening, for resource allocation, for risk assessment, for program placement, for the automated communication that reaches community members at moments of vulnerability — in ways that create governance obligations for which conventional process frameworks have no template. Category 14.0 provides that template.</p>
+
+    <p>The governance challenge is not simply about preventing harm from bad algorithms. It is about ensuring that any algorithmic system that makes or influences decisions about community members — regardless of whether it produces discriminatory outputs, regardless of whether it was designed with good intentions, regardless of whether the institution believes it to be accurate and fair — is subject to the same governance principles that govern all other institutional decisions affecting community members: transparency about criteria, contestability of specific decisions, accountability for aggregate outcomes, and community voice in the design of the systems that shape community members' lives. These principles are not novelties invented for the AI age; they are the governance requirements that post-labor institutions have always applied to human decision-making. The question Category 14.0 addresses is how to apply them when the decision-maker is a machine.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The AI risk spectrum — not all algorithms are equal</div>
+
+  <div class="body-text">
+    <p>Governance requirements for algorithmic systems should be proportionate to risk — the probability that the system produces harmful outcomes multiplied by the severity of those outcomes if they occur. Not all algorithmic systems in post-labor institutions present equivalent governance challenges: a system that recommends educational resources to program participants presents fundamentally different governance requirements than a system that determines housing eligibility. The risk spectrum below maps the primary algorithmic use cases in post-labor institutions against their community impact risk levels and the governance requirements each level triggers.</p>
+  </div>
+
+  <div class="risk-block">
+    <div class="risk-header">AI and algorithmic risk spectrum — use cases, impact levels, and governance requirements</div>
+    <div class="risk-row head">
+      <div class="risk-cell head">Risk level</div>
+      <div class="risk-cell head">Characteristic use cases in post-labor institutions</div>
+      <div class="risk-cell head">Governance requirements triggered</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-cell level level-low">Low risk</div>
+      <div class="risk-cell">Administrative efficiency tools: meeting summarization, document drafting, scheduling optimization, grant writing assistance, internal communications support. The affected party is institutional staff, not community members. Errors produce inefficiency or inconvenience, not harm to community members' access to services or resources.</div>
+      <div class="risk-cell">Basic deployment documentation; staff disclosure that AI tools are in use; quality monitoring to ensure outputs are reviewed before institutional use. No community member consent or transparency requirements. No equity impact assessment required unless community-facing outputs are generated.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-cell level level-med">Moderate risk</div>
+      <div class="risk-cell">Service navigation tools, resource recommendation systems, program information delivery, communication personalization. Community members interact with AI outputs but final decisions about service access remain with human staff. Errors produce poor recommendations but do not directly prevent access to services or resources.</div>
+      <div class="risk-cell">Community member disclosure that AI systems are used in service delivery; basic quality monitoring for accuracy and cultural appropriateness; staff training on AI system limitations; periodic accuracy assessment disaggregated by demographic subgroup; feedback mechanism for community members who receive unhelpful recommendations.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-cell level level-high">High risk</div>
+      <div class="risk-cell">Eligibility screening, needs assessment scoring, risk stratification, program placement prioritization, resource allocation modeling. AI outputs directly influence decisions about which community members receive services and at what level. Errors can result in community members being denied services they need or receiving inappropriate service levels.</div>
+      <div class="risk-cell">Full equity impact assessment before deployment; explicit community member notification; human review required for all individual decisions; contestability mechanism with accessible appeal process; ongoing equity monitoring with demographic disaggregation; governance body review of aggregate equity outcomes quarterly; published accuracy and equity metrics.</div>
+    </div>
+    <div class="risk-row">
+      <div class="risk-cell level level-crit">Critical risk</div>
+      <div class="risk-cell">Automated decision-making for housing eligibility, benefit determination, child welfare assessment, criminal justice risk scoring, immigration status impact. AI outputs determine or heavily constrain outcomes in high-stakes domains with profound and often irreversible consequences for community members' lives, safety, and fundamental rights.</div>
+      <div class="risk-cell">Community and governance body consent before deployment; independent algorithmic audit; no deployment without meaningful human oversight authority; community member right to human review; public disclosure of algorithm logic and training data; independent equity monitoring by external party; community member representation in ongoing governance of the system; right to explanation in plain language for every decision.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Governance requirements by deployment tier — the accountability architecture</div>
+
+  <div class="body-text">
+    <p>The risk spectrum determines which governance requirements apply; the governance architecture describes what those requirements look like as operational processes. The four-tier deployment framework below translates the risk spectrum into specific institutional processes — not as a checklist to be completed at deployment but as an ongoing governance relationship between the institution, its algorithmic systems, and the community members those systems affect. The most important insight in the framework is that governance requirements for high and critical risk systems do not end at deployment; they are most demanding after deployment, during the ongoing monitoring and accountability phase that most institutions neglect in favor of focusing governance attention on the pre-deployment evaluation period.</p>
+  </div>
+
+  <div class="tier-block">
+    <div class="tier-header">Deployment tier governance requirements — pre-deployment through ongoing accountability</div>
+
+    <div class="tier-row">
+      <div class="tier-label"><div class="tier-num">Tier 1</div><div class="tier-name">Administrative AI</div></div>
+      <div class="tier-content">
+        <div class="tier-desc">AI tools used for internal operational efficiency — drafting, summarizing, scheduling, organizing. Not directly affecting community members. Examples: meeting transcription, grant draft assistance, internal document management, administrative communication support.</div>
+        <div class="tier-reqs"><strong>Pre-deployment:</strong> Document which tools are in use and what data they process. <strong>Deployment:</strong> Staff training on appropriate use and output review requirements. <strong>Ongoing:</strong> Annual review of tool portfolio; data governance compliance verification (no community member data in administrative AI without explicit governance authorization).</div>
+      </div>
+    </div>
+
+    <div class="tier-row">
+      <div class="tier-label"><div class="tier-num">Tier 2</div><div class="tier-name">Service support AI</div></div>
+      <div class="tier-content">
+        <div class="tier-desc">AI tools that support service delivery by informing staff recommendations or providing community members with information. Outputs are advisory, not determinative. Examples: resource recommendation engines, program matching suggestions, navigation assistance chatbots, educational content personalization.</div>
+        <div class="tier-reqs"><strong>Pre-deployment:</strong> Accuracy testing on representative sample of target population; cultural appropriateness review; community member disclosure language developed. <strong>Deployment:</strong> Disclosure to community members; staff training on limitations; feedback mechanism operational. <strong>Ongoing:</strong> Quarterly accuracy review; annual equity audit of recommendation patterns; community member satisfaction with AI-assisted services tracked.</div>
+      </div>
+    </div>
+
+    <div class="tier-row">
+      <div class="tier-label"><div class="tier-num">Tier 3</div><div class="tier-name">Decision-influencing AI</div></div>
+      <div class="tier-content">
+        <div class="tier-desc">AI systems whose outputs substantially influence decisions about which community members receive services, at what level, or in what sequence. Human review is required but the AI output substantially shapes what that review considers. Examples: needs assessment scoring, resource allocation prioritization, risk stratification, program eligibility scoring.</div>
+        <div class="tier-reqs"><strong>Pre-deployment:</strong> Full equity impact assessment; governance body approval; community member notification policy. <strong>Deployment:</strong> Mandatory human review of all individual decisions; contestability mechanism; community member right to explanation. <strong>Ongoing:</strong> Quarterly equity monitoring with demographic disaggregation; governance body review of equity outcomes; published accuracy metrics; annual independent accuracy audit.</div>
+      </div>
+    </div>
+
+    <div class="tier-row">
+      <div class="tier-label"><div class="tier-num">Tier 4</div><div class="tier-name">High-stakes AI</div></div>
+      <div class="tier-content">
+        <div class="tier-desc">AI systems involved in decisions with profound and potentially irreversible consequences for community members. Examples: housing eligibility determination, benefit level setting, child welfare risk scoring, immigration-related assessments, criminal justice risk tools.</div>
+        <div class="tier-reqs"><strong>Pre-deployment:</strong> Independent algorithmic audit; community and governance body consent; public disclosure of algorithm design and training data. <strong>Deployment:</strong> Unconditional human review authority; plain-language explanation right for every decision; independent contestability process. <strong>Ongoing:</strong> External independent equity monitoring; community member governance representation; annual public accountability report; governance body authority to suspend system pending review if equity concerns emerge.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 14.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">14.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Govern AI and algorithmic system adoption at the community level</div>
+          <div class="proc-group-desc">Category 14.1 is the community-level governance counterpart to Category 8.3's institutional-level AI adoption governance. Where 8.3 governs the institutional decision to adopt AI tools for operational use, 14.1 governs the deployment of AI systems that affect community members directly — the governance architecture that determines whether those systems are adopted through processes that are accountable to the communities they affect. This is not an institutional administrative decision; it is a governance decision about the conditions under which technological systems will be permitted to make or influence decisions about community members' lives. It requires the same level of governance formality and community involvement that any other major governance decision affecting community members requires.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">14.1.1</div><div class="act-name">Develop an AI governance policy — establishing the institution's principles for community-facing AI deployment, the risk tier framework, and the governance authority and process for each tier</div></div>
+            <div class="proc-activity"><div class="act-id">14.1.2</div><div class="act-name">Design and conduct equity impact assessments for Tier 3 and Tier 4 AI systems — systematic evaluation of potential discriminatory outcomes before deployment, using the institution's specific community population as the assessment context</div></div>
+            <div class="proc-activity"><div class="act-id">14.1.3</div><div class="act-name">Implement community consent and notification processes — ensuring community members are informed when AI systems influence decisions about them, what data those systems use, and what their rights are with respect to those decisions</div></div>
+            <div class="proc-activity"><div class="act-id">14.1.4</div><div class="act-name">Govern AI vendor relationships — assessing vendor algorithmic transparency, data governance practices, and commitment to equity monitoring before contract and as contract renewal conditions</div></div>
+            <div class="proc-activity"><div class="act-id">14.1.5</div><div class="act-name">Maintain an AI systems registry — a current, governance-reviewed inventory of all AI systems in community-facing deployment, their tier classification, their governance status, and their current monitoring findings</div></div>
+          </div>
+          <div class="act-note">Process 14.1.2 — equity impact assessments for AI systems — requires specific technical expertise that most post-labor institutions do not currently have internally. The assessment must go beyond asking whether the system was designed without discriminatory intent to asking whether its outputs, in practice, produce different outcomes by demographic subgroup in the institution's specific community context. This requires access to demographic data about system outputs and the statistical expertise to analyze it appropriately. Peer networks and solidarity economy technology organizations (including those described in Chapter 15's Benetech case study) can provide this expertise in cases where the institution cannot develop it internally.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">14.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Ensure transparency and explainability of algorithmic decisions</div>
+          <div class="proc-group-desc">Transparency in algorithmic decision-making is not primarily a technical requirement — it is a governance requirement grounded in the same accountability principles that apply to all institutional decisions affecting community members. Community members have a right to understand the basis on which decisions about their lives are made, and that right does not diminish because the decision is made by an algorithm rather than by a human. Explainability — providing a meaningful account of why a specific algorithmic decision was made in terms that the affected community member can understand and evaluate — is the operational translation of that right. It is harder with complex algorithmic systems than with human decision-making, but the difficulty does not excuse the obligation.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">14.2.1</div><div class="act-name">Implement plain-language explanation rights for Tier 3 and Tier 4 decisions — community members can receive an explanation of any algorithmic decision that affects them, in language accessible to someone without technical or statistical expertise</div></div>
+            <div class="proc-activity"><div class="act-id">14.2.2</div><div class="act-name">Document algorithmic decision criteria for governance review — making the factors, weights, and thresholds used by decision-influencing systems accessible to governance bodies and, where appropriate, to community members</div></div>
+            <div class="proc-activity"><div class="act-id">14.2.3</div><div class="act-name">Assess and manage algorithmic opacity — for systems whose internal logic is genuinely opaque even to their operators ("black box" AI), developing governance responses including mandatory human review, conservative deployment scope, and vendor requirements for interpretability</div></div>
+            <div class="proc-activity"><div class="act-id">14.2.4</div><div class="act-name">Publish transparency reports — annual public documentation of all community-facing AI systems, their governance tier, their equity monitoring findings, and the institution's assessment of their performance against community benefit commitments</div></div>
+          </div>
+          <div class="act-note">The "black box" problem in process 14.2.3 — AI systems whose outputs cannot be explained even by their operators — is specifically incompatible with Tier 3 and Tier 4 deployment. An institution cannot explain to a community member why an algorithmic system made a decision about them if the institution itself does not understand how the system makes its decisions. This is not a counsel of perfection: partial explainability is better than none, and institutions can deploy black box systems for low-stakes advisory purposes while requiring interpretable systems for high-stakes decisions. The governance requirement is that the explainability standard be determined by the risk tier, not by the technical capabilities of the available systems — meaning that institutions should not deploy high-risk black box systems simply because they are the best available tools, if those tools cannot meet the explainability governance requirement that their risk level demands.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">14.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Monitor algorithmic systems for equity, accuracy, and community impact</div>
+          <div class="proc-group-desc">Pre-deployment equity impact assessment establishes that a system meets minimum equity standards at the point of deployment. Ongoing monitoring — the process of continuously assessing whether the system continues to meet those standards as community composition changes, as the system's training data becomes more dated, and as the ways staff use the system evolve — is equally essential and far less commonly practiced. Algorithmic systems do not maintain their accuracy and equity characteristics indefinitely; they drift in response to distributional shifts in the populations they encounter, in the data environments they operate in, and in the ways human operators interact with their outputs. Governance of community-facing AI systems requires monitoring infrastructures that detect these drifts before they produce systematic community harm.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">14.3.1</div><div class="act-name">Implement ongoing accuracy monitoring — regular assessment of whether algorithmic systems are producing accurate outputs in the institution's specific deployment context; accuracy monitored by demographic subgroup, not only in aggregate</div></div>
+            <div class="proc-activity"><div class="act-id">14.3.2</div><div class="act-name">Conduct equity outcome audits — quarterly for Tier 3 systems, monthly for Tier 4 — examining whether algorithmic decisions are producing equitable outcomes across demographic subgroups at the community member level</div></div>
+            <div class="proc-activity"><div class="act-id">14.3.3</div><div class="act-name">Collect and analyze community member experience data — systematic feedback from community members about their experience of algorithmic decisions affecting them, with specific attention to whether they experienced the process as fair, understandable, and responsive to their actual situation</div></div>
+            <div class="proc-activity"><div class="act-id">14.3.4</div><div class="act-name">Govern model drift and retraining — monitoring for performance degradation over time and governing the retraining processes that maintain system performance, with equity assessment required after any significant model update</div></div>
+            <div class="proc-activity"><div class="act-id">14.3.5</div><div class="act-name">Maintain suspension protocols — documented criteria and governance processes for suspending AI systems when monitoring reveals equity failures or accuracy degradation that may be causing community harm</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">14.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Ensure human oversight and contestability of algorithmic decisions</div>
+          <div class="proc-group-desc">The most fundamental governance requirement for community-facing algorithmic systems in post-labor institutions is this: no algorithmic decision that significantly affects a community member's access to services, resources, or rights should be final without a meaningful opportunity for human review. This requirement is non-negotiable regardless of how accurate, equitable, and well-designed the algorithmic system is claimed to be. Human oversight authority is not a backstop for deficient AI systems — it is a governance principle grounded in the dignity of the people affected and in the institutional accountability that post-labor institutions claim as a core value. A community member who cannot contest an algorithmic decision has been subjected to precisely the opaque, unaccountable institutional decision-making that post-labor institutions were created to replace.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">14.4.1</div><div class="act-name">Design and implement contestability mechanisms — accessible, well-communicated processes through which community members can contest algorithmic decisions that affect them, with timely review by humans with genuine authority to override the algorithmic output</div></div>
+            <div class="proc-activity"><div class="act-id">14.4.2</div><div class="act-name">Maintain meaningful human review authority — ensuring that staff who review algorithmic decisions have the information, authority, and time required to make genuinely independent assessments rather than simply ratifying algorithmic outputs</div></div>
+            <div class="proc-activity"><div class="act-id">14.4.3</div><div class="act-name">Track contestation outcomes — monitoring whether human review of contested algorithmic decisions is producing different outcomes (evidence of meaningful review) or consistently affirming algorithmic outputs (evidence of rubber-stamping)</div></div>
+            <div class="proc-activity"><div class="act-id">14.4.4</div><div class="act-name">Develop algorithmic decision navigators — staff or peer workers who can help community members understand algorithmic decisions affecting them and navigate the contestation process; particularly important for community members facing trust barriers with institutional systems</div></div>
+            <div class="proc-activity"><div class="act-id">14.4.5</div><div class="act-name">Inform community members of their rights — active, accessible communication of community members' rights regarding algorithmic decisions, including their right to explanation, human review, and contestation</div></div>
+          </div>
+          <div class="act-note">Process 14.4.3 — tracking contestation outcomes — is the process that distinguishes meaningful from nominal human oversight. If virtually all contested algorithmic decisions are affirmed upon human review, either the algorithm is performing perfectly (improbable) or human reviewers are rubber-stamping algorithmic outputs without genuine independent assessment (likely). Governance monitoring of contestation affirmation rates — and investigation of rates above 90–95% — is the accountability mechanism that ensures human review remains genuinely human.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">14.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Engage community members in AI governance and algorithmic design</div>
+          <div class="proc-group-desc">Community governance of algorithmic systems is the Category 14.0 operationalization of the Category 16.0 participatory democracy principle applied to the specific domain of AI governance. Community members who are affected by algorithmic systems — whose housing eligibility, resource access, or service level is influenced by algorithmic outputs — should have meaningful voice in the governance of those systems. Not as a courtesy or a communication exercise, but as a governance requirement grounded in the same principle that applies to all institutional decisions affecting community members: the people most affected should have the most influence. This is more demanding in the algorithmic domain than in most others because it requires accessible explanation of how algorithmic systems work — but that accessibility requirement is itself part of the governance obligation.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">14.5.1</div><div class="act-name">Design accessible AI literacy programming — helping community members understand what algorithmic systems are, how they work, what data they use, and what their rights are with respect to algorithmic decisions; developed with community members, not only for them</div></div>
+            <div class="proc-activity"><div class="act-id">14.5.2</div><div class="act-name">Establish community member representation in AI governance — formal roles for community members in AI governance processes: advisory committees, governance body representation, co-design participation in new system development</div></div>
+            <div class="proc-activity"><div class="act-id">14.5.3</div><div class="act-name">Conduct participatory AI impact assessments — involving community members as evaluators of AI system impacts on their community, not only as sources of data for institutional evaluation of AI performance</div></div>
+            <div class="proc-activity"><div class="act-id">14.5.4</div><div class="act-name">Build community member capacity to engage with algorithmic systems — practical skills for navigating, contesting, and influencing algorithmic systems that affect community members' lives, extending beyond the institution's own systems to the broader algorithmic environment</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six algorithmic governance failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in AI governance and algorithmic accountability</div>
+
+    <div class="fail-row">
+      <div class="fail-num">A1</div>
+      <div class="fail-content">
+        <div class="fail-name">Accuracy theater — algorithmic systems evaluated on training data, not deployment populations</div>
+        <div class="fail-desc">The institution deploys an algorithmic system that has been evaluated as accurate on general benchmarks or on training data, without assessing its performance on the specific population and context in which the institution will deploy it. The system performs well in general and produces systematically biased outputs for the institution's specific community population — which may differ in ways that the general benchmarks do not capture from the populations on which the system was trained and tested.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Equity impact assessment for the system used general benchmark data rather than data representative of the institution's specific community population. No post-deployment monitoring for accuracy or equity is conducted. The institution's community demographics differ significantly from the populations on which the system was trained, and this difference has not been addressed in the deployment evaluation.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">A2</div>
+      <div class="fail-content">
+        <div class="fail-name">Human review theater — reviewers who cannot override</div>
+        <div class="fail-desc">The institution describes its algorithmic systems as subject to human review, but the review process does not provide reviewers with the information, authority, or time required for genuine independent assessment. Reviewers are presented with algorithmic outputs and expected to ratify them unless they have specific reasons to override — but the specific reasons are not clearly defined, and the organizational expectation is confirmation rather than scrutiny. The human review is nominally present; the human judgment is absent.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Human review of algorithmic decisions takes an average of fewer than two minutes per case. Reviewers report that they do not have enough information to independently assess the algorithmic output. Contestation affirmation rates exceed 95%. Reviewers describe their role as "checking the algorithm's work" rather than making an independent judgment.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">A3</div>
+      <div class="fail-content">
+        <div class="fail-name">Invisible algorithmic governance — community members unaware their decisions are algorithmic</div>
+        <div class="fail-desc">The institution deploys algorithmic systems that influence decisions about community members without disclosing that algorithmic systems are involved, what data they use, or what community members' rights are. Community members experience algorithmic decisions as opaque institutional decisions without awareness that the opacity is of a specific technical character that creates specific accountability obligations. They cannot contest what they do not know is happening.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Community members are not informed when algorithmic systems influence decisions about them. No disclosure policy exists for community-facing AI systems. Community members who have received algorithmically-influenced decisions cannot describe the basis for those decisions when asked. No contestability mechanism exists or has been communicated to community members.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">A4</div>
+      <div class="fail-content">
+        <div class="fail-name">Equity drift — systems that degrade over time without detection</div>
+        <div class="fail-desc">The institution deployed an algorithmic system that passed its initial equity assessment but has not been monitored for equity performance since deployment. Community demographics have shifted. The system's training data has become more dated. Staff interaction patterns with the system have changed. Any or all of these changes have produced equity degradation that is systematic, consequential, and invisible because post-deployment monitoring was never established.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> No post-deployment equity monitoring exists for AI systems that were equity-assessed at deployment. The last equity assessment predates significant changes in community demographics, system updates, or staff usage patterns. Governance body receives no regular reporting on AI system equity performance.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">A5</div>
+      <div class="fail-content">
+        <div class="fail-name">Algorithmic determinism — AI outputs treated as objective facts</div>
+        <div class="fail-desc">Staff and governance members treat algorithmic outputs as objective measurements of community member characteristics rather than as probabilistic estimates that embed the value judgments of their designers, the biases of their training data, and the limitations of their design. A risk score is described as measuring a community member's actual risk rather than as estimating their probability of a specific outcome based on characteristics correlated with that outcome in a specific historical dataset. The distinction matters because it determines whether human review can meaningfully challenge algorithmic outputs or is constrained to accept them as factual measurements.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff describe algorithmic risk scores or eligibility ratings as measuring objective community member characteristics. Training materials for staff using algorithmic systems do not include explicit instruction on algorithmic uncertainty and the distinction between algorithmic output and objective fact. Human reviewers do not have clear authority to override algorithmic outputs based on qualitative contextual information that the algorithm cannot process.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">A6</div>
+      <div class="fail-content">
+        <div class="fail-name">Community exclusion from AI governance — decisions about community lives made without community voice</div>
+        <div class="fail-desc">Algorithmic systems that make decisions about community members are governed entirely by institutional staff, technical experts, and governance body members — without meaningful participation by the community members most affected. The governance processes are technically correct and substantively unaccountable to the people whose lives the systems shape. This is the algorithmic version of the governance equity failure mode identified in Category 11.0: governance that is formally correct and community-unaccountable.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> No community members have been involved in the design, evaluation, or governance of any algorithmic system the institution deploys. Community members have not been informed of their rights with respect to algorithmic decisions. No accessible AI literacy programming has been developed or offered. AI governance decisions are made in governance body meetings that community members do not attend and cannot access.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Allegheny County and the algorithmic child welfare tool</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Allegheny County DHS — community accountability for a high-stakes algorithmic system</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Allegheny County's Department of Human Services deployed the Allegheny Family Screening Tool (AFST), a predictive risk assessment algorithm used in child welfare decision-making, beginning in 2016. The AFST is one of the most extensively documented cases of high-stakes algorithmic deployment in the human services domain — both for what it illustrates about algorithmic governance and for the community accountability debates it generated. The case is instructive for Category 14.0 not as a model to replicate but as a case study in the governance challenges that Tier 4 algorithmic deployment creates and what adequate governance architecture requires.</div>
+      <div class="case-text">The AFST used administrative data — public benefits receipt, child welfare history, involvement with the criminal legal system — to generate a risk score that influenced screening decisions about incoming reports of child maltreatment. Researchers including Virginia Eubanks documented that the system systematically assigned higher risk scores to families who were more extensively surveilled by government systems — which correlated strongly with poverty and race, not with actual risk of child maltreatment — producing what Eubanks termed a "poverty score" rather than a true risk score. The governance failure was not primarily technical; it was in the deployment governance: the system was deployed without the community consent, independent equity monitoring, or community contestability mechanisms that Tier 4 governance requires.</div>
+      <div class="case-text">Allegheny County's response to the critique — including the creation of a community advisory board with genuine oversight authority, the commissioning of independent equity audits by academic researchers, and the expansion of human review requirements — operationalizes several elements of Category 14.0 processes 14.3, 14.4, and 14.5. These governance responses were developed reactively, after documentation of harm, rather than proactively as deployment prerequisites. The lesson is that Tier 4 algorithmic deployment without proactive community governance produces the reactive governance conditions that are more expensive, less effective, and more damaging to community trust than proactive governance would have been.</div>
+      <div class="case-lesson"><strong>Category 14.0 lesson:</strong> The Allegheny AFST case operationalizes the risk tier framework's most important principle: governance requirements for high-stakes algorithmic systems should be established as deployment prerequisites, not as responses to documented harm. The community advisory board, independent equity auditing, and human review requirements that Allegheny County implemented after the AFST critique are the same governance processes that Category 14.0's Tier 4 framework requires before deployment. The cost of the reactive approach — in community trust, in documented harm to families, in institutional credibility — significantly exceeds the cost of the proactive governance that would have been required. Post-labor institutions adopting Tier 3 or Tier 4 systems should use the Allegheny case as a template for what governance failures look like and what proactive governance must prevent.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — The algorithmic justice movement and community-led audit practice</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Algorithmic Justice League — community-centered algorithmic accountability practice</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Algorithmic Justice League, founded by Joy Buolamwini following her research documenting systematic racial and gender bias in commercial facial recognition systems, has developed the most comprehensive publicly available framework for community-centered algorithmic accountability practice. Its contribution to Category 14.0 is specifically in process groups 14.3 (monitoring) and 14.5 (community governance): the AJL's audit methodology, community coalition-building approach, and policy advocacy work demonstrate what community-led algorithmic accountability looks like as institutional practice rather than as academic research.</div>
+      <div class="case-text">The AJL's audit methodology — examining algorithmic systems for bias across demographic subgroups using both technical analysis and affected community member testimony — operationalizes the equity impact assessment requirements of process 14.1.2 in a community-participatory form. The methodology treats community member experience of algorithmic systems not as anecdotal supplementary evidence but as primary evidence about system performance in the specific communities where those systems are deployed. This reframes the algorithmic audit from a technical exercise conducted by experts to a community accountability exercise conducted with communities — which produces both more accurate assessments of real-world system performance and more legitimate governance authority for the findings.</div>
+      <div class="case-lesson"><strong>Category 14.0 lesson:</strong> The AJL's practice demonstrates that meaningful AI governance for post-labor institutions is not primarily a technical challenge — it is a community accountability challenge. The technical expertise required to audit algorithmic systems exists and is accessible through organizations like AJL. The governance challenge is ensuring that audit findings have genuine institutional consequences, that community members who experience algorithmic systems are positioned as the authoritative evaluators of those systems' equity performance, and that the governance authority to suspend or redesign systems that fail equity assessments is real rather than nominal. Post-labor institutions deploying Tier 3 or Tier 4 AI systems should build relationships with organizations like AJL — not only to access technical audit capacity but to develop the community accountability governance practices that Category 14.0 describes as institutional requirements.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>When a machine makes a decision about someone's life, the accountability requirements do not diminish because the decision-maker is not human. They intensify — because the affected person cannot look the machine in the eye and ask why.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 14.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 14.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No AI governance policy; algorithmic systems deployed without tier classification or governance review</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No equity impact assessment conducted for any community-facing AI system; no post-deployment monitoring</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community members not informed when algorithmic systems influence decisions about them; no contestability mechanism</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Human review exists nominally but reviewers have no genuine authority to override algorithmic outputs</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No community member involvement in AI governance; no AI literacy programming for community members</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">AI governance policy adopted; AI systems inventoried and tier-classified; governance processes for Tier 3 beginning</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Equity impact assessment conducted for primary Tier 3 systems; basic post-deployment monitoring developing</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community member disclosure for major Tier 3 systems; basic contestability mechanism developed</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Human review procedures documented; reviewer training developing; contestation tracking beginning</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community awareness of AI governance developing; initial AI literacy offerings for community members</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">AI governance policy fully implemented; all community-facing AI systems registered and tier-governed; vendor governance requirements enforced</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Equity impact assessments for all Tier 3+ systems; quarterly equity monitoring; governance body review of equity findings; suspension protocols operational</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community member disclosure for all Tier 2+ systems; plain-language explanation right implemented for Tier 3+; accessible contestability mechanism operational and communicated</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Meaningful human review authority implemented; contestation affirmation rate tracked and maintained below 95%; algorithmic decision navigators available for complex cases</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community member representation in AI governance for Tier 3+ systems; participatory equity assessments conducted; annual transparency report published</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community members are primary evaluators of AI system equity — not only informants but holders of evaluation authority with genuine governance consequences</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">External independent audit for all Tier 4 systems; community members participate in audit design and findings interpretation</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Institution has declined to deploy Tier 3 or Tier 4 systems that could not meet equity governance requirements — demonstrating governance credibility through restraint as well as compliance</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community members have developed practical capacity to navigate and contest algorithmic systems beyond the institution's own systems</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">AI governance frameworks contributed to peer network; institution participates in sector-level algorithmic accountability infrastructure</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 14.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">AI systems registry completeness</div>
+      <div class="kpi-cell">Percentage of known community-facing AI systems with current governance documentation and tier classification — measures whether AI governance is comprehensive or has gaps</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Equity impact assessment coverage</div>
+      <div class="kpi-cell">Percentage of Tier 3 and Tier 4 AI systems with current equity impact assessments — measures pre-deployment governance compliance for high-risk systems</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Algorithmic equity outcome disparity</div>
+      <div class="kpi-cell">Difference in outcomes from algorithmic decisions across demographic subgroups — the primary equity outcome measure for algorithmic systems; tracked quarterly for Tier 3+</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Contestation affirmation rate</div>
+      <div class="kpi-cell">Percentage of contested algorithmic decisions affirmed on human review — rates above 95% signal nominal rather than genuine human oversight</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community disclosure compliance rate</div>
+      <div class="kpi-cell">Percentage of Tier 2+ algorithmic deployments with active community member disclosure — measures transparency governance compliance</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Explanation request fulfillment rate</div>
+      <div class="kpi-cell">Percentage of community member requests for algorithmic explanation fulfilled within defined timeframe — measures whether the right to explanation is functional or nominal</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community AI governance participation rate</div>
+      <div class="kpi-cell">Number of community members actively participating in AI governance roles (advisory committees, co-design processes, participatory audits) — measures whether community governance is nominal or substantive</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Algorithmic systems suspended</div>
+      <div class="kpi-cell">Number of AI systems suspended following equity or accuracy monitoring findings — measures whether governance monitoring produces governance consequences; zero suspensions in institutions with significant AI portfolios may indicate inadequate monitoring</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 14.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 14.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Inventory all AI systems in community-facing use and classify by risk tier</div>
+          <div class="seq-desc">Before any other Category 14.0 development, establish a complete picture of what algorithmic systems the institution currently uses in ways that affect community members. This is harder than it sounds: many AI tools are embedded in broader platforms (case management systems, CRM tools, communication platforms) and their algorithmic components are not labeled as such. Survey all staff who interact with community members about tools they use; review all software subscriptions for AI or algorithmic components; assess which systems influence decisions about community member service access or resource allocation. Classify each system into the four risk tiers. This inventory is the foundation for all subsequent governance development.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Complete AI systems inventory with tier classification; presented to governance body; high-risk systems identified; governance authority for Category 14.0 assigned.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct equity impact assessments for all Tier 3 systems currently deployed</div>
+          <div class="seq-desc">For each system classified as Tier 3 (decision-influencing), conduct a retrospective equity impact assessment that examines actual outcomes in the institution's specific community context. If the system has been in use, there should be data on its outputs; analyze those outputs by demographic subgroup to assess whether they are producing equitable results. If outcomes data does not exist, treat that absence as a governance failure and implement outcome tracking immediately. For systems that fail the retrospective assessment, develop remediation plans with governance accountability — including the option of suspension if remediation is not achievable.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Equity impact assessments completed for all Tier 3 systems; findings presented to governance body; remediation plans for systems with equity gaps; at least one monitoring process implemented.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement community disclosure and plain-language explanation rights</div>
+          <div class="seq-desc">Develop and implement community disclosure policies for all Tier 2+ systems: plain-language communications informing community members when algorithmic systems influence decisions about them, what data those systems use, and what their rights are. For Tier 3 systems, implement the plain-language explanation right — a documented process through which community members can request and receive an accessible explanation of any algorithmic decision that affects them. Test the explanation process with community members before finalizing to ensure accessibility. Communicate rights proactively, not only when community members ask.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Community disclosure implemented for all Tier 2+ systems; plain-language explanation process operational for Tier 3 systems; community member rights communicated proactively; first round of community feedback on clarity and accessibility collected and incorporated.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement genuine human oversight and contestability mechanisms</div>
+          <div class="seq-desc">Assess whether current human review processes for algorithmic decisions are meaningful or nominal. If reviewers are not making genuine independent assessments, redesign the review process: define what information reviewers need and ensure they have it; define their authority to override algorithmic outputs and make it explicit; set time standards that allow genuine review rather than rubber-stamping; and implement contestation tracking to monitor affirmation rates. Develop accessible contestability mechanisms for community members and ensure they are actively communicated rather than buried in policy documents.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Human review redesign implemented; reviewer authority explicitly defined; contestation affirmation rate tracked; accessible contestability mechanism operational and actively communicated; algorithmic decision navigator role created for complex cases.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Establish community governance representation for Tier 3+ systems</div>
+          <div class="seq-desc">Develop a community advisory process for the institution's highest-risk algorithmic systems — formal structures through which community members who are affected by those systems can participate in their ongoing governance. The advisory process should have genuine authority (the ability to trigger governance review of systems producing concerning patterns) rather than only advisory status. Develop accessible AI literacy programming that enables meaningful community participation in AI governance. Publish the first transparency report covering all community-facing AI systems, their governance status, their equity monitoring findings, and the institution's assessment of their performance.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Community advisory process with genuine governance authority operational for Tier 3+ systems; AI literacy programming offered to community members; first transparency report published; community member participation in AI governance documented and tracked.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 14.0 and Category 8.0 (Technology and AI Infrastructure):</strong> Category 8.0 governs the institution's operational adoption and management of AI tools — the internal decision to use AI for administrative functions. Category 14.0 governs the institution's deployment of AI systems in ways that affect community members — the governance architecture that makes those deployments accountable. The boundary is the direction of impact: inward-facing AI (affecting staff operations) is governed by Category 8.0; outward-facing AI (affecting community members) is governed by Category 14.0. The boundary is not always clean: an AI tool used to assist case managers in their work is Category 8.0 if it only affects staff workflow, and Category 14.0 if its outputs influence decisions about the community members those case managers serve. When in doubt, apply Category 14.0 governance.</p>
+    <p><strong>On the post-labor economic transition and algorithmic systems:</strong> Category 14.0 is novel in the GPS framework not only because algorithmic governance is new, but because the post-labor economic transition makes algorithmic accountability specifically post-labor in character. The same AI and automation systems that are displacing human labor — creating the economic conditions that post-labor institutions exist to address — are also being deployed by those institutions in community-facing applications. Post-labor institutions that deploy algorithmic systems without adequate governance are deploying the same technologies, in the same governance-deficient ways, that produced the economic displacement they were created to address. The governance irony is acute: institutions created to counter the harms of unaccountable technological power must be the most rigorous practitioners of accountable technological deployment if their institutional legitimacy is to be consistent with their institutional purpose.</p>
+    <p><strong>On the legal landscape for algorithmic accountability:</strong> The legal framework governing algorithmic accountability in community-serving contexts is rapidly evolving. The EU AI Act (adopted 2024) establishes the most comprehensive mandatory framework for high-risk AI systems, with explicit requirements for transparency, human oversight, and accuracy testing that parallel Category 14.0's governance requirements. In the United States, several states have enacted algorithmic accountability legislation for specific high-risk contexts (automated employment decisions, healthcare, housing), and federal regulatory agencies (FTC, CFPB, HUD) have increasingly applied existing anti-discrimination law to algorithmic decision-making. Post-labor institutions should treat Category 14.0's governance requirements as floors, not ceilings — the mandatory minimum that legal compliance requires in the institution's specific jurisdiction, with the expectation that the institution's values commitments will typically require more than legal compliance demands.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part V · Chapter 21 · GPS 14.0</span>
+    <span class="close-next">Ch. 22 — Human flourishing &amp; wellbeing (GPS 15.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

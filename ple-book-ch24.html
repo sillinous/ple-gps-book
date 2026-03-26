@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 24 — Five Archetypes: Where Institutions Begin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --synth: #C9A96E; --synth-dim: rgba(201,169,110,0.08);
+    --synth-text: #d4b87e; --synth-border: rgba(201,169,110,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+    /* Per-archetype accent colors */
+    --clt: #4ecfa0;     --clt-dim: rgba(78,207,160,0.08);  --clt-border: rgba(78,207,160,0.2);
+    --wco: #378ADD;     --wco-dim: rgba(55,138,221,0.08);  --wco-border: rgba(55,138,221,0.2);
+    --man: #e8845a;     --man-dim: rgba(232,132,90,0.08);  --man-border: rgba(232,132,90,0.2);
+    --cfn: #c9a96e;     --cfn-dim: rgba(201,169,110,0.08); --cfn-border: rgba(201,169,110,0.2);
+    --ctc: #b0aaf0;     --ctc-dim: rgba(176,170,240,0.08); --ctc-border: rgba(176,170,240,0.2);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+
+  /* Part VI entry banner */
+  .part-entry { margin-bottom: 52px; padding: 28px 32px; background: var(--synth-dim); border: 1px solid var(--synth-border); border-radius: 8px; }
+  .part-entry-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--synth-text); margin-bottom: 10px; opacity: 0.8; }
+  .part-entry-title { font-family: 'Crimson Pro', serif; font-size: 1.4rem; font-weight: 300; color: var(--text-primary); margin-bottom: 10px; line-height: 1.3; }
+  .part-entry-body { font-family: 'Outfit', sans-serif; font-size: 0.78rem; color: var(--text-muted); line-height: 1.7; }
+
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--synth-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.synth { background: var(--synth-dim); color: var(--synth-text); border: 1px solid var(--synth-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--synth); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--synth-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 52px 0 44px; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--synth); transform: rotate(45deg); opacity: 0.4; }
+
+  /* ── Archetype card ────────────────────────────── */
+  .archetype { margin: 0 0 64px; }
+  .archetype-banner { display: flex; align-items: center; gap: 16px; margin-bottom: 0; padding: 20px 24px; border-radius: 8px 8px 0 0; border: 1px solid; border-bottom: none; }
+  .archetype-num { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; opacity: 0.6; }
+  .archetype-icon { font-family: 'Crimson Pro', serif; font-size: 1.5rem; font-weight: 300; line-height: 1; }
+  .archetype-title { font-family: 'Crimson Pro', serif; font-size: 1.5rem; font-weight: 300; color: var(--text-primary); line-height: 1.15; flex: 1; }
+  .archetype-tag { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .archetype-body { border: 1px solid; border-top: none; border-radius: 0 0 8px 8px; overflow: hidden; }
+
+  /* archetype color variants */
+  .arch-clt .archetype-banner { background: var(--clt-dim); border-color: var(--clt-border); }
+  .arch-clt .archetype-num { color: var(--clt); }
+  .arch-clt .archetype-icon { color: var(--clt); }
+  .arch-clt .archetype-tag { background: var(--clt-dim); color: var(--clt); border: 1px solid var(--clt-border); }
+  .arch-clt .archetype-body { border-color: var(--clt-border); }
+  .arch-clt .section-label { color: var(--clt); }
+  .arch-clt .gps-pip { background: rgba(78,207,160,0.12); border: 1px solid rgba(78,207,160,0.25); color: var(--clt); }
+  .arch-clt .priority-high { color: var(--clt); }
+  .arch-clt .start-step::before { background: var(--clt); }
+  .arch-clt .start-num { color: var(--clt); }
+
+  .arch-wco .archetype-banner { background: var(--wco-dim); border-color: var(--wco-border); }
+  .arch-wco .archetype-num { color: var(--wco); }
+  .arch-wco .archetype-icon { color: var(--wco); }
+  .arch-wco .archetype-tag { background: var(--wco-dim); color: var(--wco); border: 1px solid var(--wco-border); }
+  .arch-wco .archetype-body { border-color: var(--wco-border); }
+  .arch-wco .section-label { color: var(--wco); }
+  .arch-wco .gps-pip { background: rgba(55,138,221,0.10); border: 1px solid rgba(55,138,221,0.22); color: var(--wco); }
+  .arch-wco .priority-high { color: var(--wco); }
+  .arch-wco .start-num { color: var(--wco); }
+
+  .arch-man .archetype-banner { background: var(--man-dim); border-color: var(--man-border); }
+  .arch-man .archetype-num { color: var(--man); }
+  .arch-man .archetype-icon { color: var(--man); }
+  .arch-man .archetype-tag { background: var(--man-dim); color: var(--man); border: 1px solid var(--man-border); }
+  .arch-man .archetype-body { border-color: var(--man-border); }
+  .arch-man .section-label { color: var(--man); }
+  .arch-man .gps-pip { background: rgba(232,132,90,0.10); border: 1px solid rgba(232,132,90,0.22); color: var(--man); }
+  .arch-man .priority-high { color: var(--man); }
+  .arch-man .start-num { color: var(--man); }
+
+  .arch-cfn .archetype-banner { background: var(--cfn-dim); border-color: var(--cfn-border); }
+  .arch-cfn .archetype-num { color: var(--cfn); }
+  .arch-cfn .archetype-icon { color: var(--cfn); }
+  .arch-cfn .archetype-tag { background: var(--cfn-dim); color: var(--cfn); border: 1px solid var(--cfn-border); }
+  .arch-cfn .archetype-body { border-color: var(--cfn-border); }
+  .arch-cfn .section-label { color: var(--cfn); }
+  .arch-cfn .gps-pip { background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.25); color: var(--cfn); }
+  .arch-cfn .priority-high { color: var(--cfn); }
+  .arch-cfn .start-num { color: var(--cfn); }
+
+  .arch-ctc .archetype-banner { background: var(--ctc-dim); border-color: var(--ctc-border); }
+  .arch-ctc .archetype-num { color: var(--ctc); }
+  .arch-ctc .archetype-icon { color: var(--ctc); }
+  .arch-ctc .archetype-tag { background: var(--ctc-dim); color: var(--ctc); border: 1px solid var(--ctc-border); }
+  .arch-ctc .archetype-body { border-color: var(--ctc-border); }
+  .arch-ctc .section-label { color: var(--ctc); }
+  .arch-ctc .gps-pip { background: rgba(176,170,240,0.10); border: 1px solid rgba(176,170,240,0.22); color: var(--ctc); }
+  .arch-ctc .priority-high { color: var(--ctc); }
+  .arch-ctc .start-num { color: var(--ctc); }
+
+  /* Archetype body sections */
+  .arch-section { padding: 18px 22px; border-bottom: 1px solid var(--border-subtle); background: var(--bg-secondary); }
+  .arch-section:last-child { border-bottom: none; }
+  .arch-section.alt { background: var(--bg-primary); }
+  .section-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8; }
+  .arch-prose { font-family: 'Crimson Pro', serif; font-size: 1.05rem; line-height: 1.8; color: var(--text-secondary); }
+  .arch-prose p { margin-bottom: 1em; }
+  .arch-prose p:last-child { margin-bottom: 0; }
+
+  /* GPS priority grid */
+  .gps-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .gps-pip { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.04em; display: flex; align-items: center; gap: 4px; }
+  .pip-cat { opacity: 0.7; }
+  .pip-label { opacity: 0.95; }
+  .priority-high { font-weight: 500; }
+  .priority-grid-label { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-ghost); margin-bottom: 6px; }
+
+  /* Strength / vulnerability table */
+  .sv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-radius: 4px; overflow: hidden; margin-top: 4px; }
+  .sv-cell { padding: 12px 14px; background: var(--bg-tertiary); }
+  .sv-cell.alt { background: var(--bg-secondary); }
+  .sv-head { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; color: var(--text-ghost); }
+  .sv-item { display: flex; gap: 8px; margin-bottom: 6px; align-items: flex-start; }
+  .sv-item:last-child { margin-bottom: 0; }
+  .sv-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 5px; min-width: 4px; }
+  .sv-dot.str { background: var(--m3t); }
+  .sv-dot.vul { background: #e88; }
+  .sv-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* Where to start steps */
+  .start-steps { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+  .start-step { display: flex; gap: 14px; align-items: flex-start; }
+  .start-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; min-width: 22px; padding-top: 2px; opacity: 0.7; }
+  .start-content { flex: 1; }
+  .start-title { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+  .start-desc { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* Maturity entry profile */
+  .maturity-entry { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-subtle); border-radius: 4px; overflow: hidden; margin-top: 4px; }
+  .mat-cat { padding: 10px 12px; background: var(--bg-tertiary); }
+  .mat-cat-name { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-ghost); margin-bottom: 4px; }
+  .mat-cat-value { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; }
+  .mat-val-1 { color: var(--m1t); }
+  .mat-val-2 { color: var(--m2t); }
+  .mat-val-3 { color: var(--m3t); }
+
+  /* Cross-archetype comparison */
+  .compare-table { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .compare-head { padding: 12px 18px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .compare-row { display: grid; grid-template-columns: 140px repeat(5, 1fr); border-bottom: 1px solid var(--border-subtle); }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row.head-row { background: var(--bg-secondary); }
+  .compare-cell { padding: 10px 12px; font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-secondary); line-height: 1.4; border-right: 1px solid var(--border-subtle); }
+  .compare-cell:last-child { border-right: none; }
+  .compare-cell.row-label { font-weight: 500; color: var(--text-primary); font-size: 0.72rem; }
+  .compare-cell.col-head { font-size: 9px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+  .compare-cell.clt-h { color: var(--clt); font-size: 8px; }
+  .compare-cell.wco-h { color: var(--wco); font-size: 8px; }
+  .compare-cell.man-h { color: var(--man); font-size: 8px; }
+  .compare-cell.cfn-h { color: var(--cfn); font-size: 8px; }
+  .compare-cell.ctc-h { color: var(--ctc); font-size: 8px; }
+  .hi { font-weight: 600; }
+  .lo { opacity: 0.5; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--synth); background: var(--synth-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--synth-text); }
+  .pullquote p::after { content: '\201D'; color: var(--synth-text); }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-entry">
+    <div class="part-entry-label">Entering Part VI · Applied archetypes</div>
+    <div class="part-entry-title">Five institutional forms. Sixteen categories. The same framework assembles differently for each.</div>
+    <div class="part-entry-body">Parts I through V described the GPS framework as a whole — its categories, its maturity model, its process architecture. Part VI applies it. Each of the five archetypes that follow is a distinct institutional form with its own governance logic, its own financial structure, its own relationship to community power, and its own characteristic strengths and vulnerabilities. The GPS framework does not prescribe a single institutional model; it provides a shared process standard that all post-labor institutional forms can use to assess their current capabilities and navigate their development. What differs between archetypes is not the destination — mature, accountable, community-governed institutions capable of supporting human flourishing in a post-labor economy — but the path, the starting configuration, and the GPS categories that most urgently need attention at each stage of each form's development.</div>
+  </div>
+
+  <div class="part-eyebrow">Part VI · Applied archetypes</div>
+  <div class="chapter-eyebrow">Chapter 24</div>
+  <h1 class="chapter-title">Five archetypes — institution types and where to start</h1>
+  <p class="chapter-subtitle">How the sixteen GPS categories assemble for the community land trust, the worker cooperative, the mutual aid network, the community foundation, and the civic technology cooperative — and what each form needs most to develop</p>
+  <div class="cat-meta">
+    <span class="cat-pill synth">Synthesis</span>
+    <span class="cat-pill synth">Applied framework</span>
+    <span class="cat-pill neutral">Five institutional forms</span>
+    <span class="cat-pill neutral">All 16 GPS categories</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>The GPS framework applies to any post-labor institution regardless of its legal form, its size, or its service domain. But applying it requires understanding how the sixteen categories relate to the specific institutional form being assessed — which categories are structurally central to the form's governance logic, which are typically underdeveloped relative to their importance, and which can be deferred without immediate consequence while more urgent capabilities are developed. An institution that tries to advance all sixteen categories simultaneously will advance none of them effectively. Sequenced, archetype-informed development produces real capability improvement; undifferentiated development produces the appearance of comprehensiveness without its substance.</p>
+
+    <p>The five archetypes that follow are not exhaustive. The solidarity economy encompasses dozens of institutional forms — housing cooperatives, credit unions, time banks, community health centers, solidarity agricultural cooperatives, neighborhood development organizations, disability-led mutual aid collectives, and more — each with its own GPS profile. The five selected represent the forms most commonly being built or rebuilt in the contexts where post-labor economic transition is most acutely felt: the community land trust for the housing crisis, the worker cooperative for the employment transition, the mutual aid network for the immediate welfare gap, the community foundation for the capital mobilization challenge, and the civic technology cooperative for the digital infrastructure of post-labor community life. Together they illustrate how GPS assessment translates into institution-specific development priorities, which is the core practical skill this chapter is designed to build.</p>
+
+    <p>Each archetype profile follows the same structure: a descriptive account of the institutional form and its governance logic; a GPS priority mapping that identifies the categories most important to the form and the typical maturity profile at founding; a strengths and vulnerabilities analysis drawn from the characteristic failure modes each form produces; a where-to-start sequence that translates GPS priorities into a realistic first-year development agenda; and a brief reflection on the specific post-labor transition challenges each form is best positioned to address. The chapter closes with a cross-archetype comparison that allows practitioners working across institutional forms to understand the landscape of similarities and differences.</p>
+
+  </div>
+
+  <!-- ───────────────────────────────────────────────
+       ARCHETYPE 1: Community Land Trust
+  ──────────────────────────────────────────────── -->
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="archetype arch-clt">
+    <div class="archetype-banner">
+      <span class="archetype-num">01</span>
+      <span class="archetype-icon">◈</span>
+      <h2 class="archetype-title">Community land trust</h2>
+      <span class="archetype-tag">Land &amp; housing</span>
+    </div>
+    <div class="archetype-body">
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--clt)">What it is and how it governs</div>
+        <div class="arch-prose">
+          <p>A community land trust (CLT) is a nonprofit organization that acquires land and holds it permanently in community ownership, making the improvements on that land — homes, commercial spaces, community facilities — available to residents and users at permanently affordable costs. The CLT separates land ownership (retained by the trust in perpetuity) from building ownership or occupancy rights (held by individuals or community businesses under long-term ground leases that include resale restrictions preserving affordability for future residents). This structure removes land from the speculative market, preventing the displacement that accompanies rising land values when housing is held as conventional private property.</p>
+          <p>CLT governance is characteristically tripartite: the governing board includes equal representation from current residents (those living in CLT homes), the broader community (neighbors and stakeholders who are not CLT residents), and public interest representatives (government officials, housing advocates, lenders). This governance structure reflects the CLT's core design principle — that the land trust exists to serve not only current residents but the community as a whole across generations — by balancing resident voice with broader community accountability. The tripartite board is one of the strongest governance designs in the solidarity economy for resisting the exclusivity that affects resident-only cooperative governance, and one of the most demanding to sustain because it requires maintaining authentic participation across three distinct constituency groups simultaneously.</p>
+        </div>
+      </div>
+
+      <div class="arch-section alt">
+        <div class="section-label" style="color:var(--clt)">GPS priority mapping — categories most critical to this archetype</div>
+        <div class="priority-grid-label">Primary GPS focus — where CLTs need the greatest development investment</div>
+        <div class="gps-grid">
+          <div class="gps-pip" style="background:var(--clt-dim);border-color:var(--clt-border);color:var(--clt)"><span class="pip-cat">2.0</span><span class="pip-label priority-high">Design &amp; Steward Public Goods</span></div>
+          <div class="gps-pip" style="background:var(--clt-dim);border-color:var(--clt-border);color:var(--clt)"><span class="pip-cat">4.0</span><span class="pip-label priority-high">Deliver Physical Resources</span></div>
+          <div class="gps-pip" style="background:var(--clt-dim);border-color:var(--clt-border);color:var(--clt)"><span class="pip-cat">9.0</span><span class="pip-label priority-high">Steward Collective Resources</span></div>
+          <div class="gps-pip" style="background:var(--clt-dim);border-color:var(--clt-border);color:var(--clt)"><span class="pip-cat">10.0</span><span class="pip-label priority-high">Manage Commons &amp; Shared Assets</span></div>
+          <div class="gps-pip" style="background:var(--clt-dim);border-color:var(--clt-border);color:var(--clt)"><span class="pip-cat">1.0</span><span class="pip-label">Collective Vision &amp; Governance</span></div>
+          <div class="gps-pip" style="background:var(--clt-dim);border-color:var(--clt-border);color:var(--clt)"><span class="pip-cat">16.0</span><span class="pip-label">Participatory Democracy</span></div>
+          <div class="gps-pip" style="background:var(--clt-dim);border-color:var(--clt-border);color:var(--clt)"><span class="pip-cat">11.0</span><span class="pip-label">Institutional Integrity &amp; Equity</span></div>
+          <div class="gps-pip" style="background:var(--clt-dim);border-color:var(--clt-border);color:var(--clt)"><span class="pip-cat">3.0</span><span class="pip-label">Facilitate Access &amp; Engagement</span></div>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="priority-grid-label">Typical founding maturity profile (Level 1 → 2 transition)</div>
+          <div class="maturity-entry">
+            <div class="mat-cat"><div class="mat-cat-name">GPS 2.0</div><div class="mat-cat-value mat-val-2">Level 1–2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 4.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 9.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 10.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 1.0</div><div class="mat-cat-value mat-val-2">Level 2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 16.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 7.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 13.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--clt)">Characteristic strengths and structural vulnerabilities</div>
+        <div class="sv-grid">
+          <div class="sv-cell">
+            <div class="sv-head">Structural strengths</div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Permanent affordability mechanism is legally robust — the ground lease resale restriction withstands market pressure that voluntary affordability commitments cannot</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Tripartite governance explicitly balances resident, community, and public interest — one of the most equitable governance designs in the solidarity economy</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Asset accumulation is structural — every land acquisition permanently removes land from speculative use, compounding community benefit over time</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Ostrom's commons principles are operationalized — the CLT is among the most mature institutional implementations of commons stewardship in contemporary practice</div></div>
+          </div>
+          <div class="sv-cell alt">
+            <div class="sv-head">Structural vulnerabilities</div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Ground lease complexity creates access barriers for residents unfamiliar with the ownership model — GPS 3.0 access design is chronically underdeveloped</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Tripartite governance is demanding to sustain — community member representatives are hardest to recruit and retain, creating board imbalance over time</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Capital acquisition dependency on public subsidy creates vulnerability to government funding priorities and political cycles (GPS 9.0 revenue concentration risk)</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Stewardship function grows with every acquisition — GPS 4.0 physical resource management capacity must scale with the portfolio, and rarely does</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section alt">
+        <div class="section-label" style="color:var(--clt)">Where to start — five GPS development priorities for a new CLT</div>
+        <div class="start-steps">
+          <div class="start-step">
+            <div class="start-num" style="color:var(--clt)">01</div>
+            <div class="start-content">
+              <div class="start-title">Build GPS 10.0 asset governance before the first acquisition</div>
+              <div class="start-desc">The ground lease is the CLT's foundational legal document — it must be designed before the first home is conveyed, not adapted after. Develop a standard ground lease with community input on the resale formula, occupancy requirements, and stewardship obligations. Document the stewardship processes (annual inspections, resale protocols, default management) before there are residents who depend on them. Asset governance that is built prospectively produces more equitable implementation than asset governance built reactively when the first dispute arises.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--clt)">02</div>
+            <div class="start-content">
+              <div class="start-title">Design tripartite governance for all three constituencies, not just the most accessible</div>
+              <div class="start-desc">New CLTs routinely fill their boards with housing advocates, lenders, and public officials (the easiest constituencies to recruit) while leaving resident and community member seats empty or filled with proxies. The governance is formally tripartite and substantively captured. Design recruitment processes, term structures, and board preparation for the most difficult constituencies first. The community member third is the most commonly neglected and the most important for the CLT's democratic legitimacy.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--clt)">03</div>
+            <div class="start-content">
+              <div class="start-title">Develop GPS 3.0 access infrastructure before marketing to residents</div>
+              <div class="start-desc">The CLT model is counterintuitive to prospective residents who have been taught that homeownership means full ownership. Access and engagement processes must explain the model clearly, address the most common concerns (can I sell? can I benefit from appreciation? what do I actually own?), and support prospective residents through the ground lease review and closing process. Access barriers that are not designed away produce lower demand from more marginalized residents — exactly the demographic the CLT is designed to serve.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--clt)">04</div>
+            <div class="start-content">
+              <div class="start-title">Build GPS 9.0 revenue diversification from founding</div>
+              <div class="start-desc">CLTs with single-source capital funding are vulnerable to government priority changes. From the first operational year, develop at least three revenue sources: public subsidy (land acquisitions, affordable housing programs), earned revenue (stewardship fees, ground lease payments), and philanthropic investment. The stewardship fee — a modest annual fee from residents that covers the CLT's ongoing stewardship of their occupancy — is both a revenue source and a demonstration that the CLT relationship is mutual rather than charitable.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--clt)">05</div>
+            <div class="start-content">
+              <div class="start-title">Connect to the national CLT network before the first acquisition</div>
+              <div class="start-desc">The Community Land Trust Network holds the accumulated practice knowledge of three decades of CLT development — standard ground lease templates, stewardship protocols, acquisition financing models, governance curricula, and peer practitioners who have solved the problems a new CLT will encounter. GPS 12.0 inter-institutional relations investment pays higher returns earlier for CLTs than for almost any other institutional form because the network is exceptionally well-developed and accessible.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--clt)">Post-labor transition fit</div>
+        <div class="arch-prose"><p>The CLT is the most directly relevant institutional form for the housing dimension of post-labor economic transition. As labor market income becomes more volatile and less reliably sufficient for conventional homeownership, the CLT's permanently affordable housing model provides the residential stability that makes all other flourishing dimensions more achievable. The CLT also embodies the commons stewardship logic that is central to post-labor institutional design: land held as a community asset rather than a speculative commodity is the institutional operationalization of the commons principle applied to the foundational resource — shelter — that all other human flourishing depends on.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────────────────────
+       ARCHETYPE 2: Worker Cooperative
+  ──────────────────────────────────────────────── -->
+  <div class="archetype arch-wco">
+    <div class="archetype-banner">
+      <span class="archetype-num">02</span>
+      <span class="archetype-icon">◉</span>
+      <h2 class="archetype-title">Worker cooperative</h2>
+      <span class="archetype-tag">Democratic enterprise</span>
+    </div>
+    <div class="archetype-body">
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--wco)">What it is and how it governs</div>
+        <div class="arch-prose">
+          <p>A worker cooperative is a business owned and governed by its workers — each worker-member holds an ownership stake, participates in governance through democratic decision-making processes, and shares in the business's financial results through patronage distributions. Worker cooperatives are the most developed institutional form for democratizing the employment relationship: they retain the productive structure of a business (generating revenue by providing goods or services) while replacing the capital-over-labor governance of conventional firms with worker-majority governance that gives those who do the work authority over how the work is organized, compensated, and directed.</p>
+          <p>Worker cooperative governance centers on the general assembly of worker-members, which holds ultimate authority over major decisions, and on an elected board of directors that governs between assemblies. Management roles — the equivalent of a CEO and management team in a conventional firm — are accountable to the board rather than to external investors, which changes the character of management authority: managers in worker cooperatives serve at the pleasure of worker-members rather than at the pleasure of capital owners. This governance inversion is both the worker cooperative's most distinctive feature and its greatest organizational challenge: it requires worker-members to develop governance capacity that conventional employment does not provide, and it creates tensions between democratic governance processes and the operational decisiveness that competitive markets often require.</p>
+        </div>
+      </div>
+
+      <div class="arch-section alt">
+        <div class="section-label" style="color:var(--wco)">GPS priority mapping — categories most critical to this archetype</div>
+        <div class="priority-grid-label">Primary GPS focus</div>
+        <div class="gps-grid">
+          <div class="gps-pip" style="background:var(--wco-dim);border-color:var(--wco-border);color:var(--wco)"><span class="pip-cat">7.0</span><span class="pip-label priority-high">Develop Human Potential</span></div>
+          <div class="gps-pip" style="background:var(--wco-dim);border-color:var(--wco-border);color:var(--wco)"><span class="pip-cat">1.0</span><span class="pip-label priority-high">Collective Vision &amp; Governance</span></div>
+          <div class="gps-pip" style="background:var(--wco-dim);border-color:var(--wco-border);color:var(--wco)"><span class="pip-cat">9.0</span><span class="pip-label priority-high">Steward Collective Resources</span></div>
+          <div class="gps-pip" style="background:var(--wco-dim);border-color:var(--wco-border);color:var(--wco)"><span class="pip-cat">16.0</span><span class="pip-label priority-high">Participatory Democracy</span></div>
+          <div class="gps-pip" style="background:var(--wco-dim);border-color:var(--wco-border);color:var(--wco)"><span class="pip-cat">11.0</span><span class="pip-label">Institutional Integrity &amp; Equity</span></div>
+          <div class="gps-pip" style="background:var(--wco-dim);border-color:var(--wco-border);color:var(--wco)"><span class="pip-cat">13.0</span><span class="pip-label">Evolve Institutional Capabilities</span></div>
+          <div class="gps-pip" style="background:var(--wco-dim);border-color:var(--wco-border);color:var(--wco)"><span class="pip-cat">5.0</span><span class="pip-label">Deliver Services &amp; Programs</span></div>
+          <div class="gps-pip" style="background:var(--wco-dim);border-color:var(--wco-border);color:var(--wco)"><span class="pip-cat">15.0</span><span class="pip-label">Human Flourishing</span></div>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="priority-grid-label">Typical founding maturity profile</div>
+          <div class="maturity-entry">
+            <div class="mat-cat"><div class="mat-cat-name">GPS 7.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 1.0</div><div class="mat-cat-value mat-val-2">Level 1–2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 9.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 16.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 5.0</div><div class="mat-cat-value mat-val-2">Level 2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 11.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 13.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 15.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--wco)">Characteristic strengths and structural vulnerabilities</div>
+        <div class="sv-grid">
+          <div class="sv-cell">
+            <div class="sv-head">Structural strengths</div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Democratic governance is structurally embedded — worker-members have formal authority over the enterprise that cannot be removed without dismantling the cooperative structure</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Compensation equity is a structural governance priority — worker-members vote on pay ratios, making extreme compensation inequality structurally harder to sustain</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Wealth distribution through capital accounts operationalizes shared ownership across all worker-members rather than concentrating returns in equity-holding leadership</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Worker agency over work conditions is the most direct available response to the alienation of conventional employment that post-labor critique identifies</div></div>
+          </div>
+          <div class="sv-cell alt">
+            <div class="sv-head">Structural vulnerabilities</div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Capitalization is structurally difficult — investor-equity capital is hostile to worker governance, and worker capital accumulation is slow; most new cooperatives are undercapitalized at founding (GPS 9.0)</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Governance capacity gap — conventional employment does not develop governance skills; new worker-members who have never governed anything must quickly become effective governors</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Democracy-efficiency tension is chronic — genuine democratic deliberation takes time that competitive market contexts do not consistently provide</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Isomorphic pressure toward conventional firm practices — competitive market exposure gradually erodes cooperative governance distinctiveness if governance culture is not actively maintained</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section alt">
+        <div class="section-label" style="color:var(--wco)">Where to start — five GPS development priorities for a new worker cooperative</div>
+        <div class="start-steps">
+          <div class="start-step">
+            <div class="start-num" style="color:var(--wco)">01</div>
+            <div class="start-content">
+              <div class="start-title">GPS 7.0 first: invest in governance literacy before the first general assembly</div>
+              <div class="start-desc">Worker-members who do not understand cooperative governance — financial literacy, decision-making processes, rights and responsibilities of membership — cannot exercise their governance authority effectively. The governance literacy gap at founding produces the pattern where founding members with the most organizational experience dominate governance and newer members disengage. Design a cooperative onboarding curriculum that covers governance, financials, and member rights. Make it mandatory for membership, not optional for the engaged. The investment in governance education pays returns in every subsequent governance interaction.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--wco)">02</div>
+            <div class="start-content">
+              <div class="start-title">Design the capital account structure before the first member joins</div>
+              <div class="start-desc">The internal capital account system — how membership stakes are priced, how patronage distributions accumulate, how departing members are bought out — is the most legally and financially consequential governance decision a worker cooperative makes. Getting it wrong at founding is expensive to correct. The Mondragon model's internal capital account structure, which retains most patronage distributions as internal capital rather than distributing them as cash, is one design precedent; many variations exist. Design with a cooperative attorney and a peer cooperative's financial officer before the first member is admitted.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--wco)">03</div>
+            <div class="start-content">
+              <div class="start-title">Establish pay ratio governance in the founding governance documents</div>
+              <div class="start-desc">The compensation ratio between the lowest-paid and highest-paid worker-members is one of the most consequential equity decisions the cooperative makes and one of the most politically difficult to address after founding norms are established. Setting a ratio — many cooperatives use 3:1 or 4:1, Mondragon historically used 6:1 — in the founding documents creates structural accountability for the equity commitment that the cooperative's democratic governance aspires to. Without it, market pressures gradually push compensation structures toward conventional firm patterns.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--wco)">04</div>
+            <div class="start-content">
+              <div class="start-title">Build a peer cooperative relationship before the first year is complete</div>
+              <div class="start-desc">The learning curve for worker cooperative governance, financial management, and democratic decision-making is steep and well-documented. Peer cooperatives who have already navigated the founding governance challenges — bylaw design, first conflict resolution, first board election, first patronage distribution — provide the most relevant and accessible knowledge. The USFWC's Democracy at Work Institute and regional cooperative development centers maintain these connections. A peer mentorship relationship with an established cooperative in a related sector is worth more than most consulting investments at the founding stage.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--wco)">05</div>
+            <div class="start-content">
+              <div class="start-title">Design for democratic succession from founding</div>
+              <div class="start-desc">Worker cooperatives that do not design for leadership succession typically become founder-dependent: the founding member(s) who know the most become indispensable, and their departure triggers governance crises. Design the board election and management succession processes before they are needed. Develop the next generation of governance leaders from founding. Cross-train across governance roles so no single member holds irreplaceable institutional knowledge. Succession design is GPS 13.5 work; it should begin in Year 1, not Year 7 when the first founder departure becomes imminent.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--wco)">Post-labor transition fit</div>
+        <div class="arch-prose"><p>The worker cooperative is the most direct institutional response to the governance dimension of post-labor transition: the collapse of the labor-value contract as the organizing principle of economic life makes worker ownership of productive enterprises the most available alternative to conventional employment for communities seeking economic self-determination. Cooperatives do not eliminate the work requirement — someone must do the work — but they transform the governance relationship around work from one in which capital directs labor to one in which workers direct themselves. In communities experiencing displacement, automation-driven unemployment, and labor market exclusion, the worker cooperative creates economic activity organized by and for the workers who perform it.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────────────────────
+       ARCHETYPE 3: Mutual Aid Network
+  ──────────────────────────────────────────────── -->
+  <div class="archetype arch-man">
+    <div class="archetype-banner">
+      <span class="archetype-num">03</span>
+      <span class="archetype-icon">◎</span>
+      <h2 class="archetype-title">Mutual aid network</h2>
+      <span class="archetype-tag">Solidarity &amp; care</span>
+    </div>
+    <div class="archetype-body">
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--man)">What it is and how it governs</div>
+        <div class="arch-prose">
+          <p>A mutual aid network is a community-organized system of non-hierarchical reciprocal support — an infrastructure through which community members help each other meet needs that neither markets nor governments reliably address, without the power differentials that characterize charitable giving. The defining feature of mutual aid is its reciprocity: participants both give and receive, the relationship between helper and helped is not fixed, and the network does not require institutional approval or professional qualification to participate. Mutual aid networks are the oldest form of human solidarity, and their contemporary revival — accelerated by the COVID-19 pandemic and by growing awareness of the systemic gaps in formal safety nets — represents one of the most significant institutional developments in the post-labor solidarity economy.</p>
+          <p>Mutual aid networks are deliberately anti-institutional in orientation: they resist formal governance structures, professional hierarchies, and the institutionalization processes that can transform solidarity into service delivery. This orientation is a strength (it produces the accessibility, speed, and community rootedness that formal institutions struggle to achieve) and a structural challenge for GPS assessment (the framework was designed for institutionalized processes, and many mutual aid practices intentionally resist institutionalization). The GPS categories most relevant to mutual aid networks are those that support the network's core solidarity function without bureaucratizing the community relationships that make that function work.</p>
+        </div>
+      </div>
+
+      <div class="arch-section alt">
+        <div class="section-label" style="color:var(--man)">GPS priority mapping — categories most critical to this archetype</div>
+        <div class="priority-grid-label">Primary GPS focus</div>
+        <div class="gps-grid">
+          <div class="gps-pip" style="background:var(--man-dim);border-color:var(--man-border);color:var(--man)"><span class="pip-cat">6.0</span><span class="pip-label priority-high">Support Community Members</span></div>
+          <div class="gps-pip" style="background:var(--man-dim);border-color:var(--man-border);color:var(--man)"><span class="pip-cat">4.0</span><span class="pip-label priority-high">Deliver Physical Resources</span></div>
+          <div class="gps-pip" style="background:var(--man-dim);border-color:var(--man-border);color:var(--man)"><span class="pip-cat">3.0</span><span class="pip-label priority-high">Facilitate Access &amp; Engagement</span></div>
+          <div class="gps-pip" style="background:var(--man-dim);border-color:var(--man-border);color:var(--man)"><span class="pip-cat">12.0</span><span class="pip-label priority-high">Inter-Institutional Relations</span></div>
+          <div class="gps-pip" style="background:var(--man-dim);border-color:var(--man-border);color:var(--man)"><span class="pip-cat">15.0</span><span class="pip-label">Human Flourishing</span></div>
+          <div class="gps-pip" style="background:var(--man-dim);border-color:var(--man-border);color:var(--man)"><span class="pip-cat">16.0</span><span class="pip-label">Participatory Democracy</span></div>
+          <div class="gps-pip" style="background:var(--man-dim);border-color:var(--man-border);color:var(--man)"><span class="pip-cat">8.0</span><span class="pip-label">Technology &amp; AI Infrastructure</span></div>
+          <div class="gps-pip" style="background:var(--man-dim);border-color:var(--man-border);color:var(--man)"><span class="pip-cat">11.0</span><span class="pip-label">Institutional Integrity &amp; Equity</span></div>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="priority-grid-label">Typical founding maturity profile</div>
+          <div class="maturity-entry">
+            <div class="mat-cat"><div class="mat-cat-name">GPS 6.0</div><div class="mat-cat-value mat-val-2">Level 2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 4.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 3.0</div><div class="mat-cat-value mat-val-2">Level 1–2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 12.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 9.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 16.0</div><div class="mat-cat-value mat-val-2">Level 2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 8.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 1.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--man)">Characteristic strengths and structural vulnerabilities</div>
+        <div class="sv-grid">
+          <div class="sv-cell">
+            <div class="sv-head">Structural strengths</div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Accessibility is structurally prioritized — no professional gatekeeping, no eligibility screening, no institutional approval required to participate or receive support</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Trust is built through relationship rather than through institutional authority — community members help people they know, creating bonds that formal institutions cannot replicate</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Speed and flexibility exceeds formal institutions — network activation during crises can occur in hours rather than the days or weeks that institutional responses require</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Dignity of help is preserved — receiving mutual aid does not carry the stigma of receiving charity, because the relationship is explicitly reciprocal</div></div>
+          </div>
+          <div class="sv-cell alt">
+            <div class="sv-head">Structural vulnerabilities</div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Volunteer burnout is endemic — mutual aid networks without care infrastructure for their own participants routinely exhaust their most committed members during sustained crises (GPS 7.0 absent)</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Resource sustainability is fragile — networks dependent on volunteer labor and individual donations have no reliable revenue base when crisis subsides and urgency recedes</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Coordination capacity degrades with scale — the informal coordination that works for 20 people breaks down at 200; GPS 8.0 technology infrastructure is almost always behind the network's growth</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Equity in distribution is harder to sustain informally — relationship-based distribution tends to favor those in existing social networks, reproducing the exclusions mutual aid is designed to address</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section alt">
+        <div class="section-label" style="color:var(--man)">Where to start — five GPS development priorities for a growing mutual aid network</div>
+        <div class="start-steps">
+          <div class="start-step">
+            <div class="start-num" style="color:var(--man)">01</div>
+            <div class="start-content">
+              <div class="start-title">Build GPS 7.0 care infrastructure for your own participants before the next surge</div>
+              <div class="start-desc">The most common mutual aid network failure mode is burning out the people who make the network work. Design care systems for network participants — peer support, workload sharing, emotional support for those doing frontline crisis care — before the next crisis creates the conditions that make burnout most likely. The mutual aid network that cannot take care of its own participants cannot sustain the care it provides to others. This is not a luxury; it is operational resilience infrastructure.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--man)">02</div>
+            <div class="start-content">
+              <div class="start-title">Implement GPS 8.0 coordination technology before the informal coordination breaks</div>
+              <div class="start-desc">Mutual aid networks almost universally use whatever communication tools their founding participants already use — group texts, Facebook groups, WhatsApp threads — which works at small scale and degrades rapidly with growth. Design the coordination infrastructure before the network grows past the point where informal tools work: need intake systems, resource matching tools, volunteer coordination platforms, and the data practices that protect participant privacy. Airtable, Signal, and purpose-built mutual aid platforms (Mutual Aid Hub, Distribute Aid) provide accessible options. Implement them when the network is small enough that transition is manageable.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--man)">03</div>
+            <div class="start-content">
+              <div class="start-title">Audit GPS 3.0 access equity before the next recruitment cycle</div>
+              <div class="start-desc">Who is and is not in the network's reach is determined by who is in the founding participants' social networks — which reflects existing social segregation rather than community need. Map who the network is currently reaching and who it is not. Design outreach processes that specifically recruit participants from communities not represented in the network's current membership. Equity in mutual aid distribution requires equity in network composition; relationship-based distribution reproduces existing social networks unless those networks are intentionally diversified.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--man)">04</div>
+            <div class="start-content">
+              <div class="start-title">Develop GPS 12.0 peer network and resource sharing relationships for resilience</div>
+              <div class="start-desc">Mutual aid networks that operate in isolation lose participants to burnout and resource gaps that peer networks could help address. Build relationships with two or three peer networks — for referrals when needs exceed the network's capacity, for resource sharing during surges, and for the peer support that prevents organizer isolation. The mutual aid network's core operating principle — solidarity is reciprocal — applies to its peer relationships as much as to its community relationships.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--man)">05</div>
+            <div class="start-content">
+              <div class="start-title">Make one deliberate GPS 1.0 governance decision about institutionalization</div>
+              <div class="start-desc">Every mutual aid network faces the institutionalization question: whether to remain an informal network, incorporate as a nonprofit, become a fiscal sponsorship project, or develop some hybrid structure. There is no universally correct answer — the decision should reflect the network's specific scale, sustainability needs, and governance values. The mistake is not deciding: networks that drift into institutionalization without deliberate governance choice often end up with the downsides of both formal and informal structure. Make the governance decision explicitly, with network participant input, and document the reasoning.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--man)">Post-labor transition fit</div>
+        <div class="arch-prose"><p>Mutual aid networks are the most immediate institutional response to the welfare gap created by post-labor economic transition: the period between when formal employment as the primary welfare mechanism weakens and when new institutional alternatives are mature enough to substitute for it. They fill the gap with directness, speed, and dignity that formal institutions cannot match. They are also the institutional form most specifically designed for the social connection dimension of flourishing: mutual aid creates the relationships, the reciprocity, and the sense of community membership that are among the most important non-material determinants of wellbeing. The network that forms to deliver food during a crisis often produces community bonds that outlast the crisis and become the social infrastructure of a more resilient community.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────────────────────
+       ARCHETYPE 4: Community Foundation
+  ──────────────────────────────────────────────── -->
+  <div class="archetype arch-cfn">
+    <div class="archetype-banner">
+      <span class="archetype-num">04</span>
+      <span class="archetype-icon">◆</span>
+      <h2 class="archetype-title">Community foundation</h2>
+      <span class="archetype-tag">Capital &amp; philanthropy</span>
+    </div>
+    <div class="archetype-body">
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--cfn)">What it is and how it governs</div>
+        <div class="arch-prose">
+          <p>A community foundation is a public charity that pools philanthropic capital from multiple donors and deploys it through grants to community organizations addressing local needs. Community foundations occupy a distinctive position in the solidarity economy: they hold and deploy capital at a scale that few individual solidarity economy institutions can access, and they have the potential to redirect that capital toward post-labor institutional development — seeding worker cooperatives, funding CLT land acquisitions, building mutual aid network capacity, and supporting the civic technology infrastructure of post-labor community life. That potential is unevenly realized: many community foundations remain primarily grant-making institutions aligned with conventional nonprofit models and donor preferences, and relatively few have made explicit commitment to the post-labor institutional development agenda that their capital position makes them particularly suited to advance.</p>
+          <p>Community foundation governance is typically board-driven, with boards composed of community leaders, major donors, and representatives of community constituencies. The governance tension in community foundations is the relationship between donor preferences (which determine much of the capital flow) and community needs (which should determine grantmaking priorities). Donor-advised funds — the fastest-growing asset type in community foundations — create specific accountability challenges: donors retain advisory rights over fund deployment, which can direct capital toward donor preferences rather than toward community priorities. GPS 9.0 and GPS 11.0 together describe the accountability architecture through which community foundations can navigate this tension without surrendering to donor capture.</p>
+        </div>
+      </div>
+
+      <div class="arch-section alt">
+        <div class="section-label" style="color:var(--cfn)">GPS priority mapping — categories most critical to this archetype</div>
+        <div class="priority-grid-label">Primary GPS focus</div>
+        <div class="gps-grid">
+          <div class="gps-pip" style="background:var(--cfn-dim);border-color:var(--cfn-border);color:var(--cfn)"><span class="pip-cat">9.0</span><span class="pip-label priority-high">Steward Collective Resources</span></div>
+          <div class="gps-pip" style="background:var(--cfn-dim);border-color:var(--cfn-border);color:var(--cfn)"><span class="pip-cat">2.0</span><span class="pip-label priority-high">Design &amp; Steward Public Goods</span></div>
+          <div class="gps-pip" style="background:var(--cfn-dim);border-color:var(--cfn-border);color:var(--cfn)"><span class="pip-cat">11.0</span><span class="pip-label priority-high">Institutional Integrity &amp; Equity</span></div>
+          <div class="gps-pip" style="background:var(--cfn-dim);border-color:var(--cfn-border);color:var(--cfn)"><span class="pip-cat">12.0</span><span class="pip-label priority-high">Inter-Institutional Relations</span></div>
+          <div class="gps-pip" style="background:var(--cfn-dim);border-color:var(--cfn-border);color:var(--cfn)"><span class="pip-cat">10.0</span><span class="pip-label">Manage Commons &amp; Shared Assets</span></div>
+          <div class="gps-pip" style="background:var(--cfn-dim);border-color:var(--cfn-border);color:var(--cfn)"><span class="pip-cat">16.0</span><span class="pip-label">Participatory Democracy</span></div>
+          <div class="gps-pip" style="background:var(--cfn-dim);border-color:var(--cfn-border);color:var(--cfn)"><span class="pip-cat">13.0</span><span class="pip-label">Evolve Institutional Capabilities</span></div>
+          <div class="gps-pip" style="background:var(--cfn-dim);border-color:var(--cfn-border);color:var(--cfn)"><span class="pip-cat">15.0</span><span class="pip-label">Human Flourishing</span></div>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="priority-grid-label">Typical GPS maturity profile (established community foundation)</div>
+          <div class="maturity-entry">
+            <div class="mat-cat"><div class="mat-cat-name">GPS 9.0</div><div class="mat-cat-value mat-val-3">Level 3</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 11.0</div><div class="mat-cat-value mat-val-2">Level 2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 12.0</div><div class="mat-cat-value mat-val-2">Level 2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 16.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 2.0</div><div class="mat-cat-value mat-val-2">Level 2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 10.0</div><div class="mat-cat-value mat-val-2">Level 2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 15.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 13.0</div><div class="mat-cat-value mat-val-2">Level 2</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--cfn)">Characteristic strengths and structural vulnerabilities</div>
+        <div class="sv-grid">
+          <div class="sv-cell">
+            <div class="sv-head">Structural strengths</div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Capital scale exceeds any individual solidarity economy institution — the capital mobilization potential of community foundations is the largest available lever for post-labor institutional development</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Financial management maturity is typically the highest GPS score at founding — accounting, investment management, and grant administration processes are generally well-developed</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Community convening authority — the community foundation's network position and perceived legitimacy give it convening power that individual organizations lack</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Patient capital — endowment structures allow community foundations to fund long-horizon institutional development that annual grant cycles cannot support</div></div>
+          </div>
+          <div class="sv-cell alt">
+            <div class="sv-head">Structural vulnerabilities</div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Donor capture — donor preferences systematically shape grantmaking toward institutional forms and communities that donors are comfortable with, reproducing existing inequities (GPS 11.0 failure mode)</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Community accountability gap — the community the foundation claims to serve has little formal influence over how the foundation's capital is deployed (GPS 16.0 is the lowest GPS score for most community foundations)</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Institutional risk aversion — community foundations tend to fund established organizations doing familiar work rather than emerging institutions developing new models</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Overhead extraction — administrative costs and investment management fees extract returns from community benefit toward institutional maintenance at rates that community organizations cannot negotiate away</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section alt">
+        <div class="section-label" style="color:var(--cfn)">Where to start — five GPS development priorities for a community foundation committing to post-labor institutional development</div>
+        <div class="start-steps">
+          <div class="start-step">
+            <div class="start-num" style="color:var(--cfn)">01</div>
+            <div class="start-content">
+              <div class="start-title">Conduct a GPS 11.0 equity audit of grantmaking patterns</div>
+              <div class="start-desc">Apply the six-domain equity audit framework to the foundation's own grantmaking: who is receiving grants, in what amounts, for what purposes, and how does that distribution compare to the demographic profile of community need? Most community foundations discover significant disparities — toward larger, more established organizations; toward communities with more institutional infrastructure; away from the communities experiencing the most acute post-labor economic displacement. The audit findings should drive grantmaking strategy revision, not defensive interpretation.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--cfn)">02</div>
+            <div class="start-content">
+              <div class="start-title">Design GPS 16.0 community voice into grantmaking governance</div>
+              <div class="start-desc">The community foundation's grantmaking decisions — which organizations to fund, at what levels, for what purposes — are among the most consequential institutional decisions affecting the community it claims to serve. Yet the community that is most affected has typically the least formal influence over those decisions. Design at least one grantmaking program with genuine community decision authority: participatory grantmaking in which community members (not staff or donors) make final funding decisions. Several community foundations have implemented this model; the design precedents are available.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--cfn)">03</div>
+            <div class="start-content">
+              <div class="start-title">Deploy GPS 10.0 capital toward post-labor institutional development explicitly</div>
+              <div class="start-desc">Most community foundations lack an explicit strategy for funding the development of new institutional forms — cooperatives, CLTs, mutual aid infrastructure — as distinct from funding existing organizations doing established work. Develop a capital deployment strategy that explicitly targets post-labor institutional development: seed grants for worker cooperative conversions, land acquisition capital for community land trusts, infrastructure funding for mutual aid networks, development funding for civic technology cooperatives. RSF Social Finance's integrated capital model is a practical precedent for how philanthropic capital can support the full capital stack of post-labor institutions.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--cfn)">04</div>
+            <div class="start-content">
+              <div class="start-title">Restructure donor-advised fund governance to reduce donor capture</div>
+              <div class="start-desc">Donor-advised funds that give donors effective veto authority over capital deployment toward community priorities reproduce donor preferences rather than community needs. Redesign DAF governance to include community accountability mechanisms: community review of DAF deployment patterns, floor commitments for community-directed grantmaking from DAF assets, and donor education about the post-labor institutional development priorities that the foundation has adopted. Donors who are unwilling to accept community accountability for their philanthropy are not well-aligned with a community foundation's public purpose.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--cfn)">05</div>
+            <div class="start-content">
+              <div class="start-title">Invest in GPS 12.0 relationships with post-labor institutions, not only with grantees</div>
+              <div class="start-desc">The community foundation's most valuable contribution to the post-labor solidarity economy is often not its grantmaking but its convening capacity and its relationships. Build sustained, peer relationships with the worker cooperatives, CLTs, mutual aid networks, and civic technology cooperatives in the community — not as grantees to be managed but as institutional partners whose knowledge and perspective should shape the foundation's own strategy. The foundation that sees the solidarity economy only through the lens of its grantmaking relationship will systematically misunderstand what the community needs its capital to do.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--cfn)">Post-labor transition fit</div>
+        <div class="arch-prose"><p>Community foundations occupy a pivotal position in post-labor institutional development: they are the primary existing vehicle for mobilizing private philanthropic capital toward community benefit at scale. Their post-labor transition contribution depends on whether they direct that capital toward the institutional forms — cooperatives, CLTs, mutual aid networks, civic technology — that build community economic self-determination, or whether they continue directing it toward the charitable service delivery models that address symptoms of post-labor displacement without building the institutional alternatives to it. The foundation that chooses the former becomes the capital infrastructure of post-labor transition; the foundation that chooses the latter funds the cleanup operation of a transition it is not accelerating.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ───────────────────────────────────────────────
+       ARCHETYPE 5: Civic Technology Cooperative
+  ──────────────────────────────────────────────── -->
+  <div class="archetype arch-ctc">
+    <div class="archetype-banner">
+      <span class="archetype-num">05</span>
+      <span class="archetype-icon">◐</span>
+      <h2 class="archetype-title">Civic technology cooperative</h2>
+      <span class="archetype-tag">Digital infrastructure</span>
+    </div>
+    <div class="archetype-body">
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--ctc)">What it is and how it governs</div>
+        <div class="arch-prose">
+          <p>A civic technology cooperative is a worker-owned technology organization that builds and maintains digital infrastructure — platforms, tools, data systems, applications — specifically for community benefit rather than for commercial scale. It combines the worker ownership and democratic governance of a worker cooperative with a mission orientation toward the digital public goods that post-labor communities need: accessible civic participation platforms, community resource coordination tools, open-source alternatives to commercially extractive platforms, and the data sovereignty infrastructure that allows communities to control information about their own members rather than ceding it to corporate platforms.</p>
+          <p>Civic technology cooperatives are simultaneously worker cooperatives (governed by worker-member democracy, facing all the governance and capitalization challenges of that form) and technology organizations (facing the specific product development, technical staffing, and sustainability challenges of software-based businesses). Their GPS profile therefore overlaps significantly with the worker cooperative archetype — particularly in GPS 7.0, 1.0, and 9.0 — while adding the specific technology infrastructure obligations of GPS 8.0 and the community accountability obligations that civic mission requires in GPS 11.0, 14.0, and 15.0. They are among the most complex institutional forms to develop because they must build governance maturity, technical capability, and community accountability simultaneously.</p>
+        </div>
+      </div>
+
+      <div class="arch-section alt">
+        <div class="section-label" style="color:var(--ctc)">GPS priority mapping — categories most critical to this archetype</div>
+        <div class="priority-grid-label">Primary GPS focus</div>
+        <div class="gps-grid">
+          <div class="gps-pip" style="background:var(--ctc-dim);border-color:var(--ctc-border);color:var(--ctc)"><span class="pip-cat">8.0</span><span class="pip-label priority-high">Technology &amp; AI Infrastructure</span></div>
+          <div class="gps-pip" style="background:var(--ctc-dim);border-color:var(--ctc-border);color:var(--ctc)"><span class="pip-cat">7.0</span><span class="pip-label priority-high">Develop Human Potential</span></div>
+          <div class="gps-pip" style="background:var(--ctc-dim);border-color:var(--ctc-border);color:var(--ctc)"><span class="pip-cat">2.0</span><span class="pip-label priority-high">Design &amp; Steward Public Goods</span></div>
+          <div class="gps-pip" style="background:var(--ctc-dim);border-color:var(--ctc-border);color:var(--ctc)"><span class="pip-cat">14.0</span><span class="pip-label priority-high">AI Governance</span></div>
+          <div class="gps-pip" style="background:var(--ctc-dim);border-color:var(--ctc-border);color:var(--ctc)"><span class="pip-cat">1.0</span><span class="pip-label">Collective Vision &amp; Governance</span></div>
+          <div class="gps-pip" style="background:var(--ctc-dim);border-color:var(--ctc-border);color:var(--ctc)"><span class="pip-cat">9.0</span><span class="pip-label">Steward Collective Resources</span></div>
+          <div class="gps-pip" style="background:var(--ctc-dim);border-color:var(--ctc-border);color:var(--ctc)"><span class="pip-cat">11.0</span><span class="pip-label">Institutional Integrity &amp; Equity</span></div>
+          <div class="gps-pip" style="background:var(--ctc-dim);border-color:var(--ctc-border);color:var(--ctc)"><span class="pip-cat">16.0</span><span class="pip-label">Participatory Democracy</span></div>
+        </div>
+        <div style="margin-top:12px;">
+          <div class="priority-grid-label">Typical founding maturity profile</div>
+          <div class="maturity-entry">
+            <div class="mat-cat"><div class="mat-cat-name">GPS 8.0</div><div class="mat-cat-value mat-val-2">Level 2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 7.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 2.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 14.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 9.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 1.0</div><div class="mat-cat-value mat-val-2">Level 1–2</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 11.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+            <div class="mat-cat"><div class="mat-cat-name">GPS 16.0</div><div class="mat-cat-value mat-val-1">Level 1</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--ctc)">Characteristic strengths and structural vulnerabilities</div>
+        <div class="sv-grid">
+          <div class="sv-cell">
+            <div class="sv-head">Structural strengths</div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Technology products can scale without proportional staffing — well-designed civic technology serves exponentially more users than the worker-members who built it, multiplying community benefit</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Open-source development creates knowledge commons — civic technology cooperatives that open-source their work contribute permanent digital public goods to the solidarity economy</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Worker-owner technical expertise creates rare alignment between democratic governance and operational excellence — the workers who govern are also the workers with the deepest understanding of what the institution is building</div></div>
+            <div class="sv-item"><div class="sv-dot str"></div><div class="sv-text">Data sovereignty orientation distinguishes civic technology from commercial alternatives — community control of community data is both an ethical commitment and a market differentiator in an era of platform surveillance capitalism</div></div>
+          </div>
+          <div class="sv-cell alt">
+            <div class="sv-head">Structural vulnerabilities</div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Technical talent retention — compensation competition from commercial technology firms creates chronic staffing pressure; worker cooperative pay equity commitments are hardest to sustain in high-demand technical labor markets</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Revenue model fragility — civic technology often cannot charge the prices that commercial technology charges, creating chronic underfunding of the infrastructure that community benefit requires</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Technical debt accumulation — GPS 8.0 technology infrastructure for the institution's own operations is often neglected while technical capacity is directed toward community-facing products</div></div>
+            <div class="sv-item"><div class="sv-dot vul"></div><div class="sv-text">Community accountability gap — technical expertise creates internal authority asymmetries where non-technical community stakeholders cannot meaningfully assess the governance of technical systems affecting them (GPS 14.0)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section alt">
+        <div class="section-label" style="color:var(--ctc)">Where to start — five GPS development priorities for a new civic technology cooperative</div>
+        <div class="start-steps">
+          <div class="start-step">
+            <div class="start-num" style="color:var(--ctc)">01</div>
+            <div class="start-content">
+              <div class="start-title">GPS 2.0: design the digital public goods framework before the first product launch</div>
+              <div class="start-desc">The civic technology cooperative builds public goods — digital infrastructure intended to serve community needs rather than extract commercial value. Design the public goods framework explicitly: what does it mean for this software to be a public good? What license governs it? Who can use, modify, and redistribute it? What community accountability governs its development? The open-source license decision (which open-source license, and why) is the GPS 2.0 foundational process for a civic technology cooperative, and it should be made deliberately rather than by default.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--ctc)">02</div>
+            <div class="start-content">
+              <div class="start-title">GPS 14.0: establish AI governance before any AI feature ships</div>
+              <div class="start-desc">Civic technology cooperatives building tools used by post-labor communities will encounter decisions about AI feature integration — automated recommendations, algorithmic prioritization, machine learning classification — that have governance implications for the communities using the tools. Establish the AI governance framework before the first AI feature ships: what risk tier applies to each use case, what community transparency is required, what oversight mechanisms exist, and what equity monitoring is in place. Technology cooperatives that ship AI features without governance infrastructure are replicating the same governance failures they may be building alternatives to.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--ctc)">03</div>
+            <div class="start-content">
+              <div class="start-title">GPS 9.0: design the revenue model for long-term sustainability, not just launch viability</div>
+              <div class="start-desc">Civic technology cooperatives frequently launch with grant funding, develop a user base, and then face a sustainability cliff when grant funding ends and the user base is unwilling to pay commercial prices for tools they have been receiving for free. Design the revenue model at founding with sustainability as the primary constraint: what combination of subscription fees, grant funding, government contracts, and solidarity pricing can sustain the product over five years? The revenue model must be designed for sustainability at the scale of community benefit the product is designed to produce — not for the initial launch scale.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--ctc)">04</div>
+            <div class="start-content">
+              <div class="start-title">GPS 16.0: build community governance of product decisions, not just feedback processes</div>
+              <div class="start-desc">Civic technology cooperatives typically design community feedback processes — user research, advisory committees, beta testing — that inform product decisions made by worker-members. Genuine community governance of civic technology requires more: decision rights for the communities the technology serves over the features, priorities, and terms of the product that serves them. Design at least one product decision domain — a roadmap priority vote, a data governance decision, a platform policy — in which community users have genuine decision authority rather than advisory input.</div>
+            </div>
+          </div>
+          <div class="start-step">
+            <div class="start-num" style="color:var(--ctc)">05</div>
+            <div class="start-content">
+              <div class="start-title">GPS 7.0: design governance literacy development for non-technical worker-members</div>
+              <div class="start-desc">Worker cooperatives with high internal expertise asymmetry — where some worker-members have technical knowledge that others do not — face governance challenges specific to that asymmetry: non-technical members defer to technical members on product decisions, creating a de facto technical oligarchy within formally democratic governance. Design governance literacy development that builds all worker-members' capacity to meaningfully participate in technical product decisions, and design product decision processes that make technical expertise accessible rather than gatekept. The democratic character of the cooperative depends on the accessibility of its governance, including its technical governance.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-section">
+        <div class="section-label" style="color:var(--ctc)">Post-labor transition fit</div>
+        <div class="arch-prose"><p>The civic technology cooperative addresses the digital infrastructure dimension of post-labor transition: the need for community-controlled digital tools for coordination, resource distribution, participatory governance, and economic activity that do not extract data and rent from the communities using them. As more community life moves to digital platforms, the governance of those platforms becomes a governance question for post-labor communities — and the civic technology cooperative is the institutional form designed to give communities democratic control over the digital infrastructure of their own lives. The alternative — commercial platforms whose governance is accountable to investors rather than to users — is the digital equivalent of the labor-capital governance inversion that post-labor institutions were designed to correct.</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ──────────────────────────────────────────────
+       CROSS-ARCHETYPE COMPARISON
+  ─────────────────────────────────────────────── -->
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="compare-table">
+    <div class="compare-head">Cross-archetype comparison — GPS priority profiles across five institutional forms</div>
+    <div class="compare-row head-row">
+      <div class="compare-cell col-head">GPS category</div>
+      <div class="compare-cell clt-h">Community<br>Land Trust</div>
+      <div class="compare-cell wco-h">Worker<br>Cooperative</div>
+      <div class="compare-cell man-h">Mutual Aid<br>Network</div>
+      <div class="compare-cell cfn-h">Community<br>Foundation</div>
+      <div class="compare-cell ctc-h">Civic Tech<br>Cooperative</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell row-label">1.0 Governance strategy</div>
+      <div class="compare-cell hi">High — tripartite design is foundational</div>
+      <div class="compare-cell hi">High — democratic governance is the core distinction</div>
+      <div class="compare-cell lo">Low — informal governance is often intentional</div>
+      <div class="compare-cell">Medium — board governance is mature; community voice is not</div>
+      <div class="compare-cell">Medium — democratic governance overlaps with GPS 16.0</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell row-label">2.0 Public goods stewardship</div>
+      <div class="compare-cell hi">Critical — the permanent affordability mechanism is a public goods design</div>
+      <div class="compare-cell lo">Low — not a primary category for most worker cooperatives</div>
+      <div class="compare-cell lo">Low — mutual aid operates informally</div>
+      <div class="compare-cell hi">High — grantmaking is a public goods deployment function</div>
+      <div class="compare-cell hi">Critical — digital public goods are the product</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell row-label">4.0 Physical resources</div>
+      <div class="compare-cell hi">Critical — property portfolio management is the primary operational function</div>
+      <div class="compare-cell lo">Low — workspace management only</div>
+      <div class="compare-cell hi">High — physical resource distribution is core</div>
+      <div class="compare-cell lo">Low — minimal physical resource obligations</div>
+      <div class="compare-cell lo">Low — primarily digital</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell row-label">7.0 Human potential</div>
+      <div class="compare-cell">Medium — staff and stewardship team development</div>
+      <div class="compare-cell hi">Critical — governance literacy is the cooperative's most acute need</div>
+      <div class="compare-cell hi">High — volunteer burnout is the primary sustainability threat</div>
+      <div class="compare-cell">Medium — professional staff development</div>
+      <div class="compare-cell hi">Critical — technical talent and governance literacy both required</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell row-label">8.0 Technology &amp; AI</div>
+      <div class="compare-cell lo">Low — property management systems only</div>
+      <div class="compare-cell">Medium — operational systems</div>
+      <div class="compare-cell hi">High — coordination technology is operationally critical</div>
+      <div class="compare-cell">Medium — investment and grant management systems</div>
+      <div class="compare-cell hi">Critical — technology is the primary institutional output</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell row-label">9.0 Collective resources</div>
+      <div class="compare-cell hi">High — land acquisition capital is the primary financial challenge</div>
+      <div class="compare-cell hi">High — cooperative capitalization is chronically insufficient</div>
+      <div class="compare-cell lo">Low — minimal capital requirements but fragile revenue</div>
+      <div class="compare-cell hi">Critical — capital stewardship is the primary institutional function</div>
+      <div class="compare-cell hi">High — revenue model sustainability is the primary challenge</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell row-label">10.0 Commons management</div>
+      <div class="compare-cell hi">Critical — permanent land ownership is commons stewardship at its most direct</div>
+      <div class="compare-cell lo">Low — internal capital accounts only</div>
+      <div class="compare-cell lo">Low — no permanent assets typically</div>
+      <div class="compare-cell hi">High — endowment is a commons held for community benefit</div>
+      <div class="compare-cell">Medium — codebase and data as digital commons</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell row-label">14.0 AI governance</div>
+      <div class="compare-cell lo">Low — minimal AI exposure in most CLTs</div>
+      <div class="compare-cell lo">Low — unless technology-adjacent sector</div>
+      <div class="compare-cell lo">Low — minimal current AI use</div>
+      <div class="compare-cell">Medium — algorithmic screening risks in grantmaking</div>
+      <div class="compare-cell hi">Critical — building AI features into community-facing tools</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell row-label">15.0 Human flourishing</div>
+      <div class="compare-cell">Medium — residential stability contributes to flourishing indirectly</div>
+      <div class="compare-cell hi">High — work quality, meaning, and dignity are direct flourishing contributions</div>
+      <div class="compare-cell hi">High — connection and solidarity directly cultivate flourishing</div>
+      <div class="compare-cell">Medium — grantmaking can be explicitly reoriented toward flourishing</div>
+      <div class="compare-cell">Medium — community tools support flourishing indirectly</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell row-label">16.0 Participatory democracy</div>
+      <div class="compare-cell hi">High — tripartite governance is the most sophisticated democratic design; needs ongoing development</div>
+      <div class="compare-cell hi">Critical — democratic governance is the cooperative's defining institutional commitment</div>
+      <div class="compare-cell hi">High — participatory governance is foundational to the mutual aid model</div>
+      <div class="compare-cell lo">Low — typically the most underdeveloped GPS category for community foundations</div>
+      <div class="compare-cell hi">High — community governance of civic technology is both a commitment and a challenge</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>The framework is the same for all of them. The path through it is different for each. Knowing which archetype you are — and which GPS categories are most urgent given that form — is the beginning of institutional development that actually develops something.</p>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On using the archetype profiles in practice:</strong> The five profiles in this chapter are starting points, not prescriptions. Real institutions rarely match a single archetype perfectly — a worker cooperative that owns its building will have a more demanding GPS 10.0 profile than the typical cooperative; a mutual aid network that has incorporated and built staff capacity will have a more demanding GPS 1.0 profile than the typical network. Use the archetype profiles as the closest available approximation, then adjust based on the specific features of the institution being assessed. The GPS maturity assessment described in Chapter 7 is the tool for the adjustment: it produces an institution-specific profile that supplements and refines the archetype baseline.</p>
+    <p><strong>On sequencing across archetypes in a community:</strong> A community building post-labor institutional infrastructure is not building one archetype — it is building an ecosystem of complementary forms. The mutual aid network addresses immediate welfare gaps while the worker cooperative develops employment alternatives while the CLT builds permanent housing stability while the civic technology cooperative builds the digital infrastructure that all of them share. These institutions are not in competition; they are complementary components of a community's post-labor institutional ecosystem. The community foundation, when oriented toward post-labor institutional development, can be the capital infrastructure that supports all of them. GPS Category 12.0 (Inter-Institutional Relations) is the process domain through which these institutions build the relationships, knowledge-sharing, and mutual aid that make the ecosystem more than the sum of its parts.</p>
+    <p><strong>On institutional forms not covered here:</strong> The five archetypes in this chapter are not exhaustive. Credit unions and community development financial institutions (CDFIs) address the financial infrastructure dimension of post-labor transition — building community-controlled capital access for communities excluded from conventional banking. Community health centers and disability-led care cooperatives address health and care in ways that neither market insurance nor government programs adequately cover. Time banks and solidarity economy currencies build alternative exchange infrastructure for non-market economic activity. Housing cooperatives address the same affordability challenge as CLTs through collective ownership rather than permanent affordability mechanisms. Each of these forms has its own GPS profile; the archetype analysis method demonstrated in this chapter applies to all of them. The five chosen here are starting points, not boundaries.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part VI · Chapter 24</span>
+    <span class="close-next">Appendices A–E →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

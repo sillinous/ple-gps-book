@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 9 — Design & Steward Public Goods (GPS 2.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e; --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --civic: #1D9E75; --civic-dim: rgba(29,158,117,0.08);
+    --civic-text: #4ecfa0; --civic-border: rgba(29,158,117,0.25);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-void); color: var(--text-primary);
+    font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999;
+  }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow {
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+  }
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--civic-text);
+    margin-bottom: 20px; opacity: 0.85;
+  }
+  .chapter-title {
+    font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem);
+    font-weight: 300; line-height: 1.15; color: var(--text-primary);
+    margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300;
+    font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5;
+  }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; align-items: center; }
+  .cat-pill {
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .cat-pill.civic { background: var(--civic-dim); color: var(--civic-text); border: 1px solid var(--civic-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--civic); opacity: 0.3; margin-bottom: 44px; }
+  .body-text {
+    font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400;
+    line-height: 1.85; color: var(--text-primary);
+  }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left;
+    margin: 0.06em 0.1em 0 0; color: var(--civic-text); font-family: 'Crimson Pro', serif;
+  }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--civic); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading {
+    font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text);
+    margin-bottom: 20px; opacity: 0.7;
+  }
+  .pullquote {
+    margin: 44px 0; padding: 28px 32px;
+    border-left: 2px solid var(--civic); background: var(--civic-dim); border-radius: 0 6px 6px 0;
+  }
+  .pullquote p {
+    font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300;
+    font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0;
+  }
+  .pullquote p::before { content: '\201C'; color: var(--civic-text); }
+  .pullquote p::after  { content: '\201D'; color: var(--civic-text); }
+
+  /* Process block */
+  .process-block {
+    margin: 40px 0; border: 1px solid var(--border-subtle);
+    border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; overflow: hidden;
+  }
+  .proc-block-header {
+    padding: 12px 22px; background: var(--bg-secondary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text);
+    border-bottom: 1px solid var(--border-subtle); opacity: 0.8;
+  }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id {
+    width: 52px; min-width: 52px; display: flex; align-items: center;
+    justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px;
+    font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle);
+    background: var(--civic-dim); padding: 16px 0; opacity: 0.85;
+  }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name {
+    font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 5px; line-height: 1.3;
+  }
+  .proc-group-desc {
+    font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary);
+    line-height: 1.65; margin-bottom: 10px;
+  }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id {
+    font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500;
+    color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px;
+    border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em;
+  }
+  .act-name {
+    font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary);
+    padding: 9px 12px; line-height: 1.5; flex: 1;
+  }
+  .act-note {
+    font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted);
+    padding: 7px 12px 9px; line-height: 1.5; font-style: italic;
+    border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary);
+  }
+
+  /* Ostrom principles mapping */
+  .ostrom-block {
+    margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden;
+  }
+  .ostrom-header {
+    padding: 12px 22px; background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .ostrom-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .ostrom-row:last-child { border-bottom: none; }
+  .ostrom-num {
+    width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500;
+    color: var(--civic-text); border-right: 1px solid var(--border-subtle);
+    background: var(--civic-dim); opacity: 0.75; padding: 16px 0;
+  }
+  .ostrom-content { padding: 16px 20px; flex: 1; }
+  .ostrom-principle {
+    font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 4px;
+  }
+  .ostrom-gps {
+    font-family: 'Outfit', sans-serif; font-size: 0.74rem; color: var(--text-secondary);
+    line-height: 1.6; margin-bottom: 6px;
+  }
+  .ostrom-process {
+    font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted);
+    line-height: 1.5; font-style: italic;
+  }
+  .ostrom-process strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+
+  /* Commons typology */
+  .typology-block {
+    margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden;
+  }
+  .typology-header {
+    padding: 12px 22px; background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .typology-row {
+    display: grid; grid-template-columns: 140px 1fr 1fr;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .typology-row:last-child { border-bottom: none; }
+  .typology-row.head { background: var(--bg-secondary); }
+  .typology-cell {
+    padding: 12px 16px; font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem; color: var(--text-secondary); line-height: 1.55;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .typology-cell:last-child { border-right: none; }
+  .typology-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .typology-cell.commons-type { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header {
+    padding: 12px 22px; background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num {
+    width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500;
+    color: var(--civic-text); border-right: 1px solid var(--border-subtle);
+    background: var(--civic-dim); opacity: 0.7; padding: 18px 0;
+  }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal {
+    font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted);
+    line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary);
+    border-radius: 4px; font-style: italic;
+  }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity block */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header {
+    padding: 12px 22px; background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge {
+    width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500;
+    border-right: 1px solid var(--border-subtle); padding: 16px 0;
+  }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI block */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header {
+    padding: 12px 22px; background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell {
+    padding: 11px 16px; font-family: 'Outfit', sans-serif;
+    font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--civic-dim); color: var(--civic-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--civic-dim); border-bottom: 1px solid var(--civic-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--civic-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--civic-text); font-weight: 500; }
+
+  /* Sequence block */
+  .sequence-block {
+    margin: 40px 0; background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic);
+    border-radius: 0 0 8px 8px; padding: 28px 32px;
+  }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--civic-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part III · Civic operating processes</div>
+  <div class="chapter-eyebrow">Chapter 9 · GPS Category 2.0</div>
+  <h1 class="chapter-title">Design &amp; steward public goods</h1>
+  <p class="chapter-subtitle">Building the commons that sustain everyone — from needs assessment through design through the long discipline of stewardship that keeps public goods genuinely public across time</p>
+  <div class="cat-meta">
+    <span class="cat-pill civic">Civic Operating</span>
+    <span class="cat-pill civic">Prosperity L2</span>
+    <span class="cat-pill civic">Ostrom's principles</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">24 processes</span>
+    <span class="cat-pill neutral">16 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>The word "commons" entered the English language as a description of shared land — the village green, the grazing field held collectively by a community whose survival depended on managing it together. The commons was not romantic. It was practical: certain resources are best managed collectively, and the communities that managed them well survived; the ones that managed them badly did not. What Elinor Ostrom's Nobel Prize-winning work recovered from the wreckage of Garrett Hardin's "tragedy of the commons" argument was the empirical reality that communities have been successfully managing shared resources for centuries, in ways that are neither the market nor the state, governed by principles that are neither private property nor central planning. The commons is not a utopian concept. It is the oldest proven institutional form for managing resources whose value comes from shared use.</p>
+
+    <p>Category 2.0 is the process domain through which post-labor institutions design, build, and sustain public goods and commons — the shared resources, services, infrastructure, and knowledge that communities need and that markets systematically underprovide. It is, in the dual pyramid framework, the primary site of the second level of the Pyramid of Prosperity: ownership stakes in collective goods that ensure the gains of economic activity are distributed through shared access rather than concentrated in individual ownership. And it is the category that most clearly distinguishes post-labor institutions from both enterprises (which produce private goods for profit) and traditional welfare state institutions (which provide public goods through government bureaucracy).</p>
+
+    <p>The design challenge in Category 2.0 is threefold. The first challenge is needs assessment without market signals — determining what the community needs without the blunt but responsive mechanism of purchase and abandonment that markets use to allocate resources. The second is design for collective benefit rather than individual optimization — building things that work for everyone, including the most marginalized, rather than for the average or the most vocal. The third, and the one most institutions underinvest in, is stewardship: the unglamorous, continuous work of maintaining and governing public goods over time so that they remain genuinely public rather than gradually privatizing, deteriorating, or being captured by the interests of whoever happens to be most engaged in their governance.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Ostrom's principles as operational processes</div>
+
+  <div class="body-text">
+    <p>Elinor Ostrom's eight design principles for sustainable commons governance are not merely theoretical — they are empirically derived from centuries of successful commons management across diverse cultural and ecological contexts. They are also, read carefully, a process specification: each principle describes something a commons institution must do to sustain itself. Category 2.0 is, in substantial part, the operationalization of these eight principles into the specific process groups that a post-labor institution needs to develop. The mapping is not one-to-one — several GPS processes serve multiple Ostrom principles — but understanding the connection between Ostrom's principles and the GPS processes clarifies why each process group exists and what goes wrong when it is absent.</p>
+  </div>
+
+  <div class="ostrom-block">
+    <div class="ostrom-header">Ostrom's eight principles — mapped to GPS Category 2.0 processes</div>
+
+    <div class="ostrom-row">
+      <div class="ostrom-num">O1</div>
+      <div class="ostrom-content">
+        <div class="ostrom-principle">Clearly defined boundaries — who is a member, what resources are included</div>
+        <div class="ostrom-gps">Without clear boundaries, the commons cannot distinguish legitimate users from free riders and cannot make equitable allocation decisions. Boundary definition is not exclusionary — it is the precondition for the accountability and governance that make inclusion meaningful.</div>
+        <div class="ostrom-process"><strong>GPS processes:</strong> 2.1 (needs assessment defines who the commons serves) · 2.2 (design specifies what the commons includes and excludes) · 10.4 (access protocols — managed through Category 10)</div>
+      </div>
+    </div>
+
+    <div class="ostrom-row">
+      <div class="ostrom-num">O2</div>
+      <div class="ostrom-content">
+        <div class="ostrom-principle">Rules fit local conditions — governance reflects the specific context of the commons</div>
+        <div class="ostrom-gps">Governance rules borrowed from other commons contexts without adaptation to local conditions fail predictably. The community needs assessment process must surface the specific characteristics — ecological, social, cultural, technological — that distinguish this commons from others and that must shape its governance.</div>
+        <div class="ostrom-process"><strong>GPS processes:</strong> 2.1 (community needs assessment includes context mapping) · 2.2 (design incorporates local conditions) · 2.5 (evaluation assesses fit between rules and actual conditions)</div>
+      </div>
+    </div>
+
+    <div class="ostrom-row">
+      <div class="ostrom-num">O3</div>
+      <div class="ostrom-content">
+        <div class="ostrom-principle">Collective choice arrangements — those affected by the rules participate in modifying them</div>
+        <div class="ostrom-gps">Rules imposed on commons users rather than developed with them are routinely ignored or subverted. The design processes in 2.2 must include participatory mechanisms that give commons users genuine voice in the rules that govern their behavior. This is not consultation — it is co-creation of the governance framework.</div>
+        <div class="ostrom-process"><strong>GPS processes:</strong> 2.2 (participatory design processes) · 2.5 (evaluation with user participation) · 16.0 (participatory democracy mechanisms — managed through Category 16)</div>
+      </div>
+    </div>
+
+    <div class="ostrom-row">
+      <div class="ostrom-num">O4</div>
+      <div class="ostrom-content">
+        <div class="ostrom-principle">Monitoring — commons conditions and user behavior are actively monitored</div>
+        <div class="ostrom-gps">Commons that are not monitored deteriorate invisibly until the deterioration is too advanced to reverse without major intervention. Monitoring is not surveillance — it is the information infrastructure that allows governance to respond to actual conditions rather than assumed ones.</div>
+        <div class="ostrom-process"><strong>GPS processes:</strong> 2.3 (infrastructure maintenance includes condition monitoring) · 2.5 (evaluation and monitoring cadence) · 14.0 (AI-assisted monitoring where deployed)</div>
+      </div>
+    </div>
+
+    <div class="ostrom-row">
+      <div class="ostrom-num">O5</div>
+      <div class="ostrom-content">
+        <div class="ostrom-principle">Graduated sanctions — rule violations are sanctioned proportionally</div>
+        <div class="ostrom-gps">Commons governance that has no response to rule violations is not governance — it is aspiration. Graduated sanctions that are proportional to the violation, applied consistently, and understood by all users are essential to maintaining the fairness norms on which collective cooperation depends.</div>
+        <div class="ostrom-process"><strong>GPS processes:</strong> 2.2 (design includes sanction framework) · 11.0 (institutional integrity processes govern violation response) · 6.2 (grievance processes for disputed sanctions)</div>
+      </div>
+    </div>
+
+    <div class="ostrom-row">
+      <div class="ostrom-num">O6</div>
+      <div class="ostrom-content">
+        <div class="ostrom-principle">Conflict resolution mechanisms — low-cost arenas for resolving disputes among users</div>
+        <div class="ostrom-gps">Commons governance will produce disputes — about access, about maintenance responsibilities, about rule interpretation. Without accessible conflict resolution mechanisms, disputes escalate or suppress participation. The resolution mechanisms must be perceived as legitimate by all parties — which requires participatory design of the mechanisms themselves.</div>
+        <div class="ostrom-process"><strong>GPS processes:</strong> 2.2 (design includes dispute resolution framework) · 6.2 (grievance and conflict resolution) · 1.2 (governance structures provide conflict resolution authority)</div>
+      </div>
+    </div>
+
+    <div class="ostrom-row">
+      <div class="ostrom-num">O7</div>
+      <div class="ostrom-content">
+        <div class="ostrom-principle">Recognition of rights — external government recognizes the commons institution's right to self-govern</div>
+        <div class="ostrom-gps">Commons institutions that operate without legal recognition are permanently vulnerable to expropriation, regulation, and legal challenge. Securing legal standing — through cooperative law, nonprofit incorporation, community land trust legislation, or other enabling forms — is a prerequisite for sustainable self-governance.</div>
+        <div class="ostrom-process"><strong>GPS processes:</strong> 11.0 (legal compliance and regulatory management) · 12.0 (government relationship management) · 1.0 (governance strategy includes legal form decisions)</div>
+      </div>
+    </div>
+
+    <div class="ostrom-row">
+      <div class="ostrom-num">O8</div>
+      <div class="ostrom-content">
+        <div class="ostrom-principle">Nested enterprises — governance organized in nested layers for larger commons</div>
+        <div class="ostrom-gps">Large commons cannot be governed effectively by a single flat governance structure. Nested governance — with different decision domains handled at different levels, from user groups to regional bodies to network-level coordination — preserves participatory governance at scale by keeping the effective decision unit appropriately small for each decision type.</div>
+        <div class="ostrom-process"><strong>GPS processes:</strong> 2.2 (design of governance architecture for complex commons) · 12.0 (inter-institutional coordination for federated commons) · 1.2 (governance structure design)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">What public goods and commons actually include</div>
+
+  <div class="body-text">
+    <p>Category 2.0 covers a broader range of outputs than the word "commons" might initially suggest. Post-labor institutions produce public goods across five distinct types, each with different design requirements, governance challenges, and stewardship demands. Understanding which type of public good an institution is building shapes every design decision downstream.</p>
+  </div>
+
+  <div class="typology-block">
+    <div class="typology-header">Public goods typology — five types and their design implications</div>
+    <div class="typology-row head">
+      <div class="typology-cell head">Type</div>
+      <div class="typology-cell head">Design imperatives</div>
+      <div class="typology-cell head">Primary stewardship challenge</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell commons-type">Physical commons</div>
+      <div class="typology-cell">Land, buildings, equipment, tools, vehicles. Design for durability, maintenance access, and equitable allocation when demand exceeds availability. Requires clear boundary definition and usage protocols.</div>
+      <div class="typology-cell">Maintenance funding and responsibility allocation. Physical commons deteriorate without sustained investment; the free-rider problem is acute and requires governance mechanisms that distribute maintenance burden equitably.</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell commons-type">Knowledge commons</div>
+      <div class="typology-cell">Curricula, research, documentation, open-source software, design patterns. Design for accessibility (multiple formats, multiple languages), discoverability, and versioning. Non-rival — use by one does not reduce availability for others.</div>
+      <div class="typology-cell">Quality governance and currency. Knowledge commons degrade when contributions are not reviewed, outdated content is not removed, and the contributor community is not sustained. Wikipedia's governance architecture is a case study in knowledge commons stewardship at scale.</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell commons-type">Infrastructure commons</div>
+      <div class="typology-cell">Digital platforms, communication networks, transportation systems, water and energy infrastructure. Design for reliability, redundancy, and universal access. High initial investment with ongoing operational costs.</div>
+      <div class="typology-cell">Upgrade cycles and funding sustainability. Infrastructure becomes invisible when it works, generating little political support for the maintenance investment it requires. The funding and governance of infrastructure upgrades is a perennial governance crisis in commons institutions.</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell commons-type">Service commons</div>
+      <div class="typology-cell">Healthcare, childcare, elder care, legal aid, financial counseling. Design for equitable access (not just availability), quality consistency, and trauma-informed delivery where appropriate. Rival — each service interaction has capacity limits.</div>
+      <div class="typology-cell">Staff sustainability and quality equity. Service commons depend on human labor, which is subject to burnout, turnover, and the compounding effects of emotional labor. Quality equity — ensuring consistent quality across different user populations — requires active monitoring and governance.</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell commons-type">Cultural and ecological commons</div>
+      <div class="typology-cell">Community spaces, green infrastructure, shared cultural heritage, language preservation, ecological systems. Design for intergenerational stewardship — these goods must be maintained across generations, not just for current users.</div>
+      <div class="typology-cell">Intergenerational governance: current governance bodies make decisions that bind future members who have no representation in current governance. Designing governance mechanisms that take future interests seriously without being paternalistic about what future generations will value is one of the hardest problems in commons stewardship.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 2.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">2.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Identify, assess, and prioritize community needs and gaps</div>
+          <div class="proc-group-desc">Needs assessment is the process through which an institution learns what its community actually needs, as distinct from what institutional leaders assume it needs, what funders are willing to fund, and what the institution already knows how to provide. This distinction — between expressed community need and institutional supply — is the gap that post-labor institutions are uniquely positioned to close and uniquely prone to ignore. Needs assessment without genuine community voice is institutional paternalism dressed as service design.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">2.1.1</div><div class="act-name">Design and conduct community needs assessment using mixed methods — surveys, focus groups, asset mapping, and analysis of existing data</div></div>
+            <div class="proc-activity"><div class="act-id">2.1.2</div><div class="act-name">Map current assets and existing resources the community already has, to distinguish genuine gaps from unrecognized capacity</div></div>
+            <div class="proc-activity"><div class="act-id">2.1.3</div><div class="act-name">Disaggregate needs data by population subgroup — equity requires knowing whose needs are being met and whose are not</div></div>
+            <div class="proc-activity"><div class="act-id">2.1.4</div><div class="act-name">Prioritize identified needs against institutional capacity and mission alignment — not all needs are in scope</div></div>
+            <div class="proc-activity"><div class="act-id">2.1.5</div><div class="act-name">Establish a regular needs reassessment cycle — community needs change, and annual or biennial reassessment is the minimum cadence for a dynamic institution</div></div>
+            <div class="proc-activity"><div class="act-id">2.1.6</div><div class="act-name">Communicate assessment findings and prioritization decisions back to the community — closing the feedback loop between assessment and action</div></div>
+          </div>
+          <div class="act-note">Process 2.1.3 — disaggregating needs by population subgroup — is the most commonly skipped and the most consequential for equity. Aggregate needs data consistently masks the needs of the most marginalized subgroups, whose smaller numbers cause their needs to disappear in community-wide averages. Disaggregation is not optional for institutions with equity commitments; it is the minimum analytical requirement for those commitments to be meaningful.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">2.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Design and develop public goods and commons infrastructure</div>
+          <div class="proc-group-desc">The design process through which identified needs are translated into concrete public goods and governance frameworks. Design for collective benefit is fundamentally different from design for individual customer satisfaction: it must optimize across heterogeneous users rather than for a typical user, must build governance into the design rather than treating governance as a post-design afterthought, and must anticipate the maintenance and stewardship requirements of the good's entire lifecycle rather than just its launch. The most common design failure in this process group is building the thing without designing the governance — producing a public good with no framework for managing conflicts about access, maintenance responsibilities, and modification rights.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">2.2.1</div><div class="act-name">Facilitate co-design processes with community members — not consultation after design but participation in design decisions</div></div>
+            <div class="proc-activity"><div class="act-id">2.2.2</div><div class="act-name">Design governance framework alongside the public good — access rules, modification rights, maintenance responsibilities, and conflict resolution procedures</div></div>
+            <div class="proc-activity"><div class="act-id">2.2.3</div><div class="act-name">Develop equity access plan — how the public good will reach the most marginalized members of the community it serves</div></div>
+            <div class="proc-activity"><div class="act-id">2.2.4</div><div class="act-name">Design for sustainability from the start — lifecycle cost analysis, maintenance funding model, and renewal planning built into the initial design</div></div>
+            <div class="proc-activity"><div class="act-id">2.2.5</div><div class="act-name">Prototype and test with community members before full development — iterative design reduces the cost of discovering that the design doesn't serve the community's actual needs</div></div>
+            <div class="proc-activity"><div class="act-id">2.2.6</div><div class="act-name">Document the design rationale — why the good was designed this way, what alternatives were considered, what trade-offs were made. This institutional memory is essential for future governance and modification decisions.</div></div>
+          </div>
+          <div class="act-note">Process 2.2.2 — designing governance alongside the good — is the most important process in Category 2.0 and the one most frequently treated as a second-phase activity. Governance retrofitted to an existing public good is consistently less effective than governance designed as part of the good itself, because the design of the good creates facts on the ground — access patterns, maintenance requirements, user dependencies — that constrain the governance options available after the fact.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">2.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Manage and maintain shared physical and digital infrastructure</div>
+          <div class="proc-group-desc">Stewardship is the work that happens after design — the sustained, unglamorous, politically undervalued process of keeping public goods functioning over time. It is systematically underfunded because it generates no new outcomes to report to funders, produces no visible change to celebrate with communities, and creates no innovation narrative to attract attention. It just keeps things working. Institutions that neglect this process group discover its importance when a critical public good fails — the roof that was never repaired, the database that was never backed up, the community space that deteriorated until it became unusable.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">2.3.1</div><div class="act-name">Develop and maintain asset inventory — a current, accurate list of all shared assets with condition status and maintenance history</div></div>
+            <div class="proc-activity"><div class="act-id">2.3.2</div><div class="act-name">Implement preventive maintenance schedules for physical assets — scheduled maintenance prevents the deferred maintenance cycle that produces catastrophic failures</div></div>
+            <div class="proc-activity"><div class="act-id">2.3.3</div><div class="act-name">Manage digital infrastructure maintenance — platform updates, security patches, backup systems, and disaster recovery protocols</div></div>
+            <div class="proc-activity"><div class="act-id">2.3.4</div><div class="act-name">Maintain a capital renewal fund — systematic financial planning for major asset renewals rather than crisis fundraising when assets reach end of life</div></div>
+            <div class="proc-activity"><div class="act-id">2.3.5</div><div class="act-name">Conduct regular condition assessments and communicate findings to governance body — maintenance should not be invisible to governance decision-makers</div></div>
+          </div>
+          <div class="act-note">Process 2.3.4 — the capital renewal fund — is the financial infrastructure that makes stewardship sustainable rather than crisis-driven. Community land trusts that maintain them consistently have demonstrated fifty-year and longer asset sustainability. Institutions that operate without them routinely face the choice between deferred maintenance that compounds and emergency fundraising that depletes organizational capacity at the worst possible moment.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">2.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Steward knowledge commons and open intellectual resources</div>
+          <div class="proc-group-desc">Knowledge is the public good most dramatically underinvested in by the solidarity economy despite being the one most naturally suited to commons governance — knowledge is non-rival, its value increases with sharing, and its production is a natural site of cooperative effort. Category 2.4 covers the institutional processes for building, curating, maintaining, and distributing knowledge as a shared resource: open-source software, open educational resources, research, documentation, design patterns, and the institutional knowledge that allows the solidarity economy to learn faster than its individual members could alone.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">2.4.1</div><div class="act-name">Establish licensing framework for institutional knowledge — what can be freely shared, under what terms, with what attribution requirements</div></div>
+            <div class="proc-activity"><div class="act-id">2.4.2</div><div class="act-name">Build and maintain accessible documentation repositories — not just internal wikis but externally accessible knowledge bases that other institutions can use</div></div>
+            <div class="proc-activity"><div class="act-id">2.4.3</div><div class="act-name">Develop contribution and quality review processes — knowledge commons require governance of what enters the commons, not just governance of who accesses it</div></div>
+            <div class="proc-activity"><div class="act-id">2.4.4</div><div class="act-name">Manage knowledge currency — systematic review and retirement of outdated content, versioning of documents that change over time</div></div>
+            <div class="proc-activity"><div class="act-id">2.4.5</div><div class="act-name">Actively share institutional knowledge with peer institutions — contribution to the solidarity economy's collective knowledge infrastructure as an institutional commitment, not an occasional gesture</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">2.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Evaluate public goods for equity, access, and community impact</div>
+          <div class="proc-group-desc">Evaluation in Category 2.0 answers a specific question that is different from the general performance management questions of Category 1.4: Is this public good actually serving the community equitably, and is the community better off for having it? The evaluation must go beyond utilization metrics — the number of people using the commons — to assess whether the commons is reaching the people most in need, whether its governance is producing equitable outcomes, and whether the community's relationship to the good is improving over time. These are harder questions with less standardized measurement infrastructure, which is why they are routinely replaced by utilization counts that are easier to measure but less meaningful.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">2.5.1</div><div class="act-name">Design evaluation framework at the point of public good creation — not as a post-hoc addition when funders ask for impact data</div></div>
+            <div class="proc-activity"><div class="act-id">2.5.2</div><div class="act-name">Conduct equity access audits — who is using the public good, who is not, and what barriers account for the gap</div></div>
+            <div class="proc-activity"><div class="act-id">2.5.3</div><div class="act-name">Assess governance quality — are the people most affected by the commons' governance actually participating in it?</div></div>
+            <div class="proc-activity"><div class="act-id">2.5.4</div><div class="act-name">Measure community impact outcomes — not just utilization but change in the conditions the public good was designed to improve</div></div>
+            <div class="proc-activity"><div class="act-id">2.5.5</div><div class="act-name">Feed evaluation findings into design iteration — evaluation that does not change the public good or its governance is reporting, not improvement</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six public goods design failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in public goods design and stewardship</div>
+
+    <div class="fail-row">
+      <div class="fail-num">D1</div>
+      <div class="fail-content">
+        <div class="fail-name">Supply-side design — building what the institution knows how to build</div>
+        <div class="fail-desc">The institution designs public goods from its own capabilities and interests rather than from community needs assessment. The result is technically competent goods that serve the institution's expertise areas rather than the community's priority needs. This is the most common failure in solidarity economy institutions founded by specialists — the legal clinic that builds an extensive legal knowledge base when the community's primary need is childcare, the technology cooperative that builds digital tools when the community's need is food distribution.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution's public goods portfolio closely mirrors the founding team's professional backgrounds. Needs assessments, when conducted, surface needs that are substantially different from the institution's current programming. Community members describe the institution as "helpful for certain things" rather than as a primary resource for their most pressing needs.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">D2</div>
+      <div class="fail-content">
+        <div class="fail-name">Governance-free design — building the thing without governing it</div>
+        <div class="fail-desc">The institution invests heavily in building the public good and minimally in designing its governance — the access rules, maintenance responsibilities, modification rights, and conflict resolution processes that determine whether the good remains genuinely public over time. Without governance, the public good is captured by whoever is most persistent in using it, most willing to take on maintenance responsibilities, or most organized in advocating for design changes that serve their interests.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Conflicts about access, maintenance, or modification that have no clear resolution process. Informal norms governing the commons that are known to long-term users and unknown to new ones. Community spaces that feel owned by specific groups despite being formally open to all.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">D3</div>
+      <div class="fail-content">
+        <div class="fail-name">Maintenance deficit — the deferred maintenance cycle</div>
+        <div class="fail-desc">Maintenance is systematically deferred because it competes with new program development for scarce resources and generates no new outcomes to report. Deferred maintenance compounds: the cost of maintenance that was not done grows faster than the cost of doing it on schedule. Institutions in the deferred maintenance cycle are perpetually managing the consequences of past maintenance failures while failing to prevent the next generation of them.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> No capital renewal fund exists or is consistently underfunded. Physical assets show visible deterioration that is acknowledged but not addressed. Digital infrastructure runs on outdated versions. Maintenance decisions are made reactively rather than on a preventive schedule.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">D4</div>
+      <div class="fail-content">
+        <div class="fail-name">Universal design for a non-universal community — the average-user fallacy</div>
+        <div class="fail-desc">The public good is designed for an idealized average community member rather than for the actual diversity of the community it serves. The result is goods that are fully accessible to the most privileged community members and partially or entirely inaccessible to the most marginalized. This is not usually a deliberate exclusion — it is the predictable consequence of designing without disaggregated needs data and without explicit attention to how different population subgroups will experience the good.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The public good's primary users are disproportionately from more privileged subgroups of the target community. Barriers to access — physical, linguistic, digital, economic, social — are acknowledged but not systematically addressed. Equity access audits have not been conducted or have not produced design changes.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">D5</div>
+      <div class="fail-content">
+        <div class="fail-name">Knowledge hoarding — institutional knowledge that stays institutional</div>
+        <div class="fail-desc">The institution generates valuable knowledge through its operations — governance protocols, service design innovations, community engagement methods, technical solutions — and keeps that knowledge internal rather than contributing it to the broader solidarity economy commons. This is not usually a deliberate choice; it is the path of least resistance. But it means that the solidarity economy's collective knowledge grows more slowly than it could, and that peer institutions spend resources rediscovering what this institution has already learned.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution's documentation is organized for internal use only. Process improvements are not shared outside the institution. Peer institutions solving similar problems are not aware of relevant solutions the institution has developed. No active knowledge contribution to peer networks occurs.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">D6</div>
+      <div class="fail-content">
+        <div class="fail-name">Evaluation theater — measuring utilization instead of impact</div>
+        <div class="fail-desc">The institution evaluates its public goods using metrics that are easy to collect and report — users served, visits, downloads, attendance — without assessing whether the goods are producing the community outcomes they were designed to produce. Utilization metrics can be high while community impact is low; they can grow while equity gaps widen; they can improve while the most marginalized community members are less served than ever. Evaluation that measures only utilization is fundamentally unable to answer the question that matters: is this public good making the community better off?</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Impact reports lead with utilization numbers. No outcome measurement framework exists beyond utilization. The institution cannot describe what change would look like in the community if the public good were succeeding at its purpose. Funders are satisfied with utilization reports because they have not required more.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Champlain Housing Trust and the permanent commons</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Champlain Housing Trust — fifty years of affordable housing as a permanent commons</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Champlain Housing Trust in Burlington, Vermont is the largest and most extensively documented community land trust in the United States, managing over 2,500 homes across Burlington and the surrounding region. Its contribution to Category 2.0 practice is not primarily in its scale but in the operational rigor of its stewardship processes — the systems through which it has kept permanently affordable housing genuinely permanent across fifty years, multiple economic cycles, and several major real estate market disruptions that destroyed comparable affordable housing stock in surrounding communities.</div>
+      <div class="case-text">CHT's stewardship model operationalizes every element of process group 2.3. Its asset management system tracks the condition of every unit in its portfolio on a rolling inspection cycle. Its capital renewal fund — built into the ground lease structure from the beginning — ensures that major renovations are planned and funded in advance rather than deferred until crisis. Its stewardship counseling program works proactively with residents facing financial difficulty before those difficulties become housing emergencies. These are not innovations — they are disciplined implementations of the stewardship processes that the organization recognized, from its founding, as the difference between affordable housing that stays affordable and affordable housing that becomes market-rate through deterioration, sale, or financialization over time. The key insight embedded in CHT's founding design is that stewardship is not a support function — it is the core function. The public good is not the housing unit; it is the permanent affordability, and the housing unit is only the vehicle for delivering it. That distinction shapes every process design decision CHT has made across fifty years.</div>
+      <div class="case-lesson"><strong>Category 2.0 lesson:</strong> CHT's model demonstrates that process group 2.2 (design for sustainability from the start) is the most consequential public goods design decision an institution makes. The ground lease structure that separates land value from housing value — and the stewardship fund built into that structure — makes all subsequent stewardship processes viable by funding them. Public goods designed without sustainable maintenance funding models will be maintained through crisis fundraising or not maintained at all. The funding model is a design decision, not a finance decision.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Wikipedia and knowledge commons governance at scale</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Wikipedia — governing a knowledge commons at global scale</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Wikipedia is the most ambitious knowledge commons in human history — a collaboratively maintained encyclopedia in over 300 languages, managed by a global community of volunteer editors under the governance of the Wikimedia Foundation. It is also an unusually transparent case study in knowledge commons governance, because its entire governance history — every policy debate, every dispute, every governance innovation and failure — is publicly documented in the same wiki format as the encyclopedia itself. The Category 2.0 lessons from Wikipedia are available to any institution willing to read them.</div>
+      <div class="case-text">The most instructive Category 2.0 elements of Wikipedia's governance are in process groups 2.3 and 2.4. Wikipedia's content quality governance — the verifiability policies, the neutral point of view standard, the reliable sources requirement, and the notability guidelines — are the stewardship infrastructure that keeps the knowledge commons from deteriorating into a collection of promotional content and factual inaccuracies. They are not universally popular — they systematically exclude knowledge from communities whose knowledge traditions do not produce the kinds of secondary sources that Wikipedia's verifiability standard requires, a significant equity failure that Wikipedia's governance community continues to grapple with. But they represent a serious attempt at process group 2.5 (evaluation for equity and impact) applied to knowledge governance: the recognition that a knowledge commons with no quality governance is not a knowledge commons but a noise source, and the ongoing work of designing quality governance that is rigorous without being exclusionary.</div>
+      <div class="case-lesson"><strong>Category 2.0 lesson:</strong> Wikipedia's equity tensions — particularly the underrepresentation of knowledge from the Global South and from oral traditions — illustrate that knowledge commons governance designed by a specific community will encode that community's epistemic assumptions. Process 2.5 (equity access audit) applied to knowledge commons must assess not only who has access to use the commons but whose knowledge is recognized as valid contribution. This is one of the most undertheorized challenges in knowledge commons design, and Wikipedia's governance community has produced the most extensive public body of work on it.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 2.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 2.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Public goods are designed from institutional capacity rather than community needs assessment</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Governance of public goods is informal or absent — access and modification are managed through personal relationships</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Maintenance is reactive — addressed when things break, not prevented through scheduled care</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No capital renewal planning exists; maintenance funding competes with program delivery</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Evaluation measures utilization only; no community impact measurement exists</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community needs assessment is conducted, though not consistently disaggregated by population subgroup</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Basic governance framework exists for primary public goods — access rules are documented, if not consistently enforced</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Maintenance schedules exist for major physical assets; digital maintenance is more ad hoc</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Some institutional knowledge is documented and accessible; no systematic knowledge contribution to peers</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Evaluation framework exists and is used; findings are reported but do not consistently drive design changes</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Regular needs assessments with disaggregated data; assessment findings demonstrably shape design decisions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Governance framework for all major public goods is documented, understood by users, and consistently applied</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Preventive maintenance schedules are followed for physical and digital assets; capital renewal fund is funded and actively managed</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Knowledge commons infrastructure exists and is actively maintained; regular contribution to peer institutions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Equity access audits are conducted and produce design changes; outcome measurement goes beyond utilization</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Needs assessment methodology is continuously refined; the institution contributes needs assessment tools to peer network</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Governance frameworks are regularly reviewed and improved based on evidence of how they are performing</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Intergenerational stewardship is explicitly designed — governance mechanisms take future generations' interests into account</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Knowledge commons contribution is systematic and institutionalized — the institution is recognized as a knowledge resource by peers</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Equity gaps in public goods access are measured, tracked over time, and demonstrably narrowing</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 2.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community needs coverage rate</div>
+      <div class="kpi-cell">Percentage of identified priority needs that are addressed by current public goods portfolio — a proxy for alignment between needs and supply</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Equity access gap</div>
+      <div class="kpi-cell">Difference in utilization rates between the most and least marginalized population subgroups — measures whether public goods are reaching those most in need</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Asset maintenance ratio</div>
+      <div class="kpi-cell">Percentage of assets meeting current maintenance standards — a leading indicator of future asset condition and replacement cost</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Capital renewal fund ratio</div>
+      <div class="kpi-cell">Capital renewal fund balance as a percentage of estimated 10-year capital renewal needs — measures whether stewardship is financially sustainable</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Public goods utilization rate</div>
+      <div class="kpi-cell">Rate of use of public goods relative to design capacity — a necessary but insufficient measure; must be interpreted alongside equity gap metrics</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community impact outcome rate</div>
+      <div class="kpi-cell">Percentage of public goods with documented community outcome improvement since implementation — measures impact rather than activity</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Governance participation rate</div>
+      <div class="kpi-cell">Percentage of commons users who participate in at least one governance decision per year — measures whether commons governance is genuinely participatory</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Knowledge commons contribution index</div>
+      <div class="kpi-cell">Volume and quality of institutional knowledge contributed to peer institutions and open networks per year — measures whether the institution builds collective capacity or only its own</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 2.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 2.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a genuine community needs assessment</div>
+          <div class="seq-desc">Before designing any new public good or evaluating existing ones, conduct a needs assessment that asks the community what it needs rather than confirming what the institution already plans to provide. Use mixed methods: surveys for breadth, focus groups for depth, analysis of existing data for context. Disaggregate by population subgroup from the beginning. This will surface uncomfortable findings — needs that the institution is not currently addressing, populations that are underserved, priorities that diverge from institutional programming. These findings are the point.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Needs assessment report with disaggregated data by population subgroup, reviewed by governance body, with documented decisions about which needs the institution will and will not address.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Audit existing public goods for governance and equity gaps</div>
+          <div class="seq-desc">Before building new public goods, assess the ones that already exist. For each significant public good, ask: Does a governance framework exist? Is it documented and understood by users? Does it include conflict resolution? Who is not using this good, and why? Is it being maintained adequately? Does a renewal funding model exist? This audit will typically reveal significant gaps in governance, equity, and stewardship for goods that seemed adequate because no one had systematically examined them.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Public goods audit completed for all major goods; governance gaps and equity access gaps documented; prioritized remediation plan adopted by governance body.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Establish preventive maintenance and capital renewal infrastructure</div>
+          <div class="seq-desc">Create a basic asset inventory with condition ratings. Establish maintenance schedules for major physical assets. Begin building a capital renewal fund — even a small initial contribution signals the institutional commitment to sustainable stewardship and creates the governance mechanism for growing it over time. For digital assets, implement backup and security update protocols. These are not glamorous investments; they are the difference between public goods that last and public goods that deteriorate.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Asset inventory current and maintained; preventive maintenance schedules followed for major assets; capital renewal fund established with defined annual contribution target; four consecutive quarters of scheduled maintenance completed.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Establish co-design process for new public goods</div>
+          <div class="seq-desc">When the next public good is developed, use a co-design process that includes community members as genuine participants in design decisions rather than as consultants to institutional decisions that have already been made. Design the governance framework and equity access plan as part of the design process, not as afterthoughts. Document the design rationale. This investment in process will take more time than supply-side design; the goods it produces will be substantially more effective and more durably used.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> At least one public good designed through a documented co-design process; governance framework designed concurrently with the good; equity access plan implemented and monitored.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Build outcome evaluation infrastructure</div>
+          <div class="seq-desc">Replace or supplement utilization measurement with outcome measurement: define what community change the public good is designed to produce, develop measurement methods for that change, and establish an evaluation cycle that produces findings before the good has operated so long that changing it is politically difficult. Connect evaluation findings to governance decisions about the good's design and stewardship. When evaluation reveals an equity gap, close it — don't report it.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Outcome measurement framework implemented for all major public goods; equity access audit conducted and findings acted on; at least one design change made based on evaluation findings.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="pullquote">
+    <p>Stewardship is the work that happens after design. It is systematically underfunded because it generates no new outcomes to report. And it is the difference between a public good that lasts and one that deteriorates — slowly, invisibly, until the deterioration is too advanced to reverse without crisis.</p>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 2.0 and Category 10.0:</strong> Category 2.0 covers the design and stewardship of public goods and commons — the functions and services the commons provides. Category 10.0 covers the governance and maintenance of the physical and digital assets through which those goods are delivered. The boundary is functional (2.0) versus asset (10.0). In practice, the two categories are developed together: an institution cannot govern commons assets effectively without clarity about the public goods those assets serve, and cannot sustain public goods without the asset governance that maintains the infrastructure delivering them. Institutions should assess both categories together and develop them in coordination.</p>
+    <p><strong>On Ostrom and post-digital commons:</strong> Ostrom's principles were developed from the study of physical commons — fisheries, irrigation systems, forests, grazing lands. Their application to digital and knowledge commons has been an active area of research since the early 2000s, with significant contributions from scholars including Yochai Benkler (networked information economy), Mayo Fuster Morell (digital commons governance), and the P2P Foundation research network. The GPS framework draws on this extended literature in process groups 2.3 and 2.4, where the stewardship and knowledge governance challenges of digital commons differ meaningfully from their physical analogs.</p>
+    <p><strong>On design for intergenerational stewardship:</strong> The most undertheorized challenge in Category 2.0 is designing commons governance that takes future community members' interests seriously. Current governance bodies will make decisions that bind people who have no representation in current governance — a structural disenfranchisement that is most consequential for long-duration public goods like community land trusts, ecological commons, and cultural heritage institutions. Several practical mechanisms have been developed: future generations' advocates appointed to governance bodies, long-term impact assessments for major decisions, constitutional constraints on decisions that would irreversibly foreclose future options. These are developed further in Chapter 22 (Human Flourishing), where the intergenerational dimension of community wellbeing is addressed directly.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part III · Chapter 9 · GPS 2.0</span>
+    <span class="close-next">Ch. 10 — Facilitate access &amp; engagement (GPS 3.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

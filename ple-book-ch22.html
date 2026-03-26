@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 22 — Human Flourishing & Wellbeing (GPS 15.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --novel: #7F77DD; --novel-dim: rgba(127,119,221,0.08);
+    --novel-text: #b0aaf0; --novel-border: rgba(127,119,221,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(55,138,221,0.12); --m4t: #7ab8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.novel { background: var(--novel-dim); color: var(--novel-text); border: 1px solid var(--novel-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--novel); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--novel-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--novel); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--novel); background: var(--novel-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--novel-text); }
+  .pullquote p::after { content: '\201D'; color: var(--novel-text); }
+
+  /* Flourishing dimensions */
+  .flourish-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .flourish-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .flourish-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .flourish-row:last-child { border-bottom: none; }
+  .flourish-dim { width: 110px; min-width: 110px; padding: 14px 14px; border-right: 1px solid var(--border-subtle); background: var(--novel-dim); display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+  .flourish-dim-name { font-family: 'Crimson Pro', serif; font-size: 0.9rem; font-weight: 600; color: var(--novel-text); line-height: 1.2; }
+  .flourish-content { padding: 14px 18px; flex: 1; border-right: 1px solid var(--border-subtle); }
+  .flourish-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .flourish-measure { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .flourish-measure strong { color: var(--novel-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+
+  /* GDP critique comparison */
+  .gdp-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .gdp-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .gdp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+  .gdp-row:last-child { border-bottom: none; }
+  .gc { padding: 14px 18px; background: var(--bg-secondary); }
+  .gc.alt { background: var(--bg-primary); }
+  .gc-label { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .gc-label.what { color: var(--m1t); opacity: 0.85; }
+  .gc-label.why { color: var(--novel-text); opacity: 0.85; }
+  .gc-text { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--novel); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--novel-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--novel-text); border-right: 1px solid var(--border-subtle); background: var(--novel-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--novel-text); border-right: 1px solid var(--border-subtle); background: var(--novel-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--novel-dim); color: var(--novel-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--novel-dim); border-bottom: 1px solid var(--novel-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--novel-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--novel-text); font-weight: 500; }
+
+  /* Sequence */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--novel); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--novel-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--novel-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part V · Novel categories</div>
+  <div class="chapter-eyebrow">Chapter 22 · GPS Category 15.0</div>
+  <h1 class="chapter-title">Human flourishing &amp; wellbeing</h1>
+  <p class="chapter-subtitle">Beyond survival toward thriving — the institutional processes that make communities not merely less miserable but genuinely more flourishing, and the measurement discipline that knows the difference</p>
+  <div class="cat-meta">
+    <span class="cat-pill novel">Novel Category</span>
+    <span class="cat-pill novel">Wellbeing economics</span>
+    <span class="cat-pill novel">No APQC analog</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">20 processes</span>
+    <span class="cat-pill neutral">14 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>The question that post-labor institutions were not designed to ask — and that Category 15.0 insists they must — is not "are people surviving?" but "are people thriving?" The distinction sounds philosophical until you ask what it requires institutionally, at which point it becomes acutely practical. Surviving — having enough food, shelter, medical care, and income to continue existing — is measurable by poverty statistics, hunger rates, housing security indices, and mortality figures. Thriving is harder to measure and points to a different set of institutional interventions: not only the provision of material sufficiency but the cultivation of meaning, connection, capability, dignity, and the experience of a life that is going somewhere rather than simply continuing.</p>
+
+    <p>Category 15.0 is the process domain through which post-labor institutions attend to human flourishing as a distinct goal — not as the automatic byproduct of adequate service delivery, not as the subjective impression that community members are doing well, but as a specific, measurable institutional commitment with its own assessment infrastructure, its own program design requirements, and its own governance accountability. It is novel in the GPS framework because conventional institutional process frameworks were developed for institutions oriented toward economic output (enterprises) or toward deficit reduction (social services). Neither framework asks the flourishing question. Enterprises do not measure whether their employees' lives are going well; social services do not typically measure whether their clients are thriving beyond the resolution of the specific deficit that occasioned their institutional contact. Post-labor institutions, organized around the fullness of human community life rather than around economic productivity or problem remediation, must ask the question that the preceding frameworks omit.</p>
+
+    <p>The chapter proceeds through three intellectual moves. The first is conceptual: establishing what flourishing means as an institutional target distinct from sufficiency and service delivery. The second is empirical: describing the measurement frameworks — drawing substantially on the wellbeing economics literature and on the capabilities approach developed by Amartya Sen and Martha Nussbaum — that make flourishing assessable rather than merely aspirational. The third is operational: describing the specific institutional processes through which post-labor institutions can move from measuring flourishing to actively cultivating it. The hardest of the three is the third. Knowing that a community is flourishing less than it could is not the same as knowing what institutional intervention would produce more flourishing. Category 15.0 is where the GPS framework is most humble about the limits of current knowledge and most insistent that those limits are not an excuse for institutional inaction.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">What flourishing means — and why GDP cannot measure it</div>
+
+  <div class="body-text">
+    <p>The critique of GDP as a measure of societal wellbeing is well-established: GDP measures economic activity, not wellbeing; it increases when divorces happen (legal fees), when people get sick (medical spending), when prisons are built (construction and staffing); it does not capture unpaid care work, environmental quality, social cohesion, or the distribution of economic benefits across the population. This critique is true and insufficient. The problem with GDP as an institutional metric is not only that it measures the wrong things — it is that it asks the wrong question. GDP asks how much economic activity is occurring. Category 15.0 asks how well people's lives are going.</p>
+    <p>The comparison below maps the GDP measure against the flourishing framework along five dimensions — not to condemn GDP, which is a useful measure of what it measures, but to clarify what flourishing requires as an institutional target that GDP cannot provide.</p>
+  </div>
+
+  <div class="gdp-block">
+    <div class="gdp-header">GDP as proxy versus flourishing as target — what each measures and what it misses</div>
+
+    <div class="gdp-row">
+      <div class="gc">
+        <div class="gc-label what">What GDP measures</div>
+        <div class="gc-text"><strong>Economic output:</strong> The total monetary value of goods and services produced. Growth in GDP is treated as a proxy for improvement in human welfare on the assumption that more economic activity produces more welfare. The assumption holds approximately at very low income levels and breaks down progressively as income rises above subsistence.</div>
+      </div>
+      <div class="gc alt">
+        <div class="gc-label why">What flourishing measures</div>
+        <div class="gc-text"><strong>Quality of life across multiple dimensions:</strong> How people are actually doing across the domains that research demonstrates matter for lived experience — material security, health, relationships, meaning, capability, environmental quality, and the sense of dignity and control over one's own life. These dimensions are partially correlated with income and partially independent of it.</div>
+      </div>
+    </div>
+
+    <div class="gdp-row">
+      <div class="gc">
+        <div class="gc-label what">The distribution problem</div>
+        <div class="gc-text">GDP aggregates without distributing — a society in which one percent of the population receives fifty percent of economic output and ninety-nine percent receive fifty percent has the same GDP as one in which output is equally distributed. The aggregate says nothing about how well most people's lives are going.</div>
+      </div>
+      <div class="gc alt">
+        <div class="gc-label why">Flourishing disaggregates</div>
+        <div class="gc-text">Wellbeing measures are inherently distributional — they assess how different populations within a community are doing, revealing inequality in flourishing that aggregate economic measures conceal. Post-labor institutions whose community includes populations with significantly different flourishing trajectories need the disaggregated view to do their work.</div>
+      </div>
+    </div>
+
+    <div class="gdp-row">
+      <div class="gc">
+        <div class="gc-label what">The non-market activities problem</div>
+        <div class="gc-text">GDP does not count unpaid care work, community mutual aid, ecological stewardship, or the full range of activities that sustain human life and community cohesion without passing through market transactions. Post-labor institutions produce much of their value in precisely these domains — and GDP tells them nothing about whether they are succeeding.</div>
+      </div>
+      <div class="gc alt">
+        <div class="gc-label why">Flourishing counts what matters</div>
+        <div class="gc-text">Wellbeing measures assess the domains that post-labor institutions primarily affect: social connection, civic participation, sense of purpose, physical and mental health, and the quality of relationships. These are the outcomes that appear in community members' lives when institutional work is succeeding and are invisible in economic statistics.</div>
+      </div>
+    </div>
+
+    <div class="gdp-row">
+      <div class="gc">
+        <div class="gc-label what">The Easterlin paradox</div>
+        <div class="gc-text">Beyond a moderate income threshold, increases in average income within a society do not produce increases in average self-reported happiness — a finding replicated across dozens of societies over fifty years of research. Economic growth above subsistence does not reliably produce wellbeing growth. The proxy has failed.</div>
+      </div>
+      <div class="gc alt">
+        <div class="gc-label why">What the research shows instead</div>
+        <div class="gc-text">Social connection, sense of purpose, perceived fairness, trust in institutions, environmental quality, and autonomy over one's own life are stronger predictors of self-reported wellbeing than income above a moderate threshold. These are domains where post-labor institutions can have substantial impact without producing any GDP effect whatsoever.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The flourishing framework — seven dimensions and their institutional implications</div>
+
+  <div class="body-text">
+    <p>Drawing on the capabilities approach (Sen, Nussbaum), the OECD Better Life framework, the Gallup-Sharecare wellbeing research, and the growing literature on post-labor economics and wellbeing, Category 15.0 defines flourishing across seven dimensions that together constitute a life going well. Each dimension has measurable indicators and specific institutional implications — the things post-labor institutions can do, and the processes they must build, to contribute to flourishing in that dimension rather than only to avoid the deficits that make flourishing impossible.</p>
+  </div>
+
+  <div class="flourish-block">
+    <div class="flourish-header">Seven dimensions of flourishing — what they mean and how institutions can measure and cultivate them</div>
+
+    <div class="flourish-row">
+      <div class="flourish-dim"><div class="flourish-dim-name">Material sufficiency</div></div>
+      <div class="flourish-content">
+        <div class="flourish-desc">Having enough — food, housing, health care, income, and the material conditions that allow other dimensions of flourishing to be pursued without the consuming cognitive burden of material insecurity. Sufficiency is the floor, not the ceiling, of flourishing. It is necessary but not sufficient — a person with material sufficiency may still be flourishing poorly, and addressing material insufficiency is the highest-priority institutional intervention because it unlocks the capacity for all other flourishing dimensions.</div>
+        <div class="flourish-measure"><strong>Institutional measurement:</strong> Food security rates; housing stability rates; health care access rates; income adequacy relative to local cost of living — all disaggregated by demographic subgroup and tracked over time, not only at point of service contact. <strong>Institutional cultivation:</strong> The civic operating processes of Part III — resource delivery, program services, member support — constitute the institutional contribution to material sufficiency. Category 15.0 aggregates their outcomes into community-level sufficiency assessment.</div>
+      </div>
+    </div>
+
+    <div class="flourish-row">
+      <div class="flourish-dim"><div class="flourish-dim-name">Health and vitality</div></div>
+      <div class="flourish-content">
+        <div class="flourish-desc">Physical and mental health, including the absence of diagnosable illness and the positive presence of vitality, energy, and the bodily and psychological capacity for a full life. Health in the flourishing framework is not only medical — it encompasses the social determinants of health (housing, food, social connection, stress, discrimination) whose institutional implications extend well beyond clinical care.</div>
+        <div class="flourish-measure"><strong>Institutional measurement:</strong> Self-reported physical health; mental health status; chronic condition prevalence; social determinants of health indicators — all longitudinally tracked for community members served. <strong>Institutional cultivation:</strong> Integrated health services (Category 5.3) addressing social determinants alongside clinical needs; housing stability support (Category 4.3) as a health intervention; trauma-informed institutional culture (Category 6.0) as a mental health contribution.</div>
+      </div>
+    </div>
+
+    <div class="flourish-row">
+      <div class="flourish-dim"><div class="flourish-dim-name">Meaningful relationships</div></div>
+      <div class="flourish-content">
+        <div class="flourish-desc">The quality and depth of connections to other people — family, friendship, community, and the network of relationships through which people experience belonging, support, and the mutual recognition that makes human life distinctively human. Social isolation is among the most consistently documented predictors of poor wellbeing outcomes across the full range of health, psychological, and life satisfaction measures. Post-labor institutions that build community rather than only deliver services are directly contributing to this flourishing dimension.</div>
+        <div class="flourish-measure"><strong>Institutional measurement:</strong> Social connection quality and quantity; loneliness and isolation rates; community belonging sense; network breadth and depth — assessed through validated survey instruments and longitudinal tracking. <strong>Institutional cultivation:</strong> Community-building programming (Category 5.0); peer support networks (Category 6.4); mutual aid infrastructure (Category 12.2); physical commons that create spaces for relationship formation (Category 4.0).</div>
+      </div>
+    </div>
+
+    <div class="flourish-row">
+      <div class="flourish-dim"><div class="flourish-dim-name">Purpose and meaning</div></div>
+      <div class="flourish-content">
+        <div class="flourish-desc">The sense that one's life is going somewhere worthwhile — that activities, commitments, and relationships matter and contribute to something beyond immediate satisfaction. Purpose is the flourishing dimension most directly affected by post-labor economic transition: the collapse of work as the primary source of social identity and meaning for large portions of the population creates a purpose deficit that markets and governments are not designed to address. Post-labor institutions that build community identity, civic participation, and collective projects create the conditions in which purpose can be found outside market employment.</div>
+        <div class="flourish-measure"><strong>Institutional measurement:</strong> Sense of purpose and direction; experienced meaningfulness of daily activities; civic and community engagement levels; contributions to collective projects — assessed through validated purpose-measurement instruments adapted for community contexts. <strong>Institutional cultivation:</strong> Governance participation (Categories 1.0 and 16.0); skill development and capability building (Category 7.0 and 5.2); creative and cultural programming; community projects that create shared purpose.</div>
+      </div>
+    </div>
+
+    <div class="flourish-row">
+      <div class="flourish-dim"><div class="flourish-dim-name">Capability and agency</div></div>
+      <div class="flourish-content">
+        <div class="flourish-desc">The real freedoms — in Sen's terminology — that people have to live the lives they have reason to value. Capability is not the same as skills or resources: it is the actual ability to convert resources and skills into chosen outcomes given the constraints of one's situation. The capability approach asks not "what do people have?" but "what are people actually able to do and be?" This reframing reveals capability deficits that resource provision alone does not address: a person with resources but without the social networks, legal knowledge, or institutional navigation skills to use them has constrained capability despite adequate material provision.</div>
+        <div class="flourish-measure"><strong>Institutional measurement:</strong> Sense of control over one's own life; ability to make meaningful choices; access to the full range of life paths available to comparable community members in other circumstances — assessed through capability-adapted survey instruments. <strong>Institutional cultivation:</strong> Leadership development (Categories 3.0 and 7.0); economic empowerment programming (Category 5.4); legal services and rights education; the full access and engagement infrastructure of Category 3.0.</div>
+      </div>
+    </div>
+
+    <div class="flourish-row">
+      <div class="flourish-dim"><div class="flourish-dim-name">Dignity and respect</div></div>
+      <div class="flourish-content">
+        <div class="flourish-desc">The experience of being treated as a full human being with inherent worth — not as a client, a case number, a beneficiary, or a problem to be managed. Dignity is a flourishing dimension that institutions can produce or destroy through their design choices, their staff culture, and their daily operational practices. Institutional interactions that are experienced as demeaning, surveillance-like, or paternalistic undermine flourishing even when they successfully deliver material resources. The design principles of Categories 3.0, 4.0, and 6.0 — dignity of access, dignity of distribution, dignity of support — are contributions to this flourishing dimension.</div>
+        <div class="flourish-measure"><strong>Institutional measurement:</strong> Community members' reported experience of dignity in institutional interactions; perceived respect from institutional staff; sense of being treated as a full person rather than a case or category — assessed through the community accountability mechanisms of Category 11.2. <strong>Institutional cultivation:</strong> Trauma-informed design across all institutional processes; staff training in dignity-centered practice; the co-design and participation principles throughout Part III.</div>
+      </div>
+    </div>
+
+    <div class="flourish-row">
+      <div class="flourish-dim"><div class="flourish-dim-name">Environmental and community quality</div></div>
+      <div class="flourish-content">
+        <div class="flourish-desc">The quality of the physical and social environments in which people live — air quality, green space, neighborhood safety, built environment quality, and the ecological conditions that make a place livable across the long term. Environmental justice research consistently documents that communities with the lowest material resources also face the worst environmental conditions, compounding flourishing deficits across multiple dimensions simultaneously. Post-labor institutions that invest in physical commons, neighborhood quality, and ecological stewardship are addressing a flourishing dimension with particularly concentrated impact on the most marginalized communities.</div>
+        <div class="flourish-measure"><strong>Institutional measurement:</strong> Environmental quality indicators; neighborhood safety perceptions; access to green space and nature; housing quality; community aesthetic and cultural vitality — tracked longitudinally at the neighborhood or community level. <strong>Institutional cultivation:</strong> Physical commons stewardship (Categories 2.0 and 10.0); community land development (Categories 4.3 and 10.2); ecological commons management; cultural and creative programming that builds aesthetic and social community vitality.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 15.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">15.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Define, measure, and track community wellbeing and flourishing outcomes</div>
+          <div class="proc-group-desc">Flourishing measurement is the foundational process that makes Category 15.0 operational rather than aspirational. It is also the process most easily performed inadequately — either through over-reliance on subjective wellbeing measures that are sensitive to framing and context effects, or through over-reliance on objective indicators that miss the subjective experience of wellbeing that ultimately defines whether a life is going well. Mature flourishing measurement combines objective indicators (income adequacy, health outcomes, social connection rates) with validated subjective wellbeing instruments (life satisfaction scales, purpose measures, affect balance assessments) administered with the care required to produce reliable longitudinal data. The data must be disaggregated by demographic subgroup and collected in ways that are themselves dignity-respecting — the experience of being measured for flourishing should not itself undermine flourishing.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">15.1.1</div><div class="act-name">Develop a community flourishing assessment framework — defining the specific dimensions and indicators the institution will measure, adapted to the community's specific cultural context and institutional scope</div></div>
+            <div class="proc-activity"><div class="act-id">15.1.2</div><div class="act-name">Select and implement validated wellbeing measurement instruments — drawing on established research (OECD Better Life Index, Gallup-Sharecare, ONS4 wellbeing questions) adapted for community context and cultural appropriateness</div></div>
+            <div class="proc-activity"><div class="act-id">15.1.3</div><div class="act-name">Conduct regular wellbeing assessments — establishing the longitudinal baseline and tracking mechanism that makes trend analysis possible; annual assessment minimum, with higher-frequency monitoring for populations experiencing rapid change</div></div>
+            <div class="proc-activity"><div class="act-id">15.1.4</div><div class="act-name">Disaggregate flourishing data by demographic subgroup — identifying flourishing inequities that aggregate wellbeing data conceals; the equity dimension of flourishing assessment is as critical as the equity dimension of service delivery assessment</div></div>
+            <div class="proc-activity"><div class="act-id">15.1.5</div><div class="act-name">Connect flourishing data to institutional program assessment — using wellbeing data to evaluate whether institutional programs are contributing to flourishing outcomes, not only to service delivery metrics; closing the loop between Category 5.5 program evaluation and Category 15.0 flourishing assessment</div></div>
+          </div>
+          <div class="act-note">The cultural appropriateness requirement in process 15.1.2 deserves particular attention. Wellbeing measurement instruments developed in WEIRD (Western, Educated, Industrialized, Rich, Democratic) contexts do not translate directly to communities with different cultural frameworks for understanding what a good life means. Flourishing dimensions that are central in one cultural context (individual autonomy, personal achievement) may be less central than others in different contexts (family harmony, community belonging, spiritual connection). Adapting measurement instruments with community members rather than applying standardized instruments without modification is both methodologically sound and consistent with the co-design principles that run throughout this framework.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">15.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Design and deliver programs explicitly oriented toward flourishing outcomes</div>
+          <div class="proc-group-desc">Program design for flourishing differs from program design for deficit reduction — and the difference is more than semantic. Deficit-reduction programs ask "what is wrong and how do we fix it?" Flourishing-oriented programs ask "what would a life going well look like for this person or community, and what institutional contribution can move in that direction?" The second question produces different program designs: it prioritizes capability development over service provision, community building over individual intervention, cultural and creative expression alongside material support, and long-horizon wellbeing outcomes alongside immediate need resolution. These are not incompatible with deficit reduction; they are an expanded frame that produces programs addressing what remains after deficits are resolved.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">15.2.1</div><div class="act-name">Develop flourishing-oriented program theories of change — explicitly specifying which flourishing dimensions the program addresses, through what mechanism, and what wellbeing improvement would constitute program success</div></div>
+            <div class="proc-activity"><div class="act-id">15.2.2</div><div class="act-name">Design programs for meaning and purpose — specifically including programming that creates opportunities for contribution, creative expression, civic participation, and the cultivation of community identity that addresses purpose deficits in post-labor communities</div></div>
+            <div class="proc-activity"><div class="act-id">15.2.3</div><div class="act-name">Build social connection into program design — not as an incidental byproduct but as a designed program element; the social infrastructure of programs (peer relationships, group participation, shared projects) is often as valuable as the content</div></div>
+            <div class="proc-activity"><div class="act-id">15.2.4</div><div class="act-name">Design for capability development rather than dependency — consistently asking what participants will be able to do after program participation that they could not before, and ensuring that capability building is built into program logic alongside resource provision</div></div>
+            <div class="proc-activity"><div class="act-id">15.2.5</div><div class="act-name">Evaluate programs against flourishing outcomes — not only against service delivery metrics but against the wellbeing dimensions the program was designed to improve; feeding Category 15.1 assessment data into Category 5.5 program evaluation</div></div>
+          </div>
+          <div class="act-note">Process 15.2.2 — designing programs for meaning and purpose — is the most distinctive program design contribution of Category 15.0, and the one most directly connected to the post-labor transition. As the labor-value contract described in Chapter 1 breaks down, the social infrastructure that organized meaning-making — the workplace, the career, the professional identity, the structured time of employment — dissolves for increasing numbers of community members. Post-labor institutions cannot replace this infrastructure with service programs. They can build the alternative infrastructure: community projects, civic participation, creative expression, and collective engagement that create the conditions for meaning outside market employment. This is the institutional contribution that has no analog in conventional service delivery frameworks.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">15.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Cultivate social infrastructure and community connection</div>
+          <div class="proc-group-desc">Social infrastructure — the spaces, networks, practices, and institutions that facilitate human connection — is the category of public good most consistently underprovided by both markets and governments, most consequential for flourishing across multiple dimensions, and most naturally produced by post-labor institutions that organize community life. Libraries, community centers, public parks, mutual aid networks, civic associations, cultural institutions, and the institutions that organize community life around shared purpose are the physical and social infrastructure of flourishing. Their decline in recent decades — documented by Robert Putnam's research on social capital, by the third place literature, and by the loneliness research — is both a consequence of the same economic forces driving post-labor transition and an urgent institutional design challenge for the institutions created to address that transition.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">15.3.1</div><div class="act-name">Invest in physical spaces for community gathering — designing and maintaining community commons that facilitate the informal social encounters and organized community activities that build social connection</div></div>
+            <div class="proc-activity"><div class="act-id">15.3.2</div><div class="act-name">Design programming that builds lasting social relationships — not single events but ongoing engagement structures that allow relationships to develop over time; the longitudinal social infrastructure that transient programming cannot provide</div></div>
+            <div class="proc-activity"><div class="act-id">15.3.3</div><div class="act-name">Facilitate inter-community connection across difference — intentionally designing social infrastructure that brings together community members across demographic, cultural, and economic differences; social cohesion requires the bridging connections that naturally segregated social networks do not produce</div></div>
+            <div class="proc-activity"><div class="act-id">15.3.4</div><div class="act-name">Measure and track social connectedness — community social capital assessment, loneliness monitoring, network density measurement; treating social infrastructure outcomes as institutional performance indicators alongside service delivery metrics</div></div>
+            <div class="proc-activity"><div class="act-id">15.3.5</div><div class="act-name">Support community-generated social infrastructure — facilitating and resourcing community members' own social infrastructure development rather than only providing institutionally designed programming; the organic social infrastructure that communities generate for themselves is often more durable and more culturally resonant than institutionally designed alternatives</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">15.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Address the post-labor meaning crisis and cultivate purposeful community life</div>
+          <div class="proc-group-desc">The post-labor meaning crisis — the collapse of work as the primary organizer of social identity, time, and purpose — is the flourishing dimension most specifically created by the economic transition this framework addresses. Conventional institutions were not designed for it because it is genuinely new: there has never before been a social condition in which large portions of the adult population are involuntarily excluded from productive work as a social institution rather than as an individual failing. The communities most severely affected — those with the highest rates of technological unemployment, automation displacement, and labor market exclusion — are experiencing meaning deficits that service provision cannot resolve. Post-labor institutions that recognize this create the social, cultural, and civic infrastructure through which meaning can be found outside market employment.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">15.4.1</div><div class="act-name">Develop community contribution pathways — structured opportunities for community members to contribute to collective projects, community governance, care work, and civic life in ways that are socially recognized and organizationally supported</div></div>
+            <div class="proc-activity"><div class="act-id">15.4.2</div><div class="act-name">Build cultural and creative infrastructure — arts, music, storytelling, and cultural practice as genuine institutional investments in the meaning-making infrastructure of community life, not as supplementary amenities</div></div>
+            <div class="proc-activity"><div class="act-id">15.4.3</div><div class="act-name">Support civic and community leadership development — creating the pathways through which community members develop civic identity and community leadership roles that provide the recognition and purpose that employment previously provided</div></div>
+            <div class="proc-activity"><div class="act-id">15.4.4</div><div class="act-name">Develop mutual recognition practices — institutionally supporting the forms of recognition, celebration, and acknowledgment that make community members' contributions visible and valued; the social equivalent of the paycheck and the promotion as recognition mechanisms</div></div>
+            <div class="proc-activity"><div class="act-id">15.4.5</div><div class="act-name">Assess and address purpose deficits — measuring sense of purpose and direction in the community, identifying populations experiencing acute purpose deficits, and designing targeted interventions for the most affected groups</div></div>
+          </div>
+          <div class="act-note">Process 15.4.1 — community contribution pathways — is the most institutionally innovative element of Category 15.0, and the one with the most direct connection to the post-labor economic transition's governance implications. The insight embedded in this process is that the post-labor institution's primary social function may not be service delivery — it may be creating the social structures within which people who are not employed by the market economy can find the recognition, contribution, and belonging that employment previously organized. This reframes the institution from a service provider to a social organizer of post-labor community life — a more ambitious and more consequential role than service delivery alone.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">15.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Govern the flourishing agenda across the institution's full scope</div>
+          <div class="proc-group-desc">Category 15.5 is the governance process that ensures flourishing is an institutional commitment with accountability infrastructure — not a mission statement aspiration that appears in communications and disappears in operational decision-making. Governing the flourishing agenda means building the governance mechanisms through which flourishing data informs institutional resource allocation, through which programs that underperform on flourishing outcomes are accountable for improvement, and through which the institution's full portfolio of activities is assessed against the terminal question: are the people this institution serves actually thriving more because of what we do?</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">15.5.1</div><div class="act-name">Integrate flourishing metrics into governance reporting — ensuring that governance bodies regularly review community wellbeing data alongside service delivery metrics; flourishing assessment as a standing governance agenda item, not an occasional report</div></div>
+            <div class="proc-activity"><div class="act-id">15.5.2</div><div class="act-name">Align institutional resource allocation with flourishing priorities — examining whether budget allocation reflects the flourishing dimensions most in deficit in the community served; not only funding what is already funded but directing new investment toward highest-deficit flourishing dimensions</div></div>
+            <div class="proc-activity"><div class="act-id">15.5.3</div><div class="act-name">Develop a community flourishing vision with community members — articulating what flourishing looks like for this specific community in terms that reflect community values rather than external frameworks, and using that vision to guide institutional direction</div></div>
+            <div class="proc-activity"><div class="act-id">15.5.4</div><div class="act-name">Publish community wellbeing reports — annual public documentation of the community's flourishing across all seven dimensions, with honest assessment of where the institution has contributed and where gaps remain; transparency about flourishing outcomes as an accountability practice</div></div>
+            <div class="proc-activity"><div class="act-id">15.5.5</div><div class="act-name">Connect to local and national wellbeing policy advocacy — using community flourishing data as evidence in policy advocacy for the structural changes — income support, environmental quality, social infrastructure investment — that institutional programming alone cannot produce</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six flourishing governance failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in flourishing measurement and institutional cultivation</div>
+
+    <div class="fail-row">
+      <div class="fail-num">W1</div>
+      <div class="fail-content">
+        <div class="fail-name">Sufficiency as success — solving for survival without attending to thriving</div>
+        <div class="fail-desc">The institution successfully addresses material deficits — food insecurity, housing instability, health care gaps — without attending to the dimensions of flourishing that remain deficient after material needs are met. Community members who are now materially secure still report low purpose, isolation, dignity violations, and constrained capability. The institution counts its work as done when the deficit is resolved, missing the question of whether the resolved deficit was the whole of the problem.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution's outcome metrics are entirely deficit-oriented — food security rates, housing retention rates, employment rates — without any positive flourishing indicators. Community members who have successfully exited material crisis support describe the institution as having "solved my immediate problem" without having contributed to a sense that their lives are going well overall.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">W2</div>
+      <div class="fail-content">
+        <div class="fail-name">Flourishing without measurement — aspiring without assessing</div>
+        <div class="fail-desc">The institution describes flourishing as its goal — in mission statements, in strategic plans, in fundraising narratives — but does not measure it. Staff describe community members as thriving without evidence. The institution cannot distinguish between communities that are genuinely flourishing and those that have had their most visible deficits addressed while flourishing remains low. The aspiration is sincere; the accountability is absent.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> No validated wellbeing measurement instruments are used. Community wellbeing is assessed through staff impression and anecdote. The institution cannot answer the question "are people in this community thriving more than they were three years ago, and how do you know?" with anything other than narrative description.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">W3</div>
+      <div class="fail-content">
+        <div class="fail-name">The purpose gap — ignoring the meaning crisis created by post-labor transition</div>
+        <div class="fail-desc">The institution addresses material needs and social connection without attending to the meaning and purpose dimension of flourishing that is specifically created by labor market exclusion. Community members with adequate material resources and reasonable social connections still describe a pervasive sense of purposelessness and lack of direction that the institution has no programming to address. The most specific and most novel flourishing deficit created by post-labor transition remains unaddressed.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> No programming specifically addresses purpose, meaning, or civic contribution. Staff describe community members' sense of purposelessness as a background condition rather than as a deficit the institution has tools to address. Flourishing assessment, if conducted at all, shows adequate scores on material and social dimensions and low scores on purpose and capability dimensions without institutional response to the pattern.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">W4</div>
+      <div class="fail-content">
+        <div class="fail-name">Wellbeing inequality — aggregate flourishing that masks divergent trajectories</div>
+        <div class="fail-desc">Community wellbeing assessment produces aggregate scores that show moderate or improving flourishing while demographic subgroup analysis reveals that flourishing improvements are concentrated among the least marginalized community members and the most marginalized continue to decline. The institution reports flourishing improvement; the community members whose flourishing matters most are worse off.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Wellbeing data is collected and reported in aggregate without demographic disaggregation. Overall flourishing scores are stable or improving. No analysis has been conducted of whether flourishing improvement rates differ by demographic subgroup. Qualitative feedback from the most marginalized community members describes the institution's work as having limited relevance to their flourishing.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">W5</div>
+      <div class="fail-content">
+        <div class="fail-name">Flourishing colonialism — imposing external definitions of the good life</div>
+        <div class="fail-desc">The institution designs its flourishing framework using wellbeing dimensions and measurement instruments developed in cultural contexts different from the community served, without co-development with community members about what flourishing means in their specific cultural context. The resulting framework measures dimensions that are central to WEIRD cultural contexts and misses dimensions that are central to the community's own understanding of a life going well. The institution optimizes for the flourishing of the framework designers rather than the flourishing of the community members.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The flourishing framework was developed by institutional staff without community member co-development. Measurement instruments have been adopted from standardized surveys without cultural adaptation. Community members describe the institution's conception of flourishing as "not how we think about a good life." The flourishing dimensions most important to the community — spiritual wellbeing, family harmony, cultural connection — are not represented in the institutional framework.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">W6</div>
+      <div class="fail-content">
+        <div class="fail-name">Flourishing without governance — wellbeing data that doesn't change anything</div>
+        <div class="fail-desc">The institution measures flourishing — collects wellbeing data, produces assessments, tracks longitudinal trends — and does not change its institutional behavior based on what the data shows. Governance bodies receive flourishing reports as information rather than as accountability inputs. Programs that are not contributing to flourishing are not modified or retired. Resource allocation does not respond to flourishing deficit data. The measurement infrastructure is real; its governance function is absent.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Flourishing data is not reviewed by the governance body with accountability for institutional response. No program modification has been made based on flourishing assessment findings. Resource allocation decisions are not informed by flourishing deficit data. The institution describes its flourishing assessment as "important context" rather than as governance-accountable performance information.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Kingdom of Bhutan and the gross national happiness framework</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Bhutan's Gross National Happiness — institutionalizing flourishing as a governance framework</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Bhutan's Gross National Happiness (GNH) framework, articulated by the Fourth King of Bhutan in the 1970s and progressively institutionalized over the following decades, is the most extensively documented national attempt to operationalize human flourishing as a governance framework rather than a philosophical aspiration. The GNH Commission applies a nine-domain assessment — psychological wellbeing, health, time use, education, cultural diversity and resilience, good governance, ecological diversity, living standards, and community vitality — through a validated survey instrument administered to the Bhutanese population on a regular cycle. The results directly inform government policy and program design.</div>
+      <div class="case-text">Bhutan's contribution to Category 15.0 is specifically in the institutional design challenge that process 15.1's measurement framework addresses: how to construct a multi-dimensional wellbeing assessment that is rigorous enough to produce actionable governance findings while remaining culturally grounded in the specific society it measures. The GNH framework's nine domains were developed with Bhutanese cultural and religious values as explicit inputs — Buddhist principles of sufficiency, interdependence, and the middle path are embedded in the measurement framework rather than being overlaid on WEIRD wellbeing measures. This cultural grounding is both the framework's greatest strength (its measurements reflect what Bhutanese people actually value in a good life) and its greatest limitation for direct export (the framework requires similar cultural grounding in each new institutional context).</div>
+      <div class="case-text">The GNH framework's governance application — its direct use in policy and budget decisions — operationalizes process 15.5.2's resource allocation alignment requirement at the national scale. When GNH survey findings show deficit in a specific domain, government investment in that domain is a legitimate policy response grounded in democratic flourishing accountability rather than in economic optimization. This is the governance aspiration that Category 15.5 articulates at the institutional level.</div>
+      <div class="case-lesson"><strong>Category 15.0 lesson:</strong> Bhutan's GNH framework demonstrates that multi-dimensional flourishing assessment can be implemented at governance scale — the measurement infrastructure is achievable and the governance connections to resource allocation are designable. The framework's most important contribution to Category 15.0 is not its specific nine domains (which are Bhutan-specific) but its demonstration that flourishing can be culturally grounded, rigorously measured, and genuinely governance-connected. Post-labor institutions designing Category 15.0 processes should draw on the GNH framework's design methodology — community-grounded domain selection, validated survey instruments, longitudinal tracking, governance integration — rather than its specific content.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Wellbeing Economy Alliance and movement infrastructure for flourishing governance</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Wellbeing Economy Alliance — building the policy and institutional infrastructure for flourishing-oriented governance</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Wellbeing Economy Alliance (WEAll) is an international network of organizations, researchers, and governments working to build the policy and institutional infrastructure for economies explicitly oriented toward human and ecological flourishing rather than toward GDP growth. Its member institutions include national governments (Scotland, Iceland, Wales, New Zealand, and Finland, whose governments have collectively formed the Wellbeing Economy Governments network), civil society organizations, research institutions, and businesses that have adopted wellbeing-oriented governance frameworks.</div>
+      <div class="case-text">WEAll's contribution to Category 15.0 is specifically in the movement-building and policy advocacy dimension of process 15.5.5 — demonstrating that flourishing-oriented governance at the national and sub-national level is not utopian but operational. Scotland's National Performance Framework, which uses a multi-dimensional wellbeing measurement system as the primary accountability framework for government performance, and New Zealand's Living Standards Framework and Wellbeing Budget, which explicitly direct government investment toward wellbeing dimensions rather than GDP growth, operationalize at the national scale the governance approaches that Category 15.0 articulates at the institutional scale.</div>
+      <div class="case-text">For post-labor institutions, WEAll's most practically relevant contribution is its policy advocacy infrastructure: the demonstrated pathway from institutional flourishing measurement (what Category 15.1 describes) to policy advocacy (what process 15.5.5 describes) to structural change in the policy environments that shape community flourishing. Institutions that measure flourishing and discover that their community's wellbeing is constrained by policy failures — inadequate income support, environmental harm, lack of social infrastructure investment — have both the evidence and the movement infrastructure to advocate for the structural changes that institutional programming alone cannot produce.</div>
+      <div class="case-lesson"><strong>Category 15.0 lesson:</strong> WEAll's network demonstrates that flourishing-oriented governance is not a post-labor utopian aspiration — it is a policy innovation already being implemented at national scale in multiple countries. Post-labor institutions developing Category 15.0 processes can draw on the measurement frameworks, governance models, and policy advocacy infrastructure that WEAll and its member governments have developed. More importantly, they can connect their institutional flourishing governance to the broader movement for wellbeing-oriented policy that WEAll represents — using their community-level flourishing data as evidence in a policy conversation that is already occurring at the national and international level.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>The labor-value contract organized most of human meaning-making through employment. When that contract ends for a community, the question is not only where people will find income — it is where they will find purpose. Post-labor institutions that answer only the first question have answered half of what is being asked.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 15.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 15.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Flourishing is described as an institutional aspiration without measurement infrastructure; community wellbeing assessed through staff impression</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Programs are designed for deficit reduction only; no programming specifically addresses meaning, purpose, or social connection as flourishing goals</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No social infrastructure investment; community gathering and connection are incidental to institutional programming rather than designed institutional contributions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">The post-labor meaning crisis is not recognized as an institutional concern; purpose deficits are attributed to individual psychology rather than structural conditions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No governance accountability for flourishing outcomes; community wellbeing not reviewed by governance body</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Flourishing framework defined; initial wellbeing assessment conducted using basic validated instruments; data disaggregation beginning</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Some programs incorporating flourishing dimensions beyond deficit reduction; theories of change beginning to include positive wellbeing outcomes</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Social infrastructure investment beginning; some programming designed for relationship-building and community connection</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Awareness of purpose deficit; some programming addressing meaning and contribution; cultural programming investment developing</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Flourishing data beginning to reach governance body; initial integration with program evaluation; community vision for flourishing developing</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Annual multi-dimensional wellbeing assessment using culturally adapted validated instruments; disaggregated by demographic subgroup; longitudinal tracking established</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Programs designed with explicit flourishing theories of change; flourishing outcomes tracked and connected to program evaluation; programs modified based on flourishing findings</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Social infrastructure investment sustained; community connection programming with longitudinal tracking; social capital measurement integrated into institutional assessment</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Purpose and contribution pathways designed and offered; cultural and creative programming sustained; civic leadership development connected to meaning cultivation</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Governance body reviews flourishing data with accountability for institutional response; resource allocation reflects flourishing priorities; annual wellbeing report published</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community members are primary agents in defining and assessing their own flourishing — not only survey respondents but active participants in the design and interpretation of flourishing assessment</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Measurable improvement in community flourishing across all seven dimensions over a three-year trend period; equity gaps in flourishing narrowing</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Post-labor meaning infrastructure genuinely operational — community contribution pathways, civic identity, and collective purpose are recognized community assets that community members describe as important to their sense of thriving</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Institution contributes flourishing measurement frameworks to peer network; participates in WEAll or equivalent movement infrastructure for flourishing-oriented policy</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community flourishing data is used as evidence in policy advocacy for structural changes that institutional programming alone cannot produce</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 15.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Life satisfaction mean and trend</div>
+      <div class="kpi-cell">Community members' average self-reported life satisfaction on validated 0–10 scale, tracked annually — the primary composite flourishing indicator; trend is more meaningful than absolute level</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Flourishing equity gap</div>
+      <div class="kpi-cell">Difference in flourishing scores across demographic subgroups — the primary equity measure for Category 15.0; measures whether flourishing is distributed equitably across the community</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Purpose and meaning score</div>
+      <div class="kpi-cell">Community members' reported sense of purpose and direction, tracked annually — the flourishing dimension most specifically addressed by post-labor institutional design</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Social connection index</div>
+      <div class="kpi-cell">Composite measure of social connection quality, loneliness rates, community belonging sense, and network breadth — tracking the relational flourishing dimension over time</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community contribution rate</div>
+      <div class="kpi-cell">Percentage of community members actively participating in contribution pathways — civic roles, community projects, mutual aid, creative expression — as a measure of the post-labor meaning infrastructure</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Dignity experience score</div>
+      <div class="kpi-cell">Community members' reported experience of dignity and respect in institutional and community life — the institutional contribution to the dignity flourishing dimension</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Capability and agency index</div>
+      <div class="kpi-cell">Composite measure of sense of control, meaningful choice availability, and perceived freedom to live a chosen life — the capability flourishing dimension tracked annually</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Flourishing assessment coverage</div>
+      <div class="kpi-cell">Percentage of community members for whom multi-dimensional flourishing data has been collected in the past 12 months — measures whether flourishing assessment is comprehensive or limited to self-selecting participants</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 15.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 15.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a community flourishing conversation — what does thriving mean here?</div>
+          <div class="seq-desc">Before designing any measurement instruments or program modifications, convene a series of community conversations about what flourishing means in this specific community. Ask community members: "When you imagine your community ten years from now, thriving in the fullest sense — what does that look like? What would be different from today? What would people have that they don't have now — beyond material sufficiency?" The answers will be culturally specific, partially surprising, and necessary for building a flourishing framework that measures what matters to this community rather than what generic frameworks assume matters. Document the conversations and use them as the primary input to measurement framework design.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> At least three community flourishing conversations conducted across different demographic subgroups; documented findings; primary flourishing dimensions named by community members identified and compared to standard frameworks; preliminary framework adapted to community-specific dimensions.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement a baseline wellbeing assessment using validated instruments</div>
+          <div class="seq-desc">Select wellbeing measurement instruments that cover the community-identified flourishing dimensions and have validated psychometric properties — the ONS4 wellbeing questions, the Purpose in Life scale, the UCLA Loneliness Scale, and validated social connection measures are all well-established and accessible. Adapt instruments for cultural appropriateness based on the community conversations. Conduct the first assessment to establish a baseline — the measurement infrastructure that makes all subsequent trend analysis possible. Disaggregate results by demographic subgroup from the beginning. The baseline data will almost certainly reveal flourishing deficits that are not visible in service delivery metrics, including the purpose and connection deficits most characteristic of post-labor community conditions.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Baseline wellbeing assessment conducted using culturally adapted validated instruments; data disaggregated by demographic subgroup; findings presented to governance body; top three flourishing deficit dimensions identified for institutional response.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Audit existing programming for flourishing alignment</div>
+          <div class="seq-desc">Review the institution's current programs against the baseline flourishing findings. For each major program, assess: which flourishing dimensions does this program address, through what mechanism, and what evidence exists that it is producing flourishing improvement in those dimensions? Identify the flourishing dimensions with the largest deficits that no existing program addresses. Identify programs that are addressing service delivery metrics well but have no connection to flourishing outcomes. The audit will typically reveal that existing programming covers material sufficiency reasonably well and leaves purpose, connection, and capability dimensions largely unaddressed. Use the findings to inform the next program design cycle.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Program-flourishing alignment audit completed; flourishing gap analysis (dimensions with deficit and no programmatic response) documented; at least one program modified to include explicit flourishing theory of change; at least one new program element designed for a previously unaddressed flourishing dimension.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Design and launch one community contribution pathway</div>
+          <div class="seq-desc">Develop one structured pathway through which community members can contribute to collective life in ways that are socially recognized, organizationally supported, and designed to address the purpose and meaning deficit identified in the baseline assessment. This might be a community project, a civic leadership role, a mutual aid coordination function, a creative or cultural program, or a community teaching role — the specific form should be co-designed with community members who would use it. Launch the pathway, track participation and purpose impact, and use the experience to develop the institutional capacity for more comprehensive contribution infrastructure.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> One community contribution pathway co-designed and launched; participation tracked; wellbeing impact assessed at six and twelve months; pathway participants report higher purpose scores than non-participants; institutional learning about contribution pathway design documented.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Integrate flourishing data into governance and connect to advocacy</div>
+          <div class="seq-desc">Establish a governance routine for flourishing data review — quarterly for available indicators, annual for the full assessment — with explicit governance accountability for institutional response to flourishing deficits. Publish the first community wellbeing report, sharing the institution's flourishing assessment findings honestly with the broader community. Connect the institution's flourishing data to the relevant policy advocacy networks — WEAll, national wellbeing economy networks, local government wellbeing initiatives — as evidence in the case for structural changes that institutional programming alone cannot produce.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Quarterly governance review of flourishing indicators established; first annual community wellbeing report published; connection established with at least one policy advocacy network using community flourishing data; governance body has made at least one resource allocation decision influenced by flourishing assessment findings.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 15.0 and Category 6.0 (Support Community Members):</strong> Category 6.0 addresses the individualized support processes through which institutions work with community members navigating specific crises and challenges. Category 15.0 addresses the community-level flourishing assessment and cultivation that operates above the individual case level. The relationship is the difference between micro-level wellbeing support (Category 6.0) and macro-level flourishing governance (Category 15.0). Category 6.0 process 6.5 (individual outcome tracking) feeds into Category 15.0's community-level flourishing assessment as disaggregated data about individual wellbeing trajectories. Category 15.0's flourishing findings feed back into Category 6.0 by identifying community-wide patterns (high loneliness rates, widespread purpose deficits, systematic capability constraints) that require program-level rather than case-level responses.</p>
+    <p><strong>On the limits of institutional contributions to flourishing:</strong> Category 15.0 asks post-labor institutions to hold flourishing as an institutional goal and to design processes for measuring and cultivating it. This is an appropriate institutional ambition. It is also an ambition that must be held with humility about what institutions can and cannot produce. Human flourishing is ultimately constituted by individuals, families, communities, and the full social fabric of human life — not by institutional programs. Institutions can create the conditions in which flourishing is more possible; they cannot produce flourishing in people who are not positioned to receive it, and they cannot substitute for the organic social processes through which people actually thrive. The appropriate institutional posture is to create the infrastructure, remove the barriers, and cultivate the conditions — and then to get out of the way of the human flourishing that people produce for themselves when those conditions are present.</p>
+    <p><strong>On the Easterlin paradox and its institutional implications:</strong> The Easterlin paradox's finding — that income growth above a moderate threshold does not reliably produce wellbeing growth — has a specific and important implication for post-labor institutional design: the objective is not to maximize material provision but to achieve material sufficiency and then invest in the non-material flourishing dimensions that research demonstrates are most predictive of wellbeing above the sufficiency threshold. Institutions that continue optimizing for material provision in communities that have achieved basic material sufficiency are allocating resources to diminishing returns on wellbeing while under-investing in the social connection, purpose, capability, and dignity dimensions where additional investment produces the highest marginal wellbeing return. Category 15.0's contribution is to make this reallocation visible and governable rather than leaving it to intuition.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part V · Chapter 22 · GPS 15.0</span>
+    <span class="close-next">Ch. 23 — Participatory democracy (GPS 16.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 11 — Deliver Physical Resources (GPS 4.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e; --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --civic: #1D9E75; --civic-dim: rgba(29,158,117,0.08);
+    --civic-text: #4ecfa0; --civic-border: rgba(29,158,117,0.25);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; align-items: center; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.civic { background: var(--civic-dim); color: var(--civic-text); border: 1px solid var(--civic-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--civic); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--civic-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--civic); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--civic); background: var(--civic-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--civic-text); }
+  .pullquote p::after { content: '\201D'; color: var(--civic-text); }
+
+  /* Allocation mechanisms comparison */
+  .alloc-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .alloc-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .alloc-row { display: grid; grid-template-columns: 130px 1fr 1fr; border-bottom: 1px solid var(--border-subtle); }
+  .alloc-row:last-child { border-bottom: none; }
+  .alloc-row.head { background: var(--bg-secondary); }
+  .alloc-cell { padding: 13px 16px; font-family: 'Outfit', sans-serif; font-size: 0.74rem; color: var(--text-secondary); line-height: 1.55; border-right: 1px solid var(--border-subtle); }
+  .alloc-cell:last-child { border-right: none; }
+  .alloc-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .alloc-cell.mech-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
+
+  /* Supply chain design block */
+  .supply-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .supply-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .supply-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .supply-row:last-child { border-bottom: none; }
+  .supply-stage { width: 100px; min-width: 100px; padding: 14px 14px; border-right: 1px solid var(--border-subtle); background: var(--civic-dim); display: flex; flex-direction: column; gap: 3px; justify-content: center; }
+  .supply-stage-name { font-family: 'Crimson Pro', serif; font-size: 0.9rem; font-weight: 600; color: var(--civic-text); line-height: 1.2; }
+  .supply-stage-num { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); letter-spacing: 0.06em; }
+  .supply-content { padding: 14px 18px; flex: 1; border-right: 1px solid var(--border-subtle); }
+  .supply-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .supply-challenge { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .supply-challenge strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+  .supply-gps { width: 120px; min-width: 120px; padding: 14px 14px; }
+  .supply-gps-text { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); line-height: 1.5; }
+  .supply-gps-text strong { color: var(--civic-text); font-weight: 500; opacity: 0.8; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle); background: var(--civic-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle); background: var(--civic-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity block */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI block */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--civic-dim); color: var(--civic-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--civic-dim); border-bottom: 1px solid var(--civic-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--civic-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--civic-text); font-weight: 500; }
+
+  /* Sequence block */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--civic-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part III · Civic operating processes</div>
+  <div class="chapter-eyebrow">Chapter 11 · GPS Category 4.0</div>
+  <h1 class="chapter-title">Deliver physical resources</h1>
+  <p class="chapter-subtitle">Logistics as a justice problem — planning, procuring, and distributing the material things that make lives livable, without the price system to do the allocation work</p>
+  <div class="cat-meta">
+    <span class="cat-pill civic">Civic Operating</span>
+    <span class="cat-pill civic">Prosperity L1</span>
+    <span class="cat-pill civic">Allocation without markets</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">21 processes</span>
+    <span class="cat-pill neutral">15 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Logistics has a politics. Every decision about what to procure, where to store it, how to distribute it, and who receives it when supply falls short of demand is a political decision — a decision about whose needs take priority and whose can wait, about what counts as an adequate allocation and what counts as a deficiency, about how scarcity is managed and who bears its costs. In market systems, these decisions are made by price: those with money receive resources; those without do not. The decision appears automatic, neutral, and inevitable — a function of supply and demand rather than of power and choice. The appearance is false, but it is consequentially false. It allows an inherently political allocation process to present itself as apolitical, absorbing the moral weight of resource distribution without any of the moral accountability.</p>
+
+    <p>Category 4.0 is the process domain in which post-labor institutions take on the allocation responsibility that markets discharge through price. Housing, food, tools, medical supplies, technology equipment, transportation, and the full material layer of community life — when these flow through institutions rather than markets, every allocation decision must be made explicitly and deliberately rather than automatically. There is no price signal to clear the market. There is only the institution's allocation process: who receives when resources are abundant, how scarcity is managed when demand exceeds supply, who bears the costs of shortfalls, and what mechanisms allow community members to contest allocation decisions they believe are unjust.</p>
+
+    <p>This is not a technical problem dressed as a moral one. It is genuinely both. The logistics of physical resource delivery — procurement, inventory management, distribution planning, asset maintenance — are operationally complex and require real institutional capacity. And the allocation framework that governs those logistics — the explicit rules and criteria through which resources flow to community members — is unavoidably value-laden and must be designed with as much care as any governance process. Institutions that develop the logistics without the allocation framework produce efficient systems that distribute resources in ways shaped by unexamined assumptions rather than deliberate community choice. Institutions that develop the allocation framework without the logistics produce principled intentions that cannot be reliably executed. Category 4.0 requires both, in permanent conversation with each other.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The allocation problem — five mechanisms and their trade-offs</div>
+
+  <div class="body-text">
+    <p>When a post-labor institution distributes physical resources, it must answer the same question that markets answer through price: who gets what, in what quantity, in what order, when supply is insufficient to meet all demand simultaneously? There is no mechanism-neutral answer to this question. Every allocation mechanism embeds assumptions about equity, efficiency, dignity, and the proper basis for claims on shared resources. Understanding the available mechanisms — and their trade-offs — is the prerequisite for designing an allocation framework that reflects deliberate community values rather than default assumptions.</p>
+  </div>
+
+  <div class="alloc-block">
+    <div class="alloc-header">Five non-market allocation mechanisms — how they work and where they break</div>
+    <div class="alloc-row head">
+      <div class="alloc-cell head">Mechanism</div>
+      <div class="alloc-cell head">Logic and strengths</div>
+      <div class="alloc-cell head">Equity risks and failure modes</div>
+    </div>
+    <div class="alloc-row">
+      <div class="alloc-cell mech-name">Needs-based allocation</div>
+      <div class="alloc-cell">Resources flow to those with the greatest demonstrated need. Aligns most directly with the post-labor principle that sufficiency should not depend on market participation. Produces outcomes that are most defensible on equity grounds when needs are accurately assessed.</div>
+      <div class="alloc-cell">Requires accurate needs assessment — difficult without administrative infrastructure. Needs documentation requirements can become barriers that exclude the most marginalized (those without documentation). Defining and comparing needs across different circumstances involves value judgments that must be made explicitly rather than obscured.</div>
+    </div>
+    <div class="alloc-row">
+      <div class="alloc-cell mech-name">Queue-based allocation</div>
+      <div class="alloc-cell">First-come, first-served. Simple, transparent, and apparently neutral. Minimizes the administrative burden of needs assessment. Familiar to community members from common experience with market queuing.</div>
+      <div class="alloc-cell">Systematically advantages those with the flexibility to arrive first — typically those with more resources, fewer competing demands on their time, and better institutional navigation capacity. Reproduces class dynamics without the pricing mechanism, producing the same distributional outcome with a different surface appearance of fairness.</div>
+    </div>
+    <div class="alloc-row">
+      <div class="alloc-cell mech-name">Lottery allocation</div>
+      <div class="alloc-cell">Random selection among eligible recipients. Eliminates queue-based advantages and administrative discretion. Creates genuine equal probability among all eligible participants. Used extensively in housing, school, and grant allocation where needs-based comparison is contested.</div>
+      <div class="alloc-cell">Does not account for differential need — a family facing eviction has the same lottery probability as a stably housed family if both meet eligibility criteria. Feels arbitrary to those who experience a bad outcome. Does not build the community relationships that allocation processes can create when they involve direct interaction.</div>
+    </div>
+    <div class="alloc-row">
+      <div class="alloc-cell mech-name">Rotation-based allocation</div>
+      <div class="alloc-cell">Resources are distributed in turn, with each community member guaranteed access at regular intervals. Well-suited to durable goods (tools, equipment, vehicles) where the resource is not consumed but borrowed. Builds predictability and planning capacity for community members.</div>
+      <div class="alloc-cell">Does not respond to differential urgency — a community member whose need is acute receives the same next-rotation allocation as one whose need can wait. Rotation systems for consumable resources (food, medical supplies) are difficult to sustain equitably when consumption patterns vary significantly.</div>
+    </div>
+    <div class="alloc-row">
+      <div class="alloc-cell mech-name">Participatory allocation</div>
+      <div class="alloc-cell">Community members collectively decide how resources are allocated through deliberative processes. Produces the highest legitimacy among those who participate. Builds collective ownership of allocation decisions. Can incorporate nuanced contextual knowledge that administrative systems miss.</div>
+      <div class="alloc-cell">Time-intensive and not scalable to high-frequency, high-volume allocations. Participation equity challenges mean that participatory processes may be captured by the most engaged rather than the most representative voices. Requires significant facilitation capacity and a community with sufficient trust to hold resource allocation disagreements constructively.</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>Most institutions use hybrid mechanisms — needs-based allocation with queue-based administration for routine distributions, rotating to lottery for contested resources, and participatory processes for decisions about how the overall allocation framework should be designed. The design of the hybrid is itself a governance decision that must be made deliberately, communicated transparently, and reviewed periodically to assess whether it is producing the distributional outcomes the community has said it values.</p>
+    <p>The hardest allocation design challenge is scarcity management: what the institution does when demand exceeds supply. Scarcity protocols that are not pre-designed are almost always resolved by the default mechanisms of the institution — whoever is most persistent, most connected, or most familiar with the system tends to receive when there is not enough for everyone. Designing explicit scarcity protocols before they are needed is the most consequential allocation planning investment an institution can make.</p>
+  </div>
+
+  <div class="pullquote">
+    <p>There is no mechanism-neutral way to distribute physical resources. Every allocation system embeds assumptions about whose needs take priority. The choice is not whether to make those assumptions but whether to make them deliberately.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The physical resource supply chain — six stages</div>
+
+  <div class="body-text">
+    <p>Physical resource delivery involves a supply chain — a sequence of operations from identification of need through procurement through storage through distribution through recipient support through maintenance and renewal. Each stage presents distinct operational challenges and distinct equity risks. Understanding the full supply chain, rather than focusing on the distribution stage alone, is the precondition for building a system that is both reliable and just.</p>
+  </div>
+
+  <div class="supply-block">
+    <div class="supply-header">The physical resource supply chain — stages, challenges, and GPS process groups</div>
+
+    <div class="supply-row">
+      <div class="supply-stage">
+        <div class="supply-stage-num">Stage 1</div>
+        <div class="supply-stage-name">Needs identification</div>
+      </div>
+      <div class="supply-content">
+        <div class="supply-desc">Determining what resources the community needs, in what quantities, with what frequency, and for which populations. Without accurate needs identification, procurement is driven by assumption rather than data — producing surpluses of some resources and shortfalls of others, with the shortfalls disproportionately affecting populations whose needs are least visible to institutional decision-makers.</div>
+        <div class="supply-challenge"><strong>Equity risk:</strong> Needs identification that relies on self-reporting consistently undercounts the needs of populations facing trust barriers, complexity barriers, or stigma associated with receiving support.</div>
+      </div>
+      <div class="supply-gps">
+        <div class="supply-gps-text"><strong>GPS 4.1</strong> + 2.1 — procurement planning and needs assessment combined</div>
+      </div>
+    </div>
+
+    <div class="supply-row">
+      <div class="supply-stage">
+        <div class="supply-stage-num">Stage 2</div>
+        <div class="supply-stage-name">Procurement</div>
+      </div>
+      <div class="supply-content">
+        <div class="supply-desc">Acquiring resources from suppliers, donors, or other institutions through purchasing, accepting in-kind donations, or inter-institutional resource sharing. Procurement decisions involve quality standards, sourcing ethics (supply chain labor conditions, environmental impact), cost management, and supply reliability. Post-labor institutions must navigate the tension between solidarity economy sourcing values and the cost and reliability pressures of serving communities with limited resources.</div>
+        <div class="supply-challenge"><strong>Equity risk:</strong> Prioritizing lowest-cost procurement without quality floors produces resources that are inferior to what comparable market alternatives provide — reproducing a two-tier resource quality system that mirrors market inequality.</div>
+      </div>
+      <div class="supply-gps">
+        <div class="supply-gps-text"><strong>GPS 4.1</strong> — supply management and procurement planning</div>
+      </div>
+    </div>
+
+    <div class="supply-row">
+      <div class="supply-stage">
+        <div class="supply-stage-num">Stage 3</div>
+        <div class="supply-stage-name">Storage and inventory</div>
+      </div>
+      <div class="supply-content">
+        <div class="supply-desc">Managing the physical storage of resources between procurement and distribution — including condition maintenance, inventory tracking, waste prevention, and security. Storage is operationally invisible when it functions and catastrophic when it fails: food that spoils, medication that is stored incorrectly, equipment that is stolen or damaged in inadequate facilities. The investment in adequate storage infrastructure is consistently underfunded relative to procurement, creating a systemic waste problem in resource delivery operations.</div>
+        <div class="supply-challenge"><strong>Equity risk:</strong> Inadequate storage infrastructure disproportionately affects perishable resources and communities with the most acute needs — producing situations where resources are procured but cannot be delivered because they cannot be safely stored.</div>
+      </div>
+      <div class="supply-gps">
+        <div class="supply-gps-text"><strong>GPS 4.2</strong> — inventory management and distribution logistics</div>
+      </div>
+    </div>
+
+    <div class="supply-row">
+      <div class="supply-stage">
+        <div class="supply-stage-num">Stage 4</div>
+        <div class="supply-stage-name">Distribution</div>
+      </div>
+      <div class="supply-content">
+        <div class="supply-desc">Getting resources from storage to recipients — the stage that is most visible and most often treated as the whole of resource delivery. Distribution design includes allocation mechanism selection, scheduling, location, dignity of the distribution experience, and the staffing and volunteer management required. Distribution design that treats recipients as passive beneficiaries rather than community members with agency produces experiences that are experienced as humiliating and reinforces rather than disrupts the stigma attached to receiving support.</div>
+        <div class="supply-challenge"><strong>Equity risk:</strong> Distribution logistics designed for operational efficiency (centralized locations, fixed schedules, high throughput) systematically disadvantage recipients with transportation barriers, caregiving responsibilities, or inflexible work schedules.</div>
+      </div>
+      <div class="supply-gps">
+        <div class="supply-gps-text"><strong>GPS 4.2 + 4.3 + 4.4</strong> — logistics, housing, and food delivery</div>
+      </div>
+    </div>
+
+    <div class="supply-row">
+      <div class="supply-stage">
+        <div class="supply-stage-num">Stage 5</div>
+        <div class="supply-stage-name">Recipient support</div>
+      </div>
+      <div class="supply-content">
+        <div class="supply-desc">Supporting recipients in using resources effectively — through navigation assistance, skill building, troubleshooting, and connection to complementary services. Resource delivery without recipient support produces underutilization, misuse, and the frustration of recipients who receive resources they cannot effectively deploy. This stage is especially important for complex resources (housing, technology equipment) whose value depends significantly on the recipient's ability to use them.</div>
+        <div class="supply-challenge"><strong>Equity risk:</strong> Recipients with the greatest need often have the least capacity to navigate complex resources independently, meaning that absent recipient support, the benefits of resource delivery are inversely related to need.</div>
+      </div>
+      <div class="supply-gps">
+        <div class="supply-gps-text"><strong>GPS 6.0</strong> — member support processes provide the recipient support layer</div>
+      </div>
+    </div>
+
+    <div class="supply-row">
+      <div class="supply-stage">
+        <div class="supply-stage-num">Stage 6</div>
+        <div class="supply-stage-name">Maintenance and renewal</div>
+      </div>
+      <div class="supply-content">
+        <div class="supply-desc">Maintaining durable resources in usable condition and planning for their renewal at end of useful life. The maintenance and renewal stage applies primarily to durable goods — housing, equipment, vehicles — rather than consumables. Institutions that deliver durable resources without maintenance processes deliver goods that deteriorate to unusability, transferring the cost of deterioration to recipients who lack the resources to maintain them independently. The lifecycle cost of durable resources includes maintenance, and procurement decisions that do not account for lifecycle costs systematically underestimate the total resource commitment the institution is making.</div>
+        <div class="supply-challenge"><strong>Equity risk:</strong> Recipients of poorly maintained durable resources bear the full cost of deterioration — experiencing benefit reduction while the institution counts the initial delivery as a completed transaction.</div>
+      </div>
+      <div class="supply-gps">
+        <div class="supply-gps-text"><strong>GPS 4.5</strong> — asset maintenance and renewal processes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 4.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">4.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Plan and manage physical resource procurement and supply</div>
+          <div class="proc-group-desc">Procurement planning is the upstream investment that determines the quality, reliability, and equity of everything downstream. Institutions that do not plan procurement — that acquire resources opportunistically based on what is donated or available rather than based on what is needed — produce resource portfolios shaped by donor preferences rather than community needs, with quality and quantity variability that undermines the reliability community members depend on. Good procurement planning requires integrating needs data, supply market knowledge, quality standards, and sourcing values into a disciplined annual planning process.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">4.1.1</div><div class="act-name">Develop annual resource needs forecast based on community needs assessment and historical utilization data — with population growth and changing need projections</div></div>
+            <div class="proc-activity"><div class="act-id">4.1.2</div><div class="act-name">Establish supplier relationships and diversify supply sources — single-source dependency is a supply chain resilience risk that can be catastrophic during disruptions</div></div>
+            <div class="proc-activity"><div class="act-id">4.1.3</div><div class="act-name">Define and enforce quality standards for all major resource categories — minimum quality floors below which the institution will not accept resources regardless of cost or donation</div></div>
+            <div class="proc-activity"><div class="act-id">4.1.4</div><div class="act-name">Develop and apply an ethical sourcing framework — supply chain labor conditions, environmental impact, and solidarity economy sourcing preferences made explicit and consistently applied</div></div>
+            <div class="proc-activity"><div class="act-id">4.1.5</div><div class="act-name">Manage in-kind donation intake — systems for evaluating, accepting, declining, and processing donated resources with quality screening, not just gratitude</div></div>
+            <div class="proc-activity"><div class="act-id">4.1.6</div><div class="act-name">Design and maintain supply chain resilience — emergency procurement protocols, buffer stock policies, and inter-institutional resource sharing agreements for disruption response</div></div>
+          </div>
+          <div class="act-note">Process 4.1.5 — in-kind donation management — deserves specific attention because it is the area where procurement quality most often degrades without the institution noticing. Accepting all donations regardless of quality generates storage costs, distribution costs, and recipient frustration for resources that don't serve community needs. A donation intake system with quality standards — and the institutional confidence to decline donations that don't meet them — is an operational and equity investment. Donated items that don't meet quality thresholds can sometimes be redirected to appropriate recycling rather than simply declined, maintaining donor relationships while maintaining quality standards.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">4.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Manage inventory, storage, and distribution logistics</div>
+          <div class="proc-group-desc">The operational core of physical resource delivery: maintaining accurate inventory, managing storage facilities to prevent loss and degradation, designing distribution systems that are efficient for the institution and dignified for recipients, and tracking resource flows to enable both operational management and equity monitoring. Logistics systems that work for the institution but not for recipients — that are efficient at high-throughput distribution but create degrading or inaccessible recipient experiences — are not functional systems; they are systems that have optimized for the wrong objective.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">4.2.1</div><div class="act-name">Implement inventory management system — accurate real-time tracking of resource quantities, locations, condition, and expiration (for perishables)</div></div>
+            <div class="proc-activity"><div class="act-id">4.2.2</div><div class="act-name">Design and maintain storage facilities with appropriate conditions for each resource type — temperature, humidity, security, and access requirements vary significantly by resource category</div></div>
+            <div class="proc-activity"><div class="act-id">4.2.3</div><div class="act-name">Design distribution processes with recipient experience as a primary design criterion — scheduling, location, wait time, privacy, and dignity are design requirements, not afterthoughts</div></div>
+            <div class="proc-activity"><div class="act-id">4.2.4</div><div class="act-name">Develop and document the allocation framework — the explicit criteria, mechanisms, and scarcity protocols that govern who receives what when supply is insufficient</div></div>
+            <div class="proc-activity"><div class="act-id">4.2.5</div><div class="act-name">Track distribution equity — monitor who is receiving resources, at what rates, relative to the target community's demographic composition</div></div>
+            <div class="proc-activity"><div class="act-id">4.2.6</div><div class="act-name">Establish waste reduction systems — for perishable resources especially, logistics should minimize waste through accurate forecasting, FIFO protocols, and food rescue partnerships</div></div>
+          </div>
+          <div class="act-note">Process 4.2.4 — the allocation framework documentation — is the most politically significant process in Category 4.0. Most institutions have implicit allocation frameworks — informal norms that govern who receives what during scarcity — but have not made them explicit. Making them explicit surfaces the value disagreements that the informal system was papering over and allows the community to deliberate about allocation criteria rather than having those criteria determined by whoever happens to be managing distribution on any given day. The political discomfort of this process is proportional to its importance.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">4.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Deliver housing and shelter resources and stewardship</div>
+          <div class="proc-group-desc">Housing delivery is the highest-stakes physical resource process and the one that most acutely illustrates the tension between operational complexity and allocation equity. Housing scarcity is perpetual in most communities served by post-labor institutions; demand consistently exceeds supply; the consequences of inadequate housing are among the most severe of any resource deprivation; and the politics of housing allocation are intense because the stakes are high and the resources are visible and bounded. Category 4.3 covers the full housing delivery cycle — from unit acquisition through resident selection through occupancy support through maintenance through transition — with equity as a design requirement at every stage.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">4.3.1</div><div class="act-name">Develop and manage housing acquisition and development pipeline — identifying, acquiring, developing, and preserving housing units for community use</div></div>
+            <div class="proc-activity"><div class="act-id">4.3.2</div><div class="act-name">Design and implement equitable resident selection processes — allocation criteria, application processes, and waitlist management that prioritize need without creating dignity violations</div></div>
+            <div class="proc-activity"><div class="act-id">4.3.3</div><div class="act-name">Manage occupancy — lease administration, occupancy support, and the full landlord-tenant relationship reoriented from extraction to stewardship</div></div>
+            <div class="proc-activity"><div class="act-id">4.3.4</div><div class="act-name">Deliver housing maintenance and repair services — responsive maintenance that treats residents as members rather than tenants to be minimally serviced</div></div>
+            <div class="proc-activity"><div class="act-id">4.3.5</div><div class="act-name">Manage housing transition support — for residents moving in, moving out, and navigating difficult occupancy situations — with stability as the primary objective</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">4.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Deliver food, nutrition, and related resources</div>
+          <div class="proc-group-desc">Food delivery is the physical resource process most institutions in this category begin with — it is high-frequency, high-impact, operationally accessible, and deeply embedded in community relationship and cultural practice. It is also the category where the dignity dimension of resource delivery is most visible: the difference between a food distribution that is experienced as charity and one that is experienced as community abundance is primarily a design difference, not a resource difference. Food sovereignty — the principle that communities should control their own food systems rather than receiving food determined by external supply chains — is the post-labor extension of food delivery beyond logistics into governance.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">4.4.1</div><div class="act-name">Design food distribution systems that center community dignity — choice models, community market formats, and culturally appropriate food offerings rather than standardized package distributions</div></div>
+            <div class="proc-activity"><div class="act-id">4.4.2</div><div class="act-name">Manage food procurement for cultural relevance — sourcing food that reflects the community's actual dietary practices and cultural traditions, not the dominant food culture of the larger society</div></div>
+            <div class="proc-activity"><div class="act-id">4.4.3</div><div class="act-name">Develop local and regional food sourcing relationships — connecting to community gardens, urban farms, and regional producers to build food sovereignty alongside food security</div></div>
+            <div class="proc-activity"><div class="act-id">4.4.4</div><div class="act-name">Manage food safety and quality — FIFO inventory management, temperature monitoring, expiration tracking, and the regulatory compliance that food distribution requires</div></div>
+            <div class="proc-activity"><div class="act-id">4.4.5</div><div class="act-name">Integrate food delivery with nutrition education and cooking skill development — transforming food distribution from a welfare service into a food sovereignty infrastructure</div></div>
+          </div>
+          <div class="act-note">The dignity design requirement in 4.4.1 transforms the food distribution process more than any other single design decision. Community market models — in which recipients select from available food items as they would in a store, rather than receiving a pre-assembled package determined by staff — consistently produce higher utilization, lower waste (food that would not be used in a pre-assembled package is simply not selected), greater cultural relevance, and dramatically higher recipient satisfaction. The operational complexity of market models is higher than package distribution, but the equity and dignity outcomes justify the investment for institutions with the capacity to implement them.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">4.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Maintain, repair, and renew physical assets for community use</div>
+          <div class="proc-group-desc">The maintenance and renewal processes for durable resources — housing stock, shared equipment, vehicles, technology — that determine whether community assets remain usable across their intended lifecycle. As in Category 2.3, maintenance is the unglamorous work that is systematically underfunded and systematically consequential. Asset maintenance in Category 4.5 differs from Category 2.3 in that it covers assets held for community member use (housing units, shared tools, equipment libraries) rather than institutional infrastructure — the assets whose condition directly affects community members' day-to-day lives rather than the institution's operational capacity.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">4.5.1</div><div class="act-name">Develop and maintain a community asset registry — accurate, current inventory of all community-use physical assets with condition ratings, maintenance history, and renewal schedules</div></div>
+            <div class="proc-activity"><div class="act-id">4.5.2</div><div class="act-name">Implement preventive maintenance programs for major durable assets — scheduled maintenance that prevents the failure cycles that transfer costs to community members</div></div>
+            <div class="proc-activity"><div class="act-id">4.5.3</div><div class="act-name">Design and operate responsive repair systems — accessible, timely repair processes for community members experiencing asset failures</div></div>
+            <div class="proc-activity"><div class="act-id">4.5.4</div><div class="act-name">Plan and fund asset renewal — lifecycle cost planning and capital renewal funding that prevents end-of-life asset failures from becoming community resource crises</div></div>
+            <div class="proc-activity"><div class="act-id">4.5.5</div><div class="act-name">Develop community repair capacity — programs that build community members' skills to maintain and repair their own assets, transforming maintenance from a service dependency into community capability</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six physical resource delivery failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in physical resource planning and delivery</div>
+
+    <div class="fail-row">
+      <div class="fail-num">R1</div>
+      <div class="fail-content">
+        <div class="fail-name">Supply-driven distribution — delivering what is available rather than what is needed</div>
+        <div class="fail-desc">The institution's resource portfolio is shaped by what donors give, what is cheapest to procure, and what the institution knows how to manage — rather than by what the community actually needs. The result is systematic surplus of some resources and systematic shortage of others, with no mechanism to rebalance because the allocation process is not connected to needs data.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Regular surplus of specific resource categories that go unused while community members report unmet needs in other categories. Procurement decisions are made without reference to needs assessment data. In-kind donations are accepted without quality or relevance screening.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">R2</div>
+      <div class="fail-content">
+        <div class="fail-name">Implicit allocation — scarcity managed by default rather than design</div>
+        <div class="fail-desc">The institution has no explicit allocation framework. When demand exceeds supply — which is the normal condition for most physical resources in most communities — allocation is determined by whoever is most persistent, most connected, or most familiar with the system. The informal allocation reproduces the social hierarchies of the broader community, which is typically the opposite of what the institution intends.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff describe resource allocation during scarcity as "using their judgment" without reference to defined criteria. Community members report that knowing the right people helps in accessing resources. No documentation of allocation criteria exists. Allocation decisions cannot be explained to community members who believe they were treated inequitably.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">R3</div>
+      <div class="fail-content">
+        <div class="fail-name">Dignity deficit — efficient distribution at the cost of recipient experience</div>
+        <div class="fail-desc">The institution designs its distribution processes for operational efficiency — high throughput, centralized locations, standardized packages, minimal interaction time — without designing for recipient dignity. The result is experiences that community members describe as demeaning, that reinforce the stigma of receiving support, and that reduce the probability of future engagement with the institution even among recipients with ongoing needs.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Community members describe feeling "like charity cases" at distribution events. Participation rates are lower than expected given documented need levels. Recipients do not return for subsequent distributions even when need persists. Staff describe distribution operations in throughput terms without reference to recipient experience quality.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">R4</div>
+      <div class="fail-content">
+        <div class="fail-name">Deferred maintenance — the accumulating asset liability</div>
+        <div class="fail-desc">Maintenance of durable assets is systematically deferred in favor of resource acquisition and distribution operations. The maintenance deficit accumulates invisibly until assets fail in ways that are costly to repair, disruptive to community members, and embarrassing to the institution. The pattern repeats because the structural incentive — maintenance spending reduces visible resources available for distribution — remains unchanged.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Housing unit maintenance requests have an average open time greater than 30 days. Shared equipment has visible wear that exceeds cosmetic degradation. No capital renewal fund exists or is consistently underfunded. Maintenance budget is the first line item reduced during budget pressure.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">R5</div>
+      <div class="fail-content">
+        <div class="fail-name">Cultural irrelevance — resources that don't fit the community they serve</div>
+        <div class="fail-desc">Resources are procured and distributed without attention to the cultural practices, dietary traditions, or lifestyle requirements of the specific community served. The resulting resources are technically available but practically underutilized — food that community members don't know how to cook, clothing that doesn't fit cultural dress norms, technology that doesn't accommodate language preferences. Resources that don't fit are resources wasted.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Significant quantities of specific resources are consistently returned, discarded, or not selected in choice-model distributions. Community members cite specific types of resources as "not useful" despite documented general need. Procurement decisions are made without community input on cultural preferences and requirements.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">R6</div>
+      <div class="fail-content">
+        <div class="fail-name">Supply chain fragility — single points of failure with no resilience design</div>
+        <div class="fail-desc">The institution's resource supply chain has one or two critical dependencies — a single major donor, a single supplier, a single storage facility — that, if disrupted, produce immediate and severe community resource shortages. Supply chain fragility is invisible during normal operations and catastrophic during disruptions. The COVID-19 pandemic revealed the supply chain fragility of most community resource institutions in the United States; most had not prepared for disruptions because disruptions had not occurred.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> A single supplier, donor, or procurement relationship accounts for more than 30% of any major resource category. No emergency procurement protocols exist. No inter-institutional resource sharing agreements are in place. Buffer stock policies, if they exist, are not enforced during budget pressure.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Cooperation Jackson and sovereign resource production</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Cooperation Jackson — building the material base of post-labor community life</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Cooperation Jackson in Jackson, Mississippi is one of the most ambitious experiments in post-labor institutional design in the United States — a network of worker cooperatives, community land trusts, and community institutions explicitly designed to build economic sovereignty for a historically marginalized Black community in the Deep South. Its approach to physical resource delivery is distinguished by a commitment to sovereignty that goes beyond service provision: not simply distributing resources to community members but building the community's capacity to produce the resources it needs, own the means of production, and control the supply chains that sustain daily life.</div>
+      <div class="case-text">Cooperation Jackson's urban agriculture network — a collection of community gardens, urban farms, and food processing cooperatives — operationalizes process groups 4.4 and 4.1 as sovereignty projects rather than service projects. The goal is not to provide food to community members but to build a community food system in which Jackson residents grow, process, and distribute their own food through cooperatively owned institutions, eliminating dependence on external supply chains that have consistently failed to serve the community's needs. This distinction — between service delivery and sovereignty building — is the defining characteristic of Cooperation Jackson's Category 4.0 approach, and it represents a more ambitious interpretation of physical resource delivery than most institutions in this category pursue.</div>
+      <div class="case-text">Cooperation Jackson's fabrication laboratory — providing community members with access to 3D printing, laser cutting, and other manufacturing technologies — extends the sovereignty logic to durable goods production. The fablab operationalizes the tool library model in Category 4.2 while adding production capacity: community members can not only borrow tools but manufacture parts, repair equipment, and produce goods that would otherwise require purchase from external suppliers. This approach to Category 4.5 (maintenance and renewal) treats community repair capacity as an asset to be built rather than a service to be provided.</div>
+      <div class="case-lesson"><strong>Category 4.0 lesson:</strong> Cooperation Jackson's model illustrates the distinction between resource delivery as a service and resource delivery as sovereignty infrastructure. The service model delivers resources to community members; the sovereignty model builds community capacity to produce, control, and distribute its own resources. Both require the operational processes of Category 4.0 — procurement, inventory, distribution, maintenance — but the sovereignty model embeds those processes in an ownership structure that keeps value within the community rather than creating service dependency on an external institution. For post-labor institutions with the capacity and community alignment to pursue it, the sovereignty model is the more ambitious and more durable version of Category 4.0 development.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Mutual Aid Disaster Relief and supply chain resilience</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Mutual Aid Disaster Relief — decentralized logistics under extreme supply chain stress</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Mutual Aid Disaster Relief (MADR) is a decentralized network of mutual aid practitioners that organizes disaster response across the Gulf Coast and beyond, operating explicitly outside the formal emergency management infrastructure that has historically failed marginalized communities in disaster contexts. Its Category 4.0 practices are of particular interest because they develop under the most extreme supply chain stress conditions — active disasters — and because they have developed solutions to procurement, allocation, and distribution challenges that institutional disaster response has not.</div>
+      <div class="case-text">MADR's allocation approach during disaster response is explicitly needs-based, operationalized through community assessment rather than administrative intake. Rather than establishing centralized distribution points with eligibility verification, MADR deploys community members into affected areas to assess needs and deliver resources directly — inverting the standard distribution model in which recipients must navigate to resources rather than having resources navigate to recipients. This approach addresses the physical and mobility barriers that prevent disaster survivors from accessing centralized distribution, and it builds the community knowledge base that accurate needs assessment requires.</div>
+      <div class="case-text">MADR's supply chain resilience approach — pre-positioned resource caches, inter-network supply sharing agreements, and community member storage capacity rather than centralized warehousing — operationalizes process group 4.1's supply chain resilience design through a decentralized architecture that is more robust to the specific disruption patterns of disaster contexts than centralized supply chain models. When a central warehouse is flooded or inaccessible, the decentralized network can reroute resources through alternative nodes that remain accessible.</div>
+      <div class="case-lesson"><strong>Category 4.0 lesson:</strong> MADR's experience demonstrates that the standard centralized distribution model is not a design requirement — it is a design choice that reflects specific assumptions about recipient mobility, administrative capacity, and supply chain stability. When those assumptions do not hold, decentralized distribution models that bring resources to recipients rather than requiring recipients to navigate to resources consistently outperform centralized models on both reach and equity. The decentralized model is operationally more complex and requires more distributed coordination capacity; MADR's experience provides a case study in how to build that capacity through network relationships rather than institutional hierarchy.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 4.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 4.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Resource procurement is opportunistic — driven by availability and donation rather than community needs assessment</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No explicit allocation framework; scarcity managed informally by staff discretion</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Inventory management is manual and inaccurate; waste rates are untracked and high</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Distribution design prioritizes operational convenience over recipient experience and dignity</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No preventive maintenance or capital renewal planning for durable assets</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Annual procurement planning exists with some connection to needs data; quality standards for major categories defined</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Basic allocation criteria documented for primary resources; scarcity protocols partially defined</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Inventory tracking system in place; accuracy variable but improving; waste tracking beginning</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Distribution experience has been reviewed for dignity; some improvements implemented; recipient feedback collected</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Maintenance schedules exist for major assets; capital renewal planning beginning but not fully funded</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Procurement planning is needs-driven with documented quality standards and ethical sourcing framework; supplier relationships diversified</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Allocation framework documented, communicated to community, consistently applied; scarcity protocols pre-designed and known to staff and community</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Inventory management system accurate and actively maintained; waste rates tracked and reduced year-over-year</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Distribution processes designed for recipient dignity; choice model or equivalent implemented where feasible; recipient experience measured regularly</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Preventive maintenance schedules followed for all major assets; capital renewal fund established and consistently funded</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Supply chain resilience actively designed and tested — emergency protocols exercised, inter-institutional agreements in place, buffer stocks maintained</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Allocation framework regularly reviewed with community input; equity outcomes tracked over time and framework adjusted when distributional goals are not met</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Distribution equity tracked by demographic subgroup; access gaps systematically addressed; community members participate in distribution design decisions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community repair and maintenance capacity being built — moving from service dependency toward community self-sufficiency for durable asset maintenance</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Institution contributes resource delivery knowledge to peer network; recognized as a resource delivery design resource in its field</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 4.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Resource needs coverage rate</div>
+      <div class="kpi-cell">Percentage of identified priority resource needs met by current distribution — measures alignment between procurement and community need</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Resource distribution equity index</div>
+      <div class="kpi-cell">Distribution rates across demographic subgroups relative to need rates — primary equity measure for Category 4.0</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Waste rate by resource category</div>
+      <div class="kpi-cell">Percentage of procured resources that are wasted (spoilage, expiration, unused) — measures supply chain efficiency and procurement-need alignment</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Inventory accuracy rate</div>
+      <div class="kpi-cell">Percentage of inventory records accurate at time of audit — measures the reliability of the information system that all other logistics processes depend on</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Recipient experience score</div>
+      <div class="kpi-cell">Survey measure of recipient experience quality at distribution interactions — dignity, respect, convenience, and cultural appropriateness</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Unmet need rate</div>
+      <div class="kpi-cell">Percentage of community members with documented need who did not receive requested resources — the terminal measure of resource delivery adequacy</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Asset maintenance ratio</div>
+      <div class="kpi-cell">Percentage of community-use assets meeting current maintenance standards — measures whether asset value is being preserved or eroded</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Supply chain resilience score</div>
+      <div class="kpi-cell">Composite measure of supply source diversification, buffer stock adequacy, emergency protocol documentation, and inter-institutional agreements in place</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 4.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 4.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a supply-to-need alignment audit</div>
+          <div class="seq-desc">Before changing any procurement or distribution processes, assess the current alignment between what the institution is distributing and what the community actually needs. Compare the institution's resource portfolio to needs assessment data disaggregated by population subgroup. Identify the largest gaps — resources that are over-procured relative to need and resources that are chronically short relative to need. This audit will typically produce findings that challenge existing procurement patterns and require uncomfortable conversations about what to stop doing as well as what to start.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Supply-to-need alignment audit completed; top three surplus and top three shortage resource categories identified; preliminary recommendations for procurement reorientation presented to governance body.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Document and ratify the allocation framework</div>
+          <div class="seq-desc">Make explicit the allocation criteria, mechanisms, and scarcity protocols that currently govern resource distribution informally, and then revise them through a community deliberation process. The goal is not to design a perfect allocation system from scratch but to surface and examine the assumptions embedded in the current informal system, allow the community to evaluate whether those assumptions reflect its values, and document the result in a way that makes allocation decisions explicable and contestable. The political discomfort of this process is the evidence that it is working.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Allocation framework documented for all major resource categories; ratified through community deliberation process; communicated to community members in accessible format; at least one scarcity protocol pre-designed and documented.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement basic inventory management and waste reduction</div>
+          <div class="seq-desc">Establish accurate inventory tracking for all major resource categories — even a simple spreadsheet system is dramatically better than no system at all. Implement FIFO protocols for perishable resources. Begin tracking waste rates by category. Use waste data to identify procurement misalignments and storage failures that are generating losses. Waste reduction is typically the fastest return on investment of any Category 4.0 process improvement — resources that are not wasted are resources available for distribution.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Inventory management system implemented with documented accuracy procedures; waste tracked monthly by category; waste rate reduced by at least 20% from baseline over 12-month period.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Redesign distribution for recipient dignity</div>
+          <div class="seq-desc">Conduct a recipient experience audit — talk to community members about their experience of resource distribution, specifically about what feels dignified and what does not. Implement the highest-priority dignity improvements. If the operational investment is feasible, move toward a choice model for food and clothing distribution. At minimum, address physical layout, wait management, and interaction protocols to create an experience that feels like community resource access rather than charity reception. Measure recipient experience before and after changes.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Recipient experience audit completed; top three dignity improvements implemented; post-implementation recipient experience survey shows measurable improvement; repeat distribution participation rate tracked and improving.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Establish preventive maintenance and supply chain resilience infrastructure</div>
+          <div class="seq-desc">Implement preventive maintenance schedules for all major durable assets and begin building a capital renewal fund. Simultaneously, assess supply chain resilience: identify single-source dependencies, develop relationships with backup suppliers, and document emergency procurement protocols. Engage peer institutions about resource-sharing agreements for disruption scenarios. These investments protect the operational capacity that all other Category 4.0 processes depend on — and they are most cheaply built before they are needed urgently.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Preventive maintenance schedules implemented for all major assets; capital renewal fund established; at least one supply chain resilience improvement implemented per major resource category; emergency procurement protocols documented.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="pullquote">
+    <p>The logistics of physical resource delivery are operationally complex. The allocation framework that governs them is unavoidably political. Both require institutional capacity. Neither can be substituted for the other — and the institution that develops one without the other produces either a principled intention that cannot be executed or an efficient system that distributes injustice reliably.</p>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 4.0 and Category 10.0:</strong> Category 4.0 covers the delivery of physical resources to community members — the flow of resources from procurement through distribution. Category 10.0 covers the governance and stewardship of physical assets that the institution collectively owns and makes available for community use — the commons assets that community members access rather than receive. The distinction is between resources that are distributed (Category 4.0) and assets that are governed as shared commons (Category 10.0). In practice, many institutions manage both: distributing food and household goods through Category 4.0 processes while stewarding community land, tool libraries, and shared equipment through Category 10.0 processes. The two categories should be assessed and developed in awareness of each other.</p>
+    <p><strong>On food sovereignty versus food security:</strong> The distinction between food security (ensuring community members have adequate food) and food sovereignty (ensuring communities control their own food systems) is increasingly important in Category 4.0 practice. Food security is a service objective; food sovereignty is a governance objective. Most institutions in this category operate primarily at the food security level — delivering food to community members. The food sovereignty aspiration — building cooperatively owned food production, processing, and distribution infrastructure — requires the integration of Category 4.0 processes with Category 2.0 (public goods design), Category 9.0 (collective resource stewardship), and Category 10.0 (commons asset management). Cooperation Jackson's model, described in this chapter, is the most developed example of this integration in the United States.</p>
+    <p><strong>On housing as a unique resource category:</strong> Housing deserves extended treatment that a single process group (4.3) cannot fully provide. The policy context (zoning, landlord-tenant law, affordable housing finance), the institutional form (community land trusts, limited equity cooperatives, social housing), and the governance complexity of housing delivery at scale all merit the chapter-length treatment that Chapter 11 (Collective Vision and Governance Strategy) devoted to governance architecture. Category 4.3 covers the operational housing delivery processes; the broader housing institutional design questions are addressed in Chapter 24 (institutional archetypes), where the community land trust archetype receives dedicated treatment, and in Part IV's discussion of Commons and Shared Asset management (Category 10.0).</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part III · Chapter 11 · GPS 4.0</span>
+    <span class="close-next">Ch. 12 — Deliver services &amp; programs (GPS 5.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

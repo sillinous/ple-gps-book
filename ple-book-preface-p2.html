@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P.2 — How to use this book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504;
+    --bg-deep: #0c0a09;
+    --bg-primary: #141210;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201, 169, 110, 0.12);
+    --accent-glow: rgba(201, 169, 110, 0.06);
+    --text-primary: #f0ebe3;
+    --text-secondary: #a09890;
+    --text-muted: #6b6560;
+    --text-ghost: #48443f;
+    --border-subtle: rgba(201, 169, 110, 0.07);
+    --border-visible: rgba(201, 169, 110, 0.14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 40px 120px;
+    position: relative;
+  }
+
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+
+  .chapter-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.35;
+    margin-bottom: 44px;
+  }
+
+  .body-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--text-primary);
+  }
+
+  .body-text p { margin-bottom: 1.6em; }
+
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em;
+    font-weight: 300;
+    line-height: 0.75;
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+  }
+
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
+
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-visible);
+  }
+
+  .section-break-ornament {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+
+  .pullquote {
+    margin: 44px 0;
+    padding: 28px 32px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .pullquote p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .pullquote p::before { content: '\201C'; color: var(--accent); }
+  .pullquote p::after  { content: '\201D'; color: var(--accent); }
+
+  .reader-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 36px 0;
+  }
+
+  .reader-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 22px 22px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reader-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0.35;
+  }
+
+  .reader-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.7;
+    margin-bottom: 10px;
+  }
+
+  .reader-type {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .reader-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  .reader-path {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .reader-path strong {
+    color: var(--accent);
+    font-weight: 500;
+    opacity: 0.8;
+  }
+
+  .structure-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .structure-header {
+    padding: 12px 20px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .structure-part {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .structure-part:last-child { border-bottom: none; }
+
+  .part-marker {
+    width: 52px;
+    min-width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    border-right: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 16px 0;
+    opacity: 0.8;
+    writing-mode: horizontal-tb;
+  }
+
+  .part-content {
+    padding: 16px 20px;
+    flex: 1;
+  }
+
+  .part-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+  }
+
+  .part-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .part-chapters {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .gps-explainer {
+    margin: 40px 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .gps-exp-header {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-tertiary);
+  }
+
+  .gps-exp-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+
+  .gps-exp-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .gps-exp-body {
+    padding: 20px 22px;
+  }
+
+  .gps-row {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    align-items: flex-start;
+  }
+
+  .gps-row:last-child { border-bottom: none; }
+
+  .gps-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 28px;
+    padding-top: 2px;
+    opacity: 0.7;
+  }
+
+  .gps-info { flex: 1; }
+
+  .gps-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .gps-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  .gps-tier {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-top: 2px;
+    align-self: flex-start;
+  }
+
+  .tier-civic  { background: rgba(29,158,117,0.12); color: #4ecfa0; }
+  .tier-inst   { background: rgba(55,138,221,0.12); color: #6eb8f5; }
+  .tier-novel  { background: rgba(127,119,221,0.15); color: #a89ee8; }
+
+  .note-aside {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-visible);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .note-aside p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0;
+    margin-bottom: 0.6em;
+  }
+
+  .note-aside p:last-child { margin-bottom: 0; }
+
+  .note-aside p strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .chapter-close {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .close-next {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  .page-number {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="chapter-eyebrow">Preface · P.2</div>
+
+  <h1 class="chapter-title">How to use this book</h1>
+  <p class="chapter-subtitle">Different readers will need different things from these pages. This chapter is a guide to finding what you need without having to read everything first.</p>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Books about institutional design suffer from a structural problem: the people who most need them are usually too busy building institutions to read them cover to cover. The cooperative founder managing a governance crisis does not have six weeks to work through a framework before applying it. The community organizer trying to figure out why the mutual aid network keeps losing institutional memory does not want to read three chapters of economic theory before reaching anything actionable. The policy researcher who needs to understand what operational capability gaps exist in solidarity economy institutions doesn't need the practitioner's guide to onboarding new members.</p>
+
+    <p>This book was written with that problem in mind. It has a linear argument — the parts build on each other, and reading straight through will give you the fullest picture — but it is also designed to be navigated non-linearly by readers who know what they need and want to reach it directly. This chapter is a map of the maps: a guide to who this book is for, what each part contains, and how to find the section most relevant to where you are right now.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="section-heading">Who this book is written for</div>
+
+  <div class="body-text">
+    <p>There are four kinds of readers this book was written to serve, and their needs are distinct enough that each deserves an explicit reading path.</p>
+  </div>
+
+  <div class="reader-grid">
+
+    <div class="reader-card">
+      <div class="reader-label">Reader type 01</div>
+      <div class="reader-type">The builder</div>
+      <div class="reader-desc">You are actively building a post-labor institution — cooperative, commons, mutual aid network, platform co-op, community land trust, solidarity economy org — or you are about to. You need frameworks and tools, not theory.</div>
+      <div class="reader-path"><strong>Start at Part III.</strong> Come back to Parts I and II when you want to understand why the framework is shaped the way it is. Use Appendices A–D as working references throughout. The maturity assessment in Appendix C is your most immediately useful tool.</div>
+    </div>
+
+    <div class="reader-card">
+      <div class="reader-label">Reader type 02</div>
+      <div class="reader-type">The thinker</div>
+      <div class="reader-desc">You are a researcher, theorist, educator, or strategist working on post-labor economics, institutional design, democratic governance, or related fields. You want the full argument before the details.</div>
+      <div class="reader-path"><strong>Read straight through.</strong> Parts I and II lay the intellectual foundation. Parts III–V deliver the operational detail that makes the theory real. Part VI and the appendices are references you'll return to.</div>
+    </div>
+
+    <div class="reader-card">
+      <div class="reader-label">Reader type 03</div>
+      <div class="reader-type">The community</div>
+      <div class="reader-desc">You are part of a group — a working group, governance committee, founding team, or learning community — that wants to use this framework collectively to assess and improve an existing institution.</div>
+      <div class="reader-path"><strong>Use the GPS alongside Part IV.</strong> Run the maturity assessment from Appendix C as a workshop. Use Part IV chapters as reading for each category your institution is working on. Chapter 7 (the maturity model) should be your first read.</div>
+    </div>
+
+    <div class="reader-card">
+      <div class="reader-label">Reader type 04</div>
+      <div class="reader-type">The policymaker</div>
+      <div class="reader-desc">You work in government, philanthropy, or an enabling organization. You need to understand what these institutions require to function — what infrastructure, what legal frameworks, what funding models — before you can support them well.</div>
+      <div class="reader-path"><strong>Start with Parts I and II, then read Part V.</strong> The three novel categories — AI governance, flourishing, participatory democracy — define the regulatory and investment gaps that policy has not yet addressed. Part VI's institutional archetypes map to funding and support requirements.</div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="section-heading">How the book is structured</div>
+
+  <div class="body-text">
+    <p>The book moves through six parts, each serving a distinct function in the overall argument. What follows is not a summary — it is a map. Enough detail to navigate, not so much that reading this replaces reading the parts themselves.</p>
+  </div>
+
+  <div class="structure-block">
+    <div class="structure-header">Book architecture — six parts, one argument</div>
+
+    <div class="structure-part">
+      <div class="part-marker">I</div>
+      <div class="part-content">
+        <div class="part-title">The great decoupling</div>
+        <div class="part-desc">Establishes the context without being a context chapter. The economic diagnosis is in service of the design argument: if this is what is happening, then this is the kind of institutional work that is required. Ends with the design gap as the animating problem.</div>
+        <div class="part-chapters">Ch. 1–4 · ~18,000 words · For: thinkers, policymakers</div>
+      </div>
+    </div>
+
+    <div class="structure-part">
+      <div class="part-marker">II</div>
+      <div class="part-content">
+        <div class="part-title">The governance process standard</div>
+        <div class="part-desc">Introduces the PLE-GPS as the book's central instrument. Explains what a process standard is and why the adaptation from enterprise frameworks is the right move rather than an act of corporate mimicry. Teaches you to use the framework before the rest of the book applies it.</div>
+        <div class="part-chapters">Ch. 5–7 · ~12,000 words · For: all readers</div>
+      </div>
+    </div>
+
+    <div class="structure-part">
+      <div class="part-marker">III</div>
+      <div class="part-content">
+        <div class="part-title">Civic operating — what institutions do for communities</div>
+        <div class="part-desc">Six chapters, one per civic operating category. Each chapter pairs the theory of the category with the practice: what does this look like in real institutions, what does maturity require, where do institutions typically fail, what does good process depth look like. These chapters can be read in any order.</div>
+        <div class="part-chapters">Ch. 8–13 · ~24,000 words · GPS categories 1.0–6.0 · For: builders, communities</div>
+      </div>
+    </div>
+
+    <div class="structure-part">
+      <div class="part-marker">IV</div>
+      <div class="part-content">
+        <div class="part-title">Institutional support — how institutions sustain themselves</div>
+        <div class="part-desc">Seven chapters covering the operational infrastructure that is systematically underdeveloped in post-labor institutions. Finance without profit motive. Technology that serves members. Governance integrity without hierarchy. Each chapter is both a diagnosis of why this category is hard in post-labor contexts and a guide to making it work.</div>
+        <div class="part-chapters">Ch. 14–20 · ~28,000 words · GPS categories 7.0–13.0 · For: builders, communities</div>
+      </div>
+    </div>
+
+    <div class="structure-part">
+      <div class="part-marker">V</div>
+      <div class="part-content">
+        <div class="part-title">The novel categories</div>
+        <div class="part-desc">Three chapters for the three GPS categories that have no enterprise analog. These are the most intellectually original sections — and the most consequential. AI governance as a community right. Human flourishing as the terminal metric. Participatory democracy as operational infrastructure. Reading these three chapters in sequence is the fastest path to understanding what makes post-labor institutional design genuinely different.</div>
+        <div class="part-chapters">Ch. 21–23 · ~12,000 words · GPS categories 14.0–16.0 · For: all readers</div>
+      </div>
+    </div>
+
+    <div class="structure-part">
+      <div class="part-marker">VI</div>
+      <div class="part-content">
+        <div class="part-title">Building — how to actually start</div>
+        <div class="part-desc">Five institutional archetypes — worker cooperative, community land trust, mutual aid network, platform cooperative, commons institution — each mapped against the GPS with their characteristic strengths, predictable gaps, and recommended first-year priorities. The bridge between framework and practice.</div>
+        <div class="part-chapters">Ch. 24 · ~6,000 words · For: builders, policymakers</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="section-heading">The PLE-GPS as a living instrument</div>
+
+  <div class="body-text">
+
+    <p>The framework this book uses — the Post-Labor Economics Governance Process Standard — deserves a brief word here, before it appears throughout the text, about what it is and what it is not.</p>
+
+    <p>It is a process taxonomy: a complete list of the operational things a post-labor institution needs to do, organized into categories and process groups, with enough depth that someone could use it to assess where their institution is strong, where it is weak, and what developing each area would require. It is rigorous in the sense that it was designed to be comprehensive — to leave no significant institutional process unaccounted for — not in the sense that it claims to be final or correct in all its details.</p>
+
+    <p>It is not a recipe. It does not tell you how to run your institution. Different institutions, in different contexts, serving different communities, with different histories and different resources, will implement these processes differently. The framework names the categories of work. The judgment about how to do that work in a specific context remains, properly, with the people closest to it.</p>
+
+  </div>
+
+  <div class="pullquote">
+    <p>The framework names the categories of work. The judgment about how to do that work in a specific context remains, properly, with the people closest to it.</p>
+  </div>
+
+  <div class="body-text">
+
+    <p>It is also, explicitly, incomplete. Sixty percent of the processes have been developed with full implementation depth — concrete activities, KPIs, maturity indicators. The remaining forty percent are defined and named but not yet fully built out. This is not a failure of the framework; it is an honest acknowledgment that comprehensive institutional design for post-labor contexts is a community project that cannot be completed by any single author or institution. The framework's incompleteness is an invitation. The appendices include contribution guidelines for anyone who wants to deepen the underdeveloped sections.</p>
+
+  </div>
+
+  <div class="gps-explainer">
+    <div class="gps-exp-header">
+      <div class="gps-exp-title">Quick reference</div>
+      <div class="gps-exp-name">The 16 GPS categories at a glance</div>
+    </div>
+    <div class="gps-exp-body">
+
+      <div class="gps-row">
+        <div class="gps-num">1–6</div>
+        <div class="gps-info">
+          <div class="gps-name">Civic operating processes</div>
+          <div class="gps-desc">Collective vision, public goods design, access and engagement, physical resource delivery, services and programs, member support. The visible, community-facing work of the institution.</div>
+        </div>
+        <div class="gps-tier tier-civic">Civic</div>
+      </div>
+
+      <div class="gps-row">
+        <div class="gps-num">7–13</div>
+        <div class="gps-info">
+          <div class="gps-name">Institutional support processes</div>
+          <div class="gps-desc">Human development, technology and AI, collective finance, commons management, integrity and equity, inter-institutional relations, capability evolution. The operational infrastructure beneath the visible work.</div>
+        </div>
+        <div class="gps-tier tier-inst">Support</div>
+      </div>
+
+      <div class="gps-row">
+        <div class="gps-num">14</div>
+        <div class="gps-info">
+          <div class="gps-name">AI governance & algorithmic accountability</div>
+          <div class="gps-desc">Oversight, auditing, ethics, and accountability for AI systems that operate within or on behalf of the institution. No enterprise analog.</div>
+        </div>
+        <div class="gps-tier tier-novel">Novel</div>
+      </div>
+
+      <div class="gps-row">
+        <div class="gps-num">15</div>
+        <div class="gps-info">
+          <div class="gps-name">Human flourishing & wellbeing</div>
+          <div class="gps-desc">Defining, measuring, designing for, and reporting on human flourishing as the terminal institutional metric. The category that replaces productivity and employment as the measure of success.</div>
+        </div>
+        <div class="gps-tier tier-novel">Novel</div>
+      </div>
+
+      <div class="gps-row">
+        <div class="gps-num">16</div>
+        <div class="gps-info">
+          <div class="gps-name">Participatory democracy</div>
+          <div class="gps-desc">Voting, deliberation, participatory budgeting, citizen assemblies, mandate renewal. Democratic legitimacy treated as an operational process, not a cultural aspiration.</div>
+        </div>
+        <div class="gps-tier tier-novel">Novel</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="section-heading">On reading this as a community</div>
+
+  <div class="body-text">
+
+    <p>One thing worth saying explicitly: this book was not written to be read alone. The most productive way to engage with it — particularly the operational chapters in Parts III, IV, and V — is in the context of a group working on a real institution. The maturity assessment in Appendix C was designed for workshop use: a group of five to ten people, each scoring their institution independently, then comparing results and discussing the gaps. The disagreements in that discussion are often more valuable than the scores.</p>
+
+    <p>Similarly, the chapter on participatory democracy is considerably more useful when read by a group that is actively trying to design participation mechanisms than when read by an individual trying to understand the concept. The chapter on human flourishing is an invitation to a community conversation about what the institutions you are building are ultimately for — a conversation that cannot happen inside a single reader's head.</p>
+
+    <p>There is a community infrastructure built alongside this framework: forums, working groups, and contribution channels for the people who want to go deeper than reading. The details are in Appendix E. The framework is released under a Creative Commons license specifically because the work of completing and improving it belongs to everyone who will use it.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="section-heading">A note on language and claims</div>
+
+  <div class="body-text">
+
+    <p>This book uses the phrase "post-labor economics" in a specific sense that is worth clarifying before it appears everywhere. It does not mean a world in which no one works. It means a world in which labor — the selling of human time and effort to an employer in exchange for wages — is no longer the primary mechanism through which people access the resources they need to live with dignity. That shift is already underway. The word "post" describes a trajectory, not a destination that has been reached.</p>
+
+    <p>It also uses the word "institution" broadly. It means any organized effort to do something collectively and sustainably — not just formal organizations with legal structures, boards, and staff, but also commons, networks, protocols, and communities of practice that have developed enough internal coherence to be studied and improved. The GPS framework is designed to apply across this entire range, from the most informal mutual aid network to the most structured cooperative federation. Some categories will be less relevant at smaller or less formal scales; the framework is not prescriptive about which categories any given institution must develop.</p>
+
+    <p>Finally, this book makes empirical claims about what is happening — the decoupling of labor and economic output, the design gap in solidarity economy institutions, the absence of adequate frameworks for AI governance in community contexts — and it makes design claims about what good institutions look like. These are different kinds of claims and they warrant different kinds of scrutiny. Where the book makes empirical claims, the evidence is cited. Where it makes design claims, the argument is in the text. Disagreement with either kind of claim is welcome; the framework is designed to be improved by exactly that kind of engaged critique.</p>
+
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the interactive tools:</strong> An interactive version of the PLE-GPS is available at ple-gps.netlify.app. It includes the full taxonomy, maturity assessment scoring, pre-built institutional templates, and implementation playbooks for the three novel categories. Many readers will find it useful to have the interactive tool open alongside the book — particularly when reading the category chapters in Parts III, IV, and V.</p>
+    <p><strong>On the CSV and reference data:</strong> The full GPS taxonomy is available as a structured CSV (all 16 categories, 78 process groups, 272 processes) and is included as Appendix A. It is designed to be imported into whatever project management or governance tooling your institution uses.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Preface · P.2</span>
+    <span class="close-next">Part I begins: The great decoupling →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appendix E — Glossary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void:#060504;--bg-deep:#0c0a09;--bg-primary:#141210;
+    --bg-secondary:#1c1917;--bg-tertiary:#242120;
+    --text-primary:#f0ebe3;--text-secondary:#a09890;
+    --text-muted:#6b6560;--text-ghost:#48443f;
+    --border-subtle:rgba(201,169,110,0.07);--border-visible:rgba(201,169,110,0.14);
+    --gold:#c9a96e;--gold-dim:rgba(201,169,110,0.08);
+    --civic:#1D9E75;--civic-dim:rgba(29,158,117,0.07);--civic-border:rgba(29,158,117,0.18);--civic-text:#4ecfa0;
+    --inst:#378ADD;--inst-dim:rgba(55,138,221,0.07);--inst-border:rgba(55,138,221,0.18);--inst-text:#7ab8f0;
+    --novel:#7F77DD;--novel-dim:rgba(127,119,221,0.07);--novel-border:rgba(127,119,221,0.18);--novel-text:#b0aaf0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-void);color:var(--text-primary);font-family:'Outfit',sans-serif;font-size:13px;line-height:1.55;}
+  body::before{content:'';position:fixed;inset:0;opacity:0.015;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;}
+  .page{max-width:900px;margin:0 auto;padding:64px 36px 120px;}
+
+  .doc-eyebrow{font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+  .doc-title{font-family:'Crimson Pro',serif;font-size:2.1rem;font-weight:300;color:var(--text-primary);margin-bottom:6px;line-height:1.2;}
+  .doc-subtitle{font-family:'Crimson Pro',serif;font-size:1.05rem;font-weight:300;font-style:italic;color:var(--text-secondary);margin-bottom:18px;}
+  .doc-meta{font-size:.74rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;}
+  .doc-meta strong{color:var(--text-secondary);font-weight:500;}
+  .doc-divider{height:1px;background:var(--border-visible);margin-bottom:40px;}
+
+  .sh{font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:36px 0 16px;opacity:.8;display:flex;align-items:center;gap:12px;}
+  .sh::after{content:'';flex:1;height:1px;background:var(--border-visible);}
+
+  /* Alpha index */
+  .alpha-index{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:32px;}
+  .ai-letter{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;padding:4px 9px;border-radius:4px;background:var(--bg-secondary);border:1px solid var(--border-subtle);color:var(--text-muted);cursor:default;}
+  .ai-letter.active{color:var(--gold);border-color:rgba(201,169,110,0.25);background:var(--gold-dim);}
+
+  /* Letter group */
+  .letter-group{margin-bottom:32px;}
+  .lg-letter{font-family:'Crimson Pro',serif;font-size:2rem;font-weight:300;color:var(--gold);opacity:.4;margin-bottom:12px;line-height:1;}
+
+  /* Entry */
+  .entry{margin-bottom:16px;display:grid;grid-template-columns:220px 1fr;gap:0;border-bottom:1px solid var(--border-subtle);padding-bottom:14px;}
+  .entry:last-child{border-bottom:none;padding-bottom:0;}
+  .entry-term{font-family:'Crimson Pro',serif;font-size:1.0rem;font-weight:600;color:var(--text-primary);padding-right:20px;padding-top:1px;line-height:1.3;}
+  .entry-body{display:flex;flex-direction:column;gap:5px;}
+  .entry-def{font-size:.74rem;color:var(--text-secondary);line-height:1.65;}
+  .entry-def strong{color:var(--text-primary);font-weight:500;}
+  .entry-context{font-size:.68rem;color:var(--text-muted);line-height:1.55;font-style:italic;}
+  .entry-tag{display:inline-flex;gap:5px;flex-wrap:wrap;margin-top:2px;}
+  .etag{font-size:7.5px;font-weight:500;padding:1px 6px;border-radius:3px;letter-spacing:.05em;text-transform:uppercase;}
+  .etag.civic{background:var(--civic-dim);color:var(--civic-text);border:1px solid var(--civic-border);}
+  .etag.inst{background:var(--inst-dim);color:var(--inst-text);border:1px solid var(--inst-border);}
+  .etag.novel{background:var(--novel-dim);color:var(--novel-text);border:1px solid var(--novel-border);}
+  .etag.cross{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(201,169,110,0.2);}
+
+  .appendix-close{margin-top:44px;padding:22px 26px;background:var(--bg-secondary);border:1px solid var(--border-visible);border-radius:8px;}
+  .ac-label{font-size:9px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;opacity:.8;}
+  .ac-body{font-size:.73rem;color:var(--text-muted);line-height:1.7;}
+  .ac-body strong{color:var(--text-secondary);font-weight:500;}
+  .page-number{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--text-ghost);letter-spacing:.1em;}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="doc-eyebrow">Institutions for a world after work · Reference material</div>
+<div class="doc-title">Appendix E — Glossary</div>
+<div class="doc-subtitle">Key terms used in the PLE Governance Process Standard, defined as they are used in this framework</div>
+<div class="doc-meta">
+  <strong>Note on definitions:</strong> Many of these terms carry multiple meanings in different contexts. The definitions here reflect how each term is used specifically within the PLE-GPS framework. Where this usage diverges from common usage or from usage in related fields, that divergence is noted. Terms that appear in italics within a definition are themselves defined elsewhere in this glossary.
+</div>
+<div class="doc-divider"></div>
+
+<div class="alpha-index">
+  <span class="ai-letter active">A</span><span class="ai-letter active">B</span><span class="ai-letter active">C</span><span class="ai-letter active">D</span><span class="ai-letter active">E</span><span class="ai-letter active">F</span><span class="ai-letter active">G</span><span class="ai-letter active">H</span><span class="ai-letter active">I</span><span class="ai-letter active">J</span><span class="ai-letter">K</span><span class="ai-letter active">L</span><span class="ai-letter active">M</span><span class="ai-letter active">N</span><span class="ai-letter active">O</span><span class="ai-letter active">P</span><span class="ai-letter">Q</span><span class="ai-letter active">R</span><span class="ai-letter active">S</span><span class="ai-letter active">T</span><span class="ai-letter active">U</span><span class="ai-letter active">V</span><span class="ai-letter active">W</span><span class="ai-letter">X</span><span class="ai-letter">Y</span><span class="ai-letter">Z</span>
+</div>
+
+<!-- A -->
+<div class="letter-group">
+<div class="lg-letter">A</div>
+
+<div class="entry">
+  <div class="entry-term">Accountability architecture</div>
+  <div class="entry-body">
+    <div class="entry-def">The structural framework through which those holding institutional authority are answerable for outcomes. In this framework, a complete accountability architecture requires three components operating simultaneously: <strong>oversight</strong> (a body with genuine authority to review performance), <strong>reporting</strong> (commitment-based performance data that reaches that body), and <strong>consequence</strong> (documented institutional responses when performance gaps are identified). Any accountability system missing one of these three components is incomplete regardless of how robust the others are.</div>
+    <div class="entry-context">Distinguished from compliance, which requires only documentation of process adherence regardless of outcome. See GPS 11.2. The concept is developed in Chapter 18.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 11.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Algorithmic equity outcome disparity</div>
+  <div class="entry-body">
+    <div class="entry-def">A measurable difference in the outcomes produced by an algorithmic system across demographic subgroups — for example, a resource-allocation algorithm that approves applications at significantly different rates for different racial groups, holding other factors constant. In this framework, disparities above 10 percentage points between subgroups trigger mandatory governance review; disparities above 15 percentage points trigger mandatory system modification or suspension.</div>
+    <div class="entry-context">Distinct from algorithmic bias, which refers to the design property of a system. Disparity refers to the observable population-level outcome of system operation regardless of designed intent. See GPS 14.3 and Appendix B.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 14.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">APQC Process Classification Framework (PCF)</div>
+  <div class="entry-body">
+    <div class="entry-def">A taxonomy of organizational processes developed by the American Productivity and Quality Center, organized in a five-level hierarchy (category → process group → process → activity) originally for private sector benchmarking. The PLE-GPS framework adapts the PCF's structural logic and five-level hierarchy for solidarity economy institutions, replacing the PCF's market-oriented categories with categories appropriate to post-labor institutions governed by community benefit rather than shareholder return.</div>
+    <div class="entry-context">The PCF is freely available at apqc.org/pcf. Chapter 5 explains the adaptation logic. The PCF is the GPS framework's structural ancestor, not its philosophical one.</div>
+    <div class="entry-tag"><span class="etag cross">Framework</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Assumption surfacing</div>
+  <div class="entry-body">
+    <div class="entry-def">The deliberate practice of making explicit the beliefs about how the world works that underlie current institutional strategy — beliefs that are treated as facts rather than hypotheses and are therefore rarely examined. Assumption surfacing is distinguished from strategic planning in that it questions the premises of strategy rather than optimizing its execution. In double-loop learning terms, it is the process of examining the governing variables that determine what problems the institution believes it should solve, rather than only improving how it solves them.</div>
+    <div class="entry-context">A core practice of GPS 13.3 strategic renewal. Requires external facilitation to be effective, because organizational defensive routines prevent internal assumption surfacing from reaching genuinely held implicit beliefs.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 13.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- B -->
+<div class="letter-group">
+<div class="lg-letter">B</div>
+
+<div class="entry">
+  <div class="entry-term">Budget-strategy alignment</div>
+  <div class="entry-body">
+    <div class="entry-def">The degree to which an institution's resource allocation decisions reflect its stated strategic priorities — measured by the percentage of major budget line items that can be explicitly traced to specific strategic plan commitments. Budget-strategy alignment is the operational test of whether strategic planning is directive (it changes resource allocation) or aspirational (it coexists with unchanged resource allocation). Low alignment indicates that the strategic plan is not functioning as a governance document.</div>
+    <div class="entry-context">GPS 13.2 establishes ≥85% of major budget lines connected to strategic priorities as the Level 3 standard. GPS 9.1 describes the budget development process through which alignment is created. Distinguished from program-level budgeting, which connects activities to outputs rather than resource allocation to strategic direction.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 9.0</span><span class="etag inst">GPS 13.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- C -->
+<div class="letter-group">
+<div class="lg-letter">C</div>
+
+<div class="entry">
+  <div class="entry-term">Capability approach</div>
+  <div class="entry-body">
+    <div class="entry-def">The framework developed by Amartya Sen and extended by Martha Nussbaum that defines human development in terms of what people are actually able to do and be — their capabilities — rather than in terms of resources, income, or preferences satisfied. In this framework, the capability approach informs GPS 15.0's flourishing dimension of capability and agency, and shapes the framework's critique of deficit-reduction service delivery that addresses material insufficiency without developing community members' capacity to exercise meaningful choices.</div>
+    <div class="entry-context">Key Nussbaum text: Creating Capabilities (2011). The framework's ten central capabilities inform the seven flourishing dimensions in GPS 15.0, though the GPS framework uses a different organizing structure.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 15.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Caseload standard</div>
+  <div class="entry-body">
+    <div class="entry-def">The maximum number of community members assigned to a single support staff member at any given time, established at a level that evidence indicates permits genuine relationship-based support rather than administrative case management. Caseload standards are treated in this framework as institutional design requirements rather than operational targets — they reflect what the institution believes quality support requires, and institutions that consistently exceed them are producing lower-quality support as an institutional design choice, not as a resource constraint.</div>
+    <div class="entry-context">GPS 6.2.2 establishes the requirement. Caseload standard compliance rate is a key GPS 6.0 KPI in Appendix B. Evidence-based standards vary by service type: mental health case management typically 25–35; intensive family support typically 12–18; housing navigation typically 15–25.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 6.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Citizen assembly</div>
+  <div class="entry-body">
+    <div class="entry-def">A deliberative governance body composed of randomly or stratified-randomly selected community members who are given time, information, facilitation support, and genuine authority to deliberate on a significant institutional or policy question and produce a recommendation or decision. Distinguished from advisory committees (which are self-selected), public comment processes (which involve parallel rather than collective deliberation), and focus groups (which produce data rather than decisions).</div>
+    <div class="entry-context">GPS 16.3 covers citizen assembly design and governance. The key design requirement is genuineness of authority — an assembly with only advisory power that is routinely disregarded is not a citizen assembly but a legitimation performance. See also deliberative panel, community jury.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 16.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Co-design</div>
+  <div class="entry-body">
+    <div class="entry-def">A program design process in which the people who will use a program have substantive authority over key design decisions — not only providing input for staff to consider, but making decisions about program model, curriculum, eligibility, delivery method, or evaluation criteria. In this framework, co-design is distinguished from consultation (which seeks input without committing to use it), from community advisory boards (which advise without deciding), and from participatory design research (which involves community members in research without giving them design authority).</div>
+    <div class="entry-context">GPS 5.1.3 establishes co-design as a process requirement for new program development. The co-design rate KPI in Appendix B tracks the percentage of major programs with substantive co-design in the past three years. The distinction between co-design and consultation is maintained throughout the framework and is assessed in the GPS 5.0 maturity rubric in Appendix C.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 5.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Commons (the commons)</div>
+  <div class="entry-body">
+    <div class="entry-def">Resources — physical, digital, cultural, or relational — that are held collectively and governed by the community of people who use them, rather than by private owners maximizing return or governments maximizing administrative efficiency. In this framework, the commons concept draws on Elinor Ostrom's eight design principles for sustainable commons governance, and applies to post-labor institutions' collectively held assets, knowledge, and shared infrastructure. Commons governance is distinguished from public goods provision (administered by government for general benefit) and from shared ownership structures (which vest ownership in a legal entity rather than a community of practice).</div>
+    <div class="entry-context">GPS 2.0 covers commons stewardship at the category level. GPS 10.0 covers the governance of specific collectively held assets. The commons framing is foundational to the framework's political economy — it asserts that what post-labor institutions hold is held in trust for the community, not owned by the institution.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 2.0</span><span class="etag inst">GPS 10.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Community contribution pathway</div>
+  <div class="entry-body">
+    <div class="entry-def">A structured, institutionally supported opportunity for community members to contribute to collective life in ways that are socially recognized and organizationally meaningful — extending beyond volunteering (which typically serves organizational operational needs) to create pathways for members to exercise their skills, build relationships, and develop identity as contributors. Community contribution pathways are the primary institutional response to the post-labor meaning crisis in this framework, on the grounds that meaning in market economies is substantially derived from economically productive labor and that post-labor institutions must deliberately create non-market contribution pathways as labor's meaning-making function declines.</div>
+    <div class="entry-context">GPS 15.4.1 establishes community contribution pathways as an institutional design requirement. Community contribution rate is a key GPS 15.0 KPI. The theoretical grounding is in Chapter 22.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 15.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Constituent voice</div>
+  <div class="entry-body">
+    <div class="entry-def">The formal mechanisms through which community members who are served by an institution exercise influence over its direction — distinguished from stakeholder engagement (which includes funders, partners, and others with interests in the institution) and from public comment processes (which solicit input without committing to influence). In this framework, constituent voice is treated as a governance requirement rather than an aspirational practice: the institution's primary constituents are those whose lives it most directly affects, and they have a claim on governance influence proportionate to their stake.</div>
+    <div class="entry-context">GPS 1.4.3 distinguishes constituent voice from stakeholder management. Constituent voice attribution rate (the percentage of major decisions traceable to constituent input) is a GPS 1.0 KPI. Chapter 8 develops the theoretical grounding for constituent voice as governance obligation.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 1.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Contestability (of algorithmic decisions)</div>
+  <div class="entry-body">
+    <div class="entry-def">The genuine ability of a community member to challenge an algorithmic decision that affects them and receive timely review by a human with authority to override the algorithm. Contestability is distinguished from formal appeal rights (which may exist on paper without being practically accessible) and from complaint processes (which typically review procedural compliance rather than decision quality). A contestability mechanism is only genuine if: community members know it exists and how to use it; review is conducted by humans with actual override authority; and the institution tracks contestation outcomes as evidence of whether human review is genuine.</div>
+    <div class="entry-context">GPS 14.4 covers contestability design and monitoring. The contestation affirmation rate KPI (rates above 95% signal nominal rather than genuine human review) is developed in Appendix B and Chapter 21.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 14.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- D -->
+<div class="letter-group">
+<div class="lg-letter">D</div>
+
+<div class="entry">
+  <div class="entry-term">Decision rights map</div>
+  <div class="entry-body">
+    <div class="entry-def">An explicit, published document specifying which decisions are made by which bodies or individuals at which levels of governance authority — covering the full range of institutional decisions from operational to strategic. In this framework, a decision rights map is distinguished from an organizational chart (which shows reporting relationships, not decision authority) and from bylaws (which specify legal governance structures, not operational decision authority). The map's value is that it allows community members, staff, and governance body members to know in advance who has authority over which decisions, reducing conflict, clarifying accountability, and enabling constituent voice to engage with the right governance body for each question.</div>
+    <div class="entry-context">GPS 1.3.2 establishes the decision rights map as a governance requirement. Decision rights awareness rate (percentage of community members who can correctly describe at least one decision they have authority over) is a GPS 1.0 KPI. GPS 16.1.3 requires publication and communication of the map to community members.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 1.0</span><span class="etag novel">GPS 16.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Dignity of distribution</div>
+  <div class="entry-body">
+    <div class="entry-def">The quality of the experience of receiving resources from an institution — specifically, whether that experience treats the recipient as a full human being with agency and worth, or as a case to be processed, a problem to be solved, or a subject to be surveilled. In this framework, dignity of distribution is an explicit design requirement for physical resource delivery, not a byproduct of service quality. Design elements that undermine dignity include means-testing at point of receipt, documentation requirements disproportionate to benefit received, surveillance of how distributed resources are used, and physical environments that communicate institutional power over recipients.</div>
+    <div class="entry-context">GPS 4.3.2 establishes dignity of distribution as a process design requirement. Distribution dignity score is a GPS 4.0 KPI. The concept connects to GPS 15.0's dignity flourishing dimension. Chapter 11 develops the case for dignity as a design requirement rather than a service quality aspiration.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 4.0</span><span class="etag novel">GPS 15.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Double-loop learning</div>
+  <div class="entry-body">
+    <div class="entry-def">Organizational learning that questions and modifies the values, assumptions, and governing variables that drive institutional behavior — distinguished from single-loop learning, which solves problems within the existing framework of institutional assumptions. Single-loop learning asks "are we doing things right?" and adjusts operational variables. Double-loop learning asks "are we doing the right things?" and examines whether the institution's fundamental approach remains appropriate to its mission and context. Most institutional learning processes produce only single-loop learning; double-loop learning requires deliberate practices including assumption surfacing and strategic renewal.</div>
+    <div class="entry-context">The concept originates with Chris Argyris and Donald Schön (1978). GPS 13.3 strategic renewal is the primary mechanism for double-loop learning in this framework. Chapter 20 develops the single-loop vs. double-loop distinction as the organizing framework for GPS 13.0.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 13.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Dual pyramids</div>
+  <div class="entry-body">
+    <div class="entry-def">The conceptual framework introduced in Chapter 3 for analyzing how economic transition affects both material prosperity and political power simultaneously. The prosperity pyramid represents the distribution of economic resources; the power pyramid represents the distribution of decision authority. As labor displacement concentrates economic resources, both pyramids narrow at the top — the same forces that reduce material sufficiency for the majority also reduce political power, producing a mutual reinforcement that simple redistribution cannot address without concurrent governance transformation. Post-labor institutions must address both pyramids simultaneously.</div>
+    <div class="entry-context">Chapter 3 develops the dual pyramids framework. GPS 16.0 is the primary framework response to the power pyramid; GPS 15.0 addresses the prosperity pyramid's flourishing dimensions beyond material sufficiency.</div>
+    <div class="entry-tag"><span class="etag cross">Framework</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- E -->
+<div class="letter-group">
+<div class="lg-letter">E</div>
+
+<div class="entry">
+  <div class="entry-term">Enclosure</div>
+  <div class="entry-body">
+    <div class="entry-def">The conversion of commons resources to private control — historically referring to the privatization of common land in England, and in this framework extended to any process through which collectively held resources are transferred to private ownership or subjected to private control conditions. Enclosure in post-labor institutions can occur through privatization (direct sale to private owners), commodification (introduction of market pricing that excludes those without resources), institutional capture (funder or governance conditions that redirect commons resources to private benefit), or enclosure by increment (a series of small changes that collectively transform commons governance into private governance without any single triggering event).</div>
+    <div class="entry-context">GPS 2.3.3 establishes enclosure risk assessment as a commons stewardship requirement. GPS 10.2.2 covers legal protections against enclosure for asset disposition decisions. Enclosure incident rate is a GPS 2.0 KPI. Chapter 9 develops the enclosure framework and its application to digital and knowledge commons.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 2.0</span><span class="etag inst">GPS 10.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Equity audit</div>
+  <div class="entry-body">
+    <div class="entry-def">A systematic assessment of whether an institution's practices, outcomes, and power distribution are equitable across demographic subgroups — conducted with disaggregated quantitative data rather than narrative self-assessment. In this framework, a complete equity audit covers six domains: service access equity (who receives services), outcome equity (who benefits from services), workforce equity (who does the work and under what conditions), governance equity (who holds decision authority), resource equity (who receives what resources), and process equity (whose experience of institutional processes is treated as normative). Each domain requires its own data collection methodology.</div>
+    <div class="entry-context">GPS 11.4 covers equity audit design and implementation. Equity audit completion rate (six domains annually with disaggregated data) and equity gap closure rate are GPS 11.0 KPIs. Chapter 18 develops the six-domain framework and the distinction between root cause analysis and symptom response.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 11.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- F -->
+<div class="letter-group">
+<div class="lg-letter">F</div>
+
+<div class="entry">
+  <div class="entry-term">Flourishing</div>
+  <div class="entry-body">
+    <div class="entry-def">A multi-dimensional conception of human wellbeing that goes beyond material sufficiency to include purpose and meaning, social connection, capability and agency, dignity, and environmental quality. In this framework, flourishing is the terminal outcome that post-labor institutions exist to produce — and the framework argues that deficit-reduction service delivery, however effective at addressing material insufficiency, is insufficient for flourishing because it does not address the purpose, connection, and agency dimensions that research demonstrates are necessary for good lives. The seven flourishing dimensions used in GPS 15.0 are: material sufficiency, health, social connection and relationships, purpose and meaning, capability and agency, dignity and recognition, and environmental quality.</div>
+    <div class="entry-context">GPS 15.0 is the flourishing category. Chapter 22 develops the seven-dimension framework and the post-labor meaning crisis that makes GPS 15.0 a novel category rather than a category present in existing institutional frameworks. The Wellbeing Economy Alliance (WEAll) and Bhutan Gross National Happiness are the primary institutional exemplars.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 15.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Funder capture</div>
+  <div class="entry-body">
+    <div class="entry-def">The process through which institutional mission, priorities, and practices are reshaped by the preferences, conditions, and reporting requirements of funding sources — gradually or abruptly — without explicit governance decision to change direction. Funder capture is a failure mode rather than a designed outcome; it typically occurs incrementally as revenue concentration increases, as organizational capacity to refuse mission-compromising grants decreases, and as staff and leadership internalize funder priorities as institutional priorities. The result is an institution nominally governed by its community but actually governed by its largest funder.</div>
+    <div class="entry-context">GPS 9.2 addresses revenue diversification as the structural defense against funder capture. GPS 11.0's values-alignment assessment is designed to detect mission drift that may result from funder capture. Chapter 16 develops the funder capture failure mode in the context of GPS 9.0. Revenue concentration index above 50% is the primary early warning KPI.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 9.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- G -->
+<div class="letter-group">
+<div class="lg-letter">G</div>
+
+<div class="entry">
+  <div class="entry-term">GPS (Governance Process Standard)</div>
+  <div class="entry-body">
+    <div class="entry-def">The Post-Labor Economics Governance Process Standard — a structured taxonomy of the institutional processes through which post-labor institutions design, operate, and evolve themselves. The GPS framework organizes institutional processes into sixteen categories across three tiers (civic operating, institutional support, and novel categories), with five process groups per category and a five-level process hierarchy. The term GPS is used both for the framework as a whole and for individual category designations (e.g., GPS 1.0 refers to the Collective Vision and Governance Strategy category). The framework is modeled on the APQC Process Classification Framework but designed specifically for solidarity economy institutions.</div>
+    <div class="entry-context">Chapter 5 introduces the GPS framework and its origins. The live GPS framework is at ple-gps.netlify.app. The framework is intended as a living standard to be updated as post-labor institutions develop new practices and as the solidarity economy matures.</div>
+    <div class="entry-tag"><span class="etag cross">Framework</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- H -->
+<div class="letter-group">
+<div class="lg-letter">H</div>
+
+<div class="entry">
+  <div class="entry-term">Hierarchy-selective accountability</div>
+  <div class="entry-body">
+    <div class="entry-def">A failure mode in which an institution's accountability standards are applied rigorously to lower-level staff but loosely or not at all to senior leadership and governance body members — producing a situation where those with the least power are held most accountable and those with the most power are least accountable. Hierarchy-selective accountability is identified in Chapter 18 as one of the most common and damaging GPS 11.0 failure modes because it erodes staff trust in accountability systems, produces departures among the most principled staff, and allows the behaviors most consequential to institutional mission to go unchecked.</div>
+    <div class="entry-context">GPS 11.3.4 (ethics culture assessment) and the staff trust in accountability systems KPI are the primary detection mechanisms for hierarchy-selective accountability. The GPS 1.5 executive performance review process is the primary structural response.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 11.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- I -->
+<div class="letter-group">
+<div class="lg-letter">I</div>
+
+<div class="entry">
+  <div class="entry-term">Indirect cost recovery</div>
+  <div class="entry-body">
+    <div class="entry-def">The proportion of an institution's actual overhead costs — administration, governance, facilities, human resources, technology, finance — that are covered by restricted funding sources (grants and contracts) rather than borne by the institution's unrestricted resources. Low indirect cost recovery rates mean the institution is subsidizing restricted programs with unrestricted funds, effectively donating overhead support to grantmakers. This framework treats full indirect cost recovery as an ethical as well as financial matter — under-recovery transfers institutional resources from mission activities to program overhead subsidy.</div>
+    <div class="entry-context">GPS 9.2.4 establishes indirect cost recovery as a revenue development process. The indirect cost recovery rate KPI (target ≥85%) is developed in Appendix B. Chapter 16 develops the political economy of indirect cost under-recovery and the institutional strategies for recovery improvement.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 9.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Innovation theater</div>
+  <div class="entry-body">
+    <div class="entry-def">A failure mode in which an institution invests in innovation processes, language, and events without protecting the operational capacity necessary for experiments to be designed rigorously, run to completion, or integrated into core operations when they succeed. Innovation theater produces the cultural signaling of innovation (hackathons, design sprints, innovation labs) without the behavioral changes that would allow new approaches to displace established ones. The defining characteristic is the absence of protected innovation time — innovation activities compete with and lose to operational demands because they are not budgeted as a fixed institutional commitment.</div>
+    <div class="entry-context">GPS 13.4 establishes protected innovation capacity as a fixed budget line requirement. The innovation theater failure mode is developed in Chapter 20. Innovation-to-operations translation rate is the primary detection KPI — an institution with innovation theater will have high experiment initiation and low experiment integration.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 13.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Intergenerational equity</div>
+  <div class="entry-body">
+    <div class="entry-def">The principle that decisions about collectively held resources should account for the interests of future community members who are not present at the decision, and whose access to those resources will be affected by current decisions. In this framework, intergenerational equity is operationalized through the Haudenosaunee seven-generation principle — the requirement to assess the impact of significant decisions on seven generations into the future — and through specific asset governance requirements that prevent current institutions from disposing of collectively held resources in ways that advantage current members at the expense of future ones.</div>
+    <div class="entry-context">GPS 10.5 covers intergenerational asset protection. Intergenerational impact assessment rate is a GPS 10.0 KPI. Chapter 17 develops the seven-generation principle and its application to post-labor institutional asset governance.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 10.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- J -->
+<div class="letter-group">
+<div class="lg-letter">J</div>
+
+<div class="entry">
+  <div class="entry-term">Just transition</div>
+  <div class="entry-body">
+    <div class="entry-def">An economic and political framework for managing the transition away from fossil fuel economies — and by extension, in this framework, any major economic transition — in ways that are equitable across the communities most affected. The just transition framework shapes GPS 15.0's attention to the communities most harmed by labor displacement (those with the least capacity to navigate economic transition independently) and GPS 16.0's requirement that the communities most affected by economic change have genuine governance authority over the institutions and policies designed to support their transition.</div>
+    <div class="entry-context">Movement Generation Justice and Ecology Project is the primary institutional exemplar. The just transition framework is not the central organizing framework of this book — that is post-labor economics — but it informs the equity dimensions of several GPS categories, particularly 4.0, 5.4, and 15.4.</div>
+    <div class="entry-tag"><span class="etag cross">Framework</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- L -->
+<div class="letter-group">
+<div class="lg-letter">L</div>
+
+<div class="entry">
+  <div class="entry-term">Labor-value contract</div>
+  <div class="entry-body">
+    <div class="entry-def">The implicit social arrangement through which market economies have distributed resources, identity, social belonging, and civic worth through participation in paid labor — creating a system in which employment is simultaneously the mechanism for economic distribution and the primary source of social recognition and personal meaning. Chapter 1 argues that this contract is being voided by technological labor displacement at a rate that existing institutions — designed to supplement or support labor participation rather than replace it — cannot adequately respond to. The dissolution of the labor-value contract is the fundamental condition that post-labor institutions are designed to address.</div>
+    <div class="entry-context">Chapter 1 develops the labor-value contract concept and its dissolution. GPS 15.4 is the primary institutional response to the meaning dimensions of the contract's dissolution. GPS 5.4 addresses the economic dimensions.</div>
+    <div class="entry-tag"><span class="etag cross">Framework</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- M -->
+<div class="letter-group">
+<div class="lg-letter">M</div>
+
+<div class="entry">
+  <div class="entry-term">Mandar obedeciendo</div>
+  <div class="entry-body">
+    <div class="entry-def">Spanish for "to govern by obeying" — a governance philosophy originating in Zapatista communities in Chiapas, Mexico, which holds that governance authority is a temporary mandate granted by the community, not a personal possession of the authority holder. Those who govern are bound by the community's decisions and values; their role is to implement the community's will, not to substitute their own judgment for it. In this framework, mandar obedeciendo is the philosophical grounding for GPS 16.5's democratic accountability mechanisms — specifically the requirements for term limits, rotation, and the return of governance authority holders to ordinary community membership after their terms.</div>
+    <div class="entry-context">Chapter 23 develops mandar obedeciendo in the context of GPS 16.5 power distribution governance. The Zapatista governance case study in Chapter 23 provides institutional illustration. The concept is distinguished from representative democracy, which grants greater discretion to elected representatives.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 16.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Maturity model</div>
+  <div class="entry-body">
+    <div class="entry-def">A developmental framework that describes how institutional capability in a domain evolves from absent or informal practice through defined and developing, consistent and managed, to optimizing and contributing. In this framework, the four-level maturity model is the organizing structure for all GPS category assessment, with each level described in terms of observable institutional behaviors rather than aspirational commitments. The maturity model is a development tool, not a ranking — Level 1 in a GPS category is a starting point for development, not a failure grade. Different institutional types and at different scales require different GPS maturity levels to deliver their missions effectively.</div>
+    <div class="entry-context">Chapter 7 introduces the GPS maturity model. Appendix C is the maturity assessment tool. The framework distinguishes GPS maturity from organizational effectiveness — an institution can be highly effective at its current scale and mission scope while being at Level 1 in categories it has not yet needed to develop.</div>
+    <div class="entry-tag"><span class="etag cross">Framework</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Meaning crisis</div>
+  <div class="entry-body">
+    <div class="entry-def">The diminishment of access to socially recognized sources of purpose, contribution, and identity that accompanies labor market exclusion in economies structured around employment as the primary meaning-providing institution. In this framework, the meaning crisis is treated as a specific social harm of technological labor displacement — distinct from the material harm of income loss — that existing social safety nets do not address because they are designed for material support rather than meaning-making. Post-labor institutions are required by GPS 15.4 to design explicit responses to the meaning crisis rather than addressing only material needs.</div>
+    <div class="entry-context">Chapter 22 develops the post-labor meaning crisis concept and distinguishes it from the depression and anxiety that often accompany unemployment. Community contribution pathways are the primary GPS 15.4 institutional response. The meaning crisis concept draws on Viktor Frankl's logotherapy and Johann Hari's Lost Connections.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 15.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Mission drift</div>
+  <div class="entry-body">
+    <div class="entry-def">The gradual displacement of an institution's founding mission by operational imperatives, funder preferences, or staff interests that diverge from the community's original purposes — typically occurring incrementally and without any explicit governance decision to change direction. Mission drift is distinguished from intentional mission evolution (a governed decision to update mission in response to changed community conditions) and from programmatic expansion (adding activities that are within mission scope). It is identified through the values-alignment assessment (GPS 11.1) and the constituent voice attribution rate (GPS 1.0) — institutions experiencing mission drift typically show declining constituent voice attribution alongside increasing funder-directed program development.</div>
+    <div class="entry-context">GPS 1.1.3 establishes mission alignment assessment as a governance requirement. GPS 9.2 addresses funder capture as the most common driver of mission drift. Chapter 8 develops the mission drift failure mode in the context of GPS 1.0.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 1.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Mutual aid</div>
+  <div class="entry-body">
+    <div class="entry-def">A practice of solidarity-based resource sharing in which community members support each other based on principles of reciprocity and mutual obligation rather than charity (giving to those perceived as less fortunate) or market exchange (giving in return for payment). In this framework, mutual aid operates at two levels: the community mutual aid that GPS 6.4 supports among community members, and the inter-institutional mutual aid that GPS 12.2 formalizes between institutions. The distinction from charity is consequential — mutual aid is premised on the interdependence of all community members, while charity is premised on the separation of benefactor from recipient.</div>
+    <div class="entry-context">Dean Spade's Mutual Aid (2020) is the primary conceptual reference. GPS 12.2 covers inter-institutional mutual aid agreements. GPS 6.4 covers peer support as institutional mutual aid infrastructure. Chapter 19 develops the six inter-institutional relationship typology in which mutual aid is one category.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 6.0</span><span class="etag inst">GPS 12.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- N -->
+<div class="letter-group">
+<div class="lg-letter">N</div>
+
+<div class="entry">
+  <div class="entry-term">Novel categories</div>
+  <div class="entry-body">
+    <div class="entry-def">The three GPS categories — AI Governance and Algorithmic Accountability (GPS 14.0), Human Flourishing and Wellbeing (GPS 15.0), and Participatory Democracy (GPS 16.0) — that have no equivalent in existing process classification frameworks, including the APQC PCF. They are novel in the sense that the processes they cover are not yet institutionalized in most post-labor organizations — they represent the frontier of what it means to be a solidarity economy institution in the era of algorithmic decision-making, post-labor economic transition, and democratic legitimacy crisis. Most institutions assessed using Appendix C will score at Level 1 in these categories at founding, and development in them typically requires the prior development of civic operating and institutional support categories.</div>
+    <div class="entry-context">Tier III of the GPS framework. Chapters 21 (GPS 14.0), 22 (GPS 15.0), and 23 (GPS 16.0) develop each novel category. The novel categories are the primary theoretical contribution of the PLE-GPS framework to existing process classification literature.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 14.0–16.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- O -->
+<div class="letter-group">
+<div class="lg-letter">O</div>
+
+<div class="entry">
+  <div class="entry-term">Operational value definition</div>
+  <div class="entry-body">
+    <div class="entry-def">A specific, observable description of what a stated institutional value looks like in practice — what behaviors, decisions, and outcomes would provide evidence that the value is being honored, and what their absence would look like. Operational definitions are the prerequisite for values-alignment assessment: without them, assessment produces narrative self-affirmation rather than honest evaluation of the gap between stated and lived values. An operational definition includes both positive indicators (what honoring the value looks like) and negative indicators (what violating it looks like), enabling assessment to be specific rather than general.</div>
+    <div class="entry-context">GPS 11.1.1 requires operational definitions to be co-developed with staff, governance members, and community members. Chapter 18 develops the operational value definition concept and distinguishes it from value aspirations and value statements. The operational definition exercise is often the most productive and most uncomfortable component of the GPS 11.0 maturity assessment.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 11.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Ostrom's eight design principles</div>
+  <div class="entry-body">
+    <div class="entry-def">The conditions identified by economist Elinor Ostrom through her research on sustainable commons governance that predict whether a commons will be successfully self-governed over time: (1) clearly defined boundaries for the commons and its participants; (2) rules adapted to local conditions; (3) participation of those affected in modifying the rules; (4) effective monitoring of both the commons condition and user behavior; (5) graduated sanctions for rule violators; (6) accessible and low-cost conflict resolution mechanisms; (7) external recognition of the community's right to self-govern; and (8) nested governance structures for larger commons. These principles are the direct source of GPS 2.0's commons governance process requirements.</div>
+    <div class="entry-context">Ostrom developed the principles in Governing the Commons (1990). Chapter 9 explains how the eight principles are operationalized in GPS 2.0. Ostrom received the Nobel Prize in Economics in 2009 for this work.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 2.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- P -->
+<div class="letter-group">
+<div class="lg-letter">P</div>
+
+<div class="entry">
+  <div class="entry-term">Participation spectrum</div>
+  <div class="entry-body">
+    <div class="entry-def">A six-level model of community engagement quality from lowest to highest: (1) Informing — telling community members about decisions already made; (2) Consulting — asking for input with no commitment to use it; (3) Collaborating — working jointly with community members in developing options, with final decision retained by institution; (4) Co-deciding — sharing decision authority with community members; (5) Community-led — the community identifies issues, designs responses, and holds institutions accountable; (6) Collective self-governance — communities govern themselves directly with institutional support. In this framework, GPS 16.0's participation spectrum level is a leading indicator for the quality of democratic governance, and the goal is movement up the spectrum over time in each major governance domain.</div>
+    <div class="entry-context">The concept draws on Arnstein's Ladder of Citizen Participation (1969) and the IAP2 Spectrum. GPS 16.1 uses the spectrum as the governing framework for deliberative governance design. Chapter 23 develops the spectrum in the context of GPS 16.0.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 16.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Participatory budgeting (PB)</div>
+  <div class="entry-body">
+    <div class="entry-def">A governance process through which community members have genuine decision authority over a defined portion of an institution's budget — not advisory input into budget decisions, but binding authority to allocate resources. In this framework, three conditions distinguish genuine PB from its performance: (1) real resource scope — the percentage subject to community decision must be meaningful relative to the institution's overall budget, not token; (2) genuine authority — community decisions must be implemented as made, without staff modification; and (3) democratic legitimacy — the process must produce equitable participation across community demographics, not only among the most engaged members.</div>
+    <div class="entry-context">GPS 16.2 covers PB design and implementation requirements. Participatory budget scope (the percentage subject to community authority, with ≥10% as the Level 3 minimum) and PB implementation accountability rate are GPS 16.0 KPIs. The Porto Alegre PB case is developed in Chapter 23. The Participatory Budgeting Project (participatorybudgeting.org) is the primary US implementation resource.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 16.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Partnership equity</div>
+  <div class="entry-body">
+    <div class="entry-def">The degree to which the benefits and burdens of an inter-institutional relationship are proportionately distributed between partners — assessing whether each institution receives value commensurate with what it contributes, and whether administrative burden is proportionately shared. Partnership equity is identified in Chapter 19 as the dimension of inter-institutional relationships most frequently unaddressed, particularly in relationships between large well-resourced institutions and small under-resourced community organizations, where the administrative requirements of the partnership are often disproportionately borne by the smaller partner.</div>
+    <div class="entry-context">GPS 12.1.4 establishes annual partnership equity assessment as a process requirement. Partnership equity index is a GPS 12.0 KPI. The asymmetric collaboration failure mode (Chapter 19) describes the most common form of partnership inequity in the solidarity economy.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 12.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">PLE-GPS</div>
+  <div class="entry-body">
+    <div class="entry-def">Post-Labor Economics Governance Process Standard — the full name of the GPS framework described in this book. The "Post-Labor Economics" designation locates the framework's theoretical origin in David Shapiro's Post-Labor Economics model; the "Governance Process Standard" designation reflects the APQC PCF structural lineage and the framework's ambition to provide a shared reference standard for solidarity economy institutional practice comparable to ISO standards in manufacturing or GAAP in accounting.</div>
+    <div class="entry-context">See GPS. The framework is live at ple-gps.netlify.app.</div>
+    <div class="entry-tag"><span class="etag cross">Framework</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Post-labor economics</div>
+  <div class="entry-body">
+    <div class="entry-def">The economic framework, developed by David Shapiro, that analyzes the implications of technological labor displacement for resource distribution, social organization, and institutional design — and proposes solidarity economy institutions as the primary institutional response. Post-labor economics is distinguished from Universal Basic Income proposals (which address material distribution but not meaning, connection, or governance) and from techno-optimist accounts of labor displacement (which treat displacement as temporary adjustment rather than structural transition). The framework treats post-labor economic transition as requiring new institutions rather than only new policies.</div>
+    <div class="entry-context">The post-labor economics community is at postlaboreconomics.com. Chapter 1 develops the economic analysis. The PLE-GPS framework is the institutional design application of the post-labor economics conceptual framework.</div>
+    <div class="entry-tag"><span class="etag cross">Framework</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Power mapping</div>
+  <div class="entry-body">
+    <div class="entry-def">A systematic analysis of where formal and informal power resides in an institution — distinguishing between official governance authority (as specified in bylaws and decision rights maps) and actual influence (which may reside with funders, long-tenured staff, informal networks, or technical experts whose information others depend on). Power mapping in GPS 16.5 requires community members as co-analysts, not only subjects of analysis, and must address both formal and informal power to be useful for governance design. The key output is identification of where power is concentrated relative to community accountability and democratic legitimacy.</div>
+    <div class="entry-context">GPS 16.5.1 establishes power mapping as an annual governance requirement. Power distribution index is a GPS 16.0 KPI. The Midwest Academy organizer's manual is the primary practical resource. Chapter 23 develops power mapping in the context of GPS 16.5's democratic accountability framework.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 16.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Process classification framework</div>
+  <div class="entry-body">
+    <div class="entry-def">A hierarchical taxonomy of organizational processes organized to provide a common reference structure for describing, measuring, and improving institutional operations. Process classification frameworks are used as the basis for benchmarking (comparing an organization's processes against peers), process improvement (identifying gaps and development priorities), and governance (establishing shared language for performance accountability). The APQC PCF is the most widely adopted commercial process classification framework. PLE-GPS is the first process classification framework designed specifically for solidarity economy institutions.</div>
+    <div class="entry-context">Chapter 5 introduces process classification frameworks in the context of the GPS framework's origins. The APQC PCF is the direct structural ancestor of PLE-GPS.</div>
+    <div class="entry-tag"><span class="etag cross">Framework</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- R -->
+<div class="letter-group">
+<div class="lg-letter">R</div>
+
+<div class="entry">
+  <div class="entry-term">Risk tier (AI governance)</div>
+  <div class="entry-body">
+    <div class="entry-def">A four-level classification system for community-facing AI tools based on the severity of harm that could result from system failure or inequitable outcomes: Tier 1 (Administrative) — AI used for internal operations with no direct community member impact; Tier 2 (Service support) — AI that supports but does not determine service delivery; Tier 3 (Decision-influencing) — AI that significantly influences decisions about community member services or resource access; Tier 4 (High-stakes) — AI whose failures could cause significant harm to community members or irreversibly affect their lives. Governance requirements scale with tier: Tier 1 requires documentation; Tier 4 requires equity impact assessment, community disclosure, contestability mechanisms, and continuous monitoring.</div>
+    <div class="entry-context">GPS 14.1 establishes the risk tier framework as the governance structure for AI adoption. The NIST AI Risk Management Framework is the primary external reference for risk assessment methodology. Chapter 21 develops the four-tier framework with examples from community-facing AI deployment in social services.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 14.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- S -->
+<div class="letter-group">
+<div class="lg-letter">S</div>
+
+<div class="entry">
+  <div class="entry-term">Secondary traumatic stress</div>
+  <div class="entry-body">
+    <div class="entry-def">The emotional and psychological impact experienced by workers who are regularly exposed to the traumatic experiences of the people they serve — distinct from burnout (which results from chronic work stress) in that secondary traumatic stress is caused by empathic engagement with others' trauma rather than by work demands alone. In this framework, secondary traumatic stress is treated as an institutional design problem rather than an individual resilience problem — institutions that employ workers in crisis response and intensive support roles must design organizational responses (caseload management, group supervision, structured debriefing) rather than relying on individual self-care as the primary management strategy.</div>
+    <div class="entry-context">GPS 6.3.3 and GPS 7.5.2 address secondary traumatic stress as an institutional governance requirement. The Professional Quality of Life Scale (ProQOL) is the validated assessment instrument. Chapter 13 develops the institutional design response to secondary traumatic stress in the context of GPS 6.0.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 6.0</span><span class="etag inst">GPS 7.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Solidarity economy</div>
+  <div class="entry-body">
+    <div class="entry-def">An economic system composed of institutions and enterprises that prioritize community benefit, democratic governance, environmental sustainability, and equitable distribution over profit maximization and shareholder return. Solidarity economy institutions include worker cooperatives, consumer cooperatives, community land trusts, mutual aid networks, community development financial institutions, social enterprises, and the post-labor institutions described in this book. The solidarity economy is distinguished from the social enterprise sector (which may prioritize social benefit while retaining hierarchical governance and private ownership) by its commitment to democratic governance and commons-based ownership as structural requirements rather than strategic choices.</div>
+    <div class="entry-context">New Economy Coalition and US Solidarity Economy Network are the primary ecosystem organizations. Marjorie Kelly and Ted Howard's The Making of a Democratic Economy is the foundational text. GPS 12.5 addresses solidarity economy movement building as an institutional responsibility.</div>
+    <div class="entry-tag"><span class="etag cross">Framework</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Strategic renewal</div>
+  <div class="entry-body">
+    <div class="entry-def">A periodic, deliberate examination of whether an institution's fundamental approach — its theory of change, program model, governance structure, and core assumptions about community need and effective response — remains appropriate to current conditions. Strategic renewal is distinguished from strategic planning in that planning optimizes the execution of an existing strategy, while renewal examines whether the strategy itself remains adequate. In this framework, strategic renewal applies double-loop learning to the institution's governing logic and involves community members as co-analysts of whether the institution's approach is still the best available response to the conditions it addresses.</div>
+    <div class="entry-context">GPS 13.3 covers strategic renewal as a distinct process from strategic planning. Chapter 20 develops the six-phase renewal cycle with characteristic traps at each phase. Strategic renewal cycle completion (years since last renewal) is a GPS 13.0 KPI, with ≥5 years since last renewal as the alert threshold.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 13.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- T -->
+<div class="letter-group">
+<div class="lg-letter">T</div>
+
+<div class="entry">
+  <div class="entry-term">Theory of change</div>
+  <div class="entry-body">
+    <div class="entry-def">An explicit causal model connecting an institution's or program's activities to the outcomes it intends to produce — specifying the mechanism through which activities produce outcomes, the assumptions on which the mechanism depends, and the conditions that must be true for the mechanism to operate. In this framework, a theory of change is distinguished from a logic model (which describes inputs, activities, and outputs without necessarily specifying the causal mechanism) and from a program description (which specifies what will happen without specifying why it would produce change). Theories of change must be reviewed against evaluation evidence and updated when evidence suggests the mechanism is not operating as expected.</div>
+    <div class="entry-context">GPS 1.1.2 establishes theory of change as a governance requirement at the institutional level. GPS 5.1.2 establishes it as a program design requirement. Theory of change validation rate is a GPS 5.0 KPI. Chapter 12 develops the seven program design principles that should be reflected in program theories of change.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 1.0</span><span class="etag civic">GPS 5.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Trauma-informed practice</div>
+  <div class="entry-body">
+    <div class="entry-def">An approach to service delivery and organizational design that acknowledges the prevalence of trauma among community members and the ways in which conventional institutional practices — surveillance, documentation demands, power asymmetry, unpredictability — can re-traumatize people who have experienced prior harm. Trauma-informed practice involves six principles: safety, trustworthiness and transparency, peer support, collaboration and mutuality, empowerment and choice, and cultural, historical, and gender issues. In this framework, trauma-informed practice is treated as an organizational design requirement rather than a clinical intervention — it shapes intake processes, physical environments, staff-community relationships, and documentation practices across GPS 6.0.</div>
+    <div class="entry-context">SAMHSA's Trauma-Informed Care in Behavioral Health Services (TIP 57, 2014) is the primary reference. GPS 6.1.1 establishes trauma-informed intake as a process requirement. Chapter 13 develops the organizational (rather than only clinical) dimensions of trauma-informed practice.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 6.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- U -->
+<div class="letter-group">
+<div class="lg-letter">U</div>
+
+<div class="entry">
+  <div class="entry-term">Universal Integration Framework (UIF)</div>
+  <div class="entry-body">
+    <div class="entry-def">An inter-institutional data and coordination architecture for the solidarity economy sector — a shared technical infrastructure through which solidarity economy institutions can exchange data, coordinate services, and operate at network scale without replicating individual institution technology infrastructure. Referenced in GPS 8.0 as a sector-level technology investment that individual institutions can contribute to and benefit from. The UIF is one example of the kind of solidarity economy shared infrastructure that GPS 12.5 establishes as an institutional contribution obligation.</div>
+    <div class="entry-context">GPS 8.0 references UIF as shared technology infrastructure. GPS 12.5 covers sector ecosystem development contributions including shared technology platforms. Chapter 15 discusses shared technology infrastructure in the context of GPS 8.0 technology strategy.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 8.0</span><span class="etag inst">GPS 12.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- V -->
+<div class="letter-group">
+<div class="lg-letter">V</div>
+
+<div class="entry">
+  <div class="entry-term">Values-alignment assessment</div>
+  <div class="entry-body">
+    <div class="entry-def">A systematic annual evaluation of whether institutional behavior — as observed by staff, governance members, and community members — matches the operational definitions the institution has developed for each of its stated values. Values-alignment assessment is the primary GPS 11.1 accountability mechanism, and its design is premised on the insight that gap identification is only useful if followed by institutional response: the assessment must produce not only a diagnostic but improvement plans with governance accountability for closing identified gaps. Assessments that produce only narrative affirmation of existing practices are not functioning as accountability mechanisms.</div>
+    <div class="entry-context">GPS 11.1 covers values-alignment assessment design and implementation. Values-alignment assessment score is a GPS 11.0 KPI. Appendix C's GPS 11.0 rubric assesses maturity in values-alignment assessment practice. The concept is developed in Chapter 18 alongside the operational value definition concept that makes honest assessment possible.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 11.0</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- W -->
+<div class="letter-group">
+<div class="lg-letter">W</div>
+
+<div class="entry">
+  <div class="entry-term">Warm referral</div>
+  <div class="entry-body">
+    <div class="entry-def">A referral from one institution to another that involves direct personal connection between the referring institution and the receiving institution — a staff member contacts the receiving organization on behalf of the community member, makes an introduction, and follows up to confirm the referral was completed — as distinguished from a cold referral (providing a list of resources for the community member to contact independently) or a directory referral (pointing community members to a resource list). Warm referrals have significantly higher completion rates than cold referrals for community members with limited institutional navigation capacity, which describes most community members in post-labor economic transition.</div>
+    <div class="entry-context">GPS 3.2.2 establishes warm referral protocols as a process requirement. Referral completion rate (≥75% completion as Level 3 standard) is a GPS 3.0 KPI. GPS 6.1.3 covers warm referral in the context of individual case support.</div>
+    <div class="entry-tag"><span class="etag civic">GPS 3.0</span><span class="etag civic">GPS 6.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Wellbeing economy</div>
+  <div class="entry-body">
+    <div class="entry-def">An economic system oriented toward maximizing human wellbeing and ecological health rather than GDP growth — measuring success through flourishing indicators (life satisfaction, social connection, purpose, capability, environmental quality) rather than through production and consumption metrics. The wellbeing economy framework, developed by the Wellbeing Economy Alliance (WEAll) and allied by the governments of Scotland, Iceland, Wales, New Zealand, and Finland, is the policy-scale analog to what GPS 15.0 proposes at the institutional scale: the formal recognition that conventional economic measures miss most of what makes lives good.</div>
+    <div class="entry-context">Wellbeing Economy Alliance (weall.org) is the primary institutional exemplar for GPS 15.5. Chapter 22 develops the wellbeing economy framework in the context of GPS 15.0. The Easterlin paradox (income growth above sufficiency does not improve life satisfaction) is the empirical foundation for the wellbeing economy critique of GDP-centric institutional performance metrics.</div>
+    <div class="entry-tag"><span class="etag novel">GPS 15.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Whistleblower protection</div>
+  <div class="entry-body">
+    <div class="entry-def">Legal and institutional protections for individuals who report ethics violations, fraud, illegal activity, or values misalignment within their institution — specifically protections against retaliation (demotion, termination, exclusion, or hostile treatment) for making reports in good faith. In this framework, whistleblower protection is treated as an accountability architecture requirement rather than only a legal compliance matter: protection mechanisms must be genuinely independent of those whose conduct is being reported, actively communicated to all staff, and monitored for effectiveness through retaliation tracking. Very low ethics report rates in large institutions are treated as a suppression indicator — evidence that protective mechanisms are not functioning — rather than as evidence of institutional integrity.</div>
+    <div class="entry-context">GPS 11.5 covers whistleblower protection design and monitoring. Staff trust in accountability systems and ethics report rate are the primary GPS 11.0 detection KPIs for protection system effectiveness. Chapter 18 develops the independent reporting channel requirement as the structural solution to the common failure mode of reporting channels that route through the subjects of complaints.</div>
+    <div class="entry-tag"><span class="etag inst">GPS 11.0</span></div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-term">Worker cooperative</div>
+  <div class="entry-body">
+    <div class="entry-def">An enterprise that is owned and democratically governed by its workers — with each worker-member holding an equal governance vote regardless of their financial stake or seniority, and with surplus distributed among worker-members rather than extracted by external shareholders. Worker cooperatives are one of the five institutional archetypes covered in Chapter 24, and are notable in the GPS framework for their especially high GPS 7.0 (human potential) and GPS 16.0 (participatory democracy) development requirements — governance literacy, democratic decision-making processes, and equitable compensation structures are not aspirational for worker cooperatives but foundational to their institutional form.</div>
+    <div class="entry-context">Chapter 24's Archetype 02 covers worker cooperative GPS priorities. Democracy at Work Institute (institute.coop) is the primary technical assistance organization. USFWC (usfwc.coop) is the primary peer network. Mondragon is the primary international case study.</div>
+    <div class="entry-tag"><span class="etag cross">Archetype</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- End of glossary entries -->
+
+<div class="appendix-close">
+  <div class="ac-label">End of Appendix E — Glossary</div>
+  <div class="ac-body">
+    This glossary defines terms as they are used in the PLE-GPS framework. Where usage diverges from common usage in adjacent fields (organizational development, nonprofit management, public administration), that divergence is noted within the definition. The glossary is not intended as a comprehensive dictionary of solidarity economy or post-labor economics concepts — it covers the specific technical vocabulary of the GPS framework. For broader conceptual grounding, the resources in Appendix D organized by GPS category provide deeper engagement with the intellectual traditions that inform each part of the framework.<br><br>
+    <strong>On the book's complete reference section:</strong> Appendices A through E together constitute the GPS framework's reference infrastructure — the process taxonomy (A), measurement library (B), maturity assessment tool (C), resource library (D), and conceptual vocabulary (E). They are designed to be used together and separately: practitioners developing GPS 9.0 financial governance can work entirely within Appendix A's GPS 9.0 taxonomy, Appendix B's GPS 9.0 KPIs, Appendix C's GPS 9.0 maturity rubric, and Appendix D's GPS 9.0 resources without needing the rest of the framework. The framework's modular architecture is deliberate — institutions develop GPS capabilities sequentially, and the reference tools should support focused development in priority categories without requiring comprehension of the full 16-category framework.
+  </div>
+</div>
+
+</div>
+<div class="page-number">Institutions for a world after work · Appendix E</div>
+</body>
+</html>

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 12 — Deliver Services & Programs (GPS 5.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e; --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --civic: #1D9E75; --civic-dim: rgba(29,158,117,0.08);
+    --civic-text: #4ecfa0; --civic-border: rgba(29,158,117,0.25);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; align-items: center; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.civic { background: var(--civic-dim); color: var(--civic-text); border: 1px solid var(--civic-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--civic); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--civic-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--civic); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--civic); background: var(--civic-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--civic-text); }
+  .pullquote p::after { content: '\201D'; color: var(--civic-text); }
+
+  /* Service design principles */
+  .principles-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .principles-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .principle-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .principle-row:last-child { border-bottom: none; }
+  .principle-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle); background: var(--civic-dim); opacity: 0.8; padding: 16px 0; }
+  .principle-content { padding: 16px 20px; flex: 1; }
+  .principle-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+  .principle-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 6px; }
+  .principle-contrast { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 8px 12px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .principle-contrast strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Program design cycle */
+  .cycle-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .cycle-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .cycle-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .cycle-row:last-child { border-bottom: none; }
+  .cycle-phase { width: 90px; min-width: 90px; padding: 14px 12px; border-right: 1px solid var(--border-subtle); background: var(--civic-dim); display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+  .cycle-phase-num { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); letter-spacing: 0.06em; }
+  .cycle-phase-name { font-family: 'Crimson Pro', serif; font-size: 0.88rem; font-weight: 600; color: var(--civic-text); line-height: 1.2; }
+  .cycle-content { padding: 14px 18px; flex: 1; }
+  .cycle-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .cycle-trap { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .cycle-trap strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle); background: var(--civic-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Feedback loop diagram */
+  .feedback-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .feedback-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .feedback-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+  .feedback-row:last-child { border-bottom: none; }
+  .fb-cell { padding: 14px 18px; background: var(--bg-secondary); }
+  .fb-cell.alt { background: var(--bg-primary); }
+  .fb-label { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
+  .fb-label.good { color: var(--civic-text); opacity: 0.8; }
+  .fb-label.bad  { color: var(--m2t); opacity: 0.8; }
+  .fb-text { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle); background: var(--civic-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity block */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI block */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--civic-dim); color: var(--civic-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--civic-dim); border-bottom: 1px solid var(--civic-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--civic-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--civic-text); font-weight: 500; }
+
+  /* Sequence block */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--civic-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part III · Civic operating processes</div>
+  <div class="chapter-eyebrow">Chapter 12 · GPS Category 5.0</div>
+  <h1 class="chapter-title">Deliver services &amp; programs</h1>
+  <p class="chapter-subtitle">Designing for human outcomes, not throughput — how post-labor institutions build the feedback loops that make programs more effective over time rather than more entrenched in their original assumptions</p>
+  <div class="cat-meta">
+    <span class="cat-pill civic">Civic Operating</span>
+    <span class="cat-pill civic">Prosperity L1</span>
+    <span class="cat-pill civic">Outcome feedback</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">23 processes</span>
+    <span class="cat-pill neutral">16 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Programs are the most visible work of most post-labor institutions. They are what funders fund, what communities encounter, what staff spend their days delivering, and what institutional identity is built around. They are also the site of the most persistent gap between institutional intention and community outcome — the place where the theory of what the institution does and the reality of what actually changes in community members' lives most frequently diverge without the institution noticing. Programs that have run for years, sometimes decades, can be simultaneously well-designed, well-staffed, and well-loved by their participants while producing little measurable change in the outcomes they were created to address. The persistence of well-intentioned ineffective programs is not a mystery: it is the predictable result of institutions that measure what they do rather than what changes, and that invest in program delivery but not in the feedback infrastructure that would tell them whether delivery is working.</p>
+
+    <p>Category 5.0 is the process domain through which institutions design, deliver, and — most critically — iterate on the programs and services at the center of their civic operating work. It covers the full service delivery lifecycle: from the design of new programs through their launch through quality management through outcome evaluation through the use of evaluation findings to improve what the institution does. The word that distinguishes a mature Category 5.0 capability from an immature one is "through" — not "to." An institution that designs and delivers programs but does not systematically evaluate and iterate has stopped halfway through the process. It has built the engine but removed the steering mechanism.</p>
+
+    <p>The chapter addresses a specific feature of service design in post-labor contexts that does not have a clear analog in enterprise service management: the absence of the market feedback signal. Enterprises learn whether their services are working through purchase and abandonment — customers buy services that serve them and stop buying services that do not. This signal is imperfect, but it is real and it is continuous. Post-labor institutions deliver services without price and often without easy exit — which means they must design their own feedback mechanisms to replace what the market provides automatically. Designing those mechanisms well is the difference between a program that improves over time and a program that remains anchored to its founding assumptions long after the community's needs have evolved.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Seven principles of service design for community benefit</div>
+
+  <div class="body-text">
+    <p>Service design in post-labor institutions requires a set of principles that differ meaningfully from both enterprise service management and traditional nonprofit program delivery. The seven principles below are not aspirational values — they are operational requirements whose absence produces specific, predictable program failures documented throughout the history of community service organizations. Each principle is stated as a design requirement rather than as a philosophical commitment, because the point is not that these principles are admirable but that programs built without them fail in characteristic ways that programs built with them avoid.</p>
+  </div>
+
+  <div class="principles-block">
+    <div class="principles-header">Seven service design principles for post-labor institutions</div>
+
+    <div class="principle-row">
+      <div class="principle-num">P1</div>
+      <div class="principle-content">
+        <div class="principle-name">Design from outcome backward, not from activity forward</div>
+        <div class="principle-desc">Every program should begin with a specific, defined change in community members' lives that it intends to produce — not with a set of activities the institution knows how to deliver. The program design process works backward from the intended outcome: what must be true for that outcome to be achieved, what conditions must change, what barriers must be removed, and only then, what activities address those prerequisites.</div>
+        <div class="principle-contrast"><strong>Contrast:</strong> Activity-forward design — "we will offer twelve sessions of financial literacy training" — produces programs that can be fully implemented while producing no change in participants' financial situations, because the connection between the activity and the outcome was assumed rather than designed.</div>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-num">P2</div>
+      <div class="principle-content">
+        <div class="principle-name">Build the feedback loop into the design, not onto it</div>
+        <div class="principle-desc">Evaluation infrastructure — the mechanisms through which the institution learns whether the program is producing the intended outcome — must be designed alongside the program itself, not added when funders ask for impact data. Evaluation added retrospectively is almost always inadequate: the baseline data was not collected, the outcome measures were not defined in advance, and the causal attribution is not possible without the longitudinal design that only pre-design commitment produces.</div>
+        <div class="principle-contrast"><strong>Contrast:</strong> Post-hoc evaluation — designing the program, running it for two years, and then commissioning an evaluation — produces findings that cannot distinguish program effects from background trends and cannot identify which specific program elements are contributing to outcomes.</div>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-num">P3</div>
+      <div class="principle-content">
+        <div class="principle-name">Co-design with intended beneficiaries, not for them</div>
+        <div class="principle-desc">Community members who will receive a service are the primary experts on the barriers they face, the solutions they have already tried, the cultural contexts that determine what interventions are acceptable and effective, and the institutional dynamics that determine whether they will engage. Programs designed without this expertise consistently produce design failures that community members could have predicted if they had been consulted.</div>
+        <div class="principle-contrast"><strong>Contrast:</strong> Expert-designed programs — in which institutional professionals design interventions based on research and professional knowledge without community co-design — consistently underperform programs with equivalent professional input but genuine co-design, because the professional knowledge and community knowledge are complements, not substitutes.</div>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-num">P4</div>
+      <div class="principle-content">
+        <div class="principle-name">Treat iteration as a design feature, not a program failure</div>
+        <div class="principle-desc">Programs that do not change over time are programs that have stopped learning. The first version of any program — regardless of how much care went into its design — embeds assumptions that contact with reality will reveal to be wrong. Institutions that treat program modification as evidence of original design failure will run programs that are increasingly misaligned with community needs without changing them. Institutions that treat iteration as the expected and designed activity of program maturation will continuously improve their effectiveness.</div>
+        <div class="principle-contrast"><strong>Contrast:</strong> Fidelity-driven program delivery — implementing a program design with high consistency across sites and time periods without modification — prioritizes replication over effectiveness, producing programs that are identical at multiple sites but equally ineffective if the original design was flawed.</div>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-num">P5</div>
+      <div class="principle-content">
+        <div class="principle-name">Design for the most marginalized participant, not the average one</div>
+        <div class="principle-desc">Program design that optimizes for the average or typical participant systematically underserves participants who differ from the average — who have more complex needs, fewer supporting resources, or less institutional navigation capacity. In post-labor institutions, the most marginalized participants are typically the ones with the greatest need. Designing for them first produces programs that work better for everyone; designing for the average and accommodating them as exceptions produces programs that are adequate for some and insufficient for those who need them most.</div>
+        <div class="principle-contrast"><strong>Contrast:</strong> Universal program design — a single program configuration applied equally to all participants — consistently produces outcomes that are inversely related to need: participants with the greatest challenges experience the smallest benefits from designs that were calibrated to participants with lesser challenges.</div>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-num">P6</div>
+      <div class="principle-content">
+        <div class="principle-name">Measure what changes in lives, not what the institution does</div>
+        <div class="principle-desc">Activity metrics — participants served, sessions delivered, hours of service provided — are necessary for operational management but are insufficient measures of program effectiveness. The terminal measure is whether the program is producing the outcome it was designed to produce: whether financial situations are improving, whether health outcomes are changing, whether employment barriers are being removed, whether relationships are strengthening. Institutions that measure only activity can fully implement their programs while making no difference in the outcomes that motivated the program's creation.</div>
+        <div class="principle-contrast"><strong>Contrast:</strong> Activity-centric measurement — reporting participants served and sessions delivered as primary impact metrics — creates incentives to maximize throughput rather than impact, produces programs that serve more people with less effect per person, and provides no signal to the institution that its design assumptions are wrong.</div>
+      </div>
+    </div>
+
+    <div class="principle-row">
+      <div class="principle-num">P7</div>
+      <div class="principle-content">
+        <div class="principle-name">Sustain the program, not just launch it</div>
+        <div class="principle-desc">Program launch is not program delivery. The capacity required to design and launch a new program is different from the capacity required to deliver it consistently at quality over years, to manage staff turnover without capability loss, to iterate based on evaluation findings without losing program coherence, and to sustain funding across grant cycles that rarely align with program development timelines. Institutions that invest heavily in program design and launch and lightly in program sustainability produce a portfolio of well-designed programs that underperform at the delivery level because the delivery infrastructure was never adequately developed.</div>
+        <div class="principle-contrast"><strong>Contrast:</strong> Launch-heavy, sustain-light programs — where organizational energy and resources concentrate on the novelty of new programs and wane as programs mature — produce consistently declining quality curves as the founding energy dissipates and no sustainability infrastructure has been built to replace it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The program design cycle — six phases</div>
+
+  <div class="body-text">
+    <p>Mature service delivery in Category 5.0 is not a linear process — it is a cycle. Programs are designed, delivered, evaluated, and redesigned in continuous iteration. The six-phase program design cycle describes this process with enough specificity that institutions can identify where they are in the cycle for any given program, what the next phase requires, and what characteristically goes wrong at each transition. The cycle applies to all program types — from educational programs through health services through economic empowerment through the full range of service offerings that post-labor institutions deliver.</p>
+  </div>
+
+  <div class="cycle-block">
+    <div class="cycle-header">The program design cycle — six phases with transition traps</div>
+
+    <div class="cycle-row">
+      <div class="cycle-phase"><div class="cycle-phase-num">Phase 1</div><div class="cycle-phase-name">Discovery</div></div>
+      <div class="cycle-content">
+        <div class="cycle-desc">Deep engagement with the community experience of the problem the program will address — not just the problem as understood by institutional professionals but the problem as lived by the people who experience it. Discovery includes community listening, asset mapping, review of relevant evidence, and the development of a community-validated problem statement that the program will address.</div>
+        <div class="cycle-trap"><strong>Transition trap:</strong> Moving from discovery to design before the problem statement has been genuinely validated by community members. The consequence is a program designed for the problem as the institution understands it rather than the problem as the community experiences it.</div>
+      </div>
+    </div>
+
+    <div class="cycle-row">
+      <div class="cycle-phase"><div class="cycle-phase-num">Phase 2</div><div class="cycle-phase-name">Co-design</div></div>
+      <div class="cycle-content">
+        <div class="cycle-desc">Collaborative development of the program design with community members, drawing on both professional expertise and community knowledge. Co-design produces the program logic — the theory of change, the specific activities, the sequence of participant experiences — and the evaluation framework simultaneously. Community members who participate in co-design become informed program advocates and honest program evaluators.</div>
+        <div class="cycle-trap"><strong>Transition trap:</strong> Treating co-design as stakeholder consultation rather than genuine collaboration — presenting a professionally developed design to community members for feedback rather than developing the design with them. The consequence is a nominally co-designed program that embeds professional assumptions without community knowledge.</div>
+      </div>
+    </div>
+
+    <div class="cycle-row">
+      <div class="cycle-phase"><div class="cycle-phase-num">Phase 3</div><div class="cycle-phase-name">Pilot</div></div>
+      <div class="cycle-content">
+        <div class="cycle-desc">Small-scale implementation of the program design with close monitoring and rapid learning. The pilot phase tests the design assumptions, identifies implementation challenges, and generates the qualitative and quantitative data needed to assess whether the program is producing the intended outcomes before full-scale rollout. Pilots should be designed to be informative, not impressive — the goal is honest learning, not demonstration of early success.</div>
+        <div class="cycle-trap"><strong>Transition trap:</strong> Designing pilots to succeed rather than to learn — selecting ideal participants, delivering the program with extraordinary resources, and measuring outcomes over too short a period to detect real change. The consequence is a successful pilot that fails at scale because its conditions cannot be reproduced.</div>
+      </div>
+    </div>
+
+    <div class="cycle-row">
+      <div class="cycle-phase"><div class="cycle-phase-num">Phase 4</div><div class="cycle-phase-name">Delivery</div></div>
+      <div class="cycle-content">
+        <div class="cycle-desc">Consistent, quality-managed program delivery at the intended scale. Delivery phase process development includes staff training and quality management systems, participant support and case management, ongoing data collection for continuous monitoring, and the management of the participant experience across the full program arc. Delivery is where good designs succeed or fail based on implementation quality.</div>
+        <div class="cycle-trap"><strong>Transition trap:</strong> Treating delivery as routine once the program is "running" — reducing the management attention and resource investment that the launch phase required. The consequence is quality degradation that is gradual and invisible until it is significant and embarrassing.</div>
+      </div>
+    </div>
+
+    <div class="cycle-row">
+      <div class="cycle-phase"><div class="cycle-phase-num">Phase 5</div><div class="cycle-phase-name">Evaluation</div></div>
+      <div class="cycle-content">
+        <div class="cycle-desc">Systematic assessment of whether the program is producing the outcomes it was designed to produce, at what quality level, for which populations, and through what mechanisms. Evaluation in post-labor institutions must go beyond utilization measurement to genuine outcome assessment — and must be designed to produce actionable findings that can drive program improvement, not just accountability reporting that describes what happened without explaining why.</div>
+        <div class="cycle-trap"><strong>Transition trap:</strong> Conducting evaluation for accountability rather than for learning — producing reports that describe program activities and participant satisfaction without assessing outcome achievement or generating improvement-oriented findings. The consequence is evaluation that consumes resources without producing institutional learning.</div>
+      </div>
+    </div>
+
+    <div class="cycle-row">
+      <div class="cycle-phase"><div class="cycle-phase-num">Phase 6</div><div class="cycle-phase-name">Iteration</div></div>
+      <div class="cycle-content">
+        <div class="cycle-desc">Using evaluation findings to improve the program design and delivery — closing the feedback loop that distinguishes learning organizations from delivery organizations. Iteration requires the institutional culture and governance capacity to act on evaluation findings even when they are inconvenient, to modify programs that are not working without treating modification as failure, and to retire programs that are not working without treating retirement as defeat.</div>
+        <div class="cycle-trap"><strong>Transition trap:</strong> Evaluating without iterating — conducting evaluation, receiving findings, and continuing unchanged because the findings are uncomfortable, because the program has institutional momentum, or because modification would require renegotiating funder relationships. The consequence is evaluation that produces knowledge the institution does not use, and programs that become progressively less effective.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The feedback problem — replacing the market signal</div>
+
+  <div class="body-text">
+    <p>The most consequential process design challenge in Category 5.0 is creating feedback mechanisms that provide the information the market provides automatically through price. In market contexts, service providers learn quickly whether their services are working: customers purchase services that serve them and stop purchasing services that do not. The signal is imperfect — it reflects willingness to pay rather than benefit, and systematically excludes the perspectives of those who cannot pay — but it is real, continuous, and consequential for the service provider's viability.</p>
+    <p>Post-labor institutions must design their own feedback mechanisms to replace this signal. The feedback infrastructure must do three things simultaneously: it must detect when programs are not producing the intended outcomes; it must identify why they are not, with enough specificity to guide redesign; and it must create institutional consequences that motivate response — some analog to the market mechanism that makes non-response costly. Institutions that build feedback systems that detect without diagnosing, or diagnose without producing consequences, have built the form of evaluation without its function.</p>
+  </div>
+
+  <div class="feedback-block">
+    <div class="feedback-header">Feedback infrastructure — functional versus dysfunctional designs</div>
+
+    <div class="feedback-row">
+      <div class="fb-cell">
+        <div class="fb-label good">Functional detection</div>
+        <div class="fb-text">Outcome measures collected at regular intervals throughout program delivery, not only at end-of-program evaluation. Early outcome data creates the possibility of mid-course correction before completion.</div>
+      </div>
+      <div class="fb-cell alt">
+        <div class="fb-label bad">Dysfunctional detection</div>
+        <div class="fb-text">Outcome data collected only at program completion, at which point the participants who could have benefited from mid-course correction have already completed without benefit.</div>
+      </div>
+    </div>
+
+    <div class="feedback-row">
+      <div class="fb-cell">
+        <div class="fb-label good">Functional diagnosis</div>
+        <div class="fb-text">Evaluation design distinguishes between implementation failure (the program was not delivered as designed) and design failure (the program was delivered as designed but the design does not work) — enabling precise improvement interventions.</div>
+      </div>
+      <div class="fb-cell alt">
+        <div class="fb-label bad">Dysfunctional diagnosis</div>
+        <div class="fb-text">Evaluation identifies that outcomes were not achieved without distinguishing whether delivery or design was the problem — making targeted improvement impossible and motivating either wholesale redesign or defensive denial.</div>
+      </div>
+    </div>
+
+    <div class="feedback-row">
+      <div class="fb-cell">
+        <div class="fb-label good">Functional consequence</div>
+        <div class="fb-text">Evaluation findings are reviewed by the governance body with explicit responsibility to make program modification decisions — creating the institutional accountability loop that transforms evaluation findings into organizational action.</div>
+      </div>
+      <div class="fb-cell alt">
+        <div class="fb-label bad">Dysfunctional consequence</div>
+        <div class="fb-text">Evaluation findings are reported to staff and funders without governance review or accountability — creating knowledge without the institutional mechanism to act on it, allowing programs to continue unchanged despite documented ineffectiveness.</div>
+      </div>
+    </div>
+
+    <div class="feedback-row">
+      <div class="fb-cell">
+        <div class="fb-label good">Functional disaggregation</div>
+        <div class="fb-text">Outcome data analyzed by participant demographic subgroup to identify whether the program is working differentially across the population served — enabling targeted design improvements for populations experiencing lower benefit.</div>
+      </div>
+      <div class="fb-cell alt">
+        <div class="fb-label bad">Dysfunctional disaggregation</div>
+        <div class="fb-text">Aggregate outcome data reported without subgroup analysis — concealing the possibility that aggregate improvement masks declining benefit for the most marginalized participants, who may be experiencing negative program effects invisible in the averages.</div>
+      </div>
+    </div>
+
+    <div class="feedback-row">
+      <div class="fb-cell">
+        <div class="fb-label good">Functional community voice</div>
+        <div class="fb-text">Participant experience data collected through methods that create psychological safety for honest feedback — including peer-administered surveys, anonymous channels, and qualitative methods that surface experiences the institution might prefer not to hear.</div>
+      </div>
+      <div class="fb-cell alt">
+        <div class="fb-label bad">Dysfunctional community voice</div>
+        <div class="fb-text">Satisfaction surveys administered by program staff, producing high satisfaction scores that reflect participants' reluctance to criticize services they depend on rather than their honest assessment of program effectiveness.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 5.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">5.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Design, launch, and manage community programs and services</div>
+          <div class="proc-group-desc">The foundational process group covering the full program management lifecycle — from the initial program design through launch through ongoing management through the decision to modify, scale, or retire. Program management at this level requires integrating the design principles described above with the operational realities of staff capacity, funding constraints, and community context. The most common failure in this process group is treating program launch as the endpoint of program design rather than the beginning of program learning.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">5.1.1</div><div class="act-name">Develop program design documents incorporating theory of change, target population definition, program logic, evaluation framework, and sustainability plan — before launch, not after</div></div>
+            <div class="proc-activity"><div class="act-id">5.1.2</div><div class="act-name">Establish program governance — clear accountability for program quality, outcome achievement, and the decision rights for program modification</div></div>
+            <div class="proc-activity"><div class="act-id">5.1.3</div><div class="act-name">Develop staff training and quality management systems — ensuring consistent, quality delivery is not dependent on individual staff excellence but on designed quality infrastructure</div></div>
+            <div class="proc-activity"><div class="act-id">5.1.4</div><div class="act-name">Manage program portfolio — maintaining an active view of all programs, their stage in the program cycle, their outcome performance, and their resource requirements, to inform decisions about investment, modification, and retirement</div></div>
+            <div class="proc-activity"><div class="act-id">5.1.5</div><div class="act-name">Develop and execute program sustainability plans — funding diversification, community ownership development, and transition planning for programs that will eventually move from institutional delivery to community management</div></div>
+            <div class="proc-activity"><div class="act-id">5.1.6</div><div class="act-name">Manage program retirement — the deliberate, planned conclusion of programs that have completed their purpose or are not producing intended outcomes, with participant transition support and institutional learning capture</div></div>
+          </div>
+          <div class="act-note">Process 5.1.6 — program retirement — is the most politically difficult process in Category 5.0 and the one that most directly tests whether an institution's evaluation is genuine. Programs develop constituencies — staff whose roles depend on them, funders who have invested in them, community members who have benefited from them, and institutional identity that has been built around them. The capacity to retire programs that are not working despite these constituencies is the clearest indicator of a mature Category 5.0 capability and the clearest indicator of genuine accountability to community outcomes rather than institutional interests.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">5.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Deliver educational and workforce development programs</div>
+          <div class="proc-group-desc">Educational and workforce programs are among the most common service offerings of post-labor institutions, and among the most frequently ineffective. The gap between educational program delivery and labor market outcomes is well-documented: programs that increase knowledge and skills do not automatically translate to employment, income improvement, or economic security when the barriers to those outcomes lie outside the program's scope. Education and workforce development in post-labor contexts must address not only skill development but the structural barriers — discrimination, credential requirements, network access, transportation, childcare — that prevent skilled individuals from converting skills into economic outcomes.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">5.2.1</div><div class="act-name">Design curriculum with community co-designers and employers — building in the community knowledge and labor market knowledge that professional educators alone cannot provide</div></div>
+            <div class="proc-activity"><div class="act-id">5.2.2</div><div class="act-name">Integrate wraparound support into education programs — childcare, transportation, income support, mental health services — addressing the barriers that prevent participation and completion</div></div>
+            <div class="proc-activity"><div class="act-id">5.2.3</div><div class="act-name">Build employer and economic ecosystem relationships — creating the pathways from skill development to economic opportunity that the program itself cannot create alone</div></div>
+            <div class="proc-activity"><div class="act-id">5.2.4</div><div class="act-name">Track participants longitudinally after program completion — measuring employment, income, and economic security outcomes at 6, 12, and 24 months, not only at program completion</div></div>
+            <div class="proc-activity"><div class="act-id">5.2.5</div><div class="act-name">Analyze outcome data by participant demographic subgroup — identifying and addressing differential effectiveness across participant populations</div></div>
+          </div>
+          <div class="act-note">Process 5.2.4 — longitudinal outcome tracking — is the most important and most commonly absent process in workforce development program management. Programs that measure outcomes only at completion measure knowledge and skill acquisition, not economic outcomes. The causal pathway from skill to employment operates over six to twenty-four months and through multiple intervening variables; measuring at completion captures only the first of many required steps. Longitudinal tracking requires infrastructure investment and sustained participant contact that many institutions treat as post-program overhead rather than as core program infrastructure — which is the category error that makes workforce development evaluation consistently uninformative about whether programs work.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">5.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Deliver health, wellness, and prevention services</div>
+          <div class="proc-group-desc">Health services in post-labor institutions span a wide range — from community health worker programs through mental health services through chronic disease management through health education and prevention — and are united by a design challenge specific to the post-labor context: delivering services that are adequate to the community's actual health needs rather than to the services that are reimbursable through existing payment mechanisms. Health services designed around billing codes and reimbursable procedures are health services calibrated to the insurance system's definition of health rather than the community's. Post-labor health service design must start from community health needs and work outward to funding, rather than starting from reimbursable services and working inward to community fit.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">5.3.1</div><div class="act-name">Conduct community health needs assessment that goes beyond clinical needs to social determinants — housing instability, food insecurity, trauma exposure, social isolation — that drive health outcomes</div></div>
+            <div class="proc-activity"><div class="act-id">5.3.2</div><div class="act-name">Design and deploy community health worker programs — peer health advocates with lived experience who extend health services into community contexts that clinical settings cannot reach</div></div>
+            <div class="proc-activity"><div class="act-id">5.3.3</div><div class="act-name">Integrate mental health and behavioral health services with physical health services — addressing the artificial clinical separation that produces simultaneous over-specialization and under-service for community members with complex needs</div></div>
+            <div class="proc-activity"><div class="act-id">5.3.4</div><div class="act-name">Deliver prevention and health promotion programs with equity attention — reaching populations with the highest health burden who are typically the least reached by prevention programs designed for more advantaged populations</div></div>
+            <div class="proc-activity"><div class="act-id">5.3.5</div><div class="act-name">Measure health outcomes and social determinant outcomes longitudinally — not clinic visits and screenings completed but actual changes in health status and health equity</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">5.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Deliver economic empowerment and financial capability services</div>
+          <div class="proc-group-desc">Economic empowerment services — financial capability training, individual development accounts, credit building programs, small business development, cooperative development, and the range of interventions designed to improve community members' economic position — are the service category most directly relevant to the Pyramid of Prosperity's first and second levels. They are also the category most prone to the theory-of-change failure mode: assuming that individual skill and knowledge development will produce economic outcomes in the presence of structural barriers that no amount of individual improvement can overcome. Economic empowerment programs that do not address structural barriers alongside individual capacity will consistently produce knowledgeable individuals who remain economically insecure because the structural conditions of their insecurity have not changed.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">5.4.1</div><div class="act-name">Design economic empowerment programs with both individual capacity development and structural barrier advocacy components — the individual and structural must be designed together</div></div>
+            <div class="proc-activity"><div class="act-id">5.4.2</div><div class="act-name">Deliver financial capability training using asset-based approaches — building on existing community financial knowledge and practice rather than assuming deficit</div></div>
+            <div class="proc-activity"><div class="act-id">5.4.3</div><div class="act-name">Develop individual development account and matched savings programs — building asset accumulation capacity alongside income management skills</div></div>
+            <div class="proc-activity"><div class="act-id">5.4.4</div><div class="act-name">Integrate cooperative and collective ownership development into economic empowerment programming — building the second level of the Pyramid of Prosperity alongside the foundational level</div></div>
+            <div class="proc-activity"><div class="act-id">5.4.5</div><div class="act-name">Track economic outcome trajectories over two or more years — measuring net worth, income stability, asset accumulation, and debt reduction rather than financial literacy quiz scores</div></div>
+          </div>
+          <div class="act-note">Process 5.4.4 — integrating cooperative and collective ownership development into economic empowerment programming — is the process that distinguishes post-labor economic empowerment from conventional financial literacy programming. The conventional model develops individual economic skill within existing economic structures. The post-labor model develops individual economic skill while building collective economic structures — cooperatives, community land trusts, community development financial institutions — that change the structural conditions in which individual economic behavior occurs. Both are necessary; the individual model without the structural component consistently produces limited durable impact.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">5.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Evaluate service outcomes and iterate on program design</div>
+          <div class="proc-group-desc">The process group that closes the program cycle — and the one that distinguishes institutions that learn from institutions that deliver. Effective evaluation in post-labor contexts requires four things that are rarely found together: genuine outcome measurement (not activity counting), disaggregated analysis (not aggregate averages), honest interpretation (not defensive framing), and institutional will to act on findings (not just report them). The absence of any one of these requirements produces evaluation that is technically competent and practically useless. All four must be present for evaluation to drive the program improvement that justifies its investment.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">5.5.1</div><div class="act-name">Develop evaluation frameworks at program design — defining outcome measures, data collection methods, analysis approach, and governance review process before program launch</div></div>
+            <div class="proc-activity"><div class="act-id">5.5.2</div><div class="act-name">Collect outcome data continuously throughout delivery, not only at program completion — enabling mid-course correction and early detection of design failures</div></div>
+            <div class="proc-activity"><div class="act-id">5.5.3</div><div class="act-name">Analyze outcomes by participant demographic subgroup — identifying differential effectiveness and equity gaps that aggregate analysis conceals</div></div>
+            <div class="proc-activity"><div class="act-id">5.5.4</div><div class="act-name">Conduct structured governance review of evaluation findings — creating the institutional accountability mechanism that requires response to underperformance</div></div>
+            <div class="proc-activity"><div class="act-id">5.5.5</div><div class="act-name">Implement design iterations based on evaluation findings — closing the feedback loop between assessment and improvement; documenting changes made and the evidence that motivated them</div></div>
+            <div class="proc-activity"><div class="act-id">5.5.6</div><div class="act-name">Share evaluation findings with community members and peer institutions — contributing to the collective knowledge base of what works, rather than treating evaluation findings as proprietary institutional information</div></div>
+          </div>
+          <div class="act-note">Process 5.5.6 — sharing evaluation findings with peer institutions — is the process that converts individual institutional learning into collective movement learning. Most evaluation in the solidarity economy remains internal: institutions assess their programs, learn what works and what does not, and keep that learning within the institution. The result is that the solidarity economy collectively rediscovers the same lessons repeatedly, because the infrastructure for sharing evaluation findings across institutional boundaries does not exist. Building that infrastructure — through communities of practice, shared evaluation frameworks, and published learning reports — is one of the highest-leverage knowledge investments the solidarity economy can make. Category 12.0 (inter-institutional relations) provides the institutional relationships through which this sharing can occur; Category 5.5.6 provides the commitment to use them.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six service delivery failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in service design, delivery, and evaluation</div>
+
+    <div class="fail-row">
+      <div class="fail-num">S1</div>
+      <div class="fail-content">
+        <div class="fail-name">Theory of change assumption — the leap of faith between activity and outcome</div>
+        <div class="fail-desc">The program's theory of change contains an unexamined leap: an assumption that completing the program activities will produce the intended outcomes through a causal mechanism that has not been specified, tested, or monitored. The program runs correctly — all activities are delivered as designed — but the intended outcomes do not materialize because the assumed causal mechanism does not operate in the way the design assumed.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The program's theory of change describes activities and intended outcomes without specifying the mechanism through which activities produce outcomes. Program staff cannot explain why the activities should produce the outcomes — only that they are expected to. Evaluation focuses on activity completion rather than mechanism monitoring.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">S2</div>
+      <div class="fail-content">
+        <div class="fail-name">Funder-designed programs — what gets funded rather than what works</div>
+        <div class="fail-desc">The institution's program portfolio is shaped by available funding rather than by community needs and evidence of effectiveness. Programs that align with funder priorities are launched; programs that would address community priorities but do not align with available funding are not. Over time, the institution's programming increasingly reflects funder preferences and decreasingly reflects community needs, producing a portfolio that is well-funded and poorly matched to the community it is supposed to serve.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Program launches are consistently timed to funding availability rather than to community need cycles. Strategic planning discussions center on what is fundable rather than what is needed. Community members' expressed priorities diverge significantly from the institution's current program offerings.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">S3</div>
+      <div class="fail-content">
+        <div class="fail-name">Participation inflation — counting everyone who showed up once</div>
+        <div class="fail-desc">Participation metrics count all program contacts as participants, regardless of engagement depth or program completion. A person who attended one session of a twelve-session program and a person who completed all twelve sessions are counted equally. The resulting participation numbers are large and impressive in reports; the actual penetration of effective program dosage is significantly smaller and invisible in the metrics.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Completion rates are significantly lower than enrollment rates but are not reported or discussed. Outcome measurement is conducted with the enrolled population rather than with the completing population, producing diluted outcome estimates that conceal the program's actual effectiveness for those who fully engage.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">S4</div>
+      <div class="fail-content">
+        <div class="fail-name">Founder's program — irreplaceable staff as the program's core design feature</div>
+        <div class="fail-desc">The program's effectiveness depends on a specific staff member — the founding program director, the charismatic facilitator, the particular therapist whose relationships sustain participant engagement — whose personal qualities are the actual causal mechanism rather than the designed program elements. The program appears to be working, but what is actually working is the person, not the program. When that person leaves, the program's effectiveness collapses.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Participants attribute program effectiveness to specific staff members rather than to program design. Quality varies significantly between staff members in ways that the institution treats as individual performance rather than as program design failures. No program documentation exists that would allow a new staff member to deliver the program at comparable effectiveness.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">S5</div>
+      <div class="fail-content">
+        <div class="fail-name">Cultural mismatch — programs designed for one community delivered to another</div>
+        <div class="fail-desc">Programs are adopted from models developed in different community contexts — different racial, ethnic, linguistic, economic, or geographic contexts — without the adaptation required to make them effective in the new context. Evidence of effectiveness in the original context does not transfer automatically; it transfers only to the extent that the conditions that made the program effective in the original context are present in the new one. Cultural mismatch programs are technically evidence-based and practically ineffective.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Programs are adopted from evidence-based registries without formal adaptation processes. Participant dropout rates are higher than in the programs' original context. Community members describe program content or format as "not for us." Staff report adapting programs informally in ways that are not documented or evaluated.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">S6</div>
+      <div class="fail-content">
+        <div class="fail-name">Zombie programs — kept alive by momentum rather than effectiveness</div>
+        <div class="fail-desc">Programs that were effective in their original context or time period continue to operate long after the conditions that made them effective have changed — because they have institutional momentum, committed staff, and established funder relationships that make them difficult to retire even when evaluation clearly demonstrates their ineffectiveness. Zombie programs consume resources that could fund effective programs, signal to the community that the institution prioritizes its own programs over community outcomes, and crowd out the innovation that a portfolio review and retirement would enable.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Programs that consistently underperform their outcome targets receive incremental funding renewals without governance accountability for improvement. The institution has not retired or significantly modified any major program in more than five years. Evaluation findings for underperforming programs are reported to funders without corresponding program improvement plans.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Highlander Research and Education Center</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Highlander Research and Education Center — nearly ninety years of program iteration</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Highlander Research and Education Center in New Market, Tennessee has operated continuously since 1932 — one of the longest-running popular education and social movement support institutions in the United States. Its longevity is not the result of program stability; it is the result of program iteration. Highlander has continuously redesigned its educational methodology, its participant focus, and its strategic priorities in response to changing conditions and accumulated learning about what works. The institution that supported the labor movement in Appalachian coal fields in the 1930s, trained civil rights movement leaders in the 1950s and 1960s (Rosa Parks and Septima Clark among them), developed environmental justice programming in the 1980s, and now supports immigrant rights, LGBTQ organizing, and climate justice movements is not the same institution in terms of programming. It is the same institution in terms of values, methodology, and the discipline of continuous learning and adaptation.</div>
+      <div class="case-text">Highlander's approach to program evaluation is grounded in a specific methodology that distinguishes it from most post-labor institutions: the evaluation question is not "did participants learn what we taught?" but "what changed in the communities participants returned to?" This community outcome orientation — assessing change at the community level rather than the individual level — is the operationalization of principle P6 (measure what changes in lives) at its most demanding. It requires longitudinal tracking, community-level data collection, and the humility to acknowledge that individual learning does not automatically translate to collective action or community change. Highlander has developed, over nine decades, the methodology and the institutional culture to sustain this more demanding evaluation standard.</div>
+      <div class="case-lesson"><strong>Category 5.0 lesson:</strong> Highlander's model demonstrates that program longevity and program iteration are not opposites — they are the same thing. The institution has survived for nearly ninety years precisely because it has never treated its current program design as the destination. Its practice of collective evaluation after every major workshop — asking participants what they will do differently in their communities and following up — is process 5.5 implemented as institutional culture rather than as formal protocol. The culture is sustainable because the evaluation produces the learning that makes the program continuously better, creating a genuine positive feedback loop between evaluation and effectiveness.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Year Up and the structural barrier problem</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Year Up — workforce development at scale and the limits of individual empowerment</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Year Up is one of the most rigorously evaluated workforce development programs in the United States — a six-month intensive program that combines technical skills training, professional skills development, and corporate internship experience for young adults from low-income backgrounds. Its randomized controlled trial results are among the strongest in the workforce development field, demonstrating significant positive effects on employment and earnings outcomes. It is, in conventional evaluation terms, an evidence-based program that works.</div>
+      <div class="case-text">Year Up's case is instructive for Category 5.0 precisely because its success illuminates the limits of what even a highly effective program can accomplish. The program produces significant employment and earnings gains for participants relative to the control group — but the absolute income levels achieved, while substantially higher than comparison group incomes, remain below what most economists would consider economic security for the expensive urban markets where Year Up operates. The program's theory of change (skill development + professional network + corporate relationship = economic mobility) is partially validated by the evidence: it produces economic improvement, but the structural barriers — wage compression at the lower end of the labor market, housing costs, credential requirements for advancement — constrain the magnitude of improvement that any individual-level intervention can achieve.</div>
+      <div class="case-lesson"><strong>Category 5.0 lesson:</strong> Year Up's experience illustrates failure mode S1 (theory of change assumption) at its most sophisticated: even a well-designed program with genuine evidence of effectiveness may have a theory of change that assumes individual improvement will translate to economic security in the presence of structural barriers that individual improvement cannot overcome. The lesson for Category 5.0 process group 5.4 is that economic empowerment programs — however well-designed at the individual level — must address structural conditions alongside individual capacity, or accept that their impact will be bounded by structural constraints that the program cannot address. Year Up's own organizational evolution, which has increasingly incorporated policy advocacy and systems change alongside direct service delivery, reflects this recognition.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>A program that measures what it does rather than what changes has mistaken delivery for impact. These are not the same thing. They are not even close.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 5.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 5.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Programs are designed from institutional expertise and professional knowledge without community co-design</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Theory of change exists informally if at all; the causal mechanism between activities and outcomes is assumed rather than specified</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Evaluation measures participation and satisfaction; outcome measurement is absent or post-hoc</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Programs are modified based on staff experience and funder requirements rather than outcome data</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No programs have been retired; institutional portfolio grows through addition without subtraction</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Program design documents exist for major programs; theories of change defined though mechanisms may be underspecified</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community input incorporated into program design through consultation; full co-design developing</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Outcome measurement exists for major programs; longitudinal tracking developing but not consistent</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Evaluation findings reviewed internally; governance review of evaluation findings beginning</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Some program modifications made based on evaluation findings; retirement of ineffective programs developing as a practice</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">All major programs have documented theories of change with specified causal mechanisms; co-design processes integrated into standard program development</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Outcome measurement conducted throughout delivery and longitudinally; disaggregated by demographic subgroup</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Evaluation findings reviewed by governance body with explicit accountability for program improvement decisions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Program iterations documented with evidence rationale; institutional culture treats modification as learning rather than failure</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Program portfolio actively managed: at least one program has been retired or substantially redesigned based on evaluation evidence in the past three years</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Evaluation findings shared systematically with peer institutions; institution contributes to field knowledge through published learning reports</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Program design methodology and evaluation frameworks contributed to peer institutions as commons knowledge</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Equity gaps in program outcomes tracked over time and demonstrably narrowing; disaggregated outcome data drives targeted design improvements</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Programs are moved toward community ownership and management over time; institution's role transitions from service provider to capacity builder</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Structural barriers addressed alongside individual capacity — programs integrated with advocacy and systems change work</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 5.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Program completion rate</div>
+      <div class="kpi-cell">Percentage of enrolled participants completing the intended program dosage — a leading indicator of program accessibility, engagement quality, and participant experience</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Outcome achievement rate</div>
+      <div class="kpi-cell">Percentage of program participants achieving the specific intended outcome at the defined measurement point — the terminal program effectiveness measure</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Outcome equity gap</div>
+      <div class="kpi-cell">Difference in outcome achievement rates across demographic subgroups — measures whether programs work equitably across the population served</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Program iteration rate</div>
+      <div class="kpi-cell">Percentage of programs that received documented design modifications based on evaluation findings in the past 12 months — a process measure of whether evaluation is driving improvement</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Longitudinal outcome retention</div>
+      <div class="kpi-cell">Percentage of participants maintaining program-attributed outcomes at 12 months post-completion — measures whether program effects are durable or ephemeral</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Structural barrier addressing rate</div>
+      <div class="kpi-cell">Percentage of programs that explicitly address structural barriers identified as constraining individual outcome achievement — measures the ambition of the program theory of change</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Program portfolio retirement rate</div>
+      <div class="kpi-cell">Percentage of programs in the portfolio that have been retired or substantially redesigned based on outcome evidence in the past three years — measures institutional willingness to act on evaluation</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community co-design participation rate</div>
+      <div class="kpi-cell">Percentage of new program designs with documented community co-design process involvement — measures whether the institution is building programs with or for communities</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 5.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 5.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Audit the existing program portfolio for theory of change and outcome measurement</div>
+          <div class="seq-desc">Before designing new programs or restructuring existing ones, assess what is currently in the portfolio and whether it is working. For each major program, ask: Is there a documented theory of change with a specified causal mechanism? Is outcome data being collected (not just participation data)? Is the program achieving its intended outcomes for the populations it serves? What does the evidence actually say about whether this program is working? This audit will typically produce uncomfortable findings — programs with no clear theory of change, programs that measure only participation, and programs whose outcome evidence does not support their continued investment. These findings are the starting point for building genuine Category 5.0 capability.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Program portfolio audit completed for all major programs; theories of change documented or identified as absent; outcome measurement status assessed; at least two programs flagged for theory of change redesign or outcome measurement improvement.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Specify the causal mechanisms in existing theories of change</div>
+          <div class="seq-desc">For programs with documented theories of change, assess whether the causal mechanism — the explanation of why the activities should produce the intended outcomes — is specified or assumed. For programs with assumed mechanisms, convene staff and community members to specify them explicitly: what must be true for this program to produce its intended outcomes, and how do the program activities make those conditions more likely? This exercise will frequently reveal that the assumed mechanism is implausible, that it is not being addressed by the current program activities, or that it is undermined by structural barriers the program does not address.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Causal mechanisms specified for all major programs; at least one program redesigned based on mechanism specification revealing a gap between activities and intended outcomes.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement outcome measurement for the two highest-priority programs</div>
+          <div class="seq-desc">Do not attempt to implement outcome measurement across the full program portfolio simultaneously — the infrastructure investment is too large and the learning curve too steep. Instead, select the two programs with the highest community impact and the weakest outcome evidence, and design and implement genuine outcome measurement for them. Define the intended outcomes specifically, develop measurement methods appropriate to those outcomes, establish a baseline, and commit to collecting outcome data at regular intervals throughout delivery. Use these two programs to develop the institutional measurement capability and culture that can then be extended to the rest of the portfolio.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Outcome measurement implemented for two major programs; baseline data collected; four consecutive quarters of outcome data collected and reviewed; at least one program modification made based on emerging outcome data.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Establish governance review of evaluation findings with accountability for action</div>
+          <div class="seq-desc">As outcome data begins to accumulate, establish a formal governance review process that requires the governance body to review evaluation findings quarterly and make explicit decisions about program response. The governance review is not a reporting exercise — it is an accountability mechanism. The governance body is accountable for asking whether the program is working, for what populations, and what the institution will do if it is not. Creating this accountability relationship transforms evaluation from a compliance activity into a learning process.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Quarterly governance review of program outcome data established; at least one governance decision made to modify a program based on evaluation findings; program modification documented with the evidence that motivated it.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Pilot a co-design process for one new program</div>
+          <div class="seq-desc">Design the next new program using a genuine co-design process: not consultation after design, but co-design before it. Bring together institutional staff, community members with relevant lived experience, and relevant external expertise in a structured co-design process. Document the process and the design decisions it produced, including the specific community knowledge that shaped the design and would not have been incorporated through expert-driven design alone. Use the pilot to develop the institution's co-design capability and to demonstrate the value of the approach to staff and governance members who are skeptical.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> First co-designed program launched; co-design process documented; post-launch evaluation comparing co-designed program performance to institution's historically designed program performance; co-design methodology codified for future use.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 5.0 and Category 15.0:</strong> Category 5.0 addresses the operational design, delivery, and evaluation of programs and services. Category 15.0 (Human Flourishing) addresses the terminal measurement question: across all programs and services, is the community's wellbeing actually improving? The relationship between the two categories is that Category 5.0 provides the program-level measurement that feeds into Category 15.0's community-level wellbeing assessment. A well-developed Category 5.0 produces outcome data at the program level; a well-developed Category 15.0 aggregates that data into an institution-wide assessment of whether the community is better off. Both are required: program-level outcome measurement without community-level wellbeing assessment cannot tell whether the right programs are being delivered; community-level wellbeing assessment without program-level outcome measurement cannot tell which programs are contributing to wellbeing and which are not.</p>
+    <p><strong>On evidence-based programs and cultural adaptation:</strong> The evidence-based program movement — the effort to identify programs with rigorous evidence of effectiveness and replicate them at scale — has produced a substantial library of programs with documented outcome evidence. It has also produced a significant replication problem: programs developed and evaluated in specific community contexts frequently underperform when replicated in different contexts without systematic cultural adaptation. Category 5.0 process group 5.1 includes cultural adaptation as a required program development process for any adopted program. Adaptation is not a deviation from evidence-based practice — it is the practice required to make evidence applicable to a specific community context. The evidence tells what worked; the community co-design tells why it worked and what must change for it to work here.</p>
+    <p><strong>On the politics of program retirement:</strong> Process 5.1.6 (program retirement) is the most politically difficult process in Category 5.0, and institutions that cannot execute it are institutions whose program portfolios accumulate ineffective programs over time. The political difficulty is real: programs have constituencies, and retiring a program is experienced by those constituencies as institutional abandonment. Two approaches reduce the political cost: first, frame retirement as transition rather than termination — connecting participants to alternative programs that better address their needs before the retiring program closes. Second, build the norm of retirement into the institution's culture before any specific retirement is contemplated — organizations that regularly discuss program lifecycle management experience specific retirements as institutional maturation rather than as crises.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part III · Chapter 12 · GPS 5.0</span>
+    <span class="close-next">Ch. 13 — Support community members (GPS 6.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

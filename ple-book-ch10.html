@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 10 — Facilitate Access & Engagement (GPS 3.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e; --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --civic: #1D9E75; --civic-dim: rgba(29,158,117,0.08);
+    --civic-text: #4ecfa0; --civic-border: rgba(29,158,117,0.25);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-void); color: var(--text-primary);
+    font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999;
+  }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; align-items: center; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.civic { background: var(--civic-dim); color: var(--civic-text); border: 1px solid var(--civic-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--civic); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--civic-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--civic); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--civic); background: var(--civic-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--civic-text); }
+  .pullquote p::after { content: '\201D'; color: var(--civic-text); }
+
+  /* Barrier taxonomy */
+  .barrier-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .barrier-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .barrier-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .barrier-row:last-child { border-bottom: none; }
+  .barrier-type { width: 120px; min-width: 120px; padding: 14px 16px; border-right: 1px solid var(--border-subtle); background: var(--civic-dim); display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+  .barrier-type-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--civic-text); line-height: 1.2; }
+  .barrier-content { padding: 14px 18px; flex: 1; }
+  .barrier-examples { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .barrier-response { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 8px 12px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .barrier-response strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle); background: var(--civic-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Engagement spectrum */
+  .spectrum-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .spectrum-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .spectrum-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .spectrum-row:last-child { border-bottom: none; }
+  .spectrum-level-col { width: 110px; min-width: 110px; padding: 14px 14px; border-right: 1px solid var(--border-subtle); display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  .spectrum-level-name { font-family: 'Crimson Pro', serif; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); line-height: 1.2; }
+  .spectrum-level-tag { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; margin-top: 2px; }
+  .tag-passive { background: rgba(180,178,169,0.12); color: var(--m1t); }
+  .tag-active  { background: var(--civic-dim); color: var(--civic-text); }
+  .tag-power   { background: rgba(127,119,221,0.12); color: #b0aaf0; }
+  .spectrum-content { padding: 14px 18px; flex: 1; border-right: 1px solid var(--border-subtle); }
+  .spectrum-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+  .spectrum-gps { padding: 14px 16px; width: 160px; min-width: 160px; }
+  .spectrum-gps-text { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); line-height: 1.55; font-style: italic; }
+  .spectrum-gps-text strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle); background: var(--civic-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity block */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI block */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--civic-dim); color: var(--civic-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--civic-dim); border-bottom: 1px solid var(--civic-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--civic-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--civic-text); font-weight: 500; }
+
+  /* Sequence block */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--civic-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part III · Civic operating processes</div>
+  <div class="chapter-eyebrow">Chapter 10 · GPS Category 3.0</div>
+  <h1 class="chapter-title">Facilitate access &amp; engagement</h1>
+  <p class="chapter-subtitle">The institution that no one can reach is no institution at all — designing the systems, processes, and practices that make participation genuinely possible for the people who most need what the institution provides</p>
+  <div class="cat-meta">
+    <span class="cat-pill civic">Civic Operating</span>
+    <span class="cat-pill civic">Power L1</span>
+    <span class="cat-pill civic">Barrier removal</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">22 processes</span>
+    <span class="cat-pill neutral">17 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Availability and accessibility are not the same thing. An institution can be formally open to everyone and practically accessible to very few — and the gap between those two states is not a matter of individual choice or personal failure on the part of those who cannot reach it. It is a design failure. Barriers to access are features of institutional design, not natural conditions. They can be identified, catalogued, and systematically removed. The failure to do so is a failure of institutional intention, and it falls disproportionately on the people who have the most to gain from what the institution offers and the least capacity to overcome the obstacles it has not designed away.</p>
+
+    <p>Category 3.0 is the process domain through which institutions make genuine access a designed capability rather than a nominal commitment. It sits at the foundation of the Pyramid of Power — transparency and access as the precondition for participation — for a specific reason: participation that is formally available but practically inaccessible is not participation. It is the performance of inclusion over a system of effective exclusion, and it is exactly what most solidarity economy institutions produce when they hold equity values without access processes to operationalize them.</p>
+
+    <p>The chapter is organized around a simple but demanding claim: the work of facilitating access is not a communications function or a marketing function or a community relations function. It is a core institutional process with specific sub-processes, measurable outcomes, and a clear theory of change. Institutions that treat access facilitation as a function of charm — sending the right people to the right community events, writing the right outreach emails, maintaining the right social media presence — will consistently underproduce genuine participation. Institutions that treat it as a process — with designed onboarding sequences, systematic barrier identification and removal, intentional engagement infrastructure, and specific attention to the populations most at risk of exclusion — will consistently outperform their nominal commitments.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">A taxonomy of barriers — what actually keeps people out</div>
+
+  <div class="body-text">
+    <p>Barrier removal is impossible without barrier identification, and barrier identification requires a taxonomy — a systematic account of the different types of obstacles that prevent participation, each requiring different removal strategies. The instinct to treat all barriers as a single undifferentiated problem produces interventions that address the most visible barriers while leaving the less visible ones intact. The taxonomy below is not exhaustive, but it covers the six barrier types that account for the majority of access failures in solidarity economy institutions and that most frequently go unaddressed because they are not visible to the people designing the institution's access strategy.</p>
+  </div>
+
+  <div class="barrier-block">
+    <div class="barrier-header">Six barrier types — what they are and how to address them</div>
+
+    <div class="barrier-row">
+      <div class="barrier-type">
+        <div class="barrier-type-name">Physical barriers</div>
+      </div>
+      <div class="barrier-content">
+        <div class="barrier-examples">Geographic distance, transportation gaps, mobility limitations, disability-related access needs, childcare requirements, and the timing of institutional activities relative to work schedules and caregiving responsibilities. These are the most visible barriers and the ones that equity-committed institutions are most likely to have at least partially addressed — though rarely fully.</div>
+        <div class="barrier-response"><strong>Removal processes:</strong> Transportation support, accessible venue requirements, childcare provision at governance events, flexible timing for meetings and programs, home-based service delivery where appropriate. These are budget line items — institutions that want to remove them must fund them.</div>
+      </div>
+    </div>
+
+    <div class="barrier-row">
+      <div class="barrier-type">
+        <div class="barrier-type-name">Linguistic barriers</div>
+      </div>
+      <div class="barrier-content">
+        <div class="barrier-examples">Language differences between institutional communications and the languages of the community served; English-only materials, meetings, and governance processes in multilingual communities; the use of institutional jargon, acronyms, and technical language that is opaque to people without institutional backgrounds. The latter — jargon barriers — are often invisible to institutional insiders and highly visible to community outsiders.</div>
+        <div class="barrier-response"><strong>Removal processes:</strong> Professional translation and interpretation services, not reliance on bilingual community members as informal translators; plain-language standards for all institutional communications; regular plain-language audits of governance documents, program descriptions, and enrollment materials.</div>
+      </div>
+    </div>
+
+    <div class="barrier-row">
+      <div class="barrier-type">
+        <div class="barrier-type-name">Digital barriers</div>
+      </div>
+      <div class="barrier-content">
+        <div class="barrier-examples">Assumption of internet access, device ownership, digital literacy, and online account creation capability as prerequisites for participation. As institutions digitize their services, onboarding, and governance, they systematically exclude populations with limited digital access — which correlates strongly with age, income, disability, and geography. The digital divide is not narrowing fast enough to treat digital-only access as equitable.</div>
+        <div class="barrier-response"><strong>Removal processes:</strong> Non-digital participation pathways maintained as first-class options, not fallbacks; digital literacy support for members who want it; device lending programs; hotspot access; paper alternatives to digital enrollment and governance processes. Category 8.0 (Technology Infrastructure) operationalizes the digital access side of this; Category 3.0 operationalizes the participation-access side.</div>
+      </div>
+    </div>
+
+    <div class="barrier-row">
+      <div class="barrier-type">
+        <div class="barrier-type-name">Cultural barriers</div>
+      </div>
+      <div class="barrier-content">
+        <div class="barrier-examples">Institutional culture that implicitly requires familiarity with organizational forms, meeting formats, governance vocabulary, and participation norms that are specific to certain professional, class, or cultural backgrounds. Robert's Rules of Order is a cultural barrier. Comfort with public disagreement in meetings is a cultural barrier. The expectation that people will speak for themselves rather than as family or community representatives is a cultural barrier. Many of the informal norms of progressive organizational culture are barriers to communities that did not develop in that culture.</div>
+        <div class="barrier-response"><strong>Removal processes:</strong> Governance and meeting design that accommodates multiple participation styles; regular facilitation training that addresses cultural competency; leadership development programs that build institutional navigation skills for community members who are new to organizational contexts; explicit attention to whose comfort is centered in institutional culture and whose is not.</div>
+      </div>
+    </div>
+
+    <div class="barrier-row">
+      <div class="barrier-type">
+        <div class="barrier-type-name">Trust barriers</div>
+      </div>
+      <div class="barrier-content">
+        <div class="barrier-examples">Justified skepticism toward institutions among communities that have been systematically harmed by institutional actors — government agencies, healthcare systems, financial institutions, housing authorities, social services. Trust barriers cannot be addressed by institutional assurances of good intentions; they can only be addressed through demonstrated trustworthy behavior over time, through relationship-based outreach by trusted community members, and through institutional accountability mechanisms that give skeptics genuine recourse when the institution fails to behave as it claims.</div>
+        <div class="barrier-response"><strong>Removal processes:</strong> Peer navigator and community ambassador programs, relationship-first outreach rather than service-first outreach; transparent institutional accountability mechanisms that function without requiring trust; honest acknowledgment of past institutional failures rather than defensive institutional positioning; time — trust barriers require sustained effort measured in years, not campaigns.</div>
+      </div>
+    </div>
+
+    <div class="barrier-row">
+      <div class="barrier-type">
+        <div class="barrier-type-name">Complexity barriers</div>
+      </div>
+      <div class="barrier-content">
+        <div class="barrier-examples">Enrollment processes, application requirements, eligibility verification, and participation prerequisites that are cognitively demanding, time-consuming, or require documentation that marginalized community members may not have. Complexity barriers are frequently invisible to institutional designers who have the literacy, time, and document access to navigate them easily, and profoundly consequential for the people who do not. Means-testing, application procedures, and multi-step enrollment processes are complexity barriers whose exclusionary effects are systematically documented and systematically ignored.</div>
+        <div class="barrier-response"><strong>Removal processes:</strong> Radical simplification of enrollment and participation processes; presumptive eligibility rather than proof-of-eligibility requirements where possible; navigator programs that provide personalized assistance through complex processes; regular complexity audits of all participation pathways from the perspective of the most resource-constrained community member.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The engagement spectrum — from awareness to power</div>
+
+  <div class="body-text">
+    <p>Access is not binary. Community members exist along a spectrum of engagement with any institution — from unawareness at one end to genuine governance participation at the other. Category 3.0 is responsible for the full spectrum: not just ensuring that people know the institution exists and can reach its services, but that those who want to move deeper into governance and decision-making have genuine pathways to do so. Institutions that are accessible at the service level but inaccessible at the governance level produce the community relationship that nonprofits are most often criticized for: an institution that serves the community but is not accountable to it, because the people served are not the people governing.</p>
+  </div>
+
+  <div class="spectrum-block">
+    <div class="spectrum-header">The engagement spectrum — six levels and their Category 3.0 processes</div>
+
+    <div class="spectrum-row">
+      <div class="spectrum-level-col">
+        <div class="spectrum-level-name">Awareness</div>
+        <div class="spectrum-level-tag tag-passive">Passive</div>
+      </div>
+      <div class="spectrum-content">
+        <div class="spectrum-desc">The community member knows the institution exists and has a general understanding of what it does. They have not yet engaged with it. Awareness is the starting point for all subsequent engagement and the level at which most institutional communications are aimed.</div>
+      </div>
+      <div class="spectrum-gps">
+        <div class="spectrum-gps-text"><strong>GPS 3.3:</strong> Community communications and outreach — designing messages and channels that reach the specific populations the institution serves, not just those already in the institution's orbit.</div>
+      </div>
+    </div>
+
+    <div class="spectrum-row">
+      <div class="spectrum-level-col">
+        <div class="spectrum-level-name">Access</div>
+        <div class="spectrum-level-tag tag-passive">Passive</div>
+      </div>
+      <div class="spectrum-content">
+        <div class="spectrum-desc">The community member can reach the institution's services without insurmountable barriers — they know how to find it, can navigate the enrollment process, and receive the service they need. Access is the minimum threshold for institutional utility and the level that barrier removal processes are primarily designed to achieve.</div>
+      </div>
+      <div class="spectrum-gps">
+        <div class="spectrum-gps-text"><strong>GPS 3.1 + 3.2:</strong> Onboarding and barrier removal — the processes that make service access a designed experience rather than a navigation obstacle course.</div>
+      </div>
+    </div>
+
+    <div class="spectrum-row">
+      <div class="spectrum-level-col">
+        <div class="spectrum-level-name">Participation</div>
+        <div class="spectrum-level-tag tag-active">Active</div>
+      </div>
+      <div class="spectrum-content">
+        <div class="spectrum-desc">The community member is an active participant in institutional programs, events, and community activities — not just a passive service recipient. They show up, contribute, and maintain an ongoing relationship with the institution. Participation is the first level at which the institution becomes part of the community member's social infrastructure.</div>
+      </div>
+      <div class="spectrum-gps">
+        <div class="spectrum-gps-text"><strong>GPS 3.4:</strong> Engagement design — creating meaningful participation opportunities that give community members reason to return and deepen their involvement.</div>
+      </div>
+    </div>
+
+    <div class="spectrum-row">
+      <div class="spectrum-level-col">
+        <div class="spectrum-level-name">Contribution</div>
+        <div class="spectrum-level-tag tag-active">Active</div>
+      </div>
+      <div class="spectrum-content">
+        <div class="spectrum-desc">The community member contributes to the institution — through peer support, volunteering, knowledge sharing, or other forms of participation that add value to the community rather than just consuming services. Contribution is the level at which the institutional relationship becomes genuinely reciprocal, and at which the community member's stake in the institution's success becomes real.</div>
+      </div>
+      <div class="spectrum-gps">
+        <div class="spectrum-gps-text"><strong>GPS 3.4 + 6.4:</strong> Engagement design and peer support facilitation — building the structures through which community members' contributions are recognized and sustained.</div>
+      </div>
+    </div>
+
+    <div class="spectrum-row">
+      <div class="spectrum-level-col">
+        <div class="spectrum-level-name">Governance</div>
+        <div class="spectrum-level-tag tag-power">Power</div>
+      </div>
+      <div class="spectrum-content">
+        <div class="spectrum-desc">The community member participates in governance — in decisions about institutional direction, resource allocation, policy, and strategic priorities. Governance participation is the level at which the power dimension of the Power pyramid becomes operational, and at which the distinction between a community-serving institution and a community-governed institution is made real.</div>
+      </div>
+      <div class="spectrum-gps">
+        <div class="spectrum-gps-text"><strong>GPS 1.0 + 16.0:</strong> Governance strategy and participatory democracy — the process categories that determine whether governance participation pathways genuinely exist and are genuinely accessible.</div>
+      </div>
+    </div>
+
+    <div class="spectrum-row">
+      <div class="spectrum-level-col">
+        <div class="spectrum-level-name">Leadership</div>
+        <div class="spectrum-level-tag tag-power">Power</div>
+      </div>
+      <div class="spectrum-content">
+        <div class="spectrum-desc">The community member holds leadership roles within the institution — on governance bodies, in program management, in community organizing capacity. Leadership is the level at which the institution's formal power is held by community members rather than institutional professionals, and at which the institution's accountability to its community becomes structural rather than aspirational.</div>
+      </div>
+      <div class="spectrum-gps">
+        <div class="spectrum-gps-text"><strong>GPS 3.5 + 7.0:</strong> Support for underserved populations and human potential development — building explicit leadership pathways for community members from the populations most underrepresented in institutional leadership.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 3.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">3.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Onboard and orient new members and community participants</div>
+          <div class="proc-group-desc">Onboarding is the institutional welcome — the designed experience through which someone who is new to the institution transitions from outsider to participant. It is also one of the highest-leverage process investments an institution can make: good onboarding dramatically increases the probability that a first interaction becomes an ongoing relationship, while poor onboarding — or no onboarding — produces the revolving-door participation pattern that many institutions mistake for low community interest rather than recognizing as an institutional design failure.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">3.1.1</div><div class="act-name">Design tiered onboarding sequences calibrated to different entry points — service recipients, volunteers, members, and governance participants each need different onboarding depth</div></div>
+            <div class="proc-activity"><div class="act-id">3.1.2</div><div class="act-name">Create accessible orientation materials in multiple formats and languages — video, print, in-person, and digital options that accommodate different learning styles and access needs</div></div>
+            <div class="proc-activity"><div class="act-id">3.1.3</div><div class="act-name">Assign peer connectors or buddies to new participants — relationship-based welcome dramatically outperforms document-based welcome in retention outcomes</div></div>
+            <div class="proc-activity"><div class="act-id">3.1.4</div><div class="act-name">Conduct 30- and 90-day check-ins with new participants — identify early disengagement signals before they become departures</div></div>
+            <div class="proc-activity"><div class="act-id">3.1.5</div><div class="act-name">Track onboarding completion and early retention by demographic subgroup — equity gaps in onboarding outcomes are early indicators of access design failures</div></div>
+            <div class="proc-activity"><div class="act-id">3.1.6</div><div class="act-name">Iterate on onboarding design based on completion rates, retention data, and qualitative feedback — treat onboarding as a designed product subject to continuous improvement</div></div>
+          </div>
+          <div class="act-note">The peer connector model in 3.1.3 consistently outperforms information-delivery onboarding across institutional contexts. New participants who are connected to a specific existing community member — not just introduced to the institution — are substantially more likely to return. This is not sentimental: it reflects the reality that institutional belonging is mediated through social relationship, and that designed relationship infrastructure produces that belonging more reliably than designed information infrastructure.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">3.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Identify and systematically remove barriers to participation</div>
+          <div class="proc-group-desc">Barrier removal is not a one-time exercise — it is an ongoing process. Barriers that are removed can re-emerge as institutional practices evolve. New barriers emerge as the institution grows, as community demographics shift, and as the institutional activities that are subject to access requirements change. The barrier identification process must be systematic and regular, drawing on both quantitative data (who is not participating, relative to who should be) and qualitative data (what are the specific obstacles they report encountering). The removal process must be governed — with clear ownership, resource allocation, and accountability for implementation.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">3.2.1</div><div class="act-name">Conduct regular access audits — systematic assessment of all institutional access pathways for each of the six barrier types</div></div>
+            <div class="proc-activity"><div class="act-id">3.2.2</div><div class="act-name">Analyze participation data by demographic subgroup to identify equity gaps — who is not participating relative to the target community</div></div>
+            <div class="proc-activity"><div class="act-id">3.2.3</div><div class="act-name">Conduct community listening sessions specifically focused on access barriers — ask community members who are not currently participating what is preventing them</div></div>
+            <div class="proc-activity"><div class="act-id">3.2.4</div><div class="act-name">Develop and implement barrier removal plans with named owners, resources, timelines, and success metrics</div></div>
+            <div class="proc-activity"><div class="act-id">3.2.5</div><div class="act-name">Track barrier removal implementation and measure post-removal participation changes — verify that the removal worked</div></div>
+            <div class="proc-activity"><div class="act-id">3.2.6</div><div class="act-name">Conduct prospective access reviews of all new programs and services before launch — assess access implications of new institutional activities before they create established patterns of exclusion</div></div>
+          </div>
+          <div class="act-note">Process 3.2.3 — asking non-participants what prevents their participation — sounds obvious but is rarely done well. Reaching non-participants requires going where they are, not bringing them to institutional settings where the act of showing up has already overcome the barriers being investigated. Community listening sessions on access must occur in community settings, facilitated by trusted community members, and structured to create safety for honest feedback about institutional failures that participants may worry will be received defensively.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">3.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Design and manage community communications and outreach</div>
+          <div class="proc-group-desc">Communications in Category 3.0 serve a different purpose than institutional marketing. The goal is not to attract the largest possible audience or to optimize conversion funnels. It is to reach specific community members — particularly those with the greatest need and the least existing institutional connection — with information that is actionable, accessible, and trustworthy. This requires knowing where community members are, how they communicate, what channels they trust, and what communication styles resonate. It requires sustained presence in community contexts, not campaign-style outreach that appears when the institution needs something and disappears when it does not.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">3.3.1</div><div class="act-name">Map community communication channels — where does the target community receive information it trusts? Who are the trusted information intermediaries?</div></div>
+            <div class="proc-activity"><div class="act-id">3.3.2</div><div class="act-name">Develop a channel-specific communication strategy — different messages for different channels, all consistent in substance but adapted in form</div></div>
+            <div class="proc-activity"><div class="act-id">3.3.3</div><div class="act-name">Build sustained presence in community contexts rather than campaign-based outreach — regular, reliable presence builds trust that episodic outreach cannot</div></div>
+            <div class="proc-activity"><div class="act-id">3.3.4</div><div class="act-name">Implement plain-language standards and multilingual communication across all materials — not as exceptions but as baseline requirements</div></div>
+            <div class="proc-activity"><div class="act-id">3.3.5</div><div class="act-name">Establish two-way communication infrastructure — mechanisms for community members to reach the institution, not just for the institution to reach community members</div></div>
+            <div class="proc-activity"><div class="act-id">3.3.6</div><div class="act-name">Track outreach reach and channel effectiveness by demographic subgroup — measure whether communications are reaching the intended populations</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">3.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Drive meaningful engagement with governance and programs</div>
+          <div class="proc-group-desc">Engagement is not attendance. It is not the number of people who show up to an event or join a mailing list. It is the quality and depth of the relationship between community members and the institution over time — the degree to which participation is meaningful, valued, and consequential. Designing for meaningful engagement means creating experiences that give community members genuine reason to return, pathways to deeper involvement for those who want them, and mechanisms through which participation produces outcomes that matter to participants. The alternative — engagement designed around institutional needs (attending meetings, filling governance seats, meeting grant participation requirements) — produces compliance without belonging and numbers without community.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">3.4.1</div><div class="act-name">Design participation opportunities across the full engagement spectrum — from low-barrier entry points to deep governance involvement, with explicit pathways between levels</div></div>
+            <div class="proc-activity"><div class="act-id">3.4.2</div><div class="act-name">Create contribution opportunities for community members at all engagement levels — ways to give as well as receive from the earliest stages of participation</div></div>
+            <div class="proc-activity"><div class="act-id">3.4.3</div><div class="act-name">Design recognition systems that acknowledge contribution in ways that resonate with community values — recognition looks different in different communities and should be designed with community members, not for them</div></div>
+            <div class="proc-activity"><div class="act-id">3.4.4</div><div class="act-name">Track engagement depth and progression along the engagement spectrum — not just numbers of participants but their movement toward deeper involvement over time</div></div>
+            <div class="proc-activity"><div class="act-id">3.4.5</div><div class="act-name">Conduct regular engagement quality assessments — survey participants about whether their engagement is meaningful, what would deepen it, and what would cause them to disengage</div></div>
+          </div>
+          <div class="act-note">Process 3.4.2 — creating contribution opportunities from the earliest stages — is one of the most consistently underinvested processes in access design. Institutions that structure all early participation as service receipt and only later create contribution opportunities produce a client-provider relationship dynamic that is difficult to restructure into community membership. Institutions that create meaningful contribution opportunities from the first interaction — even at the smallest scale — produce participant identity from the beginning, which is what belonging is built from.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">3.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Design targeted support for underserved and marginalized populations</div>
+          <div class="proc-group-desc">Universal access design addresses barriers that affect all community members. Targeted access design addresses barriers specific to particular population subgroups — the compounding barriers faced by people whose marginalization is multiple and intersecting. A person who is unhoused, non-English-speaking, and mistrustful of institutions due to documented reasons faces not one barrier but a compound barrier structure in which each individual barrier amplifies the difficulty of overcoming the others. Generic barrier removal processes are necessary but not sufficient for reaching multiply-marginalized community members. Targeted processes that address compounding barriers as a system — rather than individually — are required.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">3.5.1</div><div class="act-name">Identify population subgroups in the target community with compounding barriers to participation — use disaggregated participation data and community listening to map who is systematically underreached</div></div>
+            <div class="proc-activity"><div class="act-id">3.5.2</div><div class="act-name">Develop targeted access strategies for each underserved subgroup — not generic accommodations but specific responses to the specific barrier structures each group faces</div></div>
+            <div class="proc-activity"><div class="act-id">3.5.3</div><div class="act-name">Build peer navigator and community ambassador programs drawing on community members with lived experience of the barriers being addressed</div></div>
+            <div class="proc-activity"><div class="act-id">3.5.4</div><div class="act-name">Co-design access solutions with members of the underserved populations being targeted — solutions designed without the participation of those they are designed to serve routinely fail to address the actual barriers</div></div>
+            <div class="proc-activity"><div class="act-id">3.5.5</div><div class="act-name">Track participation rates for each identified underserved subgroup over time — access equity requires measurement at the subgroup level, not just institution-wide averages</div></div>
+            <div class="proc-activity"><div class="act-id">3.5.6</div><div class="act-name">Develop explicit leadership pathways for community members from underrepresented populations — targeted access at the leadership level of the engagement spectrum, not only at the service level</div></div>
+          </div>
+          <div class="act-note">The peer navigator model in 3.5.3 — drawing on people with lived experience of the specific barriers being addressed — is empirically one of the most effective access strategies across institutional contexts, from healthcare navigation to housing to legal services. Its effectiveness comes from two sources: navigators can recognize and respond to the actual barrier experience in ways that institutional professionals without that lived experience cannot; and trust, which cannot be created institutionally, can be transferred through personal relationship between a trusted community member and a skeptical newcomer. Both effects are substantial and neither is replicable through other means.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six access and engagement failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in access facilitation and community engagement</div>
+
+    <div class="fail-row">
+      <div class="fail-num">A1</div>
+      <div class="fail-content">
+        <div class="fail-name">Open doors, invisible institution</div>
+        <div class="fail-desc">The institution is formally open and genuinely accessible to those who already know it exists, but its outreach does not reach community members who lack existing institutional connections. The institution's social networks determine its reach, and those networks systematically overrepresent more privileged community subgroups. The institution serves whoever finds it rather than those who most need it.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The demographic profile of service recipients closely mirrors the founding team's social networks and differs substantially from the target community's demographic composition. New participants almost always report learning about the institution through personal connection rather than intentional outreach.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">A2</div>
+      <div class="fail-content">
+        <div class="fail-name">Revolving door participation</div>
+        <div class="fail-desc">Community members engage once or twice and then disappear. The institution interprets this as low community interest or competing priorities without examining its own onboarding and engagement design for the features that produce early attrition. Revolving door participation is an institutional design failure masquerading as a community characteristic.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> First-time attendance at programs or events is not matched by second-time attendance. The institution's active participant pool is smaller than its total registered member list by a substantial margin. No systematic tracking of participation trajectories exists, so the revolving door pattern is not clearly visible in institutional data.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">A3</div>
+      <div class="fail-content">
+        <div class="fail-name">Accommodation without inclusion</div>
+        <div class="fail-desc">The institution provides formal accommodations for specific barrier types — translation services, accessible venues, childcare — but has not addressed the cultural, trust, or complexity barriers that prevent members of marginalized groups from experiencing the institution as genuinely welcoming. The accommodations produce access; the cultural environment produces re-exclusion.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Participation by marginalized community members spikes after accommodation provision and then declines back toward baseline without sustained increase. Qualitative feedback from marginalized participants describes feeling "like a guest" rather than a member. The accommodation provision has not been accompanied by institutional culture work.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">A4</div>
+      <div class="fail-content">
+        <div class="fail-name">Flat engagement — access to services but not to power</div>
+        <div class="fail-desc">The institution has strong access to its service programs but systematically lower access to governance and leadership roles for the same community members. Service participation is accessible; governance participation requires navigating barriers — meeting times, vocabulary, participation norms — that are never systematically addressed because governance access is not subject to the same access audit processes applied to service access.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The demographic profile of service recipients differs substantially from the demographic profile of governance participants and leadership. No explicit leadership pathways exist for community members from the populations primarily served. Governance meetings are structured in ways that assume familiarity with organizational formats that many service participants do not have.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">A5</div>
+      <div class="fail-content">
+        <div class="fail-name">Campaign engagement — outreach that appears and disappears</div>
+        <div class="fail-desc">The institution conducts intensive community outreach when it needs something — during grant cycles, membership drives, political campaigns, or program launches — and reduces its community presence significantly between these peaks. This pattern is highly visible to community members and actively undermines the trust-building that sustained access requires. It trains the community to interpret outreach as instrumental and to respond with appropriate skepticism.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Community outreach resources are concentrated in specific program cycles rather than sustained across the year. Community members describe the institution as "hard to find" between its active campaign periods. Community partners note the institution's inconsistent presence in community spaces and networks.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">A6</div>
+      <div class="fail-content">
+        <div class="fail-name">Aggregate measurement — missing equity in the averages</div>
+        <div class="fail-desc">The institution measures access and engagement at the aggregate level — total participants, overall retention rates, community-wide survey scores — without disaggregating by demographic subgroup. Aggregate metrics consistently mask equity gaps: an institution can increase total participation while the gap between its most and least marginalized participant populations widens. Without subgroup-level measurement, equity gaps are invisible until they become politically undeniable.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Access and engagement metrics are reported at institution-wide level without demographic breakdown. The institution cannot answer the question "Are we serving our most marginalized community members at the same rate as our least marginalized?" Equity commitments in mission documents are not reflected in measurement infrastructure.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Dudley Street Neighborhood Initiative</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Dudley Street Neighborhood Initiative — access as the foundation of community power</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Dudley Street Neighborhood Initiative (DSNI) in the Roxbury-North Dorchester neighborhood of Boston is one of the most extensively studied examples of genuine community governance in the United States — a neighborhood organization governed by the residents it serves, with a demographic composition of its governance body that reflects the neighborhood's racial and ethnic diversity rather than the professional networks of its staff. What is less often examined is the specific Category 3.0 investment that makes this governance model work.</div>
+      <div class="case-text">DSNI's governance participation infrastructure is not passive — it does not rely on interested residents showing up to formal organizational meetings. It is actively designed: meetings held at multiple times and locations to accommodate different schedules; childcare provided as a standard feature of all major governance events; multilingual facilitation and materials for the neighborhood's significant Portuguese-speaking, Cape Verdean, and Spanish-speaking populations; door-to-door outreach by paid community organizers who prioritize neighborhoods with the lowest historical participation rates; and leadership development programs specifically designed to move residents from service recipients to governance participants over a two-to-three-year trajectory. These are not accommodations added to a governance system designed without them — they are features of a governance system that was designed from the beginning with Category 3.0 processes as prerequisites, not afterthoughts.</div>
+      <div class="case-text">The result is a governance body whose demographic composition is consistently more diverse — and more representative of the neighborhood's residents rather than its institutions — than comparable neighborhood organizations in Boston. This is not achieved by values alone; it is achieved by the specific access investments that make governance participation possible for community members who face the full range of physical, linguistic, cultural, trust, and complexity barriers documented in this chapter.</div>
+      <div class="case-lesson"><strong>Category 3.0 lesson:</strong> DSNI's model demonstrates that governance diversity — the outcome that most solidarity economy institutions aspire to — is a product of access design, not mission commitment. The commitment is necessary; it provides the motivation to invest in access processes. But the investment itself — in multilingual facilitation, childcare provision, leadership development, and sustained community organizer presence — is what produces the result. Institutions that hold the commitment without making the investment produce diverse aspirations and homogeneous governance bodies.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Denver Basic Income Project and trust-first access</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Denver Basic Income Project — navigating trust barriers in direct cash transfer</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Denver Basic Income Project's experience with access design is particularly instructive for Category 3.0 because its target population — people experiencing homelessness — faces the full compound barrier structure that process group 3.5 addresses: physical barriers (no stable address, transportation challenges), digital barriers (limited device access, unstable connectivity), trust barriers (documented histories of institutional harm from law enforcement, social services, and housing authorities), and complexity barriers (the cognitive load of survival situations that leaves limited bandwidth for institutional navigation).</div>
+      <div class="case-text">DBIP's most significant access innovation was the peer navigator program — hiring people with lived experience of homelessness as primary relationship holders between the project and participants. The navigators were not intermediaries who transmitted institutional information; they were trusted community members whose existing relationships with the target population created the access pathway that no institutional communication could. DBIP's data showed that participant enrollment and retention rates were substantially higher when the first contact was peer-to-peer rather than institution-to-individual — a finding consistent with the peer navigator research across multiple domains.</div>
+      <div class="case-text">DBIP also invested in non-digital participation pathways as first-class options rather than accommodations. Given its target population's limited digital access, requiring digital enrollment would have been a prohibitive barrier for a substantial proportion of potential participants. The project designed its enrollment, payment delivery, and ongoing communication processes to function through multiple channels — including phone, in-person, and paper — with no single channel treated as the primary pathway.</div>
+      <div class="case-lesson"><strong>Category 3.0 lesson:</strong> The DBIP experience illustrates process 3.5's core argument: that trust barriers require relationship-based responses, not information-based ones. Institutions cannot overcome justified institutional skepticism by providing better information about their good intentions. They can create access by connecting to trusted community intermediaries who can vouch for the institution's actual behavior rather than its stated intentions. The peer navigator investment is not a communications strategy — it is an access infrastructure investment that produces outcomes that no amount of well-designed institutional outreach can replicate.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>An institution can be formally open to everyone and practically accessible to very few. The gap between those two states is not a matter of individual choice. It is a design failure — and it can be designed away.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 3.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 3.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No systematic onboarding process; new participants navigate the institution without designed support</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Barrier identification is ad hoc; barriers are addressed only when specific individuals raise them</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Outreach is network-based — reaching whoever the institution's existing members know — rather than community-directed</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No measurement of participation equity; institution cannot describe who it is not reaching or why</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No targeted access strategies for underserved subgroups; access is undifferentiated across the community</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Basic onboarding process exists — orientation materials available, welcome process defined, though inconsistently implemented</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Common physical and linguistic barriers have been identified and partially addressed; other barrier types less systematically examined</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Communications strategy exists with some channel diversification; plain-language standard developing but not consistently applied</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Participation tracked at aggregate level; equity disaggregation beginning but not yet systematic</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Awareness of underserved subgroups; targeted strategies developing but not yet fully implemented</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Tiered onboarding process implemented consistently; peer connector program in place; 30/90-day check-ins tracked and acted on</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Regular access audits conducted across all six barrier types; barrier removal plans with named owners and resources</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community communication strategy implemented across trusted channels; sustained presence maintained between campaign cycles</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Participation tracked by demographic subgroup; equity gaps are visible in institutional data and drive access investment decisions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Peer navigator programs operational for highest-barrier populations; leadership pathways explicitly designed for underrepresented groups</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Onboarding design is continuously iterated based on retention data and participant feedback; onboarding tools shared with peer institutions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Prospective access reviews conducted for all new programs before launch; access design is embedded in program development process</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Equity gaps in participation are narrowing measurably over time; trend data shows sustained improvement, not one-time adjustment</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">The institution contributes access design knowledge and tools to peer institutions; recognized as an access design resource in its field</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Leadership body composition approaches demographic parity with the community served; explicit tracking of leadership pipeline diversity</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 3.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Onboarding completion rate</div>
+      <div class="kpi-cell">Percentage of new participants who complete the full onboarding sequence — a measure of onboarding design effectiveness, not participant motivation</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">90-day retention rate</div>
+      <div class="kpi-cell">Percentage of new participants still actively engaged at 90 days — the primary early indicator of onboarding effectiveness and engagement design quality</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Demographic participation equity gap</div>
+      <div class="kpi-cell">Difference in participation rates between the highest- and lowest-participating demographic subgroups — the primary equity measure for Category 3.0</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Barrier identification-to-removal time</div>
+      <div class="kpi-cell">Average time between identification of a specific access barrier and implementation of its removal — measures institutional responsiveness to access failures</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Governance participation equity gap</div>
+      <div class="kpi-cell">Difference in governance participation rates between demographic subgroups — specifically measures access at the governance level of the engagement spectrum, not only at the service level</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Leadership demographic parity index</div>
+      <div class="kpi-cell">Ratio of demographic representation in leadership roles to demographic representation in the target community — the terminal access equity metric</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Engagement progression rate</div>
+      <div class="kpi-cell">Percentage of participants who advance at least one level along the engagement spectrum per year — measures whether the institution is building community power, not just community presence</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community trust index</div>
+      <div class="kpi-cell">Annual survey measure of community members' trust in the institution, disaggregated by demographic subgroup — trust barriers cannot be addressed without measuring trust</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 3.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 3.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Map who is not participating and conduct honest self-assessment</div>
+          <div class="seq-desc">Before building any new access processes, develop an accurate picture of who the institution is currently reaching and who it is not. Disaggregate existing participation data by demographic subgroup. Compare the demographic profile of current participants to the demographic profile of the target community. The gap is the access problem. Then conduct an honest self-assessment: which of the six barrier types is the institution currently addressing, and which has it not examined? This is the foundation for everything that follows.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Participation equity gap documented for at least three demographic dimensions; six-barrier-type access audit completed; priority access gaps identified and presented to governance body.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Design and implement a basic onboarding sequence</div>
+          <div class="seq-desc">Create a designed welcome process for new participants — not a document delivery, but a designed experience with personal connection, orientation to the institution, and a pathway to deeper engagement. Implement a peer connector program that pairs new participants with existing community members. Track onboarding completion and 90-day retention by demographic subgroup from the beginning, so improvement can be measured. Start simple — a well-executed basic onboarding dramatically outperforms a poorly-executed sophisticated one.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Onboarding sequence documented and implemented consistently; peer connector program operational; 90-day retention tracked by demographic subgroup for two consecutive quarters.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Address the two most critical barrier types for your community</div>
+          <div class="seq-desc">Using the access audit findings, identify the two barrier types most consequential for the populations the institution is not currently reaching. Develop specific removal strategies for each, with named owners, resources, timelines, and success metrics. Do not attempt to address all six barrier types simultaneously — focused effort on the highest-priority barriers produces faster and more measurable impact than diffuse effort across all of them. After implementation, measure whether participation by the affected populations changed.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Two barrier types systematically addressed with documented removal processes; post-removal participation measurement shows measurable improvement for affected populations; barrier removal process embedded in annual planning cycle.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Build peer navigator infrastructure for highest-barrier populations</div>
+          <div class="seq-desc">Identify the one or two population subgroups facing the most compounding barriers and develop a peer navigator program specifically for them — hiring or training people with lived experience of those barriers as relationship-holders between the institution and the community. Co-design the navigator program with members of the population being served. Fund it as core infrastructure, not as a program budget item, because it is infrastructure: the access pathway that makes all other access investments work for the populations that need them most.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Peer navigator program operational for highest-barrier population; navigator roles funded in core budget; documented improvement in participation rates for targeted population over two-year period.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Extend access design to governance and leadership levels</div>
+          <div class="seq-desc">Apply the same access audit methodology to governance participation and leadership roles that has been applied to service participation. Identify which barriers prevent governance participation by underrepresented community members. Develop explicit leadership pathways for community members from underrepresented populations — programs that provide the skills, networks, and institutional familiarity needed to move from service participation to governance and leadership roles. Measure governance participation equity gaps annually and set improvement targets.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Governance participation equity gap documented and tracked annually; leadership development program designed for underrepresented populations; measurable improvement in governance body demographic representation over a three-year period.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 3.0 and Category 16.0:</strong> Category 3.0 designs the access pathways to governance participation. Category 16.0 designs the governance participation mechanisms themselves. The two categories must be developed in coordination: the most accessible governance mechanism in the world is useless if community members cannot reach it, and the best outreach process in the world produces participation in governance that is not genuinely responsive. The engagement spectrum framework in this chapter connects the two categories explicitly: process groups 3.4 and 3.5 design the upper levels of the spectrum (governance and leadership), which feed directly into Category 16.0's participation mechanisms.</p>
+    <p><strong>On outreach versus organizing:</strong> There is an important distinction between outreach — communicating with community members to inform them of institutional offerings — and organizing — working with community members to build their collective power and capacity to shape institutional direction. Category 3.0 covers both, but institutions frequently invest in outreach while neglecting organizing. The distinction matters because outreach produces awareness and access; organizing produces the community agency that makes governance participation genuine rather than nominal. The engagement spectrum's upper levels (contribution, governance, leadership) are the domain of organizing, and process group 3.4's engagement design is most effective when it incorporates organizing methodology — relationship-building, leadership identification, and collective capacity development — rather than treating engagement as an institutional communications challenge.</p>
+    <p><strong>On the resource question:</strong> The access processes described in this chapter require resources — for translation services, childcare provision, peer navigator programs, transportation support, leadership development programs. These are not marginal expenses; for institutions serving highly marginalized communities, access infrastructure can represent a substantial share of the operating budget. The argument for this investment is not philanthropic — it is strategic: institutions that invest in genuine access build the community relationships that sustain them through political and financial challenges that institutions without those relationships cannot survive. Access investment is institutional resilience investment.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part III · Chapter 10 · GPS 3.0</span>
+    <span class="close-next">Ch. 11 — Deliver physical resources (GPS 4.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

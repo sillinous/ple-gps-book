@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appendix D — Recommended Resources by GPS Category</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void:#060504;--bg-deep:#0c0a09;--bg-primary:#141210;
+    --bg-secondary:#1c1917;--bg-tertiary:#242120;
+    --text-primary:#f0ebe3;--text-secondary:#a09890;
+    --text-muted:#6b6560;--text-ghost:#48443f;
+    --border-subtle:rgba(201,169,110,0.07);--border-visible:rgba(201,169,110,0.14);
+    --gold:#c9a96e;--gold-dim:rgba(201,169,110,0.08);
+    --civic:#1D9E75;--civic-dim:rgba(29,158,117,0.07);--civic-border:rgba(29,158,117,0.18);--civic-text:#4ecfa0;
+    --inst:#378ADD;--inst-dim:rgba(55,138,221,0.07);--inst-border:rgba(55,138,221,0.18);--inst-text:#7ab8f0;
+    --novel:#7F77DD;--novel-dim:rgba(127,119,221,0.07);--novel-border:rgba(127,119,221,0.18);--novel-text:#b0aaf0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-void);color:var(--text-primary);font-family:'Outfit',sans-serif;font-size:13px;line-height:1.55;}
+  body::before{content:'';position:fixed;inset:0;opacity:0.015;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;}
+  .page{max-width:900px;margin:0 auto;padding:64px 36px 120px;}
+
+  .doc-eyebrow{font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+  .doc-title{font-family:'Crimson Pro',serif;font-size:2.1rem;font-weight:300;color:var(--text-primary);margin-bottom:6px;line-height:1.2;}
+  .doc-subtitle{font-family:'Crimson Pro',serif;font-size:1.05rem;font-weight:300;font-style:italic;color:var(--text-secondary);margin-bottom:18px;}
+  .doc-meta{font-size:.74rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;}
+  .doc-meta strong{color:var(--text-secondary);font-weight:500;}
+  .doc-divider{height:1px;background:var(--border-visible);margin-bottom:40px;}
+
+  .sh{font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:44px 0 18px;opacity:.8;display:flex;align-items:center;gap:12px;}
+  .sh::after{content:'';flex:1;height:1px;background:var(--border-visible);}
+
+  .tier-sep{display:flex;align-items:center;gap:12px;margin:36px 0 22px;}
+  .tier-sep-line{flex:1;height:1px;}
+  .tier-sep-line.civic{background:var(--civic-border);}
+  .tier-sep-line.inst{background:var(--inst-border);}
+  .tier-sep-line.novel{background:var(--novel-border);}
+  .tier-sep-label{font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;padding:3px 10px;border-radius:4px;}
+  .tier-sep-label.civic{color:var(--civic-text);background:var(--civic-dim);border:1px solid var(--civic-border);}
+  .tier-sep-label.inst{color:var(--inst-text);background:var(--inst-dim);border:1px solid var(--inst-border);}
+  .tier-sep-label.novel{color:var(--novel-text);background:var(--novel-dim);border:1px solid var(--novel-border);}
+
+  /* Resource block */
+  .rblock{margin-bottom:28px;border:1px solid var(--border-subtle);border-radius:7px;overflow:hidden;}
+  .rblock-head{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border-subtle);}
+  .rblock-head.civic{background:var(--civic-dim);}
+  .rblock-head.inst{background:var(--inst-dim);}
+  .rblock-head.novel{background:var(--novel-dim);}
+  .rblock-id{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;min-width:44px;}
+  .rblock-id.civic{color:var(--civic-text);}
+  .rblock-id.inst{color:var(--inst-text);}
+  .rblock-id.novel{color:var(--novel-text);}
+  .rblock-title{font-family:'Crimson Pro',serif;font-size:1.05rem;font-weight:600;color:var(--text-primary);flex:1;}
+
+  .rblock-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+  .rblock-body.three{grid-template-columns:1fr 1fr 1fr;}
+  .rcol{padding:14px 16px;border-right:1px solid var(--border-subtle);}
+  .rcol:last-child{border-right:none;}
+  .rcol-label{font-size:8px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-ghost);margin-bottom:10px;}
+  .res-list{display:flex;flex-direction:column;gap:8px;}
+  .res-item{display:flex;flex-direction:column;gap:2px;}
+  .res-title{font-size:.71rem;font-weight:500;color:var(--text-secondary);line-height:1.4;}
+  .res-sub{font-size:.66rem;color:var(--text-muted);line-height:1.45;font-style:italic;}
+  .res-note{font-size:.64rem;color:var(--text-ghost);line-height:1.4;margin-top:1px;}
+
+  /* Cross-cutting resources */
+  .xcut-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-subtle);border:1px solid var(--border-subtle);border-radius:7px;overflow:hidden;margin-bottom:24px;}
+  .xcut-cell{background:var(--bg-secondary);padding:14px 16px;}
+  .xcut-head{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:10px;}
+  .xcut-list{display:flex;flex-direction:column;gap:7px;}
+  .xcut-item .xt{font-size:.71rem;font-weight:500;color:var(--text-secondary);}
+  .xcut-item .xs{font-size:.64rem;color:var(--text-muted);font-style:italic;margin-top:1px;}
+
+  .appendix-close{margin-top:44px;padding:22px 26px;background:var(--bg-secondary);border:1px solid var(--border-visible);border-radius:8px;}
+  .ac-label{font-size:9px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;opacity:.8;}
+  .ac-body{font-size:.73rem;color:var(--text-muted);line-height:1.7;}
+  .ac-body strong{color:var(--text-secondary);font-weight:500;}
+
+  .page-number{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--text-ghost);letter-spacing:.1em;}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="doc-eyebrow">Institutions for a world after work · Reference material</div>
+<div class="doc-title">Appendix D — Recommended Resources by GPS Category</div>
+<div class="doc-subtitle">Foundational texts, organizations, peer networks, and tools that support development in each of the sixteen GPS categories</div>
+<div class="doc-meta">
+  <strong>How to use:</strong> Resources are organized by GPS category in tier order. Each category block includes: foundational texts (books and long-form publications that provide conceptual grounding), organizations and peer networks (institutions doing this work that can be learned from directly), and practical tools (frameworks, assessments, and toolkits applicable without significant facilitation expertise). Resources marked with an asterisk (*) are particularly accessible entry points for institutions new to a category. This list is selective rather than exhaustive — it represents the resources most directly relevant to GPS framework implementation, not comprehensive literature reviews.
+</div>
+<div class="doc-divider"></div>
+
+<!-- Cross-cutting -->
+<div class="sh">Cross-cutting resources — relevant across multiple GPS categories</div>
+<div class="xcut-grid">
+  <div class="xcut-cell">
+    <div class="xcut-head">Solidarity economy framework</div>
+    <div class="xcut-list">
+      <div class="xcut-item"><div class="xt">The Making of a Democratic Economy</div><div class="xs">Marjorie Kelly &amp; Ted Howard · 2019 · Berrett-Koehler — foundational framework for community wealth building institutions</div></div>
+      <div class="xcut-item"><div class="xt">Solidarity Economy: Building Alternatives for People and Planet</div><div class="xs">Emily Kawano, Thomas Masterson &amp; Jonathan Teller-Elsberg (eds.) · 2010 · Center for Popular Economics</div></div>
+      <div class="xcut-item"><div class="xt">New Economy Coalition (neweconomy.net)</div><div class="xs">Network of 200+ organizations building a new economy; peer learning, policy advocacy, ecosystem</div></div>
+      <div class="xcut-item"><div class="xt">USFWC — US Federation of Worker Cooperatives</div><div class="xs">Peer network, technical assistance, and policy advocacy for worker cooperative institutions</div></div>
+    </div>
+  </div>
+  <div class="xcut-cell">
+    <div class="xcut-head">Post-labor economics</div>
+    <div class="xcut-list">
+      <div class="xcut-item"><div class="xt">Post-Labor Economics (David Shapiro)</div><div class="xs">The conceptual framework underlying this book; community at postlaboreconomics.com</div></div>
+      <div class="xcut-item"><div class="xt">The Second Machine Age</div><div class="xs">Brynjolfsson &amp; McAfee · 2014 · W.W. Norton — economic analysis of labor displacement dynamics</div></div>
+      <div class="xcut-item"><div class="xt">A World Without Work</div><div class="xs">Daniel Susskind · 2020 · Metropolitan Books — policy and institutional response frameworks</div></div>
+      <div class="xcut-item"><div class="xt">Doughnut Economics</div><div class="xs">Kate Raworth · 2017 · Chelsea Green — regenerative economics framework; foundation for GPS 15.0</div></div>
+    </div>
+  </div>
+  <div class="xcut-cell">
+    <div class="xcut-head">Process frameworks and evaluation</div>
+    <div class="xcut-list">
+      <div class="xcut-item"><div class="xt">APQC Process Classification Framework</div><div class="xs">apqc.org/pcf — the source framework that PLE-GPS adapts; free download; essential context</div></div>
+      <div class="xcut-item"><div class="xt">Most Significant Change technique</div><div class="xs">Davies &amp; Dart · 2005 · Free download — participatory evaluation method used by many solidarity economy institutions</div></div>
+      <div class="xcut-item"><div class="xt">Developmental Evaluation</div><div class="xs">Michael Quinn Patton · 2010 · Guilford — evaluation approach for complex, adaptive programs</div></div>
+      <div class="xcut-item"><div class="xt">GrantCraft (grantcraft.org)</div><div class="xs">Resources on participatory grantmaking and evaluation for community foundations</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TIER I -->
+<div class="tier-sep">
+  <div class="tier-sep-line civic"></div>
+  <span class="tier-sep-label civic">Tier I · Civic operating processes · GPS 1.0–6.0</span>
+  <div class="tier-sep-line civic"></div>
+</div>
+
+<!-- GPS 1.0 -->
+<div class="rblock">
+  <div class="rblock-head civic"><span class="rblock-id civic">GPS 1.0</span><span class="rblock-title">Collective Vision &amp; Governance Strategy</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Governance as Leadership *</span><span class="res-sub">Chait, Ryan &amp; Taylor · 2005 · BoardSource/Wiley</span><span class="res-note">Reframes governance from compliance to generative leadership; most accessible entry point for governance body development</span></div>
+        <div class="res-item"><span class="res-title">The Board Member's Guide to Strategic Planning</span><span class="res-sub">Fisher Howe · 1997 · Jossey-Bass</span><span class="res-note">Practical, governance-body-accessible planning guide; pairs with Chapter 8</span></div>
+        <div class="res-item"><span class="res-title">Nonprofit Governance: Responding to the New Realities</span><span class="res-sub">Francie Ostrower · 2007 · Urban Institute</span><span class="res-note">Research-based analysis of governance effectiveness; demographic data on governance composition</span></div>
+        <div class="res-item"><span class="res-title">Collective Impact Framework</span><span class="res-sub">Kania &amp; Kramer · 2011 · Stanford Social Innovation Review</span><span class="res-note">Multi-institutional governance for collective mission achievement</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">BoardSource (boardsource.org) *</span><span class="res-sub">Nonprofit governance body development, training, and research; Leading with Intent annual survey</span></div>
+        <div class="res-item"><span class="res-title">Nonprofit Quarterly (nonprofitquarterly.org)</span><span class="res-sub">Regular governance analysis and case studies; particularly strong on equity in governance</span></div>
+        <div class="res-item"><span class="res-title">Building Movement Project (buildingmovement.org)</span><span class="res-sub">Research on race and governance; Race to Lead reports on leadership pipeline inequity</span></div>
+        <div class="res-item"><span class="res-title">Democracy at Work Institute (institute.coop)</span><span class="res-sub">Governance development for worker cooperatives; governance literacy curriculum</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">BoardSource Self-Assessment Tool *</span><span class="res-sub">Validated governance body self-assessment; GPS 1.5 implementation tool</span></div>
+        <div class="res-item"><span class="res-title">Theory of Change Community (theoryofchange.org)</span><span class="res-sub">TOC development tools and facilitation guides; free resources</span></div>
+        <div class="res-item"><span class="res-title">Decision Rights Matrix templates</span><span class="res-sub">Multiple versions available through BoardSource and NTEN; adapt for GPS 1.3</span></div>
+        <div class="res-item"><span class="res-title">Sociocracy for All (sociocracyforall.org)</span><span class="res-sub">Decision-making structures for distributed governance; implementation guides and training</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 2.0 -->
+<div class="rblock">
+  <div class="rblock-head civic"><span class="rblock-id civic">GPS 2.0</span><span class="rblock-title">Design &amp; Steward Public Goods</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Governing the Commons *</span><span class="res-sub">Elinor Ostrom · 1990 · Cambridge University Press</span><span class="res-note">The foundational text for commons governance; Ostrom's eight principles are GPS 2.1's direct source</span></div>
+        <div class="res-item"><span class="res-title">The Wealth of the Commons</span><span class="res-sub">Bollier &amp; Helfrich (eds.) · 2012 · Levellers Press</span><span class="res-note">Case studies of commons governance across sectors; highly accessible</span></div>
+        <div class="res-item"><span class="res-title">Think Like a Commoner</span><span class="res-sub">David Bollier · 2014 · New Society Publishers</span><span class="res-note">Accessible introduction to commons thinking for practitioners</span></div>
+        <div class="res-item"><span class="res-title">Free, Fair and Alive</span><span class="res-sub">Bollier &amp; Helfrich · 2019 · New Society Publishers</span><span class="res-note">Operational frameworks for commons-based institutions; pairs directly with GPS 2.0</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Community Land Trust Network (cltnetwork.org) *</span><span class="res-sub">US CLT peer network; technical assistance, peer learning, policy advocacy</span></div>
+        <div class="res-item"><span class="res-title">P2P Foundation (p2pfoundation.net)</span><span class="res-sub">Commons-based peer production; global knowledge commons; extensive wiki of commons examples</span></div>
+        <div class="res-item"><span class="res-title">Creative Commons (creativecommons.org)</span><span class="res-sub">Legal infrastructure for knowledge commons; licensing for GPS 2.4 knowledge contributions</span></div>
+        <div class="res-item"><span class="res-title">Shareable (shareable.net)</span><span class="res-sub">Case studies of sharing and commons institutions globally; free resources and guides</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">CLT Resource Manual *</span><span class="res-sub">Burlington Associates; comprehensive operational guide for community land trusts</span></div>
+        <div class="res-item"><span class="res-title">Commons Health Assessment rubric</span><span class="res-sub">Adapted from Ostrom's principles by David Bollier; available through P2P Foundation</span></div>
+        <div class="res-item"><span class="res-title">Open Source Software licenses (OSI-approved)</span><span class="res-sub">GPS 2.4 knowledge sharing legal infrastructure; choosealicense.com for selection guidance</span></div>
+        <div class="res-item"><span class="res-title">Community Land Trust Ground Lease templates</span><span class="res-sub">National CLT Network; legal frameworks for permanent affordability protection</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 3.0 -->
+<div class="rblock">
+  <div class="rblock-head civic"><span class="rblock-id civic">GPS 3.0</span><span class="rblock-title">Facilitate Access &amp; Engagement</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">A Ladder of Citizen Participation *</span><span class="res-sub">Sherry Arnstein · 1969 · Journal of the American Institute of Planners</span><span class="res-note">Foundational typology of participation levels; original source of the participation spectrum</span></div>
+        <div class="res-item"><span class="res-title">Deepening Democracy</span><span class="res-sub">Fung &amp; Wright (eds.) · 2003 · Verso</span><span class="res-note">Participatory governance case studies; theory and practice of participatory institutions</span></div>
+        <div class="res-item"><span class="res-title">Trust in Black America</span><span class="res-sub">Candace Valenzuela · Various</span><span class="res-note">Framework for rebuilding institutional trust among historically harmed communities</span></div>
+        <div class="res-item"><span class="res-title">Beautiful Trouble: A Toolbox for Revolution</span><span class="res-sub">Boyd &amp; Mitchell (eds.) · 2012 · OR Books</span><span class="res-note">Community organizing and engagement tactics; practical GPS 3.2 resource</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Interaction Institute for Social Change *</span><span class="res-sub">Facilitation and community engagement training; accessible workshops and resources</span></div>
+        <div class="res-item"><span class="res-title">National Council of Nonprofits (councilofnonprofits.org)</span><span class="res-sub">Community engagement resources; trust-building guides for underserved communities</span></div>
+        <div class="res-item"><span class="res-title">Everyday Democracy (everyday-democracy.org)</span><span class="res-sub">Community dialogue and engagement tools; facilitation guides and training</span></div>
+        <div class="res-item"><span class="res-title">Disability Rights Advocates (dralegal.org)</span><span class="res-sub">Physical and programmatic accessibility legal framework; ADA compliance and beyond</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Spectrum of Community Engagement to Ownership *</span><span class="res-sub">Rosa Gonzalez; six-level engagement ladder with implementation guidance; free download</span></div>
+        <div class="res-item"><span class="res-title">Plain Language Action and Information Network (plainlanguage.gov)</span><span class="res-sub">Plain language writing guidelines for community communications; GPS 3.3 implementation</span></div>
+        <div class="res-item"><span class="res-title">Racial Equity Tools (racialequitytools.org)</span><span class="res-sub">Extensive toolkit for access equity assessment and community outreach; GPS 3.5</span></div>
+        <div class="res-item"><span class="res-title">Community Engagement Spectrum Tool (IAP2)</span><span class="res-sub">International Association of Public Participation; engagement design tools</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 4.0 -->
+<div class="rblock">
+  <div class="rblock-head civic"><span class="rblock-id civic">GPS 4.0</span><span class="rblock-title">Deliver Physical Resources</span></div>
+  <div class="rblock-body">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts and organizations</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Emergent Strategy *</span><span class="res-sub">adrienne maree brown · 2017 · AK Press — decentralized, resilient distribution systems; theory of dignified resource sharing</span></div>
+        <div class="res-item"><span class="res-title">Mutual Aid: Building Solidarity During This Crisis</span><span class="res-sub">Dean Spade · 2020 · Verso — mutual aid framework; dignity-centered distribution principles</span></div>
+        <div class="res-item"><span class="res-title">Feeding America (feedingamerica.org)</span><span class="res-sub">Food bank network; equity-focused food distribution frameworks and supply chain models</span></div>
+        <div class="res-item"><span class="res-title">Cooperation Jackson (cooperationjackson.org)</span><span class="res-sub">Case study institution for GPS 4.0 and 4.3; equity-centered physical resource distribution</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools and networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Mutual Aid Hub (mutualaidhub.org) *</span><span class="res-sub">Toolkit for mutual aid resource distribution; free implementation guides and templates</span></div>
+        <div class="res-item"><span class="res-title">Supply chain equity assessment tools (BSR)</span><span class="res-sub">Business for Social Responsibility; supply chain human rights and equity assessment frameworks</span></div>
+        <div class="res-item"><span class="res-title">Social Enterprise Alliance (socialenterprise.us)</span><span class="res-sub">Mission-aligned procurement networks; solidarity economy supplier directories</span></div>
+        <div class="res-item"><span class="res-title">Enterprise Community Partners (enterprisecommunity.org)</span><span class="res-sub">Physical infrastructure development and maintenance resources for community organizations</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 5.0 -->
+<div class="rblock">
+  <div class="rblock-head civic"><span class="rblock-id civic">GPS 5.0</span><span class="rblock-title">Deliver Services &amp; Programs</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Toxic Charity *</span><span class="res-sub">Robert Lupton · 2011 · HarperOne — critique of service delivery that creates dependency; frames GPS 5.0's seven principles</span></div>
+        <div class="res-item"><span class="res-title">When Helping Hurts</span><span class="res-sub">Corbett &amp; Fikkert · 2009 · Moody Publishers — poverty alleviation program design principles</span></div>
+        <div class="res-item"><span class="res-title">Teaching to Transgress</span><span class="res-sub">bell hooks · 1994 · Routledge — pedagogy of liberation; GPS 5.2 participant capacity framework</span></div>
+        <div class="res-item"><span class="res-title">Evidence-Based Programs Database (findyouthinfo.gov)</span><span class="res-sub">Clearinghouse of evidence-based program models by population and outcome domain</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Annie E. Casey Foundation (aecf.org) *</span><span class="res-sub">Program design resources, results-based accountability framework; equity-focused evaluation tools</span></div>
+        <div class="res-item"><span class="res-title">Highlander Research and Education Center *</span><span class="res-sub">GPS 5.3 case study institution; popular education and community-led program design</span></div>
+        <div class="res-item"><span class="res-title">Co-Design Collective (codesign.substack.com)</span><span class="res-sub">Co-design methodology and case studies; practical GPS 5.1 implementation resources</span></div>
+        <div class="res-item"><span class="res-title">Urban Institute (urban.org/policycenters/nonprofits)</span><span class="res-sub">Program evaluation methodology; equity in nonprofit program assessment</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Results-Based Accountability *</span><span class="res-sub">Mark Friedman · 2005 · free at raguide.org — outcome measurement framework; theory of change to KPI pathway</span></div>
+        <div class="res-item"><span class="res-title">Human Impact + Potential (humanimpact.org)</span><span class="res-sub">Health equity impact assessment tools; community health program design</span></div>
+        <div class="res-item"><span class="res-title">W.K. Kellogg Foundation Logic Model Development Guide *</span><span class="res-sub">Free download; most accessible theory of change and logic model guidance for GPS 5.1</span></div>
+        <div class="res-item"><span class="res-title">Participatory Action Research tools (PAR)</span><span class="res-sub">Community member as researcher methodology; GPS 5.5 participant-led evaluation</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 6.0 -->
+<div class="rblock">
+  <div class="rblock-head civic"><span class="rblock-id civic">GPS 6.0</span><span class="rblock-title">Support Community Members</span></div>
+  <div class="rblock-body">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts and organizations</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Trauma-Informed Care in Behavioral Health Services *</span><span class="res-sub">SAMHSA · 2014 · TIP 57 — foundational text for GPS 6.1; free download; clinical and organizational guidance</span></div>
+        <div class="res-item"><span class="res-title">The Deepest Well</span><span class="res-sub">Nadine Burke Harris · 2018 · Houghton Mifflin Harcourt — ACEs framework; trauma-informed service design</span></div>
+        <div class="res-item"><span class="res-title">Peer Support Whole Health (samhsa.gov)</span><span class="res-sub">SAMHSA peer support toolkit; GPS 6.4 implementation guidance and training frameworks</span></div>
+        <div class="res-item"><span class="res-title">Strong Families Fund (strongfamiliesfund.org)</span><span class="res-sub">GPS 6.4 case study institution; peer support network model for family strengthening</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Professional Quality of Life Scale (ProQOL) *</span><span class="res-sub">Beth Stamm · free at proqol.org — validated secondary trauma assessment for GPS 6.0 staff</span></div>
+        <div class="res-item"><span class="res-title">Case Management Society of America (cmsa.org)</span><span class="res-sub">Evidence-based caseload standards; GPS 6.2 caseload standard benchmarking</span></div>
+        <div class="res-item"><span class="res-title">Trauma-Informed Care Implementation Resource Center (traumainformedcare.chcs.org) *</span><span class="res-sub">Free organizational assessment and implementation guides; GPS 6.1 primary resource</span></div>
+        <div class="res-item"><span class="res-title">NAMI (nami.org) crisis resource protocols</span><span class="res-sub">Mental health crisis response frameworks; GPS 6.3 protocol development</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIER II -->
+<div class="tier-sep">
+  <div class="tier-sep-line inst"></div>
+  <span class="tier-sep-label inst">Tier II · Institutional support processes · GPS 7.0–13.0</span>
+  <div class="tier-sep-line inst"></div>
+</div>
+
+<!-- GPS 7.0 -->
+<div class="rblock">
+  <div class="rblock-head inst"><span class="rblock-id inst">GPS 7.0</span><span class="rblock-title">Develop Human Potential</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">The Advantage *</span><span class="res-sub">Patrick Lencioni · 2012 · Jossey-Bass — organizational health as competitive advantage; accessible for governance bodies</span></div>
+        <div class="res-item"><span class="res-title">Reentry to the 21st Century Workplace</span><span class="res-sub">Building Movement Project — race equity in nonprofit HR; research on structural HR barriers</span></div>
+        <div class="res-item"><span class="res-title">The Cost of Turnover</span><span class="res-sub">CompassPoint · 2001 — foundational research on retention economics in nonprofits; often-cited caseload for investment</span></div>
+        <div class="res-item"><span class="res-title">Alive at Work</span><span class="res-sub">Daniel Cable · 2018 · Harvard Business Review Press — purpose and identity in organizational culture</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">CompassPoint (compasspoint.org) *</span><span class="res-sub">Nonprofit HR and leadership development; staffing and governance research; free publications</span></div>
+        <div class="res-item"><span class="res-title">National Center for Charitable Statistics (nccs.urban.org)</span><span class="res-sub">Salary and benefits benchmarking data for nonprofit compensation equity analysis</span></div>
+        <div class="res-item"><span class="res-title">Nonprofit HR (nonprofithr.com)</span><span class="res-sub">HR consulting for mission-driven organizations; pay equity analysis tools and guidance</span></div>
+        <div class="res-item"><span class="res-title">Movement Generation Justice &amp; Ecology Project *</span><span class="res-sub">GPS 7.0 case study institution; regenerative organizational culture model</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Maslach Burnout Inventory (mindgarden.com) *</span><span class="res-sub">Validated burnout assessment; GPS 7.5 implementation; three subscales: exhaustion, cynicism, efficacy</span></div>
+        <div class="res-item"><span class="res-title">Pay Equity Analyzer (SHRM)</span><span class="res-sub">Pay equity regression analysis guidance; GPS 7.4 implementation tool</span></div>
+        <div class="res-item"><span class="res-title">Organizational Culture Assessment Instrument (OCAI)</span><span class="res-sub">Cameron &amp; Quinn; validated culture typology assessment; free online version available</span></div>
+        <div class="res-item"><span class="res-title">Individual Development Plan templates (various)</span><span class="res-sub">GPS 7.2 implementation; SHRM and CompassPoint both offer nonprofit-adapted versions</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 8.0 -->
+<div class="rblock">
+  <div class="rblock-head inst"><span class="rblock-id inst">GPS 8.0</span><span class="rblock-title">Technology &amp; AI Infrastructure</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">The Nonprofit Technology Enterprise Network (NTEN) State of Technology *</span><span class="res-sub">Annual report; nonprofit technology landscape; GPS 8.1 benchmarking and strategy development</span></div>
+        <div class="res-item"><span class="res-title">Data Feminism</span><span class="res-sub">D'Ignazio &amp; Klein · 2020 · MIT Press — data justice framework; GPS 8.2 data governance principles</span></div>
+        <div class="res-item"><span class="res-title">The Alignment Problem</span><span class="res-sub">Brian Christian · 2020 · W.W. Norton — AI values alignment; GPS 8.3 and 14.0 conceptual grounding</span></div>
+        <div class="res-item"><span class="res-title">Weapons of Math Destruction</span><span class="res-sub">Cathy O'Neil · 2016 · Crown — algorithmic harm case studies; GPS 14.0 foundational text</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">NTEN (nten.org) *</span><span class="res-sub">Nonprofit technology network; peer learning, training, annual conference; GPS 8.0 primary community</span></div>
+        <div class="res-item"><span class="res-title">Digital Impact Alliance (digitalimpactalliance.org)</span><span class="res-sub">Data governance frameworks for social sector; data responsibility toolkit; GPS 8.2</span></div>
+        <div class="res-item"><span class="res-title">AI Now Institute (ainowinstitute.org)</span><span class="res-sub">AI accountability research; GPS 14.0 and 8.3 policy and governance frameworks</span></div>
+        <div class="res-item"><span class="res-title">Benetech (benetech.org)</span><span class="res-sub">GPS 8.0 case study institution; responsible data use for social good</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">NTEN Technology Assessment Toolkit *</span><span class="res-sub">Free; GPS 8.1 technology strategy development; debt assessment and portfolio management</span></div>
+        <div class="res-item"><span class="res-title">DPIA (Data Protection Impact Assessment) templates</span><span class="res-sub">ICO and GDPR resources; GPS 8.2 data governance implementation</span></div>
+        <div class="res-item"><span class="res-title">Responsible AI Checklist (Montreal AI Ethics Institute)</span><span class="res-sub">Free; GPS 8.3 AI adoption evaluation rubric starting point</span></div>
+        <div class="res-item"><span class="res-title">TechSoup (techsoup.org) *</span><span class="res-sub">Discounted technology for nonprofits; technology assessment and procurement support</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 9.0 -->
+<div class="rblock">
+  <div class="rblock-head inst"><span class="rblock-id inst">GPS 9.0</span><span class="rblock-title">Steward Collective Resources</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Nonprofit Finance Fund: Strengthening Nonprofits *</span><span class="res-sub">Free financial management guides at nonprofitfinancefund.org; financial health ratios and benchmarks</span></div>
+        <div class="res-item"><span class="res-title">The Full Cost Project</span><span class="res-sub">Nonprofit Finance Fund — foundational research on indirect cost under-recovery; GPS 9.2.4 reference</span></div>
+        <div class="res-item"><span class="res-title">Unrestricted Capital for Nonprofits</span><span class="res-sub">MacArthur Foundation — research on general operating support and financial resilience</span></div>
+        <div class="res-item"><span class="res-title">Working Capital for Cooperatives</span><span class="res-sub">National Center for Employee Ownership — cooperative financial structure and capital account design</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Nonprofit Finance Fund (nff.org) *</span><span class="res-sub">Financial health analysis; predevelopment loans; financial resilience capacity building for nonprofits</span></div>
+        <div class="res-item"><span class="res-title">RSF Social Finance (rsfsocialfinance.org) *</span><span class="res-sub">GPS 9.0 case study institution; integrated capital and values-aligned financial management</span></div>
+        <div class="res-item"><span class="res-title">National CDFI Fund (cdfifund.gov)</span><span class="res-sub">Community Development Financial Institutions; solidarity economy finance infrastructure</span></div>
+        <div class="res-item"><span class="res-title">Mission Investors Exchange (missioninvestors.org)</span><span class="res-sub">Mission-aligned investing network; GPS 10.5 values-aligned investment policy development</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Financial Health Score tool (nff.org) *</span><span class="res-sub">Free; five-ratio financial health composite assessment; GPS 9.5 governance reporting framework</span></div>
+        <div class="res-item"><span class="res-title">Nonprofit Reserve Policy templates (various)</span><span class="res-sub">National Council of Nonprofits; GPS 9.4 reserve policy development and governance approval</span></div>
+        <div class="res-item"><span class="res-title">Indirect Cost Rate Calculator</span><span class="res-sub">National Council of Nonprofits; GPS 9.2.4 actual overhead rate calculation methodology</span></div>
+        <div class="res-item"><span class="res-title">Community Finance Fellowship (various CDFIs)</span><span class="res-sub">Financial management training for community organizations; multi-week cohort programs</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 10.0 -->
+<div class="rblock">
+  <div class="rblock-head inst"><span class="rblock-id inst">GPS 10.0</span><span class="rblock-title">Manage Commons &amp; Shared Assets</span></div>
+  <div class="rblock-body">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts and organizations</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Owning Our Future *</span><span class="res-sub">Marjorie Kelly · 2012 · Berrett-Koehler — ownership design for community benefit; GPS 10.4 foundational text</span></div>
+        <div class="res-item"><span class="res-title">Worker Cooperative Toolbox</span><span class="res-sub">Democracy at Work Institute — cooperative capital structure; internal accounts and member equity design</span></div>
+        <div class="res-item"><span class="res-title">National Community Land Trust Network (cltnetwork.org) *</span><span class="res-sub">Long-term asset stewardship models; ground lease structures; enclosure protection legal frameworks</span></div>
+        <div class="res-item"><span class="res-title">Indigenous land and resource stewardship literature</span><span class="res-sub">Haudenosaunee Environmental Task Force; seven-generation principle in institutional practice</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Asset Inventory and Valuation templates *</span><span class="res-sub">National Council of Nonprofits; GPS 10.1 comprehensive asset tracking framework</span></div>
+        <div class="res-item"><span class="res-title">Capital Needs Assessment methodology</span><span class="res-sub">Enterprise Community Partners; GPS 10.3 10-year capital planning framework for physical assets</span></div>
+        <div class="res-item"><span class="res-title">As You Sow (asyousow.org)</span><span class="res-sub">Mission-aligned investment screening tools; GPS 10.5 endowment values-alignment assessment</span></div>
+        <div class="res-item"><span class="res-title">Conservation easement resources (Land Trust Alliance)</span><span class="res-sub">GPS 10.2 legal protection instruments for land and conservation assets; lta.org</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 11.0 -->
+<div class="rblock">
+  <div class="rblock-head inst"><span class="rblock-id inst">GPS 11.0</span><span class="rblock-title">Institutional Integrity &amp; Equity</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Accountability: The Iron Cage of Liberal Democracy *</span><span class="res-sub">Melanie Walker — accountability architecture theory; GPS 11.2 conceptual foundation</span></div>
+        <div class="res-item"><span class="res-title">The Equity Audit Toolkit</span><span class="res-sub">Annie E. Casey Foundation — six-domain equity audit methodology; GPS 11.4 primary tool</span></div>
+        <div class="res-item"><span class="res-title">The Nonprofit Sector's Leadership Deficit</span><span class="res-sub">Building Movement Project — Race to Lead research; equity in governance and accountability</span></div>
+        <div class="res-item"><span class="res-title">Conflict of Interest and Nonprofit Governance</span><span class="res-sub">BoardSource — COI policy templates and governance guidance; GPS 11.3 implementation resource</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">PolicyLink (policylink.org) *</span><span class="res-sub">GPS 11.4 case study institution; equity audit methodology and national equity atlas</span></div>
+        <div class="res-item"><span class="res-title">D5 Coalition (d5coalition.org)</span><span class="res-sub">Diversity, equity, and inclusion in philanthropy; organizational equity frameworks</span></div>
+        <div class="res-item"><span class="res-title">Nonprofit Ethics Hotline (various)</span><span class="res-sub">Independent ethics reporting resources; GPS 11.5 channel design models</span></div>
+        <div class="res-item"><span class="res-title">Center for Social Change (centerforsocialchange.org)</span><span class="res-sub">Values-alignment assessment tools and organizational integrity frameworks</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Racial Equity Impact Assessment (REIA) tool *</span><span class="res-sub">Annie E. Casey Foundation; GPS 11.4 process equity audit implementation; free download</span></div>
+        <div class="res-item"><span class="res-title">BoardSource Conflict of Interest Policy templates *</span><span class="res-sub">GPS 11.3 policy development starting point; legal review recommended</span></div>
+        <div class="res-item"><span class="res-title">Whistleblower Protection Policy templates</span><span class="res-sub">National Council of Nonprofits; GPS 11.5 policy development; legal compliance baseline</span></div>
+        <div class="res-item"><span class="res-title">Equity Audit rubrics (Urban Institute)</span><span class="res-sub">Six-domain equity audit frameworks; GPS 11.4 implementation guidance</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 12.0 -->
+<div class="rblock">
+  <div class="rblock-head inst"><span class="rblock-id inst">GPS 12.0</span><span class="rblock-title">Inter-Institutional Relations</span></div>
+  <div class="rblock-body">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts and organizations</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Collaboration: What Makes It Work *</span><span class="res-sub">Mattessich, Murray-Close &amp; Monsey · 2001 · Amherst H. Wilder Foundation — 20 factors predicting collaboration success; GPS 12.1</span></div>
+        <div class="res-item"><span class="res-title">Power, Conflict and Coalition (National Equity Project)</span><span class="res-sub">Coalition building with equity lens; GPS 12.4 coalition governance design</span></div>
+        <div class="res-item"><span class="res-title">Right to the City Alliance (righttothecity.org) *</span><span class="res-sub">GPS 12.4 case study institution; constituent voice in policy advocacy coalitions</span></div>
+        <div class="res-item"><span class="res-title">US Solidarity Economy Network (ussen.org)</span><span class="res-sub">GPS 12.5 movement building infrastructure; sector networking and ecosystem development</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools and networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Wilder Collaboration Factors Inventory *</span><span class="res-sub">Validated partnership health assessment; GPS 12.1 partnership equity assessment tool; free online</span></div>
+        <div class="res-item"><span class="res-title">Partnership Agreement templates (various)</span><span class="res-sub">National Council of Nonprofits and Foundation for Rural Service; GPS 12.1 written agreement frameworks</span></div>
+        <div class="res-item"><span class="res-title">Mutual Aid Network Toolkit (mutualaid.org)</span><span class="res-sub">GPS 12.2 resource-sharing agreement frameworks; activation protocols and governance models</span></div>
+        <div class="res-item"><span class="res-title">Common Cause Community Organizing Training</span><span class="res-sub">GPS 12.4 policy coalition governance; grassroots organizing and advocacy infrastructure</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 13.0 -->
+<div class="rblock">
+  <div class="rblock-head inst"><span class="rblock-id inst">GPS 13.0</span><span class="rblock-title">Evolve Institutional Capabilities</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">The Fifth Discipline *</span><span class="res-sub">Peter Senge · 1990 · Doubleday — learning organization framework; single and double-loop learning; GPS 13.0 conceptual foundation</span></div>
+        <div class="res-item"><span class="res-title">Organizational Learning II</span><span class="res-sub">Argyris &amp; Schön · 1996 · Addison-Wesley — double-loop learning theory; GPS 13.3 strategic renewal framework</span></div>
+        <div class="res-item"><span class="res-title">The Innovator's Dilemma</span><span class="res-sub">Clayton Christensen · 1997 · Harvard Business Review Press — GPS 13.4 innovation portfolio theory</span></div>
+        <div class="res-item"><span class="res-title">Adaptive Action</span><span class="res-sub">Glenda Eoyang &amp; Royce Holladay · 2013 · Stanford University Press — complexity-adaptive planning and renewal</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Bridgespan Group (bridgespan.org) *</span><span class="res-sub">Strategic planning and renewal for nonprofits; GPS 13.2 and 13.3 case studies and tools</span></div>
+        <div class="res-item"><span class="res-title">Communitas (communitas.co)</span><span class="res-sub">Learning organization development; GPS 13.1 learning infrastructure design</span></div>
+        <div class="res-item"><span class="res-title">CDM Community Development Management (cdm.coop)</span><span class="res-sub">GPS 13.3 case study institution; community-led strategic renewal methodology</span></div>
+        <div class="res-item"><span class="res-title">Innovation Network (innonet.org)</span><span class="res-sub">Evaluation and learning infrastructure for nonprofits; GPS 13.1 performance management</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">After Action Review methodology *</span><span class="res-sub">US Army; adapted widely; GPS 13.1 institutional learning routine; free implementation guides</span></div>
+        <div class="res-item"><span class="res-title">Scenario planning tools (GBN/Global Business Network)</span><span class="res-sub">GPS 13.3 scenario development; 2×2 scenario matrix methodology; free guides available</span></div>
+        <div class="res-item"><span class="res-title">Assumption Surfacing and Testing (AST)</span><span class="res-sub">Mitroff &amp; Emshoff methodology; GPS 13.3 assumption examination for strategic renewal</span></div>
+        <div class="res-item"><span class="res-title">Balanced Scorecard Institute (balancedscorecard.org)</span><span class="res-sub">GPS 13.1 integrated performance management frameworks; adapted for nonprofit contexts</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIER III -->
+<div class="tier-sep">
+  <div class="tier-sep-line novel"></div>
+  <span class="tier-sep-label novel">Tier III · Novel categories · GPS 14.0–16.0</span>
+  <div class="tier-sep-line novel"></div>
+</div>
+
+<!-- GPS 14.0 -->
+<div class="rblock">
+  <div class="rblock-head novel"><span class="rblock-id novel">GPS 14.0</span><span class="rblock-title">AI Governance &amp; Algorithmic Accountability</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Weapons of Math Destruction *</span><span class="res-sub">Cathy O'Neil · 2016 · Crown — algorithmic harm case studies; most accessible GPS 14.0 entry point</span></div>
+        <div class="res-item"><span class="res-title">Race After Technology</span><span class="res-sub">Ruha Benjamin · 2019 · Polity Press — algorithmic racism; GPS 14.3 equity monitoring conceptual framework</span></div>
+        <div class="res-item"><span class="res-title">Automating Inequality</span><span class="res-sub">Virginia Eubanks · 2018 · St. Martin's Press — algorithmic systems in public welfare; direct GPS 14.0 case studies</span></div>
+        <div class="res-item"><span class="res-title">The Age of Surveillance Capitalism</span><span class="res-sub">Shoshana Zuboff · 2019 · PublicAffairs — data extraction and community sovereignty; GPS 8.2 and 14.0</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">AI Now Institute (ainowinstitute.org) *</span><span class="res-sub">Algorithmic accountability research; GPS 14.0 policy and governance frameworks; annual reports</span></div>
+        <div class="res-item"><span class="res-title">Algorithmic Justice League (ajl.org) *</span><span class="res-sub">GPS 14.5 case study institution; community-centered AI accountability; bias auditing methodology</span></div>
+        <div class="res-item"><span class="res-title">Data &amp; Society (datasociety.net)</span><span class="res-sub">Research on AI social impacts; equity implications of algorithmic systems in social sector</span></div>
+        <div class="res-item"><span class="res-title">Partnership on AI (partnershiponai.org)</span><span class="res-sub">Multi-stakeholder AI governance frameworks; responsible AI guidelines for organizations</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Algorithmic Impact Assessment toolkit *</span><span class="res-sub">AI Now Institute; GPS 14.1 equity impact assessment methodology; free download</span></div>
+        <div class="res-item"><span class="res-title">Model Cards for Model Reporting</span><span class="res-sub">Google · 2019; GPS 14.2 AI transparency documentation standard; free template and guidance</span></div>
+        <div class="res-item"><span class="res-title">Datasheets for Datasets</span><span class="res-sub">Gebru et al. · 2018; GPS 14.2 training data transparency documentation; free template</span></div>
+        <div class="res-item"><span class="res-title">NIST AI Risk Management Framework *</span><span class="res-sub">Free; comprehensive AI risk assessment framework; GPS 14.1 risk tier classification resource</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 15.0 -->
+<div class="rblock">
+  <div class="rblock-head novel"><span class="rblock-id novel">GPS 15.0</span><span class="rblock-title">Human Flourishing &amp; Wellbeing</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Wellbeing: The Five Essential Elements *</span><span class="res-sub">Tom Rath &amp; Jim Harter · 2010 · Gallup Press — multi-dimensional wellbeing; accessible GPS 15.0 entry point</span></div>
+        <div class="res-item"><span class="res-title">Flourish</span><span class="res-sub">Martin Seligman · 2011 · Free Press — PERMA model; positive psychology framework; GPS 15.1 instrument design</span></div>
+        <div class="res-item"><span class="res-title">The Capability Approach</span><span class="res-sub">Martha Nussbaum · Creating Capabilities · 2011 · Harvard University Press — GPS 15.0 dignity and capability dimensions</span></div>
+        <div class="res-item"><span class="res-title">Lost Connections</span><span class="res-sub">Johann Hari · 2018 · Bloomsbury — social determinants of meaning and connection; GPS 15.3 and 15.4 grounding</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Wellbeing Economy Alliance (weall.org) *</span><span class="res-sub">GPS 15.5 case study institution; WEAll governance framework; policy advocacy for wellbeing economies</span></div>
+        <div class="res-item"><span class="res-title">Center for Community Wellbeing (various universities)</span><span class="res-sub">Multi-dimensional wellbeing measurement methodology; instrument development and validation</span></div>
+        <div class="res-item"><span class="res-title">Gross National Happiness USA (gnhusa.org)</span><span class="res-sub">GNH measurement framework adapted for US context; GPS 15.1 assessment model</span></div>
+        <div class="res-item"><span class="res-title">What Works Wellbeing (whatworkswellbeing.org)</span><span class="res-sub">UK-based wellbeing evidence base; community wellbeing programs and measurement guidance</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">ONS4 Wellbeing Questions *</span><span class="res-sub">UK Office for National Statistics; four validated wellbeing questions; GPS 15.1 primary instrument; free</span></div>
+        <div class="res-item"><span class="res-title">Purpose in Life Scale (PIL)</span><span class="res-sub">Crumbaugh &amp; Maholick; validated purpose measurement; GPS 15.4 post-labor meaning assessment</span></div>
+        <div class="res-item"><span class="res-title">UCLA Loneliness Scale (Version 3)</span><span class="res-sub">Russell · 1996; validated loneliness assessment; GPS 15.3 social connection measurement; free</span></div>
+        <div class="res-item"><span class="res-title">Community Wellbeing Measurement Toolkit (RWJF) *</span><span class="res-sub">Robert Wood Johnson Foundation; multi-dimensional community wellbeing assessment framework; free download</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 16.0 -->
+<div class="rblock">
+  <div class="rblock-head novel"><span class="rblock-id novel">GPS 16.0</span><span class="rblock-title">Participatory Democracy</span></div>
+  <div class="rblock-body three">
+    <div class="rcol">
+      <div class="rcol-label">Foundational texts</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Participatory Budgeting *</span><span class="res-sub">Baiocchi &amp; Ganuza · 2017 · Stanford University Press — Porto Alegre origin and global spread; GPS 16.2 primary text</span></div>
+        <div class="res-item"><span class="res-title">When the People Rule</span><span class="res-sub">David Van Reybrouck · 2016 · Seven Stories Press — citizen assemblies and sortition; GPS 16.3 framework</span></div>
+        <div class="res-item"><span class="res-title">Power and Love</span><span class="res-sub">Adam Kahane · 2010 · Berrett-Koehler — power analysis in collaborative governance; GPS 16.5 grounding</span></div>
+        <div class="res-item"><span class="res-title">Our Word Is Our Weapon</span><span class="res-sub">Subcomandante Marcos · 2001 · Seven Stories Press — Zapatista governance philosophy; GPS 16.5 mandar obedeciendo in practice</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Organizations and peer networks</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">Participatory Budgeting Project (participatorybudgeting.org) *</span><span class="res-sub">GPS 16.2 primary implementation resource; toolkits, training, and peer learning network</span></div>
+        <div class="res-item"><span class="res-title">newDemocracy Foundation (newdemocracy.com.au)</span><span class="res-sub">Citizens assembly and deliberative panel design; GPS 16.3 implementation guidance and case studies</span></div>
+        <div class="res-item"><span class="res-title">Everyday Democracy (everyday-democracy.org) *</span><span class="res-sub">Dialogue-to-change methodology; community deliberation facilitation; GPS 16.1 and 16.3</span></div>
+        <div class="res-item"><span class="res-title">Demos (demos.org)</span><span class="res-sub">Democracy and power analysis research; GPS 16.5 power mapping methodology</span></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="rcol-label">Practical tools</div>
+      <div class="res-list">
+        <div class="res-item"><span class="res-title">PB Project Toolkit *</span><span class="res-sub">Participatory Budgeting Project; GPS 16.2 implementation from design through voting; free download</span></div>
+        <div class="res-item"><span class="res-title">Citizens Assembly facilitation guides (MASS LBP) *</span><span class="res-sub">MASS LBP (masslbp.com); GPS 16.3 assembly design, recruitment, and facilitation methodology</span></div>
+        <div class="res-item"><span class="res-title">Power mapping worksheets (Midwest Academy)</span><span class="res-sub">GPS 16.5 power analysis tools; organizer's manual power mapping methodology; widely adapted</span></div>
+        <div class="res-item"><span class="res-title">Sociocracy 3.0 (sociocracy30.org)</span><span class="res-sub">Consent-based governance patterns; GPS 16.1 decision-making structure implementation; free</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="appendix-close">
+  <div class="ac-label">End of Appendix D — Recommended Resources by GPS Category</div>
+  <div class="ac-body">
+    Resources marked with an asterisk (*) are recommended entry points for institutions beginning development in a GPS category. They were selected for accessibility, practical applicability, and low cost of access. For each category, start with the asterisked resources before moving to the broader list.<br><br>
+    <strong>On using these resources in practice:</strong> The most effective use of this list is not independent reading but peer learning. The organizations listed under each category are communities of practice — institutions doing this work whose learning is directly applicable and often available through peer relationships rather than only through published materials. Before purchasing books or engaging consultants, identify which peer organizations in your network are strongest in the GPS categories you are developing and request direct peer learning exchanges.<br><br>
+    <strong>Appendix E</strong> is the glossary of key terms used throughout the GPS framework.
+  </div>
+</div>
+
+</div>
+<div class="page-number">Institutions for a world after work · Appendix D</div>
+</body>
+</html>

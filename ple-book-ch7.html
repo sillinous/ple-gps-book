@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 7 — Using the maturity model: where to start and how to improve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504;
+    --bg-deep: #0c0a09;
+    --bg-primary: #141210;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.12);
+    --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3;
+    --text-secondary: #a09890;
+    --text-muted: #6b6560;
+    --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07);
+    --border-visible: rgba(201,169,110,0.14);
+    --civic: #1D9E75;
+    --civic-dim: rgba(29,158,117,0.08);
+    --civic-text: #4ecfa0;
+    --inst: #378ADD;
+    --inst-dim: rgba(55,138,221,0.08);
+    --inst-text: #7ab8f0;
+    --novel: #7F77DD;
+    --novel-dim: rgba(127,119,221,0.10);
+    --novel-text: #b0aaf0;
+    --m1: rgba(180,178,169,0.12);
+    --m1t: #888780;
+    --m2: rgba(201,169,110,0.10);
+    --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10);
+    --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12);
+    --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 40px 120px;
+  }
+  .part-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .chapter-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.9rem, 3.8vw, 2.85rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.35;
+    margin-bottom: 44px;
+  }
+  .body-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--text-primary);
+  }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em;
+    font-weight: 300;
+    line-height: 0.75;
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+  }
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-visible);
+  }
+  .section-break-ornament {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+  .pullquote {
+    margin: 44px 0;
+    padding: 28px 32px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 6px 6px 0;
+  }
+  .pullquote p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .pullquote p::before { content: '\201C'; color: var(--accent); }
+  .pullquote p::after  { content: '\201D'; color: var(--accent); }
+
+  /* The four maturity levels — central reference */
+  .maturity-levels {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .mat-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .mat-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level {
+    width: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    border-right: 1px solid var(--border-subtle);
+    padding: 20px 0;
+  }
+  .mat-row.m1 .mat-level { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 20px 22px; flex: 1; }
+  .mat-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+  }
+  .mat-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.77rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+  .mat-signals {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mat-signal {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .sig-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    margin-top: 6px;
+    min-width: 4px;
+  }
+  .m1 .sig-dot { background: var(--m1t); }
+  .m2 .sig-dot { background: var(--m2t); }
+  .m3 .sig-dot { background: var(--m3t); }
+  .m4 .sig-dot { background: var(--m4t); }
+  .sig-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  /* Assessment rubric — 5-question method */
+  .rubric-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .rubric-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .rubric-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .rubric-row:last-child { border-bottom: none; }
+  .rubric-q-col {
+    width: 32px;
+    min-width: 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    border-right: 1px solid var(--border-subtle);
+    padding: 14px 0 14px;
+    opacity: 0.7;
+  }
+  .rubric-q { padding: 14px 18px; flex: 1; border-right: 1px solid var(--border-subtle); }
+  .rubric-q-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.35;
+  }
+  .rubric-q-note {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .rubric-levels {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 220px;
+    max-width: 240px;
+  }
+  .rubric-level {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    flex: 1;
+  }
+  .rubric-level:last-child { border-bottom: none; }
+  .rl-badge {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    padding: 1px 5px;
+    border-radius: 3px;
+    min-width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .rl-1 { background: var(--m1); color: var(--m1t); }
+  .rl-2 { background: var(--m2); color: var(--m2t); }
+  .rl-3 { background: var(--m3); color: var(--m3t); }
+  .rl-4 { background: var(--m4); color: var(--m4t); }
+  .rl-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Example maturity profile */
+  .profile-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .profile-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .profile-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 8px 16px;
+    gap: 12px;
+  }
+  .profile-row:last-child { border-bottom: none; }
+  .prof-cat {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    min-width: 28px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .prof-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    min-width: 190px;
+    max-width: 190px;
+  }
+  .prof-bar-wrap {
+    flex: 1;
+    height: 6px;
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .prof-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+  .prof-bar.m1 { background: var(--m1t); opacity: 0.5; }
+  .prof-bar.m2 { background: var(--m2t); opacity: 0.7; }
+  .prof-bar.m3 { background: var(--m3t); opacity: 0.8; }
+  .prof-bar.m4 { background: var(--m4t); opacity: 0.9; }
+  .prof-score {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    min-width: 20px;
+    text-align: right;
+  }
+  .prof-score.m1 { color: var(--m1t); }
+  .prof-score.m2 { color: var(--m2t); }
+  .prof-score.m3 { color: var(--m3t); }
+  .prof-score.m4 { color: var(--m4t); }
+  .prof-tier-label {
+    padding: 7px 16px;
+    background: var(--bg-secondary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  /* Workshop protocol */
+  .workshop-block {
+    margin: 40px 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-top: 2px solid var(--accent);
+    border-radius: 0 0 8px 8px;
+    padding: 28px 32px;
+  }
+  .workshop-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    opacity: 0.8;
+  }
+  .workshop-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .ws-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .ws-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 22px;
+    padding-top: 2px;
+    opacity: 0.7;
+  }
+  .ws-content { flex: 1; }
+  .ws-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .ws-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  /* Prioritization grid */
+  .priority-grid {
+    margin: 40px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+  }
+  .prio-cell {
+    padding: 18px 20px;
+    background: var(--bg-secondary);
+  }
+  .prio-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .prio-label.high-impact  { color: var(--civic-text); }
+  .prio-label.lower-impact { color: var(--text-muted); }
+  .prio-label.low-score    { color: var(--novel-text); }
+  .prio-label.high-score   { color: var(--m2t); }
+  .prio-quad-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .prio-quad-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .prio-axis-row {
+    display: flex;
+    padding: 8px 20px;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-subtle);
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+  .prio-axis-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .prio-axis-arrow {
+    font-size: 11px;
+    color: var(--text-ghost);
+  }
+  .prio-corner {
+    padding: 6px 12px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    color: var(--text-ghost);
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* Common failure patterns */
+  .failure-block {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .fail-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .fail-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num {
+    width: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    border-right: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    opacity: 0.7;
+    padding: 18px 0;
+  }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .fail-pattern {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .fail-signal {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.71rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    padding: 9px 13px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    font-style: italic;
+  }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Part II close panel */
+  .part-close {
+    margin-top: 64px;
+    padding: 32px;
+    border: 1px solid var(--border-visible);
+    border-radius: 8px;
+    background: var(--bg-secondary);
+    text-align: center;
+  }
+  .part-close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .part-close-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .part-close-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .note-aside {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-visible);
+    border-radius: 0 6px 6px 0;
+  }
+  .note-aside p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 0.6em;
+  }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .close-next {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+  .page-number {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part II · The governance process standard</div>
+  <div class="chapter-eyebrow">Chapter 7</div>
+  <h1 class="chapter-title">Using the maturity model — where to start and how to improve</h1>
+  <p class="chapter-subtitle">A practical guide to assessing where your institution is, interpreting what the gaps mean, and building a prioritized path forward without being overwhelmed by what is not yet built</p>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>A taxonomy of 16 categories and 272 processes can produce one of two responses in the person who encounters it. The first is inspiration — the recognition that a comprehensive map of institutional work has been drawn and that its completeness is itself valuable. The second is paralysis — the recognition that most of those 272 processes are underdeveloped in any given institution, and that the distance between current state and the full framework feels infinite. The maturity model is the tool that converts the second response into something more useful than the first. It answers the practical question that a comprehensive taxonomy raises but cannot by itself answer: where do you start, and in what order do you build?</p>
+
+    <p>The maturity model is not a grading system. It does not distinguish good institutions from bad ones, or award scores that rank one institution above another. It is a developmental map — a set of descriptions that allow an institution to locate itself honestly in each of the 16 categories, understand what developing each category further requires, and make informed choices about where to invest scarce time and resources. The distinction matters. A maturity assessment is not an audit. It is a mirror. What the mirror shows is only useful if the institution looking into it is willing to see clearly — and then to act on what it sees.</p>
+
+    <p>This chapter describes the maturity model in detail, explains how to conduct an assessment individually and as a group, provides a framework for prioritizing development investments based on assessment results, and identifies the most common patterns of institutional underperformance that the model surfaces. It is also a practical prerequisite for the chapters that follow in Parts III, IV, and V, where each category chapter includes maturity indicators at all four levels. Reading those chapters will be more productive if the reader has first internalized the model they apply.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The four maturity levels</div>
+
+  <div class="body-text">
+    <p>The maturity model uses four levels. Four is the right number for this purpose: few enough that assessors can reliably distinguish between levels, many enough that the model captures meaningfully different states of institutional development. Models with more levels produce false precision; models with fewer produce categories too broad to guide action. The four levels are defined by a progression from absence through existence through consistency through improvement — the four qualitatively different relationships an institution can have with any given process domain.</p>
+  </div>
+
+  <div class="maturity-levels">
+    <div class="mat-header">The four maturity levels — defined</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level">1</div>
+      <div class="mat-content">
+        <div class="mat-name">Absent or informal</div>
+        <div class="mat-desc">The process either does not exist in the institution, or exists only as ad hoc individual behavior with no organizational form, documentation, or repeatable structure. Outcomes depend entirely on who happens to be present and what they happen to know. When key people leave, the capability disappears with them.</div>
+        <div class="mat-signals">
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">No documented process or designated process owner</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Outcomes are inconsistent and depend on individual knowledge</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">The institution cannot describe how it does this if asked</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Staff departures in this area cause significant capability loss</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level">2</div>
+      <div class="mat-content">
+        <div class="mat-name">Defined and developing</div>
+        <div class="mat-desc">The process exists as a recognized institutional function with some documentation and at least informal ownership. It produces consistent outputs most of the time, but execution depends significantly on individual knowledge and motivation rather than reliable process design. The process is acknowledged as important and is being actively developed, but has not yet achieved the consistency required for reliable operation across different staff and conditions.</div>
+        <div class="mat-signals">
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Process is named, acknowledged, and has a designated owner</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Some documentation exists; gaps are known and being addressed</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Outputs are consistent under normal conditions but degrade under stress</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">New staff can be onboarded to the process within a reasonable timeframe</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level">3</div>
+      <div class="mat-content">
+        <div class="mat-name">Consistent and managed</div>
+        <div class="mat-desc">The process operates reliably across different staff, conditions, and time periods. It is documented, owned, and executed consistently. Performance is measured, and the measures are used to manage execution. The process can survive the departure of its primary owner without significant disruption. This is the level that most institutional processes should aim for as their target — the point at which the process functions as a genuine institutional capability rather than a heroic individual effort.</div>
+        <div class="mat-signals">
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Process documentation is complete, current, and actively used</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Performance is measured against defined standards and reviewed regularly</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Execution is consistent across staff and withstands personnel turnover</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Deviations from standard are identified and addressed systematically</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level">4</div>
+      <div class="mat-content">
+        <div class="mat-name">Optimizing and learning</div>
+        <div class="mat-desc">The process not only performs consistently but continuously improves. The institution uses data from process execution to identify improvement opportunities, experiments with process changes, measures the results of those experiments, and incorporates learnings systematically. The process is a site of organizational learning, not just organizational execution. Maturity Level 4 is aspirational for most processes in most institutions — achieving it across all 16 categories is not a realistic near-term goal for any institution, and should not be treated as a benchmark against which current institutions are found wanting.</div>
+        <div class="mat-signals">
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Process improvement is a regular, documented activity rather than a crisis response</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Performance data drives continuous experimentation and adaptation</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">Process knowledge is actively contributed to the broader institutional community</div></div>
+          <div class="mat-signal"><div class="sig-dot"></div><div class="sig-text">The institution can teach this process to other institutions effectively</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Conducting the assessment — five diagnostic questions</div>
+
+  <div class="body-text">
+    <p>The assessment works by applying the same five diagnostic questions to each of the 16 categories. The questions are designed to be answerable without external audit — they draw on knowledge that people inside the institution already hold — and to produce a reliable maturity score when answered honestly. Each question maps to one of the four maturity levels: a "yes" to the first question suggests Level 1 has been cleared; a "yes" to the second suggests Level 2; and so on. The score for a category is the highest level at which all questions can be answered affirmatively.</p>
+  </div>
+
+  <div class="rubric-block">
+    <div class="rubric-header">Five diagnostic questions — applied to each of the 16 categories</div>
+
+    <div class="rubric-row">
+      <div class="rubric-q-col">Q1</div>
+      <div class="rubric-q">
+        <div class="rubric-q-text">Does this process exist in your institution in any form?</div>
+        <div class="rubric-q-note">Not necessarily well-designed or documented — just: does anyone do this, in any way, reliably enough that it could be called a practice?</div>
+      </div>
+      <div class="rubric-levels">
+        <div class="rubric-level"><div class="rl-badge rl-1">1</div><div class="rl-text">No — process is absent or purely ad hoc</div></div>
+        <div class="rubric-level"><div class="rl-badge rl-2">2+</div><div class="rl-text">Yes — some version of this exists and is recognized</div></div>
+      </div>
+    </div>
+
+    <div class="rubric-row">
+      <div class="rubric-q-col">Q2</div>
+      <div class="rubric-q">
+        <div class="rubric-q-text">Is the process documented and owned?</div>
+        <div class="rubric-q-note">Can someone point to written documentation? Is there a named person or role responsible for its execution? Can a new person be onboarded to this process without relying entirely on the current owner's memory?</div>
+      </div>
+      <div class="rubric-levels">
+        <div class="rubric-level"><div class="rl-badge rl-1">1</div><div class="rl-text">No documentation, no clear owner</div></div>
+        <div class="rubric-level"><div class="rl-badge rl-2">2+</div><div class="rl-text">Some documentation exists; ownership is defined</div></div>
+      </div>
+    </div>
+
+    <div class="rubric-row">
+      <div class="rubric-q-col">Q3</div>
+      <div class="rubric-q">
+        <div class="rubric-q-text">Does it execute consistently across people and conditions?</div>
+        <div class="rubric-q-note">Would the process produce similar outputs if a different person ran it? Does it hold up under pressure — when the primary owner is absent, when the institution is under stress, when circumstances are unusual?</div>
+      </div>
+      <div class="rubric-levels">
+        <div class="rubric-level"><div class="rl-badge rl-1">1</div><div class="rl-text">Highly person-dependent; degrades under stress</div></div>
+        <div class="rubric-level"><div class="rl-badge rl-2">2</div><div class="rl-text">Mostly consistent but some person-dependency remains</div></div>
+        <div class="rubric-level"><div class="rl-badge rl-3">3+</div><div class="rl-text">Consistently executed regardless of who runs it</div></div>
+      </div>
+    </div>
+
+    <div class="rubric-row">
+      <div class="rubric-q-col">Q4</div>
+      <div class="rubric-q">
+        <div class="rubric-q-text">Is performance measured and actively managed?</div>
+        <div class="rubric-q-note">Are there KPIs or measures for this process that are reviewed regularly? Does someone look at the results and make decisions based on them? Does poor performance trigger a response?</div>
+      </div>
+      <div class="rubric-levels">
+        <div class="rubric-level"><div class="rl-badge rl-1">1–2</div><div class="rl-text">No measurement, or measurement that is not acted on</div></div>
+        <div class="rubric-level"><div class="rl-badge rl-3">3+</div><div class="rl-text">Measured, reviewed, and used to manage execution</div></div>
+      </div>
+    </div>
+
+    <div class="rubric-row">
+      <div class="rubric-q-col">Q5</div>
+      <div class="rubric-q">
+        <div class="rubric-q-text">Does the process improve systematically over time?</div>
+        <div class="rubric-q-note">Is there a regular practice of reviewing how the process is working and making deliberate changes to improve it? Are process improvements documented and shared? Does the institution contribute what it has learned to other institutions?</div>
+      </div>
+      <div class="rubric-levels">
+        <div class="rubric-level"><div class="rl-badge rl-1">1–3</div><div class="rl-text">Process changes are reactive rather than deliberate</div></div>
+        <div class="rubric-level"><div class="rl-badge rl-4">4</div><div class="rl-text">Continuous, documented, systematic improvement practice</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Reading the profile — what a maturity map reveals</div>
+
+  <div class="body-text">
+    <p>When the five questions are applied across all 16 categories, the result is a maturity profile: a snapshot of where the institution is strong, where it is underdeveloped, and — crucially — where the gaps are most consequential given the institution's specific mission and context. The profile below illustrates what a typical early-stage mutual aid network might look like after an honest assessment. The pattern is instructive not because it is universal but because the shape of the gaps tells a specific story about what the institution has and has not built.</p>
+  </div>
+
+  <div class="profile-block">
+    <div class="profile-header">Example maturity profile — early-stage mutual aid network (illustrative)</div>
+
+    <div class="prof-tier-label">Civic operating</div>
+    <div class="profile-row">
+      <div class="prof-cat">1.0</div>
+      <div class="prof-name">Collective vision &amp; strategy</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m2" style="width:50%"></div></div>
+      <div class="prof-score m2">2</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">2.0</div>
+      <div class="prof-name">Design &amp; steward public goods</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m2" style="width:50%"></div></div>
+      <div class="prof-score m2">2</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">3.0</div>
+      <div class="prof-name">Facilitate access &amp; engagement</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m3" style="width:75%"></div></div>
+      <div class="prof-score m3">3</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">4.0</div>
+      <div class="prof-name">Deliver physical resources</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m3" style="width:75%"></div></div>
+      <div class="prof-score m3">3</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">5.0</div>
+      <div class="prof-name">Deliver services &amp; programs</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m2" style="width:50%"></div></div>
+      <div class="prof-score m2">2</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">6.0</div>
+      <div class="prof-name">Support community members</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m3" style="width:75%"></div></div>
+      <div class="prof-score m3">3</div>
+    </div>
+
+    <div class="prof-tier-label">Institutional support</div>
+    <div class="profile-row">
+      <div class="prof-cat">7.0</div>
+      <div class="prof-name">Develop human potential</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m1" style="width:25%"></div></div>
+      <div class="prof-score m1">1</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">8.0</div>
+      <div class="prof-name">Technology &amp; AI infrastructure</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m1" style="width:25%"></div></div>
+      <div class="prof-score m1">1</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">9.0</div>
+      <div class="prof-name">Steward collective resources</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m2" style="width:50%"></div></div>
+      <div class="prof-score m2">2</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">10.0</div>
+      <div class="prof-name">Manage commons &amp; shared assets</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m1" style="width:25%"></div></div>
+      <div class="prof-score m1">1</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">11.0</div>
+      <div class="prof-name">Institutional integrity &amp; equity</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m1" style="width:25%"></div></div>
+      <div class="prof-score m1">1</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">12.0</div>
+      <div class="prof-name">Inter-institutional relations</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m2" style="width:50%"></div></div>
+      <div class="prof-score m2">2</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">13.0</div>
+      <div class="prof-name">Evolve institutional capabilities</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m1" style="width:25%"></div></div>
+      <div class="prof-score m1">1</div>
+    </div>
+
+    <div class="prof-tier-label">Novel PLE</div>
+    <div class="profile-row">
+      <div class="prof-cat">14.0</div>
+      <div class="prof-name">AI governance &amp; accountability</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m1" style="width:25%"></div></div>
+      <div class="prof-score m1">1</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">15.0</div>
+      <div class="prof-name">Human flourishing &amp; wellbeing</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m1" style="width:25%"></div></div>
+      <div class="prof-score m1">1</div>
+    </div>
+    <div class="profile-row">
+      <div class="prof-cat">16.0</div>
+      <div class="prof-name">Participatory democracy</div>
+      <div class="prof-bar-wrap"><div class="prof-bar m2" style="width:50%"></div></div>
+      <div class="prof-score m2">2</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>This profile is typical of organizations that have been built from passion and community relationships rather than operational design. The civic operating categories are relatively strong — particularly those closest to direct service delivery (4.0, 6.0) and community connection (3.0). This is the founding energy of most mutual aid organizations: show up, deliver, connect. The institutional support categories are consistently weak, with multiple Level 1 scores. The novel categories are almost entirely undeveloped.</p>
+    <p>What the profile predicts, given the inter-category dependencies described in Chapter 6, is a specific set of vulnerabilities. The Level 1 scores in Category 7.0 (human development) and Category 13.0 (institutional evolution) mean that the Level 3 scores in service delivery and member support are being sustained by individual heroism rather than institutional capability — and that the Level 3 scores will decline as founding members burn out. The Level 1 in Category 11.0 (integrity) means that as the organization grows and governance becomes more complex, the mechanisms for preventing power concentration do not yet exist. The Level 1 scores in the novel categories are expected at this stage and not yet urgent — but they flag the work that will be required as the organization matures.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Prioritizing development — the four-quadrant model</div>
+
+  <div class="body-text">
+    <p>A maturity profile creates a list of development needs that is almost always longer than any institution can address simultaneously. Prioritization is essential — and prioritization requires a framework that takes into account both the maturity gap (how far below optimal is this category?) and the impact weight (how consequential is this category's underdevelopment for the institution's specific mission and current vulnerabilities?). These two dimensions — gap and impact — produce four quadrants that generate clear development priorities.</p>
+  </div>
+
+  <div class="priority-grid">
+    <div class="prio-corner" style="grid-column: 1; background: var(--bg-tertiary); border-bottom: 1px solid var(--border-subtle);">← Low impact</div>
+    <div class="prio-corner" style="grid-column: 2; background: var(--bg-tertiary); border-bottom: 1px solid var(--border-subtle); border-left: 1px solid var(--border-subtle);">High impact →</div>
+
+    <div class="prio-cell" style="border-right: 1px solid var(--border-subtle);">
+      <div class="prio-label lower-impact">Low gap · Low impact</div>
+      <div class="prio-quad-title">Monitor and maintain</div>
+      <div class="prio-quad-desc">Categories that are already reasonably developed and not critical to current mission delivery. Maintain current level; review periodically. Do not invest development resources here when higher-priority gaps exist.</div>
+    </div>
+    <div class="prio-cell">
+      <div class="prio-label high-impact">Low gap · High impact</div>
+      <div class="prio-quad-title">Protect and strengthen</div>
+      <div class="prio-quad-desc">Categories that are well-developed and highly consequential — the institution's genuine strengths. Protect these from resource pressure; invest in moving them from Level 3 to Level 4 where possible. These are the capabilities that give the institution its identity.</div>
+    </div>
+    <div class="prio-cell" style="border-right: 1px solid var(--border-subtle); border-top: 1px solid var(--border-subtle);">
+      <div class="prio-label low-score">High gap · Low impact</div>
+      <div class="prio-quad-title">Develop when capacity allows</div>
+      <div class="prio-quad-desc">Underdeveloped categories that are not currently blocking mission delivery. Important to develop eventually — gaps here become consequential as the institution grows — but not the first call on scarce development resources.</div>
+    </div>
+    <div class="prio-cell" style="border-top: 1px solid var(--border-subtle);">
+      <div class="prio-label high-impact" style="color: #e06060;">High gap · High impact</div>
+      <div class="prio-quad-title">Develop immediately</div>
+      <div class="prio-quad-desc">The highest-priority development investments: categories that are significantly underdeveloped and whose underdevelopment is creating real risk to mission delivery, institutional stability, or equity. This quadrant should receive the majority of development resources until the most critical gaps reach Level 2 or 3.</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>Determining which quadrant each category belongs to requires judgment that cannot be fully systematized. Two institutions with identical maturity profiles may have different development priorities because their missions, scales, and vulnerability profiles differ. A cooperative federation with 500 members faces very different Category 11.0 (integrity) risks than a five-person collective — even if both score Level 1. The maturity profile provides the gap dimension; the institution's leaders and members provide the impact weighting. Both are necessary. Neither is sufficient alone.</p>
+    <p>One specific priority rule that applies across almost all institutional contexts: any category with a Level 1 score that sits in the direct dependency chain of a Level 3 or higher civic operating category should be treated as high impact regardless of what the institution's leaders believe about its urgency. The dependency relationships documented in Chapter 6 are empirical patterns from organizational practice, not theoretical constructs. An institution that scores Level 3 in Category 6.0 (member support) but Level 1 in Category 7.0 (human development) is operating on borrowed time. The dependency will resolve itself — through burnout, capability loss, or governance crisis — whether or not the institution acknowledges it.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The group assessment workshop</div>
+
+  <div class="body-text">
+    <p>The most valuable use of the maturity assessment is not individual — it is collective. Running the assessment as a workshop with the institution's leadership team, governance body, or a representative cross-section of staff and members produces insights that no individual assessment can generate, because the disagreements that emerge in scoring are often more diagnostically valuable than the scores themselves.</p>
+    <p>When five people assess the same category and produce scores of 1, 2, 2, 3, and 3, the spread is not noise. It is signal. It typically indicates one of three things: the process is inconsistently executed across different parts of the institution; different people have different definitions of what "consistent execution" means; or some people have access to information about the process's actual performance that others do not. Any of these is important. None is visible in the individual assessment.</p>
+  </div>
+
+  <div class="workshop-block">
+    <div class="workshop-label">Group assessment workshop — recommended protocol</div>
+    <ul class="workshop-steps">
+      <li class="ws-step">
+        <div class="ws-num">01</div>
+        <div class="ws-content">
+          <div class="ws-title">Individual scoring — silent and independent</div>
+          <div class="ws-desc">Each participant receives the assessment rubric and scores all 16 categories independently, without discussion. Silent scoring prevents anchoring bias — the tendency to defer to the first confident voice in the room. Allow 20–30 minutes. Scores are recorded privately before any discussion.</div>
+        </div>
+      </li>
+      <li class="ws-step">
+        <div class="ws-num">02</div>
+        <div class="ws-content">
+          <div class="ws-title">Score reveal and spread identification</div>
+          <div class="ws-desc">All scores are revealed simultaneously — on cards, sticky notes, or a shared digital tool. For each category, record the spread (minimum score, maximum score, median). Categories with high spread (range of 2 or more) are flagged for discussion. Categories where all scorers agree are noted and set aside.</div>
+        </div>
+      </li>
+      <li class="ws-step">
+        <div class="ws-num">03</div>
+        <div class="ws-content">
+          <div class="ws-title">Discuss high-spread categories first</div>
+          <div class="ws-desc">Start with the categories that produced the widest disagreement. Ask both the highest and lowest scorers to describe the specific evidence they used for their score. The goal is not to reach consensus but to understand why informed people see the institution differently. Often the explanation reveals a genuine capability gap that neither the high-scorers nor the low-scorers had fully articulated.</div>
+        </div>
+      </li>
+      <li class="ws-step">
+        <div class="ws-num">04</div>
+        <div class="ws-content">
+          <div class="ws-title">Agree on a working profile — not a final verdict</div>
+          <div class="ws-desc">After discussion, agree on a working score for each category that reflects the group's collective best judgment. Emphasize "working" — the profile is a starting point for development planning, not a permanent institutional verdict. Revisit it annually or after significant operational changes. Record the rationale for each score, not just the number.</div>
+        </div>
+      </li>
+      <li class="ws-step">
+        <div class="ws-num">05</div>
+        <div class="ws-content">
+          <div class="ws-title">Apply the prioritization framework collectively</div>
+          <div class="ws-desc">With the working profile complete, apply the four-quadrant prioritization model as a group. Ask: which categories are currently most consequential to our mission delivery? Which Level 1 scores are creating active risk right now? Which Level 3 scores are most at risk of degrading? Produce a ranked development agenda — the two or three categories the institution will invest in developing over the next year.</div>
+        </div>
+      </li>
+      <li class="ws-step">
+        <div class="ws-num">06</div>
+        <div class="ws-content">
+          <div class="ws-title">Assign development ownership and resources</div>
+          <div class="ws-desc">For each priority development category, assign a named owner, a six-month development goal expressed as a specific maturity transition (e.g., "Category 7.0 from Level 1 to Level 2"), a resource allocation (time, budget, or external support), and a review checkpoint. Development priorities without owners and resources are wishes, not plans.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Five common patterns — and what they mean</div>
+
+  <div class="body-text">
+    <p>After applying the maturity model across many institutions of different types and stages, five recurring patterns appear with enough regularity that they deserve explicit naming. Each pattern is a diagnostic signal — a characteristic shape of institutional development that predicts specific future vulnerabilities and suggests specific development priorities. Recognizing the pattern your institution fits is the fastest way to identify which development investments matter most.</p>
+  </div>
+
+  <div class="failure-block">
+    <div class="fail-header">Five common maturity patterns — and what they predict</div>
+
+    <div class="fail-row">
+      <div class="fail-num">P1</div>
+      <div class="fail-content">
+        <div class="fail-name">The inverted pyramid — strong front, hollow back</div>
+        <div class="fail-pattern">Civic operating categories (1–6) score significantly higher than institutional support categories (7–13). The institution delivers effectively for its community but lacks the organizational infrastructure to sustain that delivery. This is the most common pattern in young, mission-driven institutions founded by community-connected individuals with strong service skills and limited organizational development experience.</div>
+        <div class="fail-signal"><strong>What it predicts:</strong> Burnout of founding staff, capability collapse on key person departures, inconsistent service delivery as the organization scales, governance crises when leadership succession is required. The civic operating scores are typically sustained by individual heroism rather than institutional process — and heroism is not a sustainable organizational resource.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">P2</div>
+      <div class="fail-content">
+        <div class="fail-name">The bureaucratic shell — strong back, hollow front</div>
+        <div class="fail-pattern">Institutional support categories score higher than civic operating categories. The institution has well-developed organizational infrastructure but delivers limited community value. This pattern is most common in organizations that began as advocacy or policy bodies and expanded into service delivery, or in organizations that have absorbed significant organizational development investment from funders without equivalent investment in community-facing capability.</div>
+        <div class="fail-signal"><strong>What it predicts:</strong> Funder-community accountability gap, declining community engagement and trust, mission drift toward what the institution is organizationally comfortable doing rather than what the community needs. The organizational infrastructure is an asset — but it is currently pointed inward rather than outward.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">P3</div>
+      <div class="fail-content">
+        <div class="fail-name">The fragile peak — one or two exceptional categories amid widespread weakness</div>
+        <div class="fail-pattern">One or two categories score at Level 3 or 4 while the majority of categories score at Level 1. The institution has a genuine area of excellence — often its founding capability, the specific program or service that generated its initial impact and reputation — surrounded by underdeveloped infrastructure. The peak score is real and valuable; the surrounding weakness is both invisible and destabilizing.</div>
+        <div class="fail-signal"><strong>What it predicts:</strong> Overextension of the exceptional capability beyond the infrastructure that can support it; institutional identity so tightly bound to the peak capability that alternatives cannot be explored; vulnerability to external shocks that disrupt the specific context in which the peak capability operates. The fragile peak institution is often described as "brilliant but brittle."</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">P4</div>
+      <div class="fail-content">
+        <div class="fail-name">The novel gap — strong adapted categories, absent novel categories</div>
+        <div class="fail-pattern">Categories 1–13 score reasonably across the board, but Categories 14, 15, and 16 score at Level 1. The institution has built solid operational capability using adapted enterprise process frameworks but has not yet confronted the genuinely novel process demands of post-labor institutional design. This pattern is increasingly common as institutions mature past their founding phase and begin to scale.</div>
+        <div class="fail-signal"><strong>What it predicts:</strong> AI systems deployed without governance or member accountability (Category 14); institutional success measured by service delivery metrics that cannot answer whether members' lives are improving (Category 15); democratic participation that is formal rather than genuine, gradually hollowing out institutional legitimacy (Category 16). The novel gap institutions are operationally sophisticated and philosophically incomplete.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">P5</div>
+      <div class="fail-content">
+        <div class="fail-name">The plateau — consistent Level 2 across most categories</div>
+        <div class="fail-pattern">Most categories score at Level 2: processes are defined, owned, and producing consistent outputs most of the time, but have not achieved the measured, managed consistency of Level 3. This is the institutional equivalent of being good enough — the organization delivers, survives, and maintains community trust, but nothing improves systematically and the organization cannot teach what it does to others. The plateau is stable but not dynamic.</div>
+        <div class="fail-signal"><strong>What it predicts:</strong> Gradual institutional aging — the processes become increasingly tailored to the current context and less adaptable to new conditions; slow erosion of community relevance as needs evolve and institutional responses do not; loss of organizational energy as staff and members experience competent but uninspiring organizational life. The move from Level 2 to Level 3 — from defined to consistently managed — requires measurement infrastructure that most plateau institutions have never built.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The maturity model as an ongoing compass</div>
+
+  <div class="body-text">
+
+    <p>The most common mistake institutions make with maturity assessments is treating them as one-time events: something done at founding or when a funder asks for it, then filed and forgotten. This is a significant waste of the assessment's value. The maturity model is most useful as a recurring tool — run annually, or after significant organizational changes, and used to track developmental progress over time.</p>
+
+    <p>Progress on the maturity model is inherently slow. Moving a category from Level 1 to Level 2 typically requires six to twelve months of deliberate development work. Moving from Level 2 to Level 3 typically requires one to two years. These are not timelines to be demoralized by — they are realistic expectations for what institutional development actually takes, and they explain why the maturity model is a compass rather than a destination. The goal is not to reach Level 4 across all 16 categories. The goal is to build the categories that matter most to your institution's mission and vulnerability profile to the level at which they stop generating active risk and begin contributing genuine institutional strength.</p>
+
+    <p>An institution that runs the assessment annually and tracks its profile over three years will see something that no single assessment can show: a trajectory. A trajectory toward Level 2 and 3 in the categories most critical to its mission, with deliberate decisions about which categories to develop and which to accept at lower maturity until capacity permits further development. That trajectory — the evidence that the institution is getting better at what matters most — is the most powerful signal that the work of institutional design is being done well.</p>
+
+  </div>
+
+  <div class="pullquote">
+    <p>The goal is not to reach Level 4 across 16 categories. It is to build the categories that matter most to your mission to the level where they stop generating active risk — and then to move the horizon forward, one deliberate development cycle at a time.</p>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>The interactive assessment tool:</strong> The maturity assessment is available in interactive form at ple-gps.netlify.app. The tool allows individual and group scoring, generates a visual profile, provides context-specific development guidance for each maturity gap, and allows institutions to track their profile over time. The printed rubric in Appendix C is a complete offline version for workshop use without digital access.</p>
+    <p><strong>On honesty in self-assessment:</strong> The most common source of inaccurate maturity assessments is motivated reasoning — the tendency to score categories higher than warranted because lower scores feel like institutional failures. The frame that produces more accurate assessments is the developmental one: a Level 1 score is not a verdict that the institution has failed to do something important; it is useful information about where development investment is needed. Institutions that approach the assessment with curiosity rather than defensiveness consistently produce more accurate profiles and more actionable development plans.</p>
+    <p><strong>On external facilitation:</strong> For institutions conducting their first group assessment, external facilitation by someone familiar with the GPS framework significantly improves the quality of the discussion. Not because external facilitators know the institution better than its members — they do not — but because they can hold the space for productive disagreement without the institutional politics that can cause internal facilitators to smooth over the most diagnostically valuable conflicts.</p>
+  </div>
+
+  <div class="part-close">
+    <div class="part-close-label">End of Part II · The governance process standard</div>
+    <div class="part-close-title">The framework is introduced. The territory is mapped. The instrument is ready to use.</div>
+    <div class="part-close-sub">Part III enters the civic operating categories — one chapter per category, beginning with Category 1.0: Collective Vision and Governance Strategy. Each chapter delivers the theory, the process depth, the real-institution examples, and the implementation guidance that the tour in Chapter 6 could only gesture toward. The maturity model developed in this chapter runs through every one of them.</div>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part II · Chapter 7</span>
+    <span class="close-next">Part III begins: Ch. 8 — Collective vision &amp; governance strategy →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

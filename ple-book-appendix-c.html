@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appendix C — GPS Maturity Assessment Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void:#060504; --bg-deep:#0c0a09; --bg-primary:#141210;
+    --bg-secondary:#1c1917; --bg-tertiary:#242120; --bg-form:#181614;
+    --text-primary:#f0ebe3; --text-secondary:#a09890;
+    --text-muted:#6b6560; --text-ghost:#48443f;
+    --border-subtle:rgba(201,169,110,0.07); --border-visible:rgba(201,169,110,0.14);
+    --gold:#c9a96e; --gold-dim:rgba(201,169,110,0.08);
+    --civic:#1D9E75; --civic-dim:rgba(29,158,117,0.07); --civic-border:rgba(29,158,117,0.18); --civic-text:#4ecfa0;
+    --inst:#378ADD; --inst-dim:rgba(55,138,221,0.07); --inst-border:rgba(55,138,221,0.18); --inst-text:#7ab8f0;
+    --novel:#7F77DD; --novel-dim:rgba(127,119,221,0.07); --novel-border:rgba(127,119,221,0.18); --novel-text:#b0aaf0;
+    --m1t:#888780; --m2t:#c9a96e; --m3t:#4ecfa0; --m4t:#7ab8f0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg-void);color:var(--text-primary);font-family:'Outfit',sans-serif;font-size:13px;line-height:1.55;}
+  body::before{content:'';position:fixed;inset:0;opacity:0.015;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;}
+  .page{max-width:820px;margin:0 auto;padding:64px 36px 120px;}
+
+  /* Header */
+  .doc-eyebrow{font-size:9px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+  .doc-title{font-family:'Crimson Pro',serif;font-size:2.1rem;font-weight:300;color:var(--text-primary);margin-bottom:6px;line-height:1.2;}
+  .doc-subtitle{font-family:'Crimson Pro',serif;font-size:1.05rem;font-weight:300;font-style:italic;color:var(--text-secondary);margin-bottom:18px;}
+  .doc-divider{height:1px;background:var(--border-visible);margin-bottom:40px;}
+
+  /* Section headings */
+  .sh{font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:44px 0 18px;opacity:.8;display:flex;align-items:center;gap:12px;}
+  .sh::after{content:'';flex:1;height:1px;background:var(--border-visible);}
+
+  /* How to use */
+  .howto{background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:8px;padding:22px 26px;margin-bottom:36px;}
+  .howto h3{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;opacity:.8;}
+  .howto-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .howto-col h4{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+  .howto-col p,.howto-col li{font-size:.74rem;color:var(--text-muted);line-height:1.65;}
+  .howto-col ul{list-style:none;display:flex;flex-direction:column;gap:5px;padding-left:0;}
+  .howto-col li::before{content:'→ ';color:var(--gold);opacity:.5;}
+  .howto-warn{margin-top:16px;padding:12px 16px;background:rgba(201,169,110,0.06);border:1px solid rgba(201,169,110,0.15);border-radius:5px;font-size:.74rem;color:var(--text-muted);line-height:1.6;}
+  .howto-warn strong{color:var(--gold);font-weight:500;}
+
+  /* Level legend */
+  .level-legend{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-subtle);border:1px solid var(--border-subtle);border-radius:6px;overflow:hidden;margin-bottom:36px;}
+  .ll-cell{padding:12px 14px;background:var(--bg-secondary);}
+  .ll-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;margin-bottom:6px;}
+  .ll-badge.l1{color:var(--m1t);}
+  .ll-badge.l2{color:var(--m2t);}
+  .ll-badge.l3{color:var(--m3t);}
+  .ll-badge.l4{color:var(--m4t);}
+  .ll-name{font-size:.75rem;font-weight:500;color:var(--text-primary);margin-bottom:4px;}
+  .ll-desc{font-size:.67rem;color:var(--text-muted);line-height:1.5;}
+
+  /* Tier separator */
+  .tier-sep{display:flex;align-items:center;gap:12px;margin:40px 0 28px;}
+  .tier-sep-line{flex:1;height:1px;}
+  .tier-sep-line.civic{background:var(--civic-border);}
+  .tier-sep-line.inst{background:var(--inst-border);}
+  .tier-sep-line.novel{background:var(--novel-border);}
+  .tier-sep-label{font-size:9px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;padding:3px 10px;border-radius:4px;}
+  .tier-sep-label.civic{color:var(--civic-text);background:var(--civic-dim);border:1px solid var(--civic-border);}
+  .tier-sep-label.inst{color:var(--inst-text);background:var(--inst-dim);border:1px solid var(--inst-border);}
+  .tier-sep-label.novel{color:var(--novel-text);background:var(--novel-dim);border:1px solid var(--novel-border);}
+
+  /* Assessment block */
+  .ablock{margin-bottom:32px;border:1px solid var(--border-subtle);border-radius:8px;overflow:hidden;}
+  .ablock-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border-subtle);}
+  .ablock-head.civic{background:var(--civic-dim);}
+  .ablock-head.inst{background:var(--inst-dim);}
+  .ablock-head.novel{background:var(--novel-dim);}
+  .ablock-id{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;min-width:44px;}
+  .ablock-id.civic{color:var(--civic-text);}
+  .ablock-id.inst{color:var(--inst-text);}
+  .ablock-id.novel{color:var(--novel-text);}
+  .ablock-title{font-family:'Crimson Pro',serif;font-size:1.1rem;font-weight:600;color:var(--text-primary);flex:1;}
+  .ablock-scope{font-size:.68rem;color:var(--text-muted);font-style:italic;}
+
+  /* Level rubric */
+  .rubric{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-subtle);}
+  .rubric-cell{padding:11px 12px;background:var(--bg-primary);}
+  .rubric-level{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+  .rl-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;}
+  .rl-num.l1{color:var(--m1t);}
+  .rl-num.l2{color:var(--m2t);}
+  .rl-num.l3{color:var(--m3t);}
+  .rl-num.l4{color:var(--m4t);}
+  .rl-name{font-size:8.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text-ghost);}
+  .rubric-desc{font-size:.66rem;color:var(--text-muted);line-height:1.55;}
+  .rubric-desc li{margin-bottom:3px;padding-left:10px;position:relative;}
+  .rubric-desc li::before{content:'·';position:absolute;left:2px;color:var(--text-ghost);}
+
+  /* Questions */
+  .questions{padding:14px 16px;background:var(--bg-secondary);border-top:1px solid var(--border-subtle);}
+  .q-label{font-size:8px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-ghost);margin-bottom:8px;}
+  .q-list{display:flex;flex-direction:column;gap:5px;}
+  .q-item{font-size:.71rem;color:var(--text-muted);line-height:1.55;display:flex;gap:8px;}
+  .q-num{color:var(--text-ghost);min-width:14px;font-family:'JetBrains Mono',monospace;font-size:.67rem;}
+
+  /* Score + evidence + priority row */
+  .assessment-row{display:grid;grid-template-columns:160px 1fr 110px;gap:1px;background:var(--border-subtle);border-top:1px solid var(--border-subtle);}
+  .ar-cell{padding:12px 14px;background:var(--bg-form);}
+  .ar-label{font-size:8px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-ghost);margin-bottom:8px;}
+  .score-options{display:flex;flex-wrap:wrap;gap:5px;}
+  .score-opt{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;padding:4px 8px;border-radius:4px;border:1px solid var(--border-subtle);cursor:pointer;color:var(--text-ghost);background:var(--bg-tertiary);}
+  .score-opt.l1{border-color:rgba(136,135,128,.25);color:var(--m1t);}
+  .score-opt.l2{border-color:rgba(201,169,110,.25);color:var(--m2t);}
+  .score-opt.l3{border-color:rgba(78,207,160,.25);color:var(--m3t);}
+  .score-opt.l4{border-color:rgba(122,184,240,.25);color:var(--m4t);}
+  .evidence-field{min-height:52px;background:var(--bg-tertiary);border:1px solid var(--border-subtle);border-radius:3px;padding:7px 9px;font-size:.67rem;color:var(--text-ghost);font-style:italic;line-height:1.5;}
+  .priority-opts{display:flex;flex-direction:column;gap:5px;}
+  .priority-opt{font-size:.68rem;padding:5px 10px;border-radius:4px;border:1px solid var(--border-subtle);color:var(--text-muted);background:var(--bg-tertiary);cursor:pointer;}
+  .priority-opt.high{border-color:rgba(232,132,90,.2);color:#d4906a;}
+  .priority-opt.med{border-color:rgba(201,169,110,.2);color:var(--m2t);}
+  .priority-opt.low{border-color:var(--border-subtle);color:var(--text-muted);}
+
+  /* Scoring summary */
+  .summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px;}
+  .summary-tier{background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:6px;overflow:hidden;}
+  .summary-tier-head{padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border-subtle);}
+  .summary-tier-head.civic{background:var(--civic-dim);}
+  .summary-tier-head.inst{background:var(--inst-dim);}
+  .summary-tier-head.novel{background:var(--novel-dim);}
+  .sth-label{font-size:8px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;}
+  .sth-label.civic{color:var(--civic-text);}
+  .sth-label.inst{color:var(--inst-text);}
+  .sth-label.novel{color:var(--novel-text);}
+  .summary-rows{display:flex;flex-direction:column;}
+  .summary-row{display:flex;align-items:center;padding:7px 14px;border-bottom:1px solid var(--border-subtle);}
+  .summary-row:last-child{border-bottom:none;}
+  .sr-id{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;min-width:52px;}
+  .sr-id.civic{color:var(--civic-text);}
+  .sr-id.inst{color:var(--inst-text);}
+  .sr-id.novel{color:var(--novel-text);}
+  .sr-name{font-size:.68rem;color:var(--text-muted);flex:1;}
+  .sr-score{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;min-width:24px;text-align:right;}
+  .sr-bar{height:4px;border-radius:2px;margin-left:10px;min-width:60px;max-width:60px;background:var(--bg-tertiary);position:relative;}
+  .sr-bar-fill{position:absolute;left:0;top:0;height:100%;border-radius:2px;}
+  .sr-pri{font-size:7.5px;padding:1px 6px;border-radius:3px;margin-left:8px;white-space:nowrap;}
+  .sr-pri.H{background:rgba(232,132,90,.12);color:#d4906a;border:1px solid rgba(232,132,90,.2);}
+  .sr-pri.M{background:rgba(201,169,110,.1);color:var(--m2t);border:1px solid rgba(201,169,110,.18);}
+  .sr-pri.L{background:rgba(180,178,169,.08);color:var(--text-ghost);border:1px solid var(--border-subtle);}
+
+  /* Profile visual */
+  .profile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:24px;}
+  .pcat{background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:5px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;}
+  .pcat-id{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;}
+  .pcat-id.c{color:var(--civic-text);}
+  .pcat-id.i{color:var(--inst-text);}
+  .pcat-id.n{color:var(--novel-text);}
+  .pcat-name{font-size:.64rem;color:var(--text-muted);line-height:1.3;}
+  .pcat-score-area{display:flex;align-items:center;gap:6px;margin-top:4px;}
+  .pcat-level{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;}
+  .pcat-dots{display:flex;gap:3px;}
+  .pdot{width:8px;height:8px;border-radius:50%;background:var(--bg-tertiary);}
+  .pdot.filled.l1{background:var(--m1t);}
+  .pdot.filled.l2{background:var(--m2t);}
+  .pdot.filled.l3{background:var(--m3t);}
+  .pdot.filled.l4{background:var(--m4t);}
+  .pcat-notes{font-size:.62rem;color:var(--text-ghost);font-style:italic;margin-top:4px;min-height:24px;}
+
+  /* Roadmap */
+  .roadmap{background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:8px;overflow:hidden;margin-bottom:24px;}
+  .roadmap-head{padding:12px 16px;background:var(--gold-dim);border-bottom:1px solid var(--border-subtle);}
+  .roadmap-head h3{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);opacity:.8;}
+  .roadmap-body{padding:20px 20px;}
+  .roadmap-section{margin-bottom:20px;}
+  .roadmap-section:last-child{margin-bottom:0;}
+  .rs-label{font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-ghost);margin-bottom:10px;}
+  .rs-field{background:var(--bg-form);border:1px solid var(--border-subtle);border-radius:4px;padding:10px 12px;min-height:40px;font-size:.7rem;color:var(--text-ghost);font-style:italic;line-height:1.55;}
+  .priority-table{width:100%;border-collapse:collapse;}
+  .priority-table th{padding:6px 10px;background:var(--bg-tertiary);font-size:8px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-align:left;border-bottom:1px solid var(--border-subtle);border-right:1px solid var(--border-subtle);}
+  .priority-table th:last-child{border-right:none;}
+  .priority-table td{padding:8px 10px;border-bottom:1px solid var(--border-subtle);border-right:1px solid var(--border-subtle);background:var(--bg-form);font-size:.69rem;color:var(--text-ghost);font-style:italic;}
+  .priority-table td:last-child{border-right:none;}
+  .priority-table tr:last-child td{border-bottom:none;}
+
+  /* Reassessment */
+  .reassess{background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:8px;padding:20px 24px;margin-bottom:32px;}
+  .reassess h3{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:12px;}
+  .reassess p{font-size:.74rem;color:var(--text-muted);line-height:1.65;margin-bottom:8px;}
+  .reassess p:last-child{margin-bottom:0;}
+  .reassess strong{color:var(--text-secondary);font-weight:500;}
+
+  /* Close */
+  .appendix-close{margin-top:40px;padding:22px 26px;background:var(--bg-secondary);border:1px solid var(--border-visible);border-radius:8px;}
+  .ac-label{font-size:9px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;opacity:.8;}
+  .ac-body{font-size:.73rem;color:var(--text-muted);line-height:1.7;}
+  .ac-body strong{color:var(--text-secondary);font-weight:500;}
+
+  .page-number{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--text-ghost);letter-spacing:.1em;}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── HEADER ─────────────────────────────────── -->
+<div class="doc-eyebrow">Institutions for a world after work · Reference material</div>
+<div class="doc-title">Appendix C — GPS Maturity Assessment Tool</div>
+<div class="doc-subtitle">A self-assessment instrument for locating institutional capability across all sixteen GPS categories and producing a prioritized development roadmap</div>
+<div class="doc-divider"></div>
+
+<!-- ── HOW TO USE ──────────────────────────────── -->
+<div class="howto">
+  <h3>How to use this tool</h3>
+  <div class="howto-grid">
+    <div class="howto-col">
+      <h4>Who should participate</h4>
+      <p>This assessment works best with a mixed group — executive leadership, board members, and frontline staff — because each group has different visibility into different aspects of institutional performance. Senior leadership tends to overestimate governance quality. Frontline staff tend to have more accurate assessments of operational process quality. Board members often have limited visibility into operational realities. Divergences between these groups are themselves diagnostic.</p>
+      <p style="margin-top:10px;">Recommended minimum group: executive director + 2 board members + 2 frontline staff. Optimal group: 8–12 participants representing all role levels and community member perspectives.</p>
+    </div>
+    <div class="howto-col">
+      <h4>How long it takes</h4>
+      <ul>
+        <li>Full 16-category assessment: 2.5–3 hours with brief breaks</li>
+        <li>Priority-category assessment (6–8 categories): 75–90 minutes</li>
+        <li>Single-category deep dive: 15–20 minutes</li>
+        <li>Roadmap development session: 45–60 minutes after scoring</li>
+      </ul>
+      <h4 style="margin-top:12px;">What to do with results</h4>
+      <ul>
+        <li>Complete the scoring summary (Section 3) immediately after assessment</li>
+        <li>Identify 2–3 priority development categories before leaving the session</li>
+        <li>Complete the development roadmap (Section 4) within two weeks</li>
+        <li>Present findings to governance body within one governance cycle</li>
+        <li>Reassess annually using the same instrument</li>
+      </ul>
+    </div>
+  </div>
+  <div class="howto-warn">
+    <strong>The most important instruction:</strong> Assess where the institution <em>actually is</em>, not where leadership wants it to be or intends to get to. The assessment has no external audience. The only failure mode is self-deception that produces a development roadmap based on aspirational rather than actual capability. For each score, you must record specific evidence — a named document, a specific decision, a particular staff practice. "We believe we are at Level 3" is insufficient. "Our evidence is: our six-domain equity audit from March 2024 and the improvement plan adopted at the June board meeting" is the standard required.
+  </div>
+</div>
+
+<!-- ── LEVEL LEGEND ────────────────────────────── -->
+<div class="sh">Section 1 — Level legend: what each maturity level means</div>
+<div class="level-legend">
+  <div class="ll-cell">
+    <div class="ll-badge l1">Level 1</div>
+    <div class="ll-name">Absent or informal</div>
+    <div class="ll-desc">This process does not exist in the institution, or exists only in the informal behaviors of specific individuals — not as a designed institutional practice. If those individuals leave, the practice disappears. Governance body is unaware of performance in this domain or receives no systematic information about it.</div>
+  </div>
+  <div class="ll-cell">
+    <div class="ll-badge l2">Level 2</div>
+    <div class="ll-name">Defined and developing</div>
+    <div class="ll-desc">The process has been formally designed and is beginning to be implemented. Written policies or procedures exist. Practice is inconsistent — some staff or governance members follow them, others do not. Data is beginning to be collected but is not yet driving decisions. Evidence of intent more than consistent execution.</div>
+  </div>
+  <div class="ll-cell">
+    <div class="ll-badge l3">Level 3</div>
+    <div class="ll-name">Consistent and managed</div>
+    <div class="ll-desc">The process is consistently practiced across the institution. Written procedures are followed reliably. Data is collected, reviewed at governance level, and drives improvement decisions. The process survives leadership transitions. Most practitioners can describe the process and its purpose without prompting.</div>
+  </div>
+  <div class="ll-cell">
+    <div class="ll-badge l4">Level 4</div>
+    <div class="ll-name">Optimizing and contributing</div>
+    <div class="ll-desc">The process is continuously improving based on data and reflection. The institution is recognized by peers as a resource or model in this domain. Improvements in this category are contributing to improvements in other GPS categories. Community members are active participants in shaping the process rather than subjects of it.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 2 — ASSESSMENT INSTRUMENT
+═══════════════════════════════════════════════ -->
+<div class="sh">Section 2 — Assessment instrument: all 16 GPS categories</div>
+
+<!-- TIER I -->
+<div class="tier-sep">
+  <div class="tier-sep-line civic"></div>
+  <span class="tier-sep-label civic">Tier I · Civic operating processes · GPS 1.0–6.0</span>
+  <div class="tier-sep-line civic"></div>
+</div>
+
+<!-- GPS 1.0 -->
+<div class="ablock">
+  <div class="ablock-head civic">
+    <span class="ablock-id civic">GPS 1.0</span>
+    <span class="ablock-title">Collective Vision &amp; Governance Strategy</span>
+    <span class="ablock-scope">Mission, governance bodies, decision rights, stakeholder engagement, governance health</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>Mission statement exists but was not developed with community participation</li><li>No decision rights map; community members cannot describe what authority they hold</li><li>No governance self-assessment process</li><li>Executive director reviewed informally or not at all</li><li>Succession plan absent for all critical roles</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Mission developed with some community input; theory of change documented</li><li>Governance body composition somewhat documented; election processes exist</li><li>Decision rights partially mapped; some community members aware of their authority</li><li>Annual executive director review conducted; primarily activity-based</li><li>Some succession awareness; no formal succession plans</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Mission reviewed and updated through participatory process on regular cycle</li><li>Decision rights map published and communicated to all community members</li><li>Annual governance self-assessment conducted; findings drive development priorities</li><li>Executive director assessed against institutional commitments, not only activities</li><li>Succession plans current for ED and critical board roles</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Mission operationalization is measurable; values-alignment assessment drives governance decisions</li><li>Community members routinely exercise decision rights; at least 40% of major decisions traceable to constituent input</li><li>Governance model contributed to peer institutions; recognized as governance resource</li><li>Governance structures reformed in response to self-assessment findings</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions — require specific examples, not general tendencies</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>When was the decision rights map last published and communicated to community members? Can you name a specific community member who knows what decisions they have authority over?</div>
+      <div class="q-item"><span class="q-num">2.</span>Describe the last governance body self-assessment — when was it conducted, who participated, and what specific change did it produce?</div>
+      <div class="q-item"><span class="q-num">3.</span>When was the executive director last assessed against institutional commitments (not only financial and programmatic metrics)? What happened as a result?</div>
+      <div class="q-item"><span class="q-num">4.</span>Name one major institutional decision made in the past 12 months that was changed because of community member input. What was the mechanism?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell">
+      <div class="ar-label">Score — select level</div>
+      <div class="score-options">
+        <span class="score-opt l1">1</span><span class="score-opt l1">1.5</span>
+        <span class="score-opt l2">2</span><span class="score-opt l2">2.5</span>
+        <span class="score-opt l3">3</span><span class="score-opt l3">3.5</span>
+        <span class="score-opt l4">4</span>
+      </div>
+    </div>
+    <div class="ar-cell">
+      <div class="ar-label">Evidence supporting this score — name specific documents, decisions, or practices</div>
+      <div class="evidence-field">Record specific evidence here: named documents, dates, decisions, examples that justify the selected level…</div>
+    </div>
+    <div class="ar-cell">
+      <div class="ar-label">Development priority</div>
+      <div class="priority-opts">
+        <span class="priority-opt high">High — urgent gap</span>
+        <span class="priority-opt med">Medium — important</span>
+        <span class="priority-opt low">Low — adequate</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPS 2.0 -->
+<div class="ablock">
+  <div class="ablock-head civic">
+    <span class="ablock-id civic">GPS 2.0</span>
+    <span class="ablock-title">Design &amp; Steward Public Goods</span>
+    <span class="ablock-scope">Commons definition, access design, stewardship, knowledge contribution, transitions</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>Commons resources not formally inventoried or governed</li><li>No commons rules or sustainability monitoring</li><li>No knowledge contribution to peer institutions</li><li>No maintenance reserves for commons assets</li><li>Enclosure risk not assessed</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Commons assets identified and inventoried; basic governance rules drafted</li><li>Access criteria documented; some equity assessment beginning</li><li>Some knowledge sharing with peers; not systematic</li><li>Maintenance reserves beginning to be built</li><li>Enclosure risk identified if not formally assessed</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Commons governance rules implemented with community awareness; dispute resolution active</li><li>Access equity monitored annually with demographic disaggregation</li><li>Substantive knowledge contributions to peer institutions annually</li><li>Maintenance reserve funded and governed; enclosure protections legally reviewed</li><li>Commons condition assessed annually</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Institution recognized as knowledge commons contributor; tools and frameworks adopted by peers</li><li>Commons enclosure has been actively resisted and resources protected in past 3 years</li><li>Ostrom principles operationalized across all major commons assets</li><li>Future generations explicitly represented in commons governance decisions</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>Name the institution's three most significant commons assets. For each: is there a written governance rule, a sustainability monitoring process, and a maintenance reserve?</div>
+      <div class="q-item"><span class="q-num">2.</span>What specific knowledge (tools, evaluation findings, frameworks) has the institution contributed to peer institutions in the past 12 months? Name them.</div>
+      <div class="q-item"><span class="q-num">3.</span>When was the last access equity assessment conducted for each major commons asset? What disparities were found and what was done?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 3.0 -->
+<div class="ablock">
+  <div class="ablock-head civic">
+    <span class="ablock-id civic">GPS 3.0</span>
+    <span class="ablock-title">Facilitate Access &amp; Engagement</span>
+    <span class="ablock-scope">Barrier removal, outreach, communications, engagement pathways, access equity measurement</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>No access barrier assessment conducted</li><li>Participation demographics not tracked</li><li>Language access reactive, not systematic</li><li>No peer connectors or community trust-building roles</li><li>Referral network informal; completion not tracked</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Some barriers identified; remediation beginning</li><li>Participation data collected; not yet disaggregated</li><li>Language access for primary community languages</li><li>Referral network documented; warm handoffs inconsistent</li><li>Engagement spectrum mapped in some domains</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Annual six-type barrier audit; findings tracked to remediation</li><li>Participation equity gap tracked quarterly; disparities addressed</li><li>Compensated peer connector roles embedded in access processes</li><li>Referral completion tracked; ≥75% completion rate</li><li>Engagement spectrum level assessed across all major domains</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Participation equity gap ≤10pp across all major dimensions; narrowing trend</li><li>Community trust high among historically excluded populations specifically</li><li>Access model contributed to peer institutions</li><li>≥20% of community at collaborating engagement level or above</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>What is the participation equity gap by race, income, and language for the institution's primary programs? When was this last measured?</div>
+      <div class="q-item"><span class="q-num">2.</span>Name a specific access barrier identified in the past 24 months and describe the intervention implemented to address it. What was the outcome?</div>
+      <div class="q-item"><span class="q-num">3.</span>Does the institution have compensated peer connector or peer navigator roles? How many people hold these roles, and how are they compensated?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 4.0 -->
+<div class="ablock">
+  <div class="ablock-head civic">
+    <span class="ablock-id civic">GPS 4.0</span>
+    <span class="ablock-title">Deliver Physical Resources</span>
+    <span class="ablock-scope">Procurement, inventory management, distribution, infrastructure maintenance, resource equity</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>No formal allocation framework; first-come, first-served default</li><li>Single-source dependencies for critical resources</li><li>Distribution dignity not assessed</li><li>No preventive maintenance program</li><li>Procurement entirely cost-driven; mission alignment not considered</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Allocation criteria documented; not fully applied</li><li>Some backup suppliers identified for critical resources</li><li>Distribution dignity considered in design; not formally assessed</li><li>Preventive maintenance schedule exists; inconsistently followed</li><li>Some mission-aligned procurement; not systematic policy</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Allocation framework documented, published, and consistently applied; equity monitored</li><li>≥2 backup suppliers for all critical resources; mutual aid agreements active</li><li>Distribution dignity surveyed annually; score ≥3.8/5 across subgroups</li><li>Preventive maintenance investment ≥90% of recommended; reserve funded</li><li>Mission-aligned procurement policy with measurable targets</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Allocation equity measurably improving; community sets resource priorities</li><li>Supply chain mutual aid activated at least once; network tested</li><li>Distribution model contributed to peer institutions</li><li>≥25% of procurement from solidarity economy suppliers; trend improving</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>Describe the institution's resource allocation framework. Is it documented? Published to community members? When was it last reviewed for equity impact?</div>
+      <div class="q-item"><span class="q-num">2.</span>For the two most critical resource categories: how many backup suppliers exist? Has the mutual aid relationship been tested in the past 24 months?</div>
+      <div class="q-item"><span class="q-num">3.</span>When was the last distribution dignity assessment? What did it find, and what changed as a result?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 5.0 -->
+<div class="ablock">
+  <div class="ablock-head civic">
+    <span class="ablock-id civic">GPS 5.0</span>
+    <span class="ablock-title">Deliver Services &amp; Programs</span>
+    <span class="ablock-scope">Program design, participant capacity, service delivery, economic empowerment, evaluation and iteration</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>No formal theory of change for major programs</li><li>Programs designed by staff without community co-design</li><li>Evaluation measures activities, not outcomes</li><li>No disaggregated outcome data by demographic subgroup</li><li>Evaluation findings do not drive program modification</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Theories of change documented for some programs</li><li>Community input sought in some program designs</li><li>Some outcome measurement beyond activities; disaggregation beginning</li><li>Participant satisfaction tracked; findings not consistently acted on</li><li>Structural barriers occasionally documented</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Current ToC for all major programs; reviewed against evaluation evidence</li><li>≥60% of programs co-designed with participants; distinction maintained</li><li>Outcome equity gap tracked; improvement plans adopted for identified gaps</li><li>Program iteration cycle time ≤12 months from finding to change</li><li>Structural barriers documented and connected to policy agenda</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Outcome equity gap ≤10pp across all major demographic dimensions; narrowing</li><li>Program models contributed to peer institutions; adopted externally</li><li>Community members hold evaluation authority not only advisory role</li><li>6-month follow-up outcome retention ≥80%; durable change demonstrated</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>Pick the institution's largest program. When was its theory of change last updated, what triggered the update, and what evidence was it based on?</div>
+      <div class="q-item"><span class="q-num">2.</span>What is the outcome achievement rate for the institution's primary programs, disaggregated by demographic subgroup? When was this last measured?</div>
+      <div class="q-item"><span class="q-num">3.</span>Describe the last program modification made in direct response to evaluation findings. What was the finding, what was changed, and when?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 6.0 -->
+<div class="ablock">
+  <div class="ablock-head civic">
+    <span class="ablock-id civic">GPS 6.0</span>
+    <span class="ablock-title">Support Community Members</span>
+    <span class="ablock-scope">Intake, individualized case support, crisis response, peer support, individual outcome tracking</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>Intake process is administrative, not trauma-informed</li><li>No formal caseload standards; no monitoring</li><li>Crisis protocols undocumented; staff improvise</li><li>No peer support infrastructure</li><li>No individual outcome tracking beyond immediate service period</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Trauma-informed intake training begun; inconsistently applied</li><li>Caseload standard adopted; compliance not formally monitored</li><li>Crisis protocols documented; some staff trained</li><li>Peer support present informally or in limited scope</li><li>Some follow-up outcome data; not systematic</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Trauma-informed intake fully implemented; dignity assessed annually</li><li>Caseload standard at evidence level; ≥85% compliance monitored monthly</li><li>Crisis protocols practiced; secondary trauma screened semi-annually</li><li>Compensated peer support roles; peer workers supervised and supported</li><li>6-month individual outcome tracking with demographic disaggregation</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Individual outcome data contributing to GPS 15.0 flourishing assessment</li><li>Peer support model developed and shared with peer institutions</li><li>Secondary trauma management model institutional, not individual</li><li>Community members lead intake design reviews and quality assessment</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>What is the institution's adopted caseload standard? What percentage of staff are currently at or below it? When was this last monitored?</div>
+      <div class="q-item"><span class="q-num">2.</span>When was secondary traumatic stress last assessed among frontline staff? What was found? What organizational (not just individual) response was implemented?</div>
+      <div class="q-item"><span class="q-num">3.</span>What percentage of community members have individual outcome data at 6-month follow-up? How does this vary by demographic group?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- TIER II -->
+<div class="tier-sep">
+  <div class="tier-sep-line inst"></div>
+  <span class="tier-sep-label inst">Tier II · Institutional support processes · GPS 7.0–13.0</span>
+  <div class="tier-sep-line inst"></div>
+</div>
+
+<!-- GPS 7.0 -->
+<div class="ablock">
+  <div class="ablock-head inst">
+    <span class="ablock-id inst">GPS 7.0</span>
+    <span class="ablock-title">Develop Human Potential</span>
+    <span class="ablock-scope">Recruitment, staff development, performance management, compensation equity, culture and wellbeing</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>Recruitment without equity-centered practices</li><li>No formal development investment; learning ad hoc</li><li>Performance review informal or absent for senior roles</li><li>No pay equity analysis; compensation opaque</li><li>Burnout not monitored; no organizational response designed</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Some equity practices in recruitment; inconsistently applied</li><li>Individual development plans exist for some staff</li><li>Annual performance review for all staff; mostly activity-based</li><li>Compensation philosophy documented; pay equity not formally analyzed</li><li>Staff culture survey conducted; findings not always acted on</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Equity-centered recruitment: structured interviews, community outreach, credential audit</li><li>Development investment equity tracked; disparities addressed</li><li>Annual pay equity analysis conducted and acted on; results shared with staff</li><li>Annual burnout screening; organizational-level (not just individual) response to elevated rates</li><li>Leadership pipeline includes community members; demographic diversity improving</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Staff retention ≥85% with no major demographic gap; trend sustained ≥3 years</li><li>Adjusted pay equity gap &lt;5% across all demographic groups</li><li>HR practices contributed to peer institutions</li><li>Leadership pipeline demographics approaching community demographics</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>When was the institution's last pay equity analysis? What was the adjusted gap by demographic group? What was done in response?</div>
+      <div class="q-item"><span class="q-num">2.</span>Describe the last burnout or secondary trauma screening. What percentage of staff were at high levels? What organizational (not individual) response was implemented?</div>
+      <div class="q-item"><span class="q-num">3.</span>What is the voluntary turnover rate, disaggregated by demographic group and tenure band? What pattern does it show?</div>
+      <div class="q-item"><span class="q-num">4.</span>Who is in the institution's leadership development pipeline? Does their demographic composition differ from current leadership? From community demographics?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 8.0 -->
+<div class="ablock">
+  <div class="ablock-head inst">
+    <span class="ablock-id inst">GPS 8.0</span>
+    <span class="ablock-title">Technology &amp; AI Infrastructure</span>
+    <span class="ablock-scope">Technology strategy, data governance, AI adoption, security, digital equity</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>No technology strategy; tools adopted reactively</li><li>No data governance policy; community data collected without clear policy</li><li>No cybersecurity assessment in past 3 years</li><li>AI tools used without classification or governance</li><li>Digital equity gap not assessed or addressed</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Technology principles documented; not consistently applied</li><li>Data governance policy adopted; compliance not fully assessed</li><li>Basic cybersecurity practices in place; not formally assessed</li><li>Community-facing AI tools identified; governance developing</li><li>Digital equity gap identified; some accommodations made</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Annual technology debt audit; multi-year investment plan active</li><li>Data governance ≥90% compliant; community access/deletion rights implemented</li><li>Annual cybersecurity assessment; findings addressed within 90 days</li><li>All community-facing AI tools registered and tier-classified with governance</li><li>Digital equity gap ≤15%; digital literacy programming offered</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Data sovereignty as demonstrated practice; community data stays in community control</li><li>Technology practices contributed to peer institutions</li><li>AI governance framework referenced by peer network</li><li>Zero confirmed community data breaches in past 3 years; continuity tested annually</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>What community-facing AI or algorithmic tools is the institution using? Are they registered, classified by risk tier, and governed proportionately?</div>
+      <div class="q-item"><span class="q-num">2.</span>When was the last data governance compliance assessment? What percentage of practices were compliant? What was not compliant, and what changed?</div>
+      <div class="q-item"><span class="q-num">3.</span>What percentage of the community served lacks adequate device access, connectivity, or digital literacy to use the institution's digital services? What accommodations exist?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 9.0 -->
+<div class="ablock">
+  <div class="ablock-head inst">
+    <span class="ablock-id inst">GPS 9.0</span>
+    <span class="ablock-title">Steward Collective Resources</span>
+    <span class="ablock-scope">Budgeting, revenue diversification, accounting, risk and reserves, financial transparency</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>Operating reserves &lt;1 month; no reserve policy</li><li>Single funder &gt;50% of revenue; diversification not prioritized</li><li>Indirect costs significantly under-recovered</li><li>Financial information not transparent to community or staff</li><li>Budget not connected to strategic priorities</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Reserve policy adopted; reserves 1–2 months; building plan in place</li><li>Revenue diversification strategy documented; concentration improving</li><li>Indirect cost recovery improving; some funders accepting full rates</li><li>Annual audit or review conducted; findings addressed</li><li>Budget reviewed quarterly by governance body</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Reserves ≥3 months; reserve policy adopted and followed</li><li>Single-source concentration ≤30%; earned revenue growing</li><li>Indirect cost recovery ≥85%; advocacy strategy for resistant funders</li><li>Budget-to-strategy alignment ≥85%; alignment required in budget development</li><li>Financial summary published in plain language annually for community</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Financial health composite score ≥4.0; all five ratios in healthy range</li><li>Earned revenue model sustainable at mission scale; not funder-dependent</li><li>Financial practices contributed to peer institutions</li><li>Community members participate in financial transparency sessions and ask substantive questions</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>What is the current operating reserve in months? Is there a governance-adopted reserve policy? What is the target and when was it last reviewed?</div>
+      <div class="q-item"><span class="q-num">2.</span>What percentage of total revenue comes from the single largest funding source? What is the trend over the past three years?</div>
+      <div class="q-item"><span class="q-num">3.</span>What is the institution's indirect cost rate? What percentage of that rate is actually recovered through restricted funding? What is the institution doing about the gap?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 10.0 -->
+<div class="ablock">
+  <div class="ablock-head inst">
+    <span class="ablock-id inst">GPS 10.0</span>
+    <span class="ablock-title">Manage Commons &amp; Shared Assets</span>
+    <span class="ablock-scope">Asset inventory, acquisition and disposition governance, long-term stewardship, ownership structures, intergenerational protection</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>No formal asset inventory; ownership unclear for some assets</li><li>No capital maintenance reserves</li><li>Ownership structures not reviewed for enclosure vulnerability</li><li>Asset disposition decisions made without community input</li><li>No intergenerational impact consideration</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Asset inventory documented; not fully current</li><li>Maintenance reserve beginning to be built; capital needs not formally assessed</li><li>Some legal protections on major assets; not comprehensively reviewed</li><li>Community notification for major asset decisions; input advisory only</li><li>Intergenerational consideration emerging in major decisions</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Complete annual asset inventory; all assets classified and valued</li><li>Capital reserve covers ≥5 years of estimated capital needs; growing</li><li>All major community-benefit assets have legally reviewed ownership protections</li><li>Community approval required for major asset disposition</li><li>Intergenerational impact assessed for all major disposition decisions</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Asset stewardship model contributed to peer institutions</li><li>Investment assets mission-aligned ≥80%; values-aligned investment policy adopted</li><li>Community members hold genuine governance authority over major asset decisions</li><li>Enclosure has been actively resisted and assets protected in past 5 years</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>What are the institution's three most significant collectively held assets? For each: what legal protections against privatization exist, and when were they last reviewed by legal counsel?</div>
+      <div class="q-item"><span class="q-num">2.</span>What is the capital maintenance reserve level? What is the 10-year capital needs estimate? When was the capital needs assessment last conducted?</div>
+      <div class="q-item"><span class="q-num">3.</span>Describe the last major asset acquisition or disposition decision. What community input was sought, and how did it influence the decision?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 11.0 -->
+<div class="ablock">
+  <div class="ablock-head inst">
+    <span class="ablock-id inst">GPS 11.0</span>
+    <span class="ablock-title">Institutional Integrity &amp; Equity</span>
+    <span class="ablock-scope">Values operationalization, accountability architecture, conflict of interest, equity auditing, whistleblower protection</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>Values articulated but not operationalized; no observable indicators</li><li>Accountability aspirational; no oversight-reporting-consequence architecture</li><li>Conflict of interest disclosure collected but not reviewed</li><li>No equity audit conducted in any domain</li><li>No independent ethics reporting channel; staff fear retaliation</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Values-alignment indicators developed for primary values</li><li>Accountability relationships mapped; reporting developing; consequence protocols forming</li><li>Conflict of interest disclosures reviewed; recusal inconsistently applied</li><li>Equity audit conducted in 1–2 domains; findings presented to governance</li><li>Whistleblower policy adopted; channel not fully independent</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Annual values-alignment assessment; improvement plans adopted by governance</li><li>Three-component accountability architecture fully operational</li><li>Recusal 100% compliant on documented conflicts; related-party audit annual</li><li>Annual six-domain equity audit with disaggregated data; improvement plans with governance accountability</li><li>Independent ethics reporting channel operational; retaliation monitoring active</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Equity gaps measurably closing across all six domains; three-year trend</li><li>Staff trust in accountability systems &gt;75%; no significant department disparities</li><li>Community accountability session attended and produces governance changes</li><li>Integrity framework contributed to peer institutions</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>Name the institution's top three stated values. For each: what is the operational definition (what specifically would this look like if honored vs. not honored)? When were these definitions developed?</div>
+      <div class="q-item"><span class="q-num">2.</span>When was the institution's last equity audit? Which of the six domains were covered? What disparities were found, and what improvement plans were adopted?</div>
+      <div class="q-item"><span class="q-num">3.</span>Where does an ethics report go if it concerns the executive director? Is that path genuinely independent of the executive director's authority?</div>
+      <div class="q-item"><span class="q-num">4.</span>Name the last governance decision where a recusal was documented. Is this recorded in meeting minutes?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 12.0 -->
+<div class="ablock">
+  <div class="ablock-head inst">
+    <span class="ablock-id inst">GPS 12.0</span>
+    <span class="ablock-title">Inter-Institutional Relations</span>
+    <span class="ablock-scope">Strategic partnerships, mutual aid, peer learning, policy advocacy and coalitions, movement building</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>Partnerships informal; no written agreements for any relationship</li><li>No mutual aid or resource-sharing agreements</li><li>Network participation passive; no knowledge contribution</li><li>No policy agenda; no coalition participation</li><li>No movement infrastructure investment</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Written agreements for primary service partnerships</li><li>Informal mutual aid relationships; no formal agreements</li><li>Active in 1–2 peer networks; contribution beginning</li><li>Policy priorities identified; nominal coalition membership</li><li>Sector body membership; passive participation</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Partnership portfolio actively managed; equity assessed annually</li><li>Formal mutual aid agreements; at least one activation or exercise</li><li>Active knowledge contribution to peer networks; multi-staff relationships</li><li>Policy agenda developed with community input; governance role in ≥1 coalition</li><li>Governance role in solidarity economy sector body; emerging institution support</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Recognized knowledge contributor; tools and models adopted by peers</li><li>Policy win attributable in part to institution's coalition contribution</li><li>Relationships institutionalized; survive leadership transitions</li><li>Movement infrastructure investment ≥2% of institutional resources</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>Name the institution's three most important inter-institutional relationships. For each: is there a written agreement? Are there staff relationships beyond the executive director that would survive a leadership change?</div>
+      <div class="q-item"><span class="q-num">2.</span>Name a specific knowledge contribution (tool, framework, evaluation finding, training) the institution made to peer institutions in the past 12 months. Was it adopted or used?</div>
+      <div class="q-item"><span class="q-num">3.</span>Name one policy coalition the institution participates in. What governance or facilitation role does it hold? What policy outcome has the institution contributed to?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 13.0 -->
+<div class="ablock">
+  <div class="ablock-head inst">
+    <span class="ablock-id inst">GPS 13.0</span>
+    <span class="ablock-title">Evolve Institutional Capabilities</span>
+    <span class="ablock-scope">Learning infrastructure, strategic planning, strategic renewal, innovation and experimentation, change management</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>Performance data collected but not reviewed at governance level</li><li>Strategic planning episodic; plans not connected to budget</li><li>No strategic renewal in past 5+ years</li><li>Innovation ad hoc; no protected capacity</li><li>Major transitions managed reactively without change management</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Performance reporting to governance body; limited decision-making from reports</li><li>Strategic plan developed with community input; partial budget connection</li><li>Environmental scanning conducted; assumption examination beginning</li><li>Some protected innovation capacity; experiments not consistently evaluated</li><li>Change management awareness; some transitions planned proactively</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Performance reviews produce governance decisions ≥75% of the time</li><li>Budget-to-strategy alignment ≥85%; quarterly strategy monitoring</li><li>Strategic renewal completed within past 3 years with community participation</li><li>Protected innovation capacity as fixed budget line; experiments evaluated</li><li>GPS maturity assessment conducted annually; improvement in priority categories documented</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>GPS maturity improving in ≥30% of categories year-over-year</li><li>Double-loop learning operational: institution questions assumptions, not only execution</li><li>Innovation-to-operations translation rate ≥50%</li><li>Institutional learning model contributed to peer institutions</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>Pick the last three governance meetings. For each: did any performance data presented produce a specific governance decision or action item? What was it?</div>
+      <div class="q-item"><span class="q-num">2.</span>When was the institution's last strategic renewal — not routine strategic planning but a fundamental examination of whether the approach remains adequate? What did it conclude?</div>
+      <div class="q-item"><span class="q-num">3.</span>Name a successful innovation experiment from the past three years. Was it integrated into core operations? If yes, what changed? If no, why not?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- TIER III -->
+<div class="tier-sep">
+  <div class="tier-sep-line novel"></div>
+  <span class="tier-sep-label novel">Tier III · Novel categories · GPS 14.0–16.0</span>
+  <div class="tier-sep-line novel"></div>
+</div>
+
+<!-- GPS 14.0 -->
+<div class="ablock">
+  <div class="ablock-head novel">
+    <span class="ablock-id novel">GPS 14.0</span>
+    <span class="ablock-title">AI Governance &amp; Algorithmic Accountability</span>
+    <span class="ablock-scope">AI adoption governance, transparency and explainability, equity monitoring, human oversight and contestability, community governance of AI</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>No AI governance policy; no systems registry</li><li>Community members not informed when AI affects their services</li><li>No equity impact assessments for any AI system</li><li>Human review nominal; no genuine override authority</li><li>No community involvement in AI governance</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>AI governance policy adopted; systems registry beginning</li><li>Community disclosure for major high-risk systems developing</li><li>Equity impact assessment for primary Tier 3 systems</li><li>Contestability mechanism created; not well-communicated</li><li>AI literacy programming offered to community members</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>All community-facing AI registered and tier-governed; vendor governance enforced</li><li>Active disclosure for all Tier 2+ systems; explanation right implemented for Tier 3+</li><li>Quarterly equity monitoring for Tier 3+; suspension protocols operational</li><li>Contestation affirmation rate tracked; ≥80% independent review demonstrated</li><li>Community governance roles with genuine authority for Tier 3+ systems</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>At least one AI system suspended or significantly modified based on monitoring</li><li>Community members are primary evaluators of AI equity</li><li>AI governance framework contributed to peer institutions</li><li>Institution has declined to deploy a system that could not meet governance requirements</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>List all AI or algorithmic systems the institution uses in ways that affect community member services or decisions. For each: what risk tier is it? Is there a current equity impact assessment?</div>
+      <div class="q-item"><span class="q-num">2.</span>For the institution's highest-risk AI system: can a community member get a plain-language explanation of any algorithmic decision affecting them? Have community members successfully received explanations?</div>
+      <div class="q-item"><span class="q-num">3.</span>What is the contestation affirmation rate for the institution's Tier 3 AI systems? If above 95%, what does that mean about the quality of human review?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 15.0 -->
+<div class="ablock">
+  <div class="ablock-head novel">
+    <span class="ablock-id novel">GPS 15.0</span>
+    <span class="ablock-title">Human Flourishing &amp; Wellbeing</span>
+    <span class="ablock-scope">Flourishing measurement, programs for flourishing outcomes, social infrastructure, post-labor meaning crisis, flourishing governance</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>No validated wellbeing measurement; flourishing assessed by staff impression</li><li>Programs designed for deficit reduction only; no positive flourishing goals</li><li>No social infrastructure investment; community connection incidental</li><li>Post-labor meaning crisis not recognized as institutional concern</li><li>Flourishing not a governance-level accountability item</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>Basic wellbeing measurement beginning; not all seven dimensions</li><li>Some programs incorporating flourishing dimensions beyond deficit reduction</li><li>Some social infrastructure investment; not designed specifically for connection</li><li>Purpose and meaning recognized as a community need; programming beginning</li><li>Flourishing data beginning to reach governance body</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Annual multi-dimensional flourishing assessment using culturally adapted validated instruments; disaggregated</li><li>Programs with explicit flourishing theories of change; outcomes tracked</li><li>Social infrastructure investment sustained; loneliness and belonging tracked</li><li>Community contribution pathways designed and utilized; purpose deficit assessed</li><li>Annual community wellbeing report published; governance body reviews and responds</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>Life satisfaction measurably improving across all demographic subgroups; three-year trend</li><li>Flourishing equity gap ≤1.0 point; narrowing</li><li>Community members are active co-designers of flourishing framework</li><li>Flourishing data used in GPS 12.4 policy advocacy</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>What validated wellbeing instruments does the institution use? When were they last administered? Do they cover purpose and meaning as distinct from material wellbeing?</div>
+      <div class="q-item"><span class="q-num">2.</span>Do any of the institution's programs have explicit theories of change connecting activities to purpose, connection, or dignity outcomes (not only material outcomes)? Name them.</div>
+      <div class="q-item"><span class="q-num">3.</span>What community contribution pathways does the institution have — structured ways for community members to contribute to collective life that are socially recognized and supported? How many community members use them?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- GPS 16.0 -->
+<div class="ablock">
+  <div class="ablock-head novel">
+    <span class="ablock-id novel">GPS 16.0</span>
+    <span class="ablock-title">Participatory Democracy</span>
+    <span class="ablock-scope">Deliberative governance structures, participatory budgeting, citizen assemblies, civic capacity development, power distribution governance</span>
+  </div>
+  <div class="rubric">
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l1">1</span><span class="rl-name">Absent / informal</span></div><ul class="rubric-desc"><li>Community participation at informing and consulting level only</li><li>No community decision authority over any institutional budget</li><li>No citizen assemblies or deliberative panels in institution's history</li><li>No civic capacity development programming</li><li>Power mapping never conducted; power concentration unexamined</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l2">2</span><span class="rl-name">Defined / developing</span></div><ul class="rubric-desc"><li>At least one governance domain at collaborating level</li><li>Participatory budgeting piloted over marginal resources (&lt;5%)</li><li>First citizen assembly or deliberative panel convened</li><li>Civic education offerings available; not embedded in institutional practice</li><li>Power mapping conducted at least once; some redistribution awareness</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l3">3</span><span class="rl-name">Consistent / managed</span></div><ul class="rubric-desc"><li>Co-deciding in multiple governance domains; decision rights map published</li><li>PB covers ≥10% of discretionary budget; community decisions implemented as made</li><li>Citizen assemblies regular governance tool; facilitation capacity institutional</li><li>Civic capacity development sustained; governance leadership pipeline building</li><li>Annual power mapping; documented redistribution actions; power distribution improving</li></ul></div>
+    <div class="rubric-cell"><div class="rubric-level"><span class="rl-num l4">4</span><span class="rl-name">Optimizing / contributing</span></div><ul class="rubric-desc"><li>PB scope ≥30% and growing; community priorities demonstrably shaping resource allocation</li><li>Community-led or collective self-governance in primary domains</li><li>Civic efficacy score ≥60% and improving; gap across demographic groups ≤10pp</li><li>Deliberative democracy model contributed to peer institutions</li></ul></div>
+  </div>
+  <div class="questions">
+    <div class="q-label">Assessment questions</div>
+    <div class="q-list">
+      <div class="q-item"><span class="q-num">1.</span>Name one institutional decision made in the past 12 months that community members had genuine authority over — not just input into, but decision rights. What was the mechanism? What was the decision?</div>
+      <div class="q-item"><span class="q-num">2.</span>What percentage of the discretionary budget is subject to binding community decision? If participatory budgeting exists, were the community's decisions implemented as made or modified afterward?</div>
+      <div class="q-item"><span class="q-num">3.</span>When was the institution's last power mapping? What did it reveal about the difference between formal authority and actual influence? What structural redistribution action resulted?</div>
+      <div class="q-item"><span class="q-num">4.</span>What percentage of community members report believing that their participation influences institutional decisions (civic efficacy score)? How does this vary by demographic group?</div>
+    </div>
+  </div>
+  <div class="assessment-row">
+    <div class="ar-cell"><div class="ar-label">Score</div><div class="score-options"><span class="score-opt l1">1</span><span class="score-opt l1">1.5</span><span class="score-opt l2">2</span><span class="score-opt l2">2.5</span><span class="score-opt l3">3</span><span class="score-opt l3">3.5</span><span class="score-opt l4">4</span></div></div>
+    <div class="ar-cell"><div class="ar-label">Evidence</div><div class="evidence-field">Record specific evidence…</div></div>
+    <div class="ar-cell"><div class="ar-label">Priority</div><div class="priority-opts"><span class="priority-opt high">High</span><span class="priority-opt med">Medium</span><span class="priority-opt low">Low</span></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 3 — SCORING SUMMARY
+═══════════════════════════════════════════════ -->
+<div class="sh">Section 3 — Scoring summary and maturity profile</div>
+
+<p style="font-size:.74rem;color:var(--text-muted);line-height:1.65;margin-bottom:20px;">Transfer scores from Section 2 into the profile below. The profile reveals the <strong style="color:var(--text-secondary)">pattern</strong> that is the most useful assessment output — which tier is most developed, which categories are farthest below mission requirements, and where the institution's strengths can support its weakest areas.</p>
+
+<div class="profile-grid">
+  <!-- GPS 1.0–4.0 -->
+  <div class="pcat"><div class="pcat-id c">GPS 1.0</div><div class="pcat-name">Collective Vision &amp; Governance</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--civic-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id c">GPS 2.0</div><div class="pcat-name">Design &amp; Steward Public Goods</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--civic-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id c">GPS 3.0</div><div class="pcat-name">Facilitate Access &amp; Engagement</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--civic-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id c">GPS 4.0</div><div class="pcat-name">Deliver Physical Resources</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--civic-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <!-- GPS 5.0–8.0 -->
+  <div class="pcat"><div class="pcat-id c">GPS 5.0</div><div class="pcat-name">Deliver Services &amp; Programs</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--civic-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id c">GPS 6.0</div><div class="pcat-name">Support Community Members</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--civic-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id i">GPS 7.0</div><div class="pcat-name">Develop Human Potential</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--inst-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id i">GPS 8.0</div><div class="pcat-name">Technology &amp; AI Infrastructure</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--inst-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <!-- GPS 9.0–12.0 -->
+  <div class="pcat"><div class="pcat-id i">GPS 9.0</div><div class="pcat-name">Steward Collective Resources</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--inst-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id i">GPS 10.0</div><div class="pcat-name">Manage Commons &amp; Shared Assets</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--inst-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id i">GPS 11.0</div><div class="pcat-name">Institutional Integrity &amp; Equity</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--inst-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id i">GPS 12.0</div><div class="pcat-name">Inter-Institutional Relations</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--inst-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <!-- GPS 13.0–16.0 -->
+  <div class="pcat"><div class="pcat-id i">GPS 13.0</div><div class="pcat-name">Evolve Institutional Capabilities</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--inst-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id n">GPS 14.0</div><div class="pcat-name">AI Governance &amp; Accountability</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--novel-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id n">GPS 15.0</div><div class="pcat-name">Human Flourishing &amp; Wellbeing</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--novel-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+  <div class="pcat"><div class="pcat-id n">GPS 16.0</div><div class="pcat-name">Participatory Democracy</div><div class="pcat-score-area"><div class="pcat-level" style="color:var(--novel-text)">_.__</div><div class="pcat-dots"><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div><div class="pdot"></div></div></div><div class="pcat-notes">Notes…</div></div>
+</div>
+
+<!-- Tier summaries -->
+<div class="summary-grid">
+  <div class="summary-tier">
+    <div class="summary-tier-head civic"><span class="sth-label civic">Tier I · Civic Operating · GPS 1–6</span></div>
+    <div class="summary-rows">
+      <div class="summary-row"><span class="sr-id civic">GPS 1.0</span><span class="sr-name">Governance strategy</span><span class="sr-score">—</span><span class="sr-pri H" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id civic">GPS 2.0</span><span class="sr-name">Public goods</span><span class="sr-score">—</span><span class="sr-pri M" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id civic">GPS 3.0</span><span class="sr-name">Access &amp; engagement</span><span class="sr-score">—</span><span class="sr-pri L" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id civic">GPS 4.0</span><span class="sr-name">Physical resources</span><span class="sr-score">—</span><span class="sr-pri L" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id civic">GPS 5.0</span><span class="sr-name">Services &amp; programs</span><span class="sr-score">—</span><span class="sr-pri L" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id civic">GPS 6.0</span><span class="sr-name">Community member support</span><span class="sr-score">—</span><span class="sr-pri L" style="opacity:0.4">Pri</span></div>
+    </div>
+  </div>
+  <div class="summary-tier">
+    <div class="summary-tier-head inst"><span class="sth-label inst">Tier II · Institutional Support · GPS 7–13</span></div>
+    <div class="summary-rows">
+      <div class="summary-row"><span class="sr-id inst">GPS 7.0</span><span class="sr-name">Human potential</span><span class="sr-score">—</span><span class="sr-pri H" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id inst">GPS 8.0</span><span class="sr-name">Technology &amp; AI</span><span class="sr-score">—</span><span class="sr-pri L" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id inst">GPS 9.0</span><span class="sr-name">Collective resources</span><span class="sr-score">—</span><span class="sr-pri L" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id inst">GPS 10.0</span><span class="sr-name">Commons &amp; shared assets</span><span class="sr-score">—</span><span class="sr-pri L" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id inst">GPS 11.0</span><span class="sr-name">Integrity &amp; equity</span><span class="sr-score">—</span><span class="sr-pri L" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id inst">GPS 12.0</span><span class="sr-name">Inter-institutional relations</span><span class="sr-score">—</span><span class="sr-pri L" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id inst">GPS 13.0</span><span class="sr-name">Evolve capabilities</span><span class="sr-score">—</span><span class="sr-pri L" style="opacity:0.4">Pri</span></div>
+    </div>
+  </div>
+  <div class="summary-tier" style="grid-column:span 2;">
+    <div class="summary-tier-head novel"><span class="sth-label novel">Tier III · Novel Categories · GPS 14–16 · Observation: novel categories are almost always Level 1 at founding for all institutional types</span></div>
+    <div class="summary-rows" style="display:grid;grid-template-columns:repeat(3,1fr);">
+      <div class="summary-row"><span class="sr-id novel">GPS 14.0</span><span class="sr-name">AI governance</span><span class="sr-score">—</span><span class="sr-pri H" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id novel">GPS 15.0</span><span class="sr-name">Human flourishing</span><span class="sr-score">—</span><span class="sr-pri H" style="opacity:0.4">Pri</span></div>
+      <div class="summary-row"><span class="sr-id novel">GPS 16.0</span><span class="sr-name">Participatory democracy</span><span class="sr-score">—</span><span class="sr-pri H" style="opacity:0.4">Pri</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Pattern observations -->
+<div style="background:var(--bg-secondary);border:1px solid var(--border-subtle);border-radius:6px;padding:16px 20px;margin-bottom:24px;">
+  <div style="font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);opacity:.7;margin-bottom:10px;">Profile pattern observations — complete during or immediately after assessment session</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div><div style="font-size:8px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-ghost);margin-bottom:6px;">Highest-scoring categories (institutional strengths)</div><div style="background:var(--bg-form);border:1px solid var(--border-subtle);border-radius:3px;padding:8px 10px;min-height:36px;font-size:.69rem;color:var(--text-ghost);font-style:italic;">List GPS categories scored 3.0 or above…</div></div>
+    <div><div style="font-size:8px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-ghost);margin-bottom:6px;">Lowest-scoring categories (most critical gaps)</div><div style="background:var(--bg-form);border:1px solid var(--border-subtle);border-radius:3px;padding:8px 10px;min-height:36px;font-size:.69rem;color:var(--text-ghost);font-style:italic;">List GPS categories scored 1.5 or below…</div></div>
+    <div><div style="font-size:8px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-ghost);margin-bottom:6px;">Biggest score divergences (where assessors disagreed most)</div><div style="background:var(--bg-form);border:1px solid var(--border-subtle);border-radius:3px;padding:8px 10px;min-height:36px;font-size:.69rem;color:var(--text-ghost);font-style:italic;">Divergences between senior staff and frontline staff, or between governance and operations, are particularly diagnostic…</div></div>
+    <div><div style="font-size:8px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-ghost);margin-bottom:6px;">Most urgent gaps relative to mission requirements</div><div style="background:var(--bg-form);border:1px solid var(--border-subtle);border-radius:3px;padding:8px 10px;min-height:36px;font-size:.69rem;color:var(--text-ghost);font-style:italic;">Categories scored High priority that are below the level required for current mission delivery…</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 4 — DEVELOPMENT ROADMAP
+═══════════════════════════════════════════════ -->
+<div class="sh">Section 4 — Development roadmap template</div>
+
+<p style="font-size:.74rem;color:var(--text-muted);line-height:1.65;margin-bottom:20px;">Complete this template within two weeks of the assessment session. The roadmap requires explicit prioritization — if more than three GPS categories are scored as High priority, the institution must choose which three to address in the first 12 months. Attempting all high-priority categories simultaneously is the most common implementation failure mode.</p>
+
+<div class="roadmap">
+  <div class="roadmap-head"><h3>Development roadmap — 12–24 month institutional development plan</h3></div>
+  <div class="roadmap-body">
+
+    <div class="roadmap-section">
+      <div class="rs-label">Institution and assessment information</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div><div style="font-size:8px;color:var(--text-ghost);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Institution name</div><div class="rs-field" style="min-height:28px;">…</div></div>
+        <div><div style="font-size:8px;color:var(--text-ghost);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Assessment date</div><div class="rs-field" style="min-height:28px;">…</div></div>
+        <div><div style="font-size:8px;color:var(--text-ghost);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Assessment participants</div><div class="rs-field" style="min-height:28px;">…</div></div>
+      </div>
+    </div>
+
+    <div class="roadmap-section">
+      <div class="rs-label">Priority GPS categories — select 2–3 for first 12-month development focus</div>
+      <p style="font-size:.72rem;color:var(--text-ghost);margin-bottom:10px;font-style:italic;">Prioritization should be based on: (1) how critical the category is for current mission delivery at current scale, (2) how far below that required level the institution currently is, and (3) which development investments will create the most enabling conditions for improvement in other categories. Category 13.0 (Evolve Institutional Capabilities) deserves particular attention in institutions with many Level 1 categories — it is the meta-process that makes all other development sustainable.</p>
+      <table class="priority-table">
+        <thead><tr><th style="width:80px">GPS Category</th><th style="width:120px">Category name</th><th style="width:50px">Current level</th><th style="width:60px">Target level (12 mo)</th><th>Theory of change — why this category first, and why it enables other improvements</th></tr></thead>
+        <tbody>
+          <tr><td>GPS _.__</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>GPS _.__</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>GPS _.__</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="roadmap-section">
+      <div class="rs-label">Development activities — specific actions for each priority category</div>
+      <table class="priority-table">
+        <thead><tr><th style="width:80px">GPS Cat.</th><th>Specific development activity</th><th style="width:100px">Who is accountable</th><th style="width:80px">By when</th><th style="width:90px">Resources required</th></tr></thead>
+        <tbody>
+          <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+          <tr><td>…</td><td>…</td><td>…</td><td>…</td><td>…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="roadmap-section">
+      <div class="rs-label">Governance accountability commitments</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div><div style="font-size:8px;color:var(--text-ghost);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Governance body review cadence for roadmap implementation</div><div class="rs-field">Quarterly / semi-annual / annual — and which governance agenda item…</div></div>
+        <div><div style="font-size:8px;color:var(--text-ghost);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Next reassessment date</div><div class="rs-field">Schedule approximately 12 months from current assessment…</div></div>
+        <div><div style="font-size:8px;color:var(--text-ghost);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Person responsible for roadmap coordination</div><div class="rs-field">Name and role…</div></div>
+        <div><div style="font-size:8px;color:var(--text-ghost);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">What will change in the institution's operations if the roadmap succeeds?</div><div class="rs-field">Name a specific observable institutional difference in 12 months…</div></div>
+      </div>
+    </div>
+
+    <div class="roadmap-section">
+      <div class="rs-label">Categories deferred — and why</div>
+      <div class="rs-field" style="min-height:44px;">List GPS categories scored High priority that are being deferred from the first 12-month plan, with rationale. Deferral should be an explicit governance decision, not an omission. Include the plan for when each deferred category will become a development priority…</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 5 — REASSESSMENT GUIDANCE
+═══════════════════════════════════════════════ -->
+<div class="sh">Section 5 — Reassessment guidance</div>
+
+<div class="reassess">
+  <h3>When and how to reassess</h3>
+  <p><strong>Annual reassessment</strong> is the standard recommendation. The reassessment should be conducted at the same time each year to enable meaningful year-over-year comparison. The same instrument should be used each time — do not modify the rubrics between assessments, as changes in wording will make it impossible to distinguish genuine maturity improvement from assessment drift.</p>
+  <p><strong>Triggered reassessment</strong> — outside the annual cycle — is appropriate when: the institution undergoes major leadership transition (executive director departure, board chair departure, or replacement of more than 30% of the governance body); the institution makes a significant strategic pivot; the institution merges with or acquires another organization; or a major external event (funding crisis, pandemic, natural disaster) significantly disrupts institutional operations for more than three months.</p>
+  <p><strong>The evidence standard for claiming improvement.</strong> Any score increase at reassessment requires specific evidence. "We have improved our GPS 11.0 score from 1.5 to 2.5" requires naming what specifically changed: a new process was implemented, a specific document was created, a specific governance decision was made, a specific staff practice changed. Claiming improvement without naming evidence is the assessment equivalent of claiming values alignment without operationalizing the values. The question "what specifically changed?" should be asked for every score that increases at reassessment.</p>
+  <p><strong>What counts as maturity improvement.</strong> Moving from Level 1 to Level 2 in a category typically requires 6–18 months of sustained development work. Moving from Level 2 to Level 3 typically requires 12–24 months. Level 4 requires sustained excellence over multiple years and is unlikely to be achieved in fewer than 3–5 years from Level 1. Claims of rapid improvement across many categories simultaneously should be viewed with skepticism — the most common cause is score inflation at the initial assessment or at reassessment, not rapid genuine improvement.</p>
+  <p><strong>Sharing assessment results.</strong> The GPS maturity profile is an internal governance document. Institutions may choose to share their profiles with peer institutions, funders, or community members — doing so requires accepting the accountability that comes with transparency about current weaknesses as well as strengths. Institutions that share only results that reflect well on them are not practicing the transparency that many of the GPS categories themselves require. The most honest and most useful sharing is of the full profile including the development roadmap — because it demonstrates not only where the institution is but what it is committed to doing about the gaps.</p>
+</div>
+
+<!-- CLOSE -->
+<div class="appendix-close">
+  <div class="ac-label">End of Appendix C — GPS Maturity Assessment Tool</div>
+  <div class="ac-body">
+    <strong>Connection to Appendix B (KPI Library):</strong> The maturity assessment and the KPI library are complementary tools. The maturity assessment locates the institution on the capability development spectrum for each GPS category; the KPI library provides the specific measurements that track performance within each category. Institutions should complete a maturity assessment before selecting their active KPI set — the assessment identifies which categories require the most development investment and therefore which KPIs will be most valuable to track closely.<br><br>
+    <strong>Connection to Chapter 24 (Five Archetypes):</strong> The maturity assessment is most useful when interpreted through the lens of the institution's archetype. A community land trust scoring Level 1 on GPS 10.0 is in a different governance situation than a mutual aid network scoring Level 1 on GPS 10.0 — the former has an urgent critical gap; the latter may not need GPS 10.0 above Level 2 for years. The archetype profiles in Chapter 24 provide the context for interpreting which GPS category gaps are urgent and which can be developed more slowly.<br><br>
+    <strong>Appendix D</strong> contains recommended resources by GPS category — specific books, organizations, peer networks, tools, and frameworks that support development in each of the sixteen categories. <strong>Appendix E</strong> is the glossary of key terms used throughout the framework.
+  </div>
+</div>
+
+</div>
+<div class="page-number">Institutions for a world after work · Appendix C</div>
+</body>
+</html>

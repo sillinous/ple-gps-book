@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 5 — What is a process standard, and why do post-labor institutions need one</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504;
+    --bg-deep: #0c0a09;
+    --bg-primary: #141210;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.12);
+    --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3;
+    --text-secondary: #a09890;
+    --text-muted: #6b6560;
+    --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07);
+    --border-visible: rgba(201,169,110,0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 40px 120px;
+  }
+  .part-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .chapter-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.9rem, 3.8vw, 2.85rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.35;
+    margin-bottom: 44px;
+  }
+  .body-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--text-primary);
+  }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em;
+    font-weight: 300;
+    line-height: 0.75;
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+  }
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-visible);
+  }
+  .section-break-ornament {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+  .pullquote {
+    margin: 44px 0;
+    padding: 28px 32px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 6px 6px 0;
+  }
+  .pullquote p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .pullquote p::before { content: '\201C'; color: var(--accent); }
+  .pullquote p::after  { content: '\201D'; color: var(--accent); }
+
+  /* APQC origin story timeline */
+  .origin-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .origin-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .origin-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .origin-row:last-child { border-bottom: none; }
+  .origin-year {
+    width: 58px;
+    min-width: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--accent);
+    border-right: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 16px 0;
+    opacity: 0.75;
+    letter-spacing: 0.06em;
+  }
+  .origin-content { padding: 16px 20px; flex: 1; }
+  .origin-event {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .origin-detail {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* PCF taxonomy levels */
+  .taxonomy-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .taxonomy-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .tax-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .tax-row:last-child { border-bottom: none; }
+  .tax-level {
+    width: 54px;
+    min-width: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    border-right: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    padding: 14px 0;
+    opacity: 0.75;
+  }
+  .tax-content { padding: 14px 20px; flex: 1; }
+  .tax-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+  }
+  .tax-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .tax-example {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* Adaptation decisions — what changed and why */
+  .adaptation-block {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .adapt-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .adapt-row {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .adapt-row:last-child { border-bottom: none; }
+  .adapt-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+  .adapt-side {
+    padding: 14px 18px;
+    background: var(--bg-secondary);
+  }
+  .adapt-side:first-child { background: var(--bg-primary); }
+  .adapt-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .adapt-label.pcf  { color: var(--text-ghost); }
+  .adapt-label.gps  { color: var(--accent); opacity: 0.8; }
+  .adapt-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .adapt-rationale {
+    padding: 12px 18px;
+    border-top: 1px solid var(--border-subtle);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-style: italic;
+    background: var(--bg-tertiary);
+  }
+  .adapt-rationale strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  /* What a process standard is not */
+  .not-block {
+    margin: 40px 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-top: 2px solid var(--accent);
+    border-radius: 0 0 8px 8px;
+    padding: 28px 32px;
+  }
+  .not-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    opacity: 0.8;
+  }
+  .not-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .not-list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .not-marker {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-ghost);
+    min-width: 16px;
+    padding-top: 3px;
+  }
+  .not-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .not-text strong { color: var(--text-primary); font-weight: 600; }
+
+  /* The three original contributions */
+  .contrib-block {
+    margin: 40px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .contrib-card {
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 20px 18px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-secondary);
+  }
+  .contrib-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0.3;
+  }
+  .contrib-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.7;
+    margin-bottom: 8px;
+  }
+  .contrib-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .contrib-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.73rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* How to read the GPS */
+  .read-gps-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .read-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .read-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .read-row:last-child { border-bottom: none; }
+  .read-q {
+    flex: 1;
+    padding: 14px 18px;
+    border-right: 1px solid var(--border-subtle);
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .read-a {
+    flex: 1.4;
+    padding: 14px 18px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .read-a strong { color: var(--accent); font-weight: 500; opacity: 0.85; }
+
+  .note-aside {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-visible);
+    border-radius: 0 6px 6px 0;
+  }
+  .note-aside p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 0.6em;
+  }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .close-next {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+  .page-number {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part II · The governance process standard</div>
+  <div class="chapter-eyebrow">Chapter 5</div>
+  <h1 class="chapter-title">What is a process standard, and why do post-labor institutions need one</h1>
+  <p class="chapter-subtitle">The APQC origin story, what a taxonomy actually does, and why adapting an enterprise framework for a commons is not an act of corporate mimicry but of institutional seriousness</p>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>In 1992, a consortium of large American corporations — including companies as different from each other as Boeing, Ford, and Chevron — sat down together to answer a question that, in retrospect, seems almost embarrassingly practical: what is a complete list of everything an organization does? Not what any specific organization does. What any organization, regardless of industry or purpose, must do to function. The exercise was driven by a specific frustration that any manager who has moved between companies will recognize: every organization invents its own vocabulary for its own processes, which means that when organizations try to learn from each other — which is the purpose of benchmarking, and of most management consulting — they spend enormous amounts of time and money translating between vocabularies before they can compare the underlying practices. The translation problem was consuming resources that should have been spent on the improvement that was supposed to follow from comparison.</p>
+
+    <p>The result of that 1992 consortium was the Process Classification Framework, later developed and maintained by the American Productivity and Quality Center — APQC. Over the three decades since its first publication, the PCF has been refined through seven major versions, adopted by thousands of organizations globally, and extended into industry-specific variants for healthcare, aerospace, banking, and dozens of other sectors. It is not a perfect document. Its enterprise-sector assumptions are visible throughout. But it is the most rigorous, comprehensive, and widely tested organizational process taxonomy that exists — and it solves the problem it was designed to solve with genuine effectiveness. Organizations that speak the same process language can compare their practices, identify gaps, and learn from each other's experience in ways that organizations without a shared vocabulary cannot.</p>
+
+    <p>The PLE Governance Process Standard begins here — not because the solidarity economy should aspire to be like Boeing, but because the problem the PCF solves is precisely the problem identified in Chapter 4 as the first proximate cause of the design gap: the vocabulary problem. The solidarity economy has no shared process language. Every cooperative, mutual aid network, community land trust, and commons institution invents its own vocabulary for its own processes. The accumulated knowledge of the movement cannot flow across institutional boundaries because there are no shared categories to flow through. Adapting the most rigorous available solution to that problem — rather than inventing a new solution from scratch — is not a capitulation to enterprise logic. It is the application of appropriate intellectual humility to a genuine organizational challenge.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">What the PCF got right — and why it matters here</div>
+
+  <div class="body-text">
+    <p>Before describing how the PCF was adapted, it is worth being precise about what it got right — because those things are worth preserving in the adaptation, and understanding them prevents the adaptation from throwing out what is most valuable in the original.</p>
+    <p>The PCF got three things fundamentally right. First, it insisted on completeness. The goal was not a list of the most important processes, or the most commonly discussed processes, or the processes that seemed most relevant to the consortium members' immediate concerns. It was a complete list: every process a functioning organization must execute, regardless of whether any particular organization executes it well or even consciously. This is a harder standard than it sounds. The natural tendency of any process taxonomy is to over-index on what the people building it find interesting or difficult, and to under-represent the mundane infrastructure processes — financial reporting, knowledge management, supplier relationships — that are invisible when they function and catastrophic when they do not. The PCF's comprehensiveness is its most valuable and most difficult-to-replicate quality.</p>
+    <p>Second, the PCF maintained a clear distinction between process categories and how those processes are implemented. The framework describes what needs to happen — develop and manage human capital, manage financial resources, manage information technology — without prescribing how it happens. This distinction is what makes the framework genuinely cross-organizational: different organizations in different sectors with different cultures can all use the same taxonomy to describe their processes, even though the processes look completely different in practice. Preserving this distinction in the adaptation is essential. The GPS describes what a post-labor institution needs to do. It does not prescribe how any specific institution does it.</p>
+    <p>Third, the PCF organized processes hierarchically — from broad categories down through process groups, individual processes, and activity-level detail — in a way that makes the framework useful at multiple levels of analysis. A strategist can work at the category level. A manager can work at the process level. An implementer can work at the activity level. The same framework serves all three without collapsing into either unhelpful abstraction or overwhelming procedural detail. This multi-level structure is preserved in the GPS and is one of its most practically useful features.</p>
+  </div>
+
+  <div class="origin-block">
+    <div class="origin-header">APQC PCF — origin and development</div>
+    <div class="origin-row">
+      <div class="origin-year">1992</div>
+      <div class="origin-content">
+        <div class="origin-event">The consortium forms</div>
+        <div class="origin-detail">Major American corporations convene to address the translation problem in benchmarking. The goal: a shared vocabulary for organizational processes that would allow cross-industry learning without the costly vocabulary translation step.</div>
+      </div>
+    </div>
+    <div class="origin-row">
+      <div class="origin-year">1995</div>
+      <div class="origin-content">
+        <div class="origin-event">PCF v1.0 published</div>
+        <div class="origin-detail">First public release. 13 high-level categories, two tiers (operating and management/support), covering the full range of enterprise processes from strategy through customer service through financial management. Immediately adopted as the basis for cross-industry benchmarking programs.</div>
+      </div>
+    </div>
+    <div class="origin-row">
+      <div class="origin-year">2000s</div>
+      <div class="origin-content">
+        <div class="origin-event">Industry-specific variants and global adoption</div>
+        <div class="origin-detail">Healthcare, banking, aerospace, retail, and energy variants developed. The PCF becomes the de facto standard for enterprise process benchmarking globally, with over 10,000 member organizations across 150+ countries using it in some form. Multiple major management consulting firms build practices around PCF-based process assessment.</div>
+      </div>
+    </div>
+    <div class="origin-row">
+      <div class="origin-year">2018</div>
+      <div class="origin-content">
+        <div class="origin-event">PCF v7.0 — digital transformation update</div>
+        <div class="origin-detail">Major revision incorporating digital processes, data governance, and emerging technology management. The update reflects the reality that "manage information technology" is no longer an adequate descriptor for the full scope of digital operations in modern organizations. This is the version that most directly informs the GPS adaptation, particularly Category 8.0 (Technology and AI Infrastructure).</div>
+      </div>
+    </div>
+    <div class="origin-row">
+      <div class="origin-year">2024</div>
+      <div class="origin-content">
+        <div class="origin-event">PLE-GPS adaptation begins</div>
+        <div class="origin-detail">The Foundation for Global Progress begins systematic adaptation of PCF v7.3 for post-labor institutional contexts. 13 categories are translated and reoriented from market competition to commons stewardship. Three entirely new categories — AI governance, human flourishing, participatory democracy — are developed from first principles for processes with no enterprise analog.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five-level taxonomy — how it works</div>
+
+  <div class="body-text">
+    <p>The PCF and the GPS both use a hierarchical taxonomy that organizes processes from the broadest categories down to specific activity-level detail. Understanding how the levels relate to each other is essential for using the framework effectively — and for understanding which level is relevant for any given purpose.</p>
+  </div>
+
+  <div class="taxonomy-block">
+    <div class="taxonomy-header">The five taxonomy levels — from category to activity</div>
+    <div class="tax-row">
+      <div class="tax-level">L1</div>
+      <div class="tax-content">
+        <div class="tax-name">Category</div>
+        <div class="tax-desc">The broadest classification. Groups of processes that share a common institutional function. The GPS has 16 categories organized in three tiers: civic operating (1–6), institutional support (7–13), and novel PLE (14–16). Categories are the unit of strategic assessment: "how mature is our governance strategy capability?" operates at this level.</div>
+        <div class="tax-example">Example: 1.0 Collective Vision &amp; Governance Strategy</div>
+      </div>
+    </div>
+    <div class="tax-row">
+      <div class="tax-level">L2</div>
+      <div class="tax-content">
+        <div class="tax-name">Process group</div>
+        <div class="tax-desc">Clusters of related processes within a category. A category typically contains four to eight process groups. Process groups are the unit of operational planning: "we need to develop our collective decision-making processes" operates at this level. The GPS contains 78 process groups across its 16 categories.</div>
+        <div class="tax-example">Example: 1.3 Set strategic direction and priorities</div>
+      </div>
+    </div>
+    <div class="tax-row">
+      <div class="tax-level">L3</div>
+      <div class="tax-content">
+        <div class="tax-name">Process</div>
+        <div class="tax-desc">A named, bounded process with identifiable inputs, outputs, and sequence. Processes are the primary unit of the GPS: the 272 processes in the full taxonomy are the things an institution actually does, each of which can be assessed for maturity, assigned ownership, and improved systematically. This is the level at which most process improvement work happens.</div>
+        <div class="tax-example">Example: 1.3.2 Develop institutional theory of change and impact model</div>
+      </div>
+    </div>
+    <div class="tax-row">
+      <div class="tax-level">L4</div>
+      <div class="tax-content">
+        <div class="tax-name">Activity</div>
+        <div class="tax-desc">The specific activities that comprise a process. Activities are implementation-level detail: what someone actually does to execute the process. L4 depth is where the GPS is most incomplete — 60% of processes have full L4 activity listings; the remainder are defined at L3 and await community contribution. This is the level where local adaptation is most extensive and most necessary.</div>
+        <div class="tax-example">Example: 1.3.2.a Facilitate cross-stakeholder workshops to surface community priorities; 1.3.2.b Document theory of change in accessible plain-language format</div>
+      </div>
+    </div>
+    <div class="tax-row">
+      <div class="tax-level">L5</div>
+      <div class="tax-content">
+        <div class="tax-name">Task</div>
+        <div class="tax-desc">The granular task level — specific actions within activities. The GPS does not systematically develop L5 detail, as this level is almost entirely context-specific and cannot be meaningfully generalized across different institutional types and sizes. L5 is the level at which institutions write their own standard operating procedures, training materials, and role-specific guidelines.</div>
+        <div class="tax-example">Example: Steps within a specific facilitation activity — agenda template, timing guide, documentation protocol</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The adaptation — what changed and why</div>
+
+  <div class="body-text">
+    <p>The PCF's 13 categories were not simply relabeled for a post-labor context. The adaptation required substantive rethinking of the purpose behind each category — what the enterprise version was trying to accomplish, and what the equivalent purpose looks like in an institution oriented toward community stewardship rather than market competition. In some categories, the structural logic translates almost directly with changes in language and emphasis. In others, the underlying logic required significant redesign. And in three cases, there is no enterprise analog at all: the process domains that define post-labor institutions as categorically different from everything that came before required development from first principles.</p>
+    <p>Six of the most significant adaptation decisions are documented below — not as an exhaustive account of every change but as an illustration of the reasoning process, which will be useful for readers who want to understand why the GPS is organized the way it is, or who are considering extending the framework into domains it does not yet cover.</p>
+  </div>
+
+  <div class="adaptation-block">
+    <div class="adapt-header">Key adaptation decisions — enterprise to post-labor</div>
+
+    <div class="adapt-row">
+      <div class="adapt-top">
+        <div class="adapt-side">
+          <div class="adapt-label pcf">PCF original</div>
+          <div class="adapt-text">Develop and manage products and services — market research, product design, commercialization, lifecycle management. Oriented entirely toward competitive advantage and revenue generation.</div>
+        </div>
+        <div class="adapt-side">
+          <div class="adapt-label gps">GPS adaptation</div>
+          <div class="adapt-text">Design and steward public goods — community needs assessment, commons design, shared infrastructure stewardship, knowledge commons management. Oriented toward collective benefit and durability.</div>
+        </div>
+      </div>
+      <div class="adapt-rationale"><strong>Reasoning:</strong> The enterprise category treats the organization's outputs as competitive products whose value is measured by market price and customer acquisition. Post-labor institutions produce public goods whose value is measured by community benefit and durability of commons. The structural logic of design → produce → manage the lifecycle is preserved; the purpose, the inputs, and the success metrics are entirely different.</div>
+    </div>
+
+    <div class="adapt-row">
+      <div class="adapt-top">
+        <div class="adapt-side">
+          <div class="adapt-label pcf">PCF original</div>
+          <div class="adapt-text">Market and sell products and services — brand management, lead generation, sales force management, customer acquisition. The machinery of market competition.</div>
+        </div>
+        <div class="adapt-side">
+          <div class="adapt-label gps">GPS adaptation</div>
+          <div class="adapt-text">Facilitate access and engagement — barrier removal, equitable onboarding, community activation, communications that reach rather than attract. The machinery of inclusion.</div>
+        </div>
+      </div>
+      <div class="adapt-rationale"><strong>Reasoning:</strong> The enterprise category exists to maximize revenue by capturing customers. The post-labor equivalent exists to maximize equitable participation by removing barriers. "Marketing" in an institution that does not charge for its services means something entirely different: it means ensuring that the people who most need what the institution provides know it exists and can actually reach it. The structural position in the taxonomy is analogous; the purpose is inverted.</div>
+    </div>
+
+    <div class="adapt-row">
+      <div class="adapt-top">
+        <div class="adapt-side">
+          <div class="adapt-label pcf">PCF original</div>
+          <div class="adapt-text">Manage financial resources — financial planning, treasury management, cost accounting, financial reporting to shareholders and regulators. Profit maximization as the terminal objective.</div>
+        </div>
+        <div class="adapt-side">
+          <div class="adapt-label gps">GPS adaptation</div>
+          <div class="adapt-text">Steward collective resources — participatory budgeting, mission-aligned treasury, diversified community revenue, resource allocation by collective decision rather than return on investment.</div>
+        </div>
+      </div>
+      <div class="adapt-rationale"><strong>Reasoning:</strong> Financial management processes are structurally similar in enterprise and post-labor contexts — both require budgeting, accounting, treasury management, and reporting. The fundamental difference is the objective function: enterprise finance maximizes shareholder return; collective resource stewardship maximizes community benefit while maintaining institutional sustainability. The processes are adapted rather than replaced, with new sub-processes for participatory allocation and community wealth building that have no enterprise equivalent.</div>
+    </div>
+
+    <div class="adapt-row">
+      <div class="adapt-top">
+        <div class="adapt-side">
+          <div class="adapt-label pcf">PCF original</div>
+          <div class="adapt-text">Manage external relationships — government and regulatory relations, public affairs, industry associations, investor relations. Managing the political environment to protect competitive position.</div>
+        </div>
+        <div class="adapt-side">
+          <div class="adapt-label gps">GPS adaptation</div>
+          <div class="adapt-text">Inter-institutional relations — federation and network participation, peer institution mutual support, coalition building, movement representation. Building the solidarity infrastructure rather than managing competitive exposure.</div>
+        </div>
+      </div>
+      <div class="adapt-rationale"><strong>Reasoning:</strong> The enterprise external relations category is primarily defensive — protecting the firm from regulatory and political risk while managing the optics of public behavior. The post-labor equivalent is primarily constructive — building the inter-institutional infrastructure through which the solidarity economy functions as a connected movement rather than a collection of isolated experiments. The political relations function is retained but reoriented from compliance management to collective power building.</div>
+    </div>
+
+    <div class="adapt-row">
+      <div class="adapt-top">
+        <div class="adapt-side">
+          <div class="adapt-label pcf">PCF original</div>
+          <div class="adapt-text">Manage information technology — IT strategy, application management, infrastructure operations, cybersecurity. Technology as a support function for business processes.</div>
+        </div>
+        <div class="adapt-side">
+          <div class="adapt-label gps">GPS adaptation</div>
+          <div class="adapt-text">Technology and AI infrastructure — digital systems governance, data stewardship for member benefit, AI tooling management, universal digital access, cybersecurity as member protection. Technology as commons infrastructure.</div>
+        </div>
+      </div>
+      <div class="adapt-rationale"><strong>Reasoning:</strong> The enterprise IT category treats technology as a cost center supporting business operations. The GPS treats technology — including AI — as institutional infrastructure with significant implications for equity, access, and member agency. The addition of AI tooling management, digital access equity, and data stewardship for member benefit rather than organizational optimization reflects both the technological environment of 2024 and the specific accountability requirements of post-labor institutions.</div>
+    </div>
+
+    <div class="adapt-row">
+      <div class="adapt-top">
+        <div class="adapt-side">
+          <div class="adapt-label pcf">PCF original</div>
+          <div class="adapt-text">No equivalent. Enterprise frameworks have no category for AI governance as a member right, human flourishing as an institutional objective, or participatory democracy as an operational system.</div>
+        </div>
+        <div class="adapt-side">
+          <div class="adapt-label gps">GPS adaptation</div>
+          <div class="adapt-text">Three new categories developed from first principles: 14.0 AI Governance and Algorithmic Accountability, 15.0 Human Flourishing and Wellbeing, 16.0 Participatory Democracy. The defining contribution of the GPS to institutional design theory.</div>
+        </div>
+      </div>
+      <div class="adapt-rationale"><strong>Reasoning:</strong> These categories represent processes that are either absent from enterprise institutions entirely or present in such attenuated form that adaptation is meaningless. The enterprise sector has no need to govern AI as a member right because members are customers, not stakeholders. It has no need to measure human flourishing because profit measures organizational success. It has no need to operationalize participatory democracy because governance authority is assigned by ownership share. These three categories are genuinely novel — and their novelty is precisely the marker of what makes post-labor institutions a categorically different kind of organization.</div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">What a process standard is not</div>
+
+  <div class="body-text">
+    <p>Three common misreadings of what a process standard does are worth addressing directly, because each produces a different kind of misuse that undermines the framework's value. Each of these misreadings is understandable — they reflect reasonable intuitions about what a comprehensive taxonomy might imply — but each is wrong, and wrong in ways that matter for how institutions actually engage with the GPS.</p>
+  </div>
+
+  <div class="not-block">
+    <div class="not-label">What the GPS is not</div>
+    <ul class="not-list">
+      <li>
+        <div class="not-marker">✕</div>
+        <div class="not-text"><strong>It is not a compliance checklist.</strong> The GPS describes what processes a mature institution has developed. It does not prescribe that any institution must develop all of them, in any particular order, or to any particular depth. A small mutual aid network serving a specific community may need high maturity in Categories 3, 5, and 6 (access, services, member support) and very limited development in Categories 8, 12, and 13. The framework provides a map. Navigating the map requires judgment about the terrain, the destination, and the available resources — none of which the framework provides or should try to provide.</div>
+      </li>
+      <li>
+        <div class="not-marker">✕</div>
+        <div class="not-text"><strong>It is not a prescription for how to do anything.</strong> The GPS names processes and describes what they accomplish. It does not specify how any process should be executed. "Facilitate collective decision-making" is a process that a small cooperative might accomplish through a monthly member meeting, that a large federated institution might accomplish through nested representative structures and digital deliberation tools, and that a mutual aid network might accomplish through a weekly phone call among core coordinators. All three are valid implementations of the same named process. The framework is indifferent to implementation as long as the process function is being served.</div>
+      </li>
+      <li>
+        <div class="not-marker">✕</div>
+        <div class="not-text"><strong>It is not a substitute for community knowledge.</strong> The people closest to a specific community's needs, relationships, and context know things about what their institution should do that no general framework can capture. The GPS makes their judgment better-informed — by ensuring that no significant process category has been overlooked, by providing a vocabulary for communicating about institutional capacity, and by connecting their institution to the accumulated knowledge of similar institutions. It does not replace their judgment. The framework is a scaffold, not a building. The community builds the building.</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The three original contributions of the GPS</div>
+
+  <div class="body-text">
+    <p>Having described what the GPS adapts from its enterprise predecessor, it is important to be equally clear about what it adds — the three genuinely original contributions that distinguish it from a translation exercise and make it specifically valuable for post-labor institutional design rather than merely adequate.</p>
+  </div>
+
+  <div class="contrib-block">
+    <div class="contrib-card">
+      <div class="contrib-num">Contribution 01</div>
+      <div class="contrib-title">The novel categories</div>
+      <div class="contrib-desc">Categories 14, 15, and 16 — AI governance, human flourishing, participatory democracy — are developed entirely from first principles for institutional functions that post-labor institutions require and that no enterprise framework has ever attempted to describe. These are not gaps in the PCF; they are processes that enterprise institutions do not need. Developing them rigorously, as operational processes with named sub-processes, KPIs, maturity indicators, and implementation activities, is the GPS's most significant intellectual contribution to the institutional design literature.</div>
+    </div>
+    <div class="contrib-card">
+      <div class="contrib-num">Contribution 02</div>
+      <div class="contrib-title">Commons-oriented reframing</div>
+      <div class="contrib-desc">The adaptation is not terminological. The 13 adapted categories have been rebuilt with a genuinely different purpose structure — from competitive advantage to community benefit, from customer acquisition to barrier removal, from shareholder value to collective stewardship. The structural logic is preserved; the teleology is inverted. This reframing is not cosmetic. It changes which sub-processes exist, what the KPIs measure, what maturity looks like, and what failure looks like in each category.</div>
+    </div>
+    <div class="contrib-card">
+      <div class="contrib-num">Contribution 03</div>
+      <div class="contrib-title">The solidarity economy as the use case</div>
+      <div class="contrib-desc">The GPS is designed for the specific institutional context of the solidarity economy — organizations that serve communities rather than shareholders, that operate without profit motive, that hold equity commitments seriously, and that exist in an environment of resource constraint and political hostility that enterprise institutions do not face. Every process definition, every KPI, and every maturity indicator has been developed with this specific context as the design constraint, not as an afterthought.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">How to read the GPS — a practical orientation</div>
+
+  <div class="body-text">
+    <p>The full GPS taxonomy appears in Appendix A and in the interactive explorer at ple-gps.netlify.app. Before entering the detailed category chapters in Parts III, IV, and V, a practical orientation to how the framework should be read — and how different readers will use it differently — is useful.</p>
+  </div>
+
+  <div class="read-gps-block">
+    <div class="read-header">How to read the GPS — questions and answers for different use cases</div>
+
+    <div class="read-row">
+      <div class="read-q">I want to assess where my institution currently stands</div>
+      <div class="read-a">Use the maturity assessment in Appendix C or the interactive explorer. Work at the L1 category level first: score each of the 16 categories on a 1–4 maturity scale based on whether the processes exist, function consistently, are measured, and improve over time. The gaps at L1 tell you where to go deeper. <strong>See: Appendix C, Chapter 7</strong></div>
+    </div>
+
+    <div class="read-row">
+      <div class="read-q">I want to develop a specific area of my institution's capability</div>
+      <div class="read-a">Go to the relevant category chapter in Parts III, IV, or V. Read the L2 process group descriptions to identify which sub-areas are most underdeveloped. Use the L4 activity listings (where available) as a starting point for what developing that process actually requires. <strong>See: Parts III, IV, V</strong></div>
+    </div>
+
+    <div class="read-row">
+      <div class="read-q">I want to communicate my institution's capacity to funders or partners</div>
+      <div class="read-a">The GPS category names and maturity levels provide a shared vocabulary for institutional capacity that funders and partners can understand. A maturity profile across the 16 categories communicates more precisely than any narrative description what an institution can and cannot reliably do. <strong>See: Chapter 7, Appendix C</strong></div>
+    </div>
+
+    <div class="read-row">
+      <div class="read-q">I want to understand how my institution compares to similar institutions</div>
+      <div class="read-a">The institutional templates in Appendix D provide pre-scored profiles for five archetypes (worker cooperative, CLT, mutual aid network, platform cooperative, commons institution). Comparing your maturity assessment to the relevant template shows where your institution is ahead of or behind the archetype's typical pattern. <strong>See: Appendix D, Chapter 24</strong></div>
+    </div>
+
+    <div class="read-row">
+      <div class="read-q">I want to contribute to the framework's development</div>
+      <div class="read-a">The GPS is released under CC BY-SA 4.0 and is explicitly designed for community contribution. Priority areas for development are documented at the GitHub repository (github.com/sillinous/ple-gps). L4 depth for the 40% of processes that lack full activity listings is the highest-priority contribution. <strong>See: Appendix E</strong></div>
+    </div>
+
+    <div class="read-row">
+      <div class="read-q">I am a funder trying to assess grantee institutional capacity</div>
+      <div class="read-a">Request a GPS maturity assessment alongside narrative grant applications. The 16-category profile allows comparison across grantees on a common scale and identifies whether capacity-building support is needed alongside program funding. Consider funding GPS maturity development directly as infrastructure investment. <strong>See: Chapter 7, the KPI library in Appendix B</strong></div>
+    </div>
+
+  </div>
+
+  <div class="pullquote">
+    <p>A shared process vocabulary is not bureaucracy. It is the precondition for improvement — the infrastructure through which the scattered knowledge of the solidarity economy can accumulate into something that any institution can use, rather than dissipating at every institutional boundary.</p>
+  </div>
+
+  <div class="body-text">
+    <p>The chapters that follow in Parts III, IV, and V go deep into each category — one chapter per category in the civic operating and novel tiers, seven chapters for the institutional support tier. Each chapter is designed to be both read as part of the book's argument and used as a standalone reference for practitioners working on that specific area of institutional development. But before going into the depth of the categories, Chapter 6 provides the overview: a guided tour of all 16 categories together, showing how they relate to each other and to the dual pyramid framework, and giving the reader a map of the map before the map is used for navigation.</p>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the APQC PCF and this work:</strong> The PLE-GPS adapts the structural logic and taxonomic approach of the APQC Process Classification Framework but is not an APQC product and is not affiliated with or endorsed by APQC. The PCF is used here as the best available foundation for a comprehensive process taxonomy; the adaptation is substantial enough that the GPS should be understood as a new work that builds on the PCF's intellectual tradition rather than as a version or extension of the PCF itself.</p>
+    <p><strong>On completeness:</strong> The claim that the GPS provides a "complete" process taxonomy should be understood as an aspiration and a design goal, not a guarantee. Completeness in a taxonomy of this kind is always provisional — new institutional forms, new technologies, and new community contexts will reveal processes that the current framework does not adequately capture. The framework is designed to be extended and improved by the communities that use it, and the incompleteness of the current version (approximately 40% of processes without full L4 depth) is an explicit invitation for community contribution rather than a deficiency to be concealed.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part II · Chapter 5</span>
+    <span class="close-next">Ch. 6 — The 16 categories: a guided tour →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

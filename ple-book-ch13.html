@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 13 — Support Community Members (GPS 6.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e; --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --civic: #1D9E75; --civic-dim: rgba(29,158,117,0.08);
+    --civic-text: #4ecfa0; --civic-border: rgba(29,158,117,0.25);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; align-items: center; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.civic { background: var(--civic-dim); color: var(--civic-text); border: 1px solid var(--civic-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--civic); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--civic-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--civic); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--civic); background: var(--civic-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--civic-text); }
+  .pullquote p::after { content: '\201D'; color: var(--civic-text); }
+
+  /* Tension analysis block */
+  .tension-block { margin: 40px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-subtle); }
+  .tension-col { background: var(--bg-secondary); padding: 0; }
+  .tension-col-header { padding: 12px 18px; font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid var(--border-subtle); }
+  .tension-col-header.syst { color: var(--civic-text); opacity: 0.8; }
+  .tension-col-header.indiv { color: var(--m2t); opacity: 0.8; }
+  .tension-item { display: flex; gap: 10px; padding: 12px 18px; border-bottom: 1px solid var(--border-subtle); align-items: flex-start; }
+  .tension-item:last-child { border-bottom: none; }
+  .tension-dot { width: 5px; height: 5px; border-radius: 50%; margin-top: 6px; min-width: 5px; }
+  .td-syst { background: var(--civic-text); opacity: 0.7; }
+  .td-indiv { background: var(--m2t); opacity: 0.7; }
+  .tension-text { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle); background: var(--civic-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Trauma-informed framework */
+  .trauma-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .trauma-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .trauma-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .trauma-row:last-child { border-bottom: none; }
+  .trauma-principle-col { width: 120px; min-width: 120px; padding: 14px 14px; border-right: 1px solid var(--border-subtle); background: var(--civic-dim); display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+  .trauma-principle-name { font-family: 'Crimson Pro', serif; font-size: 0.9rem; font-weight: 600; color: var(--civic-text); line-height: 1.25; }
+  .trauma-content { padding: 14px 18px; flex: 1; border-right: 1px solid var(--border-subtle); }
+  .trauma-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .trauma-process { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .trauma-process strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle); background: var(--civic-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity block */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI block */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--civic-dim); color: var(--civic-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--civic-dim); border-bottom: 1px solid var(--civic-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--civic-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--civic-text); font-weight: 500; }
+
+  /* Sequence block */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--civic-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--civic-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  /* Part III close */
+  .part-close { margin-top: 64px; padding: 32px; border: 1px solid var(--border-visible); border-radius: 8px; background: var(--bg-secondary); text-align: center; }
+  .part-close-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+  .part-close-title { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.4; }
+  .part-close-sub { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part III · Civic operating processes</div>
+  <div class="chapter-eyebrow">Chapter 13 · GPS Category 6.0</div>
+  <h1 class="chapter-title">Support community members</h1>
+  <p class="chapter-subtitle">When the institution meets the individual — designing direct support that sustains human dignity, prevents secondary harm, and maintains the humanity of both the people receiving help and the people providing it</p>
+  <div class="cat-meta">
+    <span class="cat-pill civic">Civic Operating</span>
+    <span class="cat-pill civic">Prosperity L1</span>
+    <span class="cat-pill civic">Dignity by design</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">22 processes</span>
+    <span class="cat-pill neutral">15 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>There is a moment, somewhere in every post-labor institution's work, when the scale falls away. The strategic plans and program portfolios and governance frameworks recede, and the institution is present with a single person in a specific situation — a family that has just lost housing, a member navigating a mental health crisis, a community elder with no one to call at three in the morning. What happens in those moments determines more about the institution's actual character than any document it has produced or any governance structure it has built. It is in those moments that the institution either is or is not what it says it is.</p>
+
+    <p>Category 6.0 is the process domain for those moments and for the systematic infrastructure that makes those moments go well consistently rather than depending on which staff member happens to be present and what they happen to know. It covers case management, grievance resolution, crisis response, peer support facilitation, and outcome tracking — the full operational territory of direct individual support. It is the category most resistant to systematization, because the human situations it addresses are irreducibly particular and because the people who do this work typically entered it out of deep personal commitment to the individuals they serve rather than out of interest in organizational process. And it is the category where the failure to systematize is most consequential — where the absence of processes produces outcomes that range from inadequate support to active institutional harm.</p>
+
+    <p>The central design challenge of Category 6.0 can be stated simply: how do you build systems that make direct human support consistent, accountable, and transmissible across staff transitions — without making it so systematized that it stops being human? This tension between consistency and humanization is not resolvable by choosing one over the other. The institutions that have done this work best have learned to systematize the framework while preserving the relationship — to use process to protect and sustain the human encounter rather than to replace it.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The systematization tension — what gets lost on each side</div>
+
+  <div class="body-text">
+    <p>The design tension in Category 6.0 is real, and its resolution requires understanding what is lost when each side is overemphasized. Institutions that over-systematize direct support produce processes that are consistent and accountable but experienced as dehumanizing — as bureaucratic case processing rather than human encounter. Institutions that under-systematize produce support that is warm and relationship-based but inequitable, inconsistent, and entirely dependent on individuals who will eventually leave. Neither extreme serves community members well. The design work is in the middle: identifying which elements of direct support most benefit from systematization and which most depend on individual judgment, and designing accordingly.</p>
+  </div>
+
+  <div class="tension-block">
+    <div class="tension-col">
+      <div class="tension-col-header syst">What systematization protects</div>
+      <div class="tension-item"><div class="tension-dot td-syst"></div><div class="tension-text">Consistency — community members receive comparable quality of support regardless of which staff member they encounter</div></div>
+      <div class="tension-item"><div class="tension-dot td-syst"></div><div class="tension-text">Equity — support allocation is governed by explicit criteria rather than by personal relationships or staff preferences</div></div>
+      <div class="tension-item"><div class="tension-dot td-syst"></div><div class="tension-text">Accountability — support processes can be examined, evaluated, and improved; outcomes can be tracked across the full caseload</div></div>
+      <div class="tension-item"><div class="tension-dot td-syst"></div><div class="tension-text">Continuity — institutional knowledge about community members' situations survives staff transitions</div></div>
+      <div class="tension-item"><div class="tension-dot td-syst"></div><div class="tension-text">Staff sustainability — clear processes prevent the accumulation of informal obligations that produce burnout</div></div>
+      <div class="tension-item"><div class="tension-dot td-syst"></div><div class="tension-text">Legibility — community members can understand and navigate the support system, contest decisions they believe are wrong, and anticipate what will happen next</div></div>
+    </div>
+    <div class="tension-col">
+      <div class="tension-col-header indiv">What over-systematization destroys</div>
+      <div class="tension-item"><div class="tension-dot td-indiv"></div><div class="tension-text">Dignity — community members' situations are irreducibly particular; systems that force them into standardized categories fail to respond to what is actually happening</div></div>
+      <div class="tension-item"><div class="tension-dot td-indiv"></div><div class="tension-text">Trust — the relationship between support provider and community member is the mechanism through which support often works; systems that eliminate relationship eliminate effectiveness</div></div>
+      <div class="tension-item"><div class="tension-dot td-indiv"></div><div class="tension-text">Flexibility — the situations that most require support are the ones that most resist categorization; rigid processes fail at the margins where need is most acute</div></div>
+      <div class="tension-item"><div class="tension-dot td-indiv"></div><div class="tension-text">Judgment — effective support requires the capacity to recognize when standard processes are inadequate and to respond differently; systems that eliminate judgment eliminate effectiveness</div></div>
+      <div class="tension-item"><div class="tension-dot td-indiv"></div><div class="tension-text">Meaning — for staff, the relationship with community members is often the primary source of professional meaning; over-systematization removes this and accelerates burnout</div></div>
+      <div class="tension-item"><div class="tension-dot td-indiv"></div><div class="tension-text">Agency — community members must remain active agents in their own situations, not passive recipients of prescribed support plans; systems that produce dependency undermine the wellbeing they aim to support</div></div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>The resolution is not a compromise between the two columns but a design that honors both: systems that structure the framework while preserving the relationship, that create consistency in process without creating uniformity in encounter, and that build accountability for outcomes while protecting the judgment that produces those outcomes. The specific design principles that achieve this are addressed in the trauma-informed care framework below and operationalized in the process groups that follow.</p>
+  </div>
+
+  <div class="pullquote">
+    <p>Systematize the framework. Preserve the relationship. The system is there to support the encounter — not to replace it.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Trauma-informed care as institutional design — six principles operationalized</div>
+
+  <div class="body-text">
+    <p>Trauma-informed care is the most rigorous framework available for designing direct support processes that are simultaneously consistent and human — that systematize appropriately without producing secondary harm through institutional interaction. Originally developed in mental health and healthcare contexts, it has been extended across social services, education, housing, and legal services as a design philosophy for any institution that works with people whose histories include adverse experiences with institutional actors. In post-labor contexts, trauma-informed design is not optional: the communities most in need of institutional support are typically those with the most sustained histories of institutional harm. Designing support without attending to those histories produces institutions that re-traumatize the people they are trying to help.</p>
+    <p>The six principles of trauma-informed care — safety, trustworthiness, peer support, collaboration, empowerment, and cultural sensitivity — are not values to be stated but operational requirements to be designed into processes. Each has specific implications for how Category 6.0 processes should be structured.</p>
+  </div>
+
+  <div class="trauma-block">
+    <div class="trauma-header">Trauma-informed care — six principles as Category 6.0 process design requirements</div>
+
+    <div class="trauma-row">
+      <div class="trauma-principle-col"><div class="trauma-principle-name">Safety</div></div>
+      <div class="trauma-content">
+        <div class="trauma-desc">Physical and psychological safety for community members in all support interactions — including physical space design, confidentiality assurances, and the elimination of institutional interactions that activate threat responses. Safety is not merely the absence of physical danger; it is the presence of conditions in which people can be honest about their situations without fear of judgment, punishment, or loss of support.</div>
+        <div class="trauma-process"><strong>Process implications:</strong> Confidentiality protocols with clear limits communicated in advance; intake environments designed for privacy; no mandatory reporting requirements that are not disclosed at first contact; staff trained in de-escalation rather than compliance enforcement.</div>
+      </div>
+    </div>
+
+    <div class="trauma-row">
+      <div class="trauma-principle-col"><div class="trauma-principle-name">Trustworthiness</div></div>
+      <div class="trauma-content">
+        <div class="trauma-desc">Transparency about processes, decisions, and the institution's limits — so that community members can develop accurate expectations rather than experiencing institutional behavior as unpredictable or arbitrary. Trustworthiness is built through consistency between what the institution says it will do and what it actually does, including consistency in acknowledging when it has failed to do what it said.</div>
+        <div class="trauma-process"><strong>Process implications:</strong> Clear explanation of what support is available and what is not, communicated without minimization; documented follow-through on commitments; explicit disclosure of mandatory reporting requirements and other limits on confidentiality; honest communication about case status and decisions, including decisions that community members will find difficult.</div>
+      </div>
+    </div>
+
+    <div class="trauma-row">
+      <div class="trauma-principle-col"><div class="trauma-principle-name">Peer support</div></div>
+      <div class="trauma-content">
+        <div class="trauma-desc">Inclusion of people with lived experience of the situations being addressed as core support providers — not as adjuncts to professional services but as primary relationship-holders whose experience is the basis of their effectiveness. Peer support workers can provide what professional workers without that experience cannot: the relational credibility that comes from shared experience, and the practical knowledge of how systems actually work from the perspective of those who must navigate them.</div>
+        <div class="trauma-process"><strong>Process implications:</strong> Peer support worker roles designed as institutional roles with compensation, training, supervision, and career pathways — not as volunteer positions or informal helpers; peer workers integrated into case management teams with clearly defined collaborative relationships with professional staff; peer worker wellbeing actively managed, including trauma-aware supervision for people doing emotionally demanding work from a position of shared vulnerability.</div>
+      </div>
+    </div>
+
+    <div class="trauma-row">
+      <div class="trauma-principle-col"><div class="trauma-principle-name">Collaboration</div></div>
+      <div class="trauma-content">
+        <div class="trauma-desc">Power sharing between institutional staff and community members in the design and delivery of support — recognizing that community members are experts on their own situations and that effective support plans are co-developed rather than prescribed. Collaboration does not mean that community members must make all decisions; it means that their knowledge, preferences, and judgment are treated as primary inputs rather than secondary considerations.</div>
+        <div class="trauma-process"><strong>Process implications:</strong> Support plans developed with community members, not for them — community members present, contributing, and retaining agency over plan elements that affect their lives; regular plan review meetings structured as collaborative reassessments rather than compliance checks; community members' disagreement with plan elements documented and, where possible, accommodated rather than overridden.</div>
+      </div>
+    </div>
+
+    <div class="trauma-row">
+      <div class="trauma-principle-col"><div class="trauma-principle-name">Empowerment</div></div>
+      <div class="trauma-content">
+        <div class="trauma-desc">Designing support to build rather than replace community members' own capacity — ensuring that institutional support is a bridge to self-determination rather than a permanent dependency. Empowerment is not motivational rhetoric; it is a design requirement: support processes that create dependency rather than building capacity are not doing what they are meant to do, regardless of how much care goes into delivering them.</div>
+        <div class="trauma-process"><strong>Process implications:</strong> Support goals explicitly include community members' own capacity development alongside crisis resolution; transition planning from institutional support to self-managed or peer-managed wellbeing built into every case from the beginning; progress toward independence tracked alongside stability outcomes; community members recognized as resources for other community members, not only as recipients of institutional resources.</div>
+      </div>
+    </div>
+
+    <div class="trauma-row">
+      <div class="trauma-principle-col"><div class="trauma-principle-name">Cultural sensitivity</div></div>
+      <div class="trauma-content">
+        <div class="trauma-desc">Recognition of the specific cultural, historical, and community contexts that shape community members' experiences of institutions, their understanding of help and support, and their capacity to trust institutional actors. Cultural sensitivity is not a surface adaptation of institutional processes for different audiences; it is the recognition that the dominant institutional culture of most support organizations is itself a culture — with specific assumptions about help, autonomy, family, and institutional relationship that are not universally shared and may actively conflict with the values and practices of the communities being served.</div>
+        <div class="trauma-process"><strong>Process implications:</strong> Cultural competency integrated into staff hiring, training, and supervision — not as a discrete training but as an ongoing organizational capacity; service co-design with community members whose cultural backgrounds differ from the institutional founding culture; community-specific historical awareness in case management practice, including awareness of the specific institutional actors whose actions have produced the trust deficits that community members bring to institutional encounters.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 6.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">6.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Provide direct member support and case management</div>
+          <div class="proc-group-desc">Case management is the primary process through which institutions provide individualized support to community members navigating complex situations — situations where needs are multiple, interconnected, and evolving over time in ways that require coordinated institutional response rather than isolated program participation. The case management relationship is, at its best, a sustained partnership between a staff member and a community member that provides continuity, coordination, advocacy, and accountability across the community member's full situation. At its worst, it is a documentation process that generates records of institutional activity while providing minimal support to the individual whose name appears in the records.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">6.1.1</div><div class="act-name">Develop case management protocols that specify intake process, needs assessment methodology, plan development, progress monitoring, and case closure — with community member participation at each stage</div></div>
+            <div class="proc-activity"><div class="act-id">6.1.2</div><div class="act-name">Implement a case management information system that maintains continuity of case knowledge across staff transitions — so that no community member must start over because their case manager changed</div></div>
+            <div class="proc-activity"><div class="act-id">6.1.3</div><div class="act-name">Design caseload management standards — maximum caseloads per case manager that allow genuine relationship rather than administrative processing; indicators for caseload adjustment when community member complexity increases</div></div>
+            <div class="proc-activity"><div class="act-id">6.1.4</div><div class="act-name">Build internal referral and warm handoff protocols — systematic processes for connecting community members to additional institutional services or external resources, with documented responsibility for follow-up</div></div>
+            <div class="proc-activity"><div class="act-id">6.1.5</div><div class="act-name">Implement case supervision — regular review of active cases by supervisors, designed to support case managers in difficult situations rather than only to audit for compliance</div></div>
+            <div class="proc-activity"><div class="act-id">6.1.6</div><div class="act-name">Track case outcomes and caseload-level patterns — identifying systemic issues that emerge across multiple cases and require program-level rather than case-level response</div></div>
+          </div>
+          <div class="act-note">Caseload management standards in 6.1.3 are the most commonly ignored process requirement in case management design — and their absence is the primary structural driver of case manager burnout. Case management organizations routinely assign caseloads that preclude genuine relationship: a case manager with 60 active cases cannot maintain meaningful connection with any of them, and the resulting work is administrative processing that satisfies institutional recording requirements while providing inadequate support. Designing and enforcing maximum caseload standards requires resource commitments that institutions consistently resist making, while the cost of their absence — in staff turnover, community member outcomes, and institutional effectiveness — is consistently underestimated.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">6.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Manage grievances, appeals, and conflict resolution</div>
+          <div class="proc-group-desc">Grievance management is the institutional accountability mechanism closest to community members — the process through which individuals who believe the institution has acted unjustly can seek redress. It is also the process most commonly designed to protect the institution rather than the community member: grievance systems in most social service and solidarity economy institutions are formally available but practically inaccessible, producing records of institutional compliance rather than genuine accountability. A genuinely functional grievance system is one that community members can actually use, that produces findings that the institution genuinely acts on, and that over time changes institutional behavior in ways that reduce the grievances that created it.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">6.2.1</div><div class="act-name">Design a grievance intake process that is accessible without institutional navigation skills — the person who most needs to file a grievance is often the one least able to navigate complex intake procedures</div></div>
+            <div class="proc-activity"><div class="act-id">6.2.2</div><div class="act-name">Establish independent grievance review — review panels or processes that include independence from the staff whose decisions are being challenged; conflict-of-interest management that is genuine rather than nominal</div></div>
+            <div class="proc-activity"><div class="act-id">6.2.3</div><div class="act-name">Provide grievance navigation support — assistance for community members who want to file grievances but need support through the process; ideally provided by peer advocates rather than institutional staff</div></div>
+            <div class="proc-activity"><div class="act-id">6.2.4</div><div class="act-name">Implement timely response standards — maximum resolution timeframes that are actually enforced; escalation procedures for unresolved grievances</div></div>
+            <div class="proc-activity"><div class="act-id">6.2.5</div><div class="act-name">Analyze grievance patterns — regular review of resolved grievances for systemic issues that require process-level rather than case-level correction; this analysis is the governance mechanism through which grievance data becomes institutional improvement</div></div>
+            <div class="proc-activity"><div class="act-id">6.2.6</div><div class="act-name">Manage community member conflicts — processes for resolving disputes between community members rather than only between community members and the institution; peer mediation capacity development</div></div>
+          </div>
+          <div class="act-note">Process 6.2.5 — analyzing grievance patterns — is the process that converts grievance management from a legal compliance function into a quality improvement function. Institutions that resolve individual grievances without examining the patterns across them are satisfying individual community members while leaving the institutional practices that generated their grievances intact. Quarterly governance review of grievance pattern data — asking "what is the institution doing consistently that generates these complaints, and what must change?" — is the accountability mechanism that makes grievance management consequential rather than procedural.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">6.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Deliver wraparound and crisis support services</div>
+          <div class="proc-group-desc">Wraparound support is the response to the reality that community members' most difficult situations rarely have a single-domain cause or a single-domain solution. Housing instability is accompanied by economic insecurity and mental health stress and family relationship strain. The single-service model — providing one type of support and expecting it to address the full situation — consistently underperforms because the supporting conditions for its effectiveness are absent. Wraparound support coordinates multiple service responses around a single individual's needs, managing the integration that community members cannot manage for themselves when their situations are most difficult. Crisis response is the most acute version of this: when a situation becomes immediately threatening, the institution must have the capacity to respond quickly, effectively, and without compounding the harm through institutional interaction.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">6.3.1</div><div class="act-name">Develop crisis response protocols — tiered response levels, clear decision criteria for escalation, designated crisis response roles, and coordination with external emergency services — designed before crisis occurs, not in the moment of one</div></div>
+            <div class="proc-activity"><div class="act-id">6.3.2</div><div class="act-name">Build 24/7 crisis support capacity — on-call staff or peer support availability for community members experiencing acute situations outside business hours; crisis situations do not observe institutional schedules</div></div>
+            <div class="proc-activity"><div class="act-id">6.3.3</div><div class="act-name">Design and implement wraparound coordination processes — multi-service coordination meetings, shared care planning, and the inter-service communication protocols that prevent service fragmentation</div></div>
+            <div class="proc-activity"><div class="act-id">6.3.4</div><div class="act-name">Develop safety planning processes for community members in high-risk situations — collaborative development of concrete plans for managing risk, with community member agency at the center</div></div>
+            <div class="proc-activity"><div class="act-id">6.3.5</div><div class="act-name">Manage critical incident response — structured processes for responding to and learning from serious adverse events involving community members, including documentation, support for affected staff, and systemic review</div></div>
+          </div>
+          <div class="act-note">Process 6.3.2 — 24/7 crisis support capacity — is among the most resource-intensive process requirements in Category 6.0 and among the most consequential. Crises that occur outside business hours — which is when many of the most acute situations arise — met with institutional voicemail produce outcomes that range from community member harm to institutional liability. Developing after-hours capacity does not necessarily require 24/7 staffing: peer support networks, on-call rotation systems, partnerships with crisis hotlines, and clearly communicated community member access to peer support can collectively address after-hours need without requiring round-the-clock institutional staffing. The design question is what coverage is appropriate for the specific community and what combination of mechanisms provides it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">6.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Facilitate peer support networks and mutual aid within the community</div>
+          <div class="proc-group-desc">Peer support is not a substitute for professional support — it is a distinct and often more effective form of support for specific kinds of need. The person who has lived through a housing crisis can offer something to someone in a current housing crisis that no professionally trained housing counselor can: the credibility of shared experience, the practical knowledge of how systems actually feel to navigate from the inside, and the relationship of equals rather than the relationship of helper and helped. Category 6.4 develops the institutional processes for building and sustaining peer support networks within the community — not as informal arrangements dependent on individual goodwill but as designed institutional infrastructure with training, supervision, compensation where possible, and the organizational support that makes sustained peer support viable.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">6.4.1</div><div class="act-name">Design and implement peer support worker programs — recruitment from the community, training in peer support methodology, supervision structures that support peer workers' own wellbeing, and career pathways that recognize peer support as professional work</div></div>
+            <div class="proc-activity"><div class="act-id">6.4.2</div><div class="act-name">Facilitate peer support groups — structured, facilitated groups where community members with shared experiences support each other, with institutional infrastructure (space, facilitation training, coordination) but community member leadership</div></div>
+            <div class="proc-activity"><div class="act-id">6.4.3</div><div class="act-name">Build mutual aid infrastructure within the community — the practices and platforms through which community members support each other directly, with the institution providing infrastructure rather than mediating every exchange</div></div>
+            <div class="proc-activity"><div class="act-id">6.4.4</div><div class="act-name">Support peer advocacy development — building community members' capacity to advocate for each other and for themselves in systems they must navigate, reducing long-term dependence on institutional advocacy</div></div>
+            <div class="proc-activity"><div class="act-id">6.4.5</div><div class="act-name">Manage peer worker wellbeing — trauma-aware supervision and support for peer workers who are providing support from a position of shared vulnerability; secondary trauma and burnout prevention specific to peer support roles</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">6.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Track and report on individual member outcomes and wellbeing</div>
+          <div class="proc-group-desc">Individual outcome tracking in Category 6.0 serves two distinct functions: it provides the case manager and community member with information needed for effective plan management, and it aggregates across cases to provide the institution with information about whether its support processes are producing the community outcomes it intends. Both functions require outcome measurement that goes beyond service delivery counting — that captures changes in community members' actual situations rather than only the support interactions the institution has provided. The tension between these two functions is that measurement designed for aggregate institutional learning can feel intrusive or surveillance-like at the individual level; measurement designed for individual case management may not aggregate in ways that produce institutional intelligence. Designing for both requires explicit attention to how measurement serves community members as well as institutional learning.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">6.5.1</div><div class="act-name">Develop individual outcome frameworks that measure change in community members' situations across multiple wellbeing domains — not only the specific needs that occasioned institutional contact but the broader conditions of community members' lives</div></div>
+            <div class="proc-activity"><div class="act-id">6.5.2</div><div class="act-name">Implement measurement practices that are useful to community members — outcome data collected in ways that support community members' own reflection on progress and goal-setting, not only institutional recording requirements</div></div>
+            <div class="proc-activity"><div class="act-id">6.5.3</div><div class="act-name">Track outcomes longitudinally — beyond case closure, maintaining contact with former community members to assess whether support produced durable change or temporary stabilization</div></div>
+            <div class="proc-activity"><div class="act-id">6.5.4</div><div class="act-name">Aggregate individual outcomes to caseload-level and institution-level analysis — identifying patterns in outcomes across cases that reveal systemic support gaps rather than only individual variations</div></div>
+            <div class="proc-activity"><div class="act-id">6.5.5</div><div class="act-name">Protect community member data — consent-based data collection, data minimization, secure storage, and clear policies about who can access case information and for what purposes; data governance that prioritizes community member privacy over institutional convenience</div></div>
+          </div>
+          <div class="act-note">Process 6.5.2 — implementing measurement practices that are useful to community members — is the process most commonly absent in outcome tracking systems designed for funders rather than for the people being served. Outcome measurement tools designed as institutional accountability instruments typically produce data that funders can analyze and community members have no use for. Measurement tools designed to support community members' own goal-setting and progress reflection — visual tracking tools, simple check-in formats, collaborative review processes — produce data that community members find useful and that, as a secondary benefit, can be aggregated for institutional reporting. Designing measurement to serve community members first typically produces better institutional data as a result, because community members engage more honestly with instruments they experience as useful rather than intrusive.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six direct support failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in direct member support and case management</div>
+
+    <div class="fail-row">
+      <div class="fail-num">C1</div>
+      <div class="fail-content">
+        <div class="fail-name">Throughput case management — processing people rather than supporting them</div>
+        <div class="fail-desc">Case management is designed and resourced for high volume with low depth: many cases per case manager, short contact times, standardized plans applied across diverse situations, and documentation as the primary output. Community members are processed through the system efficiently; their situations are inadequately understood, their plans are inadequately individualized, and the institutional record of their cases is far more complete than the institutional support they received.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Case managers carry caseloads that make genuine relationship mathematically impossible. Case plans are similar across diverse situations. Case manager turnover is high and attributed to stress; the connection between caseload and burnout is acknowledged but not addressed through caseload management. Community members describe feeling "like a file number."</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">C2</div>
+      <div class="fail-content">
+        <div class="fail-name">Inaccessible grievance — the right to complain without the ability to</div>
+        <div class="fail-desc">Grievance procedures are formally documented and legally compliant but practically inaccessible to community members who lack institutional navigation skills, literacy, or the willingness to risk their relationship with a service they depend on. The institution can demonstrate that grievance procedures exist; it cannot demonstrate that they are actually used or that they produce outcomes proportional to the legitimate grievances in the community.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Grievance filing rates are very low relative to the scale and complexity of services provided. Community members describe knowing the grievance process exists but not knowing how to use it. Staff are uncertain about the grievance process and unable to explain it to community members who ask. The institution has never received a grievance about a decision later found to be unjust.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">C3</div>
+      <div class="fail-content">
+        <div class="fail-name">Crisis unprepared — designing response after the crisis arrives</div>
+        <div class="fail-desc">The institution has no documented crisis response protocols. When crisis situations arise — as they do in any institution working with people under significant stress — response is improvised based on whoever happens to be present and whatever they happen to know. Improvised response is inconsistent, produces secondary harms through institutional interaction, and fails to draw on the institutional learning that documented protocols encode.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff cannot describe the crisis response protocol when asked. Different staff describe different procedures for the same crisis type. The institution has no documented protocols for specific crisis types it regularly encounters. Critical incidents produce ad hoc response and after-action discussion but no protocol development for the next occurrence.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">C4</div>
+      <div class="fail-content">
+        <div class="fail-name">Dependency by design — support that prevents rather than builds capacity</div>
+        <div class="fail-desc">Support processes are designed to deliver assistance but not to build community members' capacity to manage their own situations — producing relationships in which community members remain dependent on institutional support for situations they could, with appropriate investment, learn to manage independently. The dependency is often experienced by staff as evidence of ongoing need rather than as evidence of inadequate empowerment design, making it self-reinforcing.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Support plans do not include explicit capacity-building goals alongside stabilization goals. Community members' length of involvement with the institution increases over time without a corresponding increase in their independent functioning. Community members who exit support programs return at high rates with the same presenting situations. Staff describe community members as "not ready for independence" without examining what the institution has done to build the preconditions for independence.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">C5</div>
+      <div class="fail-content">
+        <div class="fail-name">Secondary harm — institutional interaction that compounds the original difficulty</div>
+        <div class="fail-desc">The institution's support interactions produce harm alongside or instead of help — through re-traumatizing community members whose histories include institutional harm, through disrespectful or dismissive encounters that confirm negative expectations about institutions, through privacy violations that expose sensitive information without consent, or through well-intentioned interventions that undermine community members' agency and dignity. Secondary harm is often invisible to the institution because the community members who experience it often do not return to report it.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Community members disengage from services after initial contact at higher rates than can be explained by need resolution. Staff report difficult or tense encounters but attribute tension to community members' resistance rather than to institutional interaction design. No trauma-informed training or design review has been conducted. Community members from specific demographic groups disengage at substantially higher rates than others — a pattern that often reflects differential secondary harm across groups with different institutional histories.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">C6</div>
+      <div class="fail-content">
+        <div class="fail-name">Staff sacrifice — sustaining support by consuming the people providing it</div>
+        <div class="fail-desc">The institution sustains its direct support capacity by relying on staff members' personal commitment to absorb workloads, emotional demands, and institutional inadequacies that the institution has not addressed structurally. Staff burnout is high, turnover is frequent, and institutional knowledge is lost at every departure. The sustainability of the support is achieved at the cost of the wellbeing of those providing it — which is both ethically unacceptable and operationally counterproductive, because burned-out staff provide worse support than well-supported staff.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff turnover in direct support roles is significantly higher than in other institutional roles. Departing staff cite stress and emotional exhaustion rather than compensation or career advancement as primary reasons for leaving. No structural response to turnover has been developed — each departure is treated as an individual rather than an institutional event. Peer workers and community-member staff are provided with no more support or lower caseloads than professional staff despite carrying additional burden from shared vulnerability.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Denver Basic Income Project and the limits of cash alone</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Denver Basic Income Project — when cash transfer needs Category 6.0</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Denver Basic Income Project, referenced in Chapter 10 for its access design innovations, provides an equally instructive Category 6.0 case study. DBIP's central design premise — that direct cash transfers to people experiencing homelessness would produce better outcomes than service-heavy case management — was validated by its outcome data: participants receiving larger cash amounts experienced greater improvements in housing stability and wellbeing than those receiving smaller amounts or services alone. Cash worked, often better than comparable investments in professional services.</div>
+      <div class="case-text">What DBIP's experience also demonstrated is that cash alone — without the wraparound support processes of Category 6.0 — consistently underperformed cash-plus-support. Participants navigating acute crises alongside their cash transfers — mental health emergencies, family disruptions, encounters with the legal system, landlord conflicts — needed the case management and crisis support infrastructure that Category 6.0 operationalizes. The peer navigators who provided that support (drawing on process group 6.4) were the highest-value element of the program's support design: they provided the trust-based relationship infrastructure that professional case managers could not replicate, while the professional case management infrastructure provided the coordination and institutional knowledge that peer relationships alone could not sustain.</div>
+      <div class="case-text">DBIP's most significant Category 6.0 contribution was its approach to the dignity tension: the program was designed from the start to treat participants as competent adults with agency over their own situations — providing cash without conditions, support without surveillance, and navigation without coercion. This approach, which operationalizes the empowerment principle of trauma-informed care across the entire program design, produced participant engagement levels and program satisfaction scores significantly higher than comparable programs with more conditional, compliance-oriented support designs.</div>
+      <div class="case-lesson"><strong>Category 6.0 lesson:</strong> DBIP's experience illustrates both the power and the limits of the resource delivery model. Cash transfers without case management support leave participants vulnerable to the crises that disrupt their ability to use resources effectively. Case management without cash leaves participants with support relationships but inadequate material conditions for the outcomes the support is designed to produce. Category 4.0 (resources) and Category 6.0 (support) are complements, not substitutes — and the dignity design principle that runs through both is the element that makes each effective.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Strong Families and the caseload standard</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Strong Families Fund — redefining what case management capacity actually requires</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Strong Families Fund, a California-based family support initiative, conducted a systematic examination of the relationship between case manager caseload and community member outcomes — a question that most case management organizations avoid examining because the findings are operationally uncomfortable. The study tracked outcomes across case managers with caseloads ranging from 15 to 80 families per case manager, controlling for community member characteristics and case complexity. The findings were unambiguous: case managers with caseloads above 25-30 families produced outcomes that were statistically indistinguishable from no case management at all for the most complex family situations. The relationship was not gradual — there was a threshold effect, above which the marginal benefit of additional case manager time fell to near zero because the minimum time required for genuine relationship and effective plan management could not be achieved.</div>
+      <div class="case-text">Strong Families used these findings to redesign their case management model with a maximum caseload of 25 families per full-time case manager — a standard that required substantially more case management capacity per family served and that consequently reduced the number of families the program could reach at comparable funding levels. The tension this created between depth of service and breadth of reach is the central resource allocation challenge of Category 6.0: serving more people with less effective support, or fewer people with genuinely effective support. Strong Families' governance chose depth, based on the evidence that breadth without depth produces neither equity nor impact.</div>
+      <div class="case-lesson"><strong>Category 6.0 lesson:</strong> The caseload standard is not an operational preference — it is a design requirement with documented outcome implications. Institutions that set caseloads based on available funding rather than on the minimum required for effective practice are making a decision to provide ineffective support at scale rather than effective support to fewer people. Making that decision transparently — acknowledging that the caseload is above the effective threshold and accepting the outcome implications — is at least honest. Making it while asserting that the support is effective is not.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>The institution either is or is not what it says it is in those moments when the scale falls away and it is present with a single person in a specific situation. Process is what makes the answer consistent.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 6.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 6.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Case management is informal and person-dependent; institutional knowledge of community members' situations lives in individual staff members, not in systems</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No documented grievance process; complaints are handled through whoever receives them without systematic process</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Crisis response is improvised; no protocols exist; staff handle crises based on personal knowledge and judgment</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Peer support happens informally among community members; institution provides no support infrastructure for it</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Outcome tracking measures service delivery; no individual wellbeing outcome measurement exists</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Case management protocols documented for major case types; case management information system in place but inconsistently used</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Formal grievance process exists; accessible to community members who know it exists; analysis of grievance patterns developing</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Crisis protocols documented for most common crisis types; staff trained though not all staff aware of protocols</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Peer support workers exist in some capacity; training and supervision developing; compensation and career pathways not yet established</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Individual outcome measurement exists for some outcomes; longitudinal tracking beginning; disaggregation by demographic subgroup developing</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Case management protocols implemented consistently across staff; case management information system actively maintained; maximum caseload standards established and enforced</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Grievance process accessible and utilized; grievance pattern analysis conducted quarterly with governance review; systemic improvements made based on grievance findings</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Crisis response protocols documented for all significant crisis types; all staff trained; 24/7 coverage addressed; critical incidents reviewed systematically</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Peer support worker program operational with training, supervision, and compensation; peer worker wellbeing actively managed; peer support integrated into case management teams</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Individual outcome measurement conducted consistently with longitudinal tracking; outcomes disaggregated by demographic subgroup; outcome patterns reviewed by governance body</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Trauma-informed practice integrated into all direct support processes; regular trauma-informed practice review and training; secondary trauma actively prevented through systemic support</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community members are involved in governance of direct support processes — in designing grievance systems, reviewing case management protocols, and evaluating support quality</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Support processes designed to build community members' independence over time; movement from institutional support toward peer support and self-management tracked and valued as an outcome</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Institution contributes direct support knowledge to peer network — case management protocols, crisis response designs, peer support frameworks shared as commons knowledge</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Staff wellbeing measured and maintained at institutional level, not only managed at individual level; structural drivers of burnout addressed through institutional design rather than individual coping</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 6.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Average case manager caseload</div>
+      <div class="kpi-cell">Mean active cases per full-time case manager — the primary structural determinant of case management quality; must be tracked against the evidence-based effective caseload threshold</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Case resolution rate and time</div>
+      <div class="kpi-cell">Percentage of active cases progressing toward stated goals within defined timeframes — measures case management effectiveness at the process level</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Grievance filing and resolution rate</div>
+      <div class="kpi-cell">Number of grievances filed relative to program scale, and percentage resolved within defined timeframes — both are important; very low filing rates may indicate inaccessible process rather than community satisfaction</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Crisis response time</div>
+      <div class="kpi-cell">Average time from crisis identification to institutional response — for life-safety situations, measured in minutes; for non-emergency crises, measured in hours</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Member wellbeing trajectory index</div>
+      <div class="kpi-cell">Composite measure of change in community members' wellbeing across multiple domains over the period of institutional support — the terminal outcome measure for Category 6.0</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Staff turnover rate — direct support roles</div>
+      <div class="kpi-cell">Annual turnover among case managers and direct support staff — a leading indicator of staff sustainability, which is a leading indicator of support quality</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Support continuation rate at 12 months</div>
+      <div class="kpi-cell">Percentage of community members who exited institutional support and had not returned to crisis-level need 12 months later — measures whether support produced durable stabilization</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community member-reported dignity score</div>
+      <div class="kpi-cell">Survey measure of whether community members experienced institutional support as respectful, dignified, and empowering — separately from satisfaction with outcomes</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 6.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 6.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Document current case management practice and assess the caseload</div>
+          <div class="seq-desc">Before building new systems, document what the institution currently does in direct support: how cases are taken on, how plans are developed, how progress is tracked, how staff are supervised, and what caseloads are. Compare current caseloads to evidence-based effective caseload thresholds for the specific case types served. This assessment will typically reveal that the institution is operating above the threshold at which effective relationship-based support is possible — and will require a resource and prioritization conversation about whether to serve fewer people more effectively or continue current reach with documented quality limitations.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Current case management practice documented; caseload assessment completed and compared to effectiveness thresholds; governance body has reviewed and made an explicit decision about caseload standards and their implications for program reach.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement a case management information system and protocol</div>
+          <div class="seq-desc">Create the infrastructure that makes case knowledge institutional rather than personal: a case management information system that maintains continuity across staff transitions, and documented protocols for intake, needs assessment, plan development, and case closure. The protocol does not need to be elaborate — a well-designed simple protocol is more useful than an elaborate one that staff cannot follow consistently. Start with the minimum that would allow a new case manager to pick up an active case without starting over from the beginning.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Case management information system implemented and actively used by all case managers; case management protocol documented and followed consistently; new case manager onboarding process developed that uses the information system rather than informal knowledge transfer.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Design and document crisis response protocols for the most common crisis types</div>
+          <div class="seq-desc">Identify the three to five crisis types that occur most frequently in the community the institution serves. For each, develop a documented response protocol: what constitutes a crisis of this type, who is responsible for responding, what the initial response looks like, what escalation thresholds exist, how external resources are activated, and how the situation is documented and reviewed afterward. Train all staff in these protocols. Establish a regular crisis protocol review process to update protocols based on actual crisis experience.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Crisis protocols documented for all major crisis types; all staff trained and able to describe protocols accurately; after-action review conducted for all critical incidents; at least one protocol updated based on incident learning.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Make the grievance process accessible and consequential</div>
+          <div class="seq-desc">Review the current grievance process from a community member's perspective: Can someone with limited institutional navigation skills actually use it? Is there support available for community members who want to file but need help? Is the review process genuinely independent? Is there a documented pattern analysis that produces systemic change? Redesign the elements that fail these tests. Establish a quarterly governance review of grievance patterns with documented institutional response to patterns identified.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Grievance process redesigned for accessibility; grievance navigator support available; quarterly governance review of grievance patterns established; at least one systemic process change made based on grievance pattern analysis.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Launch a peer support worker program</div>
+          <div class="seq-desc">Identify community members with lived experience of the situations the institution's case management addresses and who express interest in peer support work. Develop training for the peer support role — not professional counseling training but peer support methodology, boundaries, self-care, and the institution's specific context. Establish compensation (peer support is work, and unpaid peer work is unsustainable), supervision, and career pathways. Integrate peer workers into case management teams with clearly defined collaborative roles. Develop and implement a peer worker wellbeing infrastructure from day one, before burnout becomes visible.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Peer worker program operational with at least three active peer workers; training, compensation, supervision, and career pathways established; peer workers integrated into case management teams with documented collaborative process; peer worker wellbeing infrastructure in place and functioning.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On Category 6.0 and Category 15.0 (Human Flourishing):</strong> Category 6.0 is the most proximate relationship between the institution and individual community members' wellbeing. Category 15.0 is the institutional process for measuring and cultivating flourishing at the community level. The connection is direct: Category 6.0 process 6.5 (individual outcome tracking) provides the disaggregated individual data that Category 15.0 aggregates into community-level flourishing assessment. The theory of change that connects them is that institutions that provide effective, dignified, empowering direct support to individuals are building the conditions for community flourishing — and that institutions that measure and cultivate flourishing at the community level are holding their direct support processes accountable to something larger than case resolution rates.</p>
+    <p><strong>On mandatory reporting and trust:</strong> Many direct support contexts involve mandatory reporting requirements — legal obligations to report specific categories of information to government agencies, typically involving child welfare, elder abuse, or imminent danger situations. Mandatory reporting requirements create a structural tension with the trust and confidentiality principles of trauma-informed care. The resolution is not to eliminate mandatory reporting — these requirements exist for important protective reasons — but to be completely transparent about them with community members from the first contact, so that the institution's confidentiality limits are known in advance rather than discovered in crisis. Surprise mandatory reporting destroys trust in ways that disclosed mandatory reporting does not.</p>
+    <p><strong>On the staff wellbeing imperative:</strong> The staff sustainability failure mode (C6) is unique in Category 6.0 because it is an ethical failure as well as an operational one. Institutions that sustain direct support capacity by consuming the people providing it are not only producing worse outcomes — they are exploiting the very commitment that brings people into direct support work. Building Category 6.0 without building staff wellbeing infrastructure is building the capacity to help community members on the backs of staff members. The ethical and operational imperatives align: effective direct support requires well-supported staff, and well-supported staff requires that the institution treat the sustainability of their wellbeing as a design requirement rather than an individual coping challenge.</p>
+  </div>
+
+  <div class="part-close">
+    <div class="part-close-label">End of Part III · Civic operating processes</div>
+    <div class="part-close-title">Six categories. The full arc from collective vision through direct human support.</div>
+    <div class="part-close-sub">Part IV enters the institutional support tier — the seven categories of operational infrastructure that sustain the civic operating work of Part III. Beginning with Category 7.0: Develop Human Potential, the institutional category that most directly determines whether everything in Part III is sustainable or whether it is being consumed by the humans providing it.</div>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part III · Chapter 13 · GPS 6.0</span>
+    <span class="close-next">Part IV begins: Ch. 14 — Develop human potential (GPS 7.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

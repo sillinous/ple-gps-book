@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 3 — The dual pyramids: prosperity and power</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504;
+    --bg-deep: #0c0a09;
+    --bg-primary: #141210;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.12);
+    --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3;
+    --text-secondary: #a09890;
+    --text-muted: #6b6560;
+    --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07);
+    --border-visible: rgba(201,169,110,0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 40px 120px;
+  }
+  .part-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .chapter-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.35;
+    margin-bottom: 44px;
+  }
+  .body-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--text-primary);
+  }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em;
+    font-weight: 300;
+    line-height: 0.75;
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+  }
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-visible);
+  }
+  .section-break-ornament {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+  .pullquote {
+    margin: 44px 0;
+    padding: 28px 32px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 6px 6px 0;
+  }
+  .pullquote p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .pullquote p::before { content: '\201C'; color: var(--accent); }
+  .pullquote p::after  { content: '\201D'; color: var(--accent); }
+
+  /* Dual pyramid diagram */
+  .pyramid-wrap {
+    margin: 40px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .pyramid {
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .pyramid-title-bar {
+    padding: 12px 18px;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-subtle);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .pyramid-title-bar.prosperity { color: #c9a96e; }
+  .pyramid-title-bar.power      { color: #8fa8c8; }
+
+  .pyramid-level {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .pyramid-level:last-child { border-bottom: none; }
+  .level-marker {
+    width: 36px;
+    min-width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    border-right: 1px solid var(--border-subtle);
+    padding: 14px 0;
+  }
+  .prosperity .level-marker { background: rgba(201,169,110,0.06); color: #c9a96e; }
+  .power      .level-marker { background: rgba(143,168,200,0.06); color: #8fa8c8; }
+  .level-content { padding: 14px 16px; flex: 1; }
+  .level-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .level-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* Interlocking diagram */
+  .interlock-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .interlock-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .interlock-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .interlock-row:last-child { border-bottom: none; }
+  .il-left {
+    flex: 1;
+    padding: 16px 18px;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .il-right {
+    flex: 1;
+    padding: 16px 18px;
+  }
+  .il-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .il-label.prosp { color: #c9a96e; opacity: 0.8; }
+  .il-label.powr  { color: #8fa8c8; opacity: 0.8; }
+  .il-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .il-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+  }
+  .il-connector:last-child { border-bottom: none; }
+  .il-connector-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  /* Four tensions block */
+  .tension-block {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .tension-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .tension-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .tension-row:last-child { border-bottom: none; }
+  .tension-num {
+    width: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    border-right: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    opacity: 0.75;
+    padding: 18px 0;
+  }
+  .tension-content { padding: 18px 22px; flex: 1; }
+  .tension-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+  }
+  .tension-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.77rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .tension-resolution {
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* GPS mapping block */
+  .gps-map-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .gps-map-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .gps-map-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .gps-map-row:last-child { border-bottom: none; }
+  .gps-map-level {
+    width: 120px;
+    min-width: 120px;
+    padding: 14px 16px;
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .gps-level-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .gps-level-tag {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-top: 2px;
+  }
+  .prosp-tag { background: rgba(201,169,110,0.1); color: #c9a96e; }
+  .powr-tag  { background: rgba(143,168,200,0.1); color: #8fa8c8; }
+  .both-tag  { background: rgba(180,178,169,0.1); color: #b4b2a9; }
+  .gps-map-cats {
+    padding: 14px 18px;
+    flex: 1;
+  }
+  .gps-cat-list {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .gps-cat-list strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .note-aside {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-visible);
+    border-radius: 0 6px 6px 0;
+  }
+  .note-aside p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 0.6em;
+  }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .close-next {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+  .page-number {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part I · The great decoupling</div>
+  <div class="chapter-eyebrow">Chapter 3</div>
+  <h1 class="chapter-title">The dual pyramids — prosperity and power</h1>
+  <p class="chapter-subtitle">A framework for thinking about what post-labor institutions must do simultaneously — and why neither pyramid can be built without the other</p>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Diagnosis without architecture is despair dressed as analysis. The previous two chapters established what is ending — the labor-value contract — and what exists in its place — a fragmented, under-powered ecology of institutions that were built for different conditions. This chapter turns from diagnosis to structure. It introduces the organizing framework that runs through the rest of this book: the argument that post-labor institutional design requires building two distinct hierarchical structures simultaneously, and that the failure to understand their interdependence is one of the most reliable predictors of institutional failure in the solidarity economy.</p>
+
+    <p>The framework is called the dual pyramids. It is not a theory of everything. It does not explain all the complexity of the transition or prescribe in detail what any particular institution should build. What it does is something more useful at this stage of the argument: it organizes the design space. It shows the terrain before the map is drawn. It answers the question that any serious institution builder has to answer before they can make coherent design choices — what is this institution ultimately for, and what must it do to be that thing durably?</p>
+
+    <p>The two pyramids are the Pyramid of Prosperity and the Pyramid of Power. Each is a hierarchy of conditions, from foundational to aspirational. Each can be built without the other — and when that happens, the partial structure fails in characteristic ways that the framework predicts. Built together, with their interdependencies understood and actively managed, they describe an institutional environment in which human beings can live with dignity, agency, and the capacity for self-determination that the labor-value contract once promised to provide — and that most people never fully received even when it was functioning at its best.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The first pyramid — prosperity</div>
+
+  <div class="body-text">
+    <p>The Pyramid of Prosperity addresses the material question: what must be true for human beings to live with economic security, to participate in their communities, and to have the freedom to pursue lives they genuinely choose rather than lives imposed by the necessity of survival? It is organized in three levels, from foundational to aspirational, each dependent on the one below it.</p>
+    <p>The pyramid structure is deliberate. The levels are not parallel options. They are a sequence. Ownership stakes without universal guarantees beneath them produce islands of security in a sea of precarity. Individual agency without the supporting levels beneath it is the libertarian fantasy — freedom for those who already have resources, the brutal liberty of the unmarked road for everyone else. The sequence matters as much as the components.</p>
+  </div>
+
+  <div class="pyramid-wrap">
+    <div class="pyramid prosperity">
+      <div class="pyramid-title-bar prosperity">Pyramid of Prosperity</div>
+      <div class="pyramid-level prosperity">
+        <div class="level-marker">↑</div>
+        <div class="level-content">
+          <div class="level-name">Individual agency</div>
+          <div class="level-desc">Entrepreneurship, creative work, voluntary contribution, investment, self-determination. The space for human flourishing when survival is secured and power is distributed.</div>
+        </div>
+      </div>
+      <div class="pyramid-level prosperity">
+        <div class="level-marker">↑</div>
+        <div class="level-content">
+          <div class="level-name">Ownership stakes</div>
+          <div class="level-desc">Cooperatives, DAOs, community wealth funds, patron equity, community land trusts, shared infrastructure. The mechanisms through which automation's gains are distributed beyond wages.</div>
+        </div>
+      </div>
+      <div class="pyramid-level prosperity">
+        <div class="level-marker">▣</div>
+        <div class="level-content">
+          <div class="level-name">Universal guarantees</div>
+          <div class="level-desc">Basic income, healthcare, housing security, education, nutrition. Provided regardless of labor participation. The floor below which no one falls — the precondition for everything above.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pyramid power">
+      <div class="pyramid-title-bar power">Pyramid of Power</div>
+      <div class="pyramid-level power">
+        <div class="level-marker">↑</div>
+        <div class="level-content">
+          <div class="level-name">Distributed governance</div>
+          <div class="level-desc">Subsidiarity, local control, federated structures, polycentric decision-making. Power exercised at the lowest effective level, accountable to those it affects.</div>
+        </div>
+      </div>
+      <div class="pyramid-level power">
+        <div class="level-marker">↑</div>
+        <div class="level-content">
+          <div class="level-name">Participation mechanisms</div>
+          <div class="level-desc">Direct democracy tools, citizen assemblies, DAOs, participatory budgeting, deliberative processes. Designed channels through which people exercise voice that actually shapes outcomes.</div>
+        </div>
+      </div>
+      <div class="pyramid-level power">
+        <div class="level-marker">▣</div>
+        <div class="level-content">
+          <div class="level-name">Transparency and access</div>
+          <div class="level-desc">Open governance data, plain-language requirements, universal digital access, legible decision processes. Democracy requires comprehension. The floor on which everything else stands.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-text">
+
+    <p>The foundation of the Pyramid of Prosperity — universal guarantees — is where the post-labor argument connects most directly to existing policy debate. Basic income, universal healthcare, housing security, and access to education are not novel concepts. They have been argued for, piloted, partially implemented, and politically contested for decades. What the pyramid framework adds is a structural claim: these are not welfare provisions or social insurance against exceptional misfortune. They are the necessary foundation for everything else the post-labor economy requires. Without them, ownership stakes are fragile — people facing acute survival pressure cannot hold long-term ownership positions or participate meaningfully in cooperative governance. Individual agency is illusory — freedom from compulsion is only real freedom when the basic conditions of survival are secure.</p>
+
+    <p>The second level — ownership stakes — is where the post-labor argument departs most sharply from both mainstream welfare state thinking and classical socialist theory. The insight is specific and structural: as automation displaces labor as the primary productive input, the gains from that displacement accrue to whoever owns the automation. The distribution of those gains therefore depends entirely on the distribution of ownership. An economy in which automation is overwhelmingly owned by shareholders produces a world in which automation's gains are overwhelmingly captured by shareholders. An economy in which automation is owned cooperatively, communally, and broadly produces a different distribution. The policy and institutional work of the second level is therefore not redistribution after the fact — taxing the gains of automation and redistributing the proceeds — but predistribution before it: designing ownership structures that distribute the gains as they are generated.</p>
+
+  </div>
+
+  <div class="pullquote">
+    <p>The question is not how to redistribute automation's gains after they accrue to shareholders. It is how to design ownership structures that distribute those gains as they are generated — before concentration makes redistribution politically impossible.</p>
+  </div>
+
+  <div class="body-text">
+    <p>The third level — individual agency — is the most easily misread. It is not the celebration of individual entrepreneurship at the expense of the collective foundation beneath it. It is the recognition that security and equitable ownership are not ends in themselves. They are conditions for something. Human beings have capacities — for creativity, for self-determination, for pursuing lives shaped by genuine choice rather than imposed necessity — that require material conditions to be expressed. The post-labor economy, at its best, is an economy in which the automation that displaces labor as a means of survival also liberates human energy for the forms of work and contribution that are most distinctively human: care, creation, relationship, community, and the open-ended pursuit of meaning. The third level names what we are trying to make possible, not just what we are trying to prevent.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The second pyramid — power</div>
+
+  <div class="body-text">
+    <p>The Pyramid of Power addresses the political question: what must be true for human beings to exercise genuine democratic agency over the conditions of their collective life? It is organized on the same three-level logic as the Pyramid of Prosperity — foundational, intermediate, aspirational — and it is equally dependent on sequence.</p>
+
+    <p>The foundation of the Pyramid of Power is transparency and access. This level is often treated as procedural or technical — make government data open, require plain language in official communications, ensure digital access — rather than as a substantive democratic precondition. The framework treats it as foundational for a specific reason: democratic participation that is formally available but practically inaccessible is not democracy. It is the performance of democracy over a system of effective exclusion. Participation mechanisms built on a foundation of opacity and inaccessibility produce the outcomes that characterize much of existing democratic practice: high formal participation rights, low actual participation, and decisions made by whoever has the resources to navigate complexity that others cannot.</p>
+
+    <p>The second level — participation mechanisms — is where the design work of democratic institutions becomes most technically demanding. There is a large and growing literature on participatory democracy tools: citizens' assemblies, deliberative mini-publics, participatory budgeting, liquid democracy, consensus processes, and the various blockchain-based governance experiments. What this literature has produced is an extensive menu of mechanisms, each with documented strengths and characteristic failure modes. What it has not yet produced — and what the GPS framework specifically addresses in Category 16 — is an account of participatory democracy as an operational system: a set of processes that can be designed, implemented, monitored, and improved over time as a core institutional function rather than an occasional event or a cultural aspiration.</p>
+
+    <p>The third level — distributed governance — is the aspirational structure toward which the lower levels build. Subsidiarity — the principle that decisions should be made at the lowest level at which they can be effectively made — is an ancient principle of political philosophy that has been partially implemented in federal systems and almost entirely ignored in the governance of private institutions. In post-labor institutional design, it describes the end state toward which participation mechanisms are building: a world in which power is genuinely distributed, in which the decisions that affect people are made by or with those people, and in which the concentration of governance authority is treated as a design failure rather than an efficiency gain.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Why neither pyramid can be built alone</div>
+
+  <div class="body-text">
+    <p>The dual pyramid framework is not simply a list of good things divided into two categories. Its analytical power comes from the interdependence claim: the two pyramids must be built simultaneously, and each is fragile without the other. This claim runs against the grain of most progressive institutional thinking, which tends to prioritize one dimension — either the material or the political — and treat the other as a downstream consequence of getting the first one right. The framework argues that this sequencing assumption is empirically wrong and historically costly.</p>
+    <p>The case for why prosperity without power fails is the easier one to make. History furnishes abundant examples of material distribution that did not translate into democratic agency — welfare states that provided economic security while concentrating governance in technocratic institutions inaccessible to ordinary citizens; cooperatives that distributed profits democratically but could not resist the capture of their governance by a small active minority; commons institutions that sustained material abundance while excluding from decision-making the populations most dependent on them. Material security without political voice produces what might be called administered dignity — a condition better than destitution but fundamentally different from self-determination. It is a condition in which people's material needs are met by institutions they do not control, which is a better outcome than unmet needs but a weaker one than genuine agency.</p>
+  </div>
+
+  <div class="pullquote">
+    <p>Material security without political voice produces administered dignity — a condition better than destitution but fundamentally different from self-determination.</p>
+  </div>
+
+  <div class="body-text">
+    <p>The case for why power without prosperity fails is less commonly made but equally important. Democratic institutions built on a foundation of material precarity are vulnerable in ways that are both direct and indirect. Directly: people facing acute survival pressure cannot participate meaningfully in governance processes that require time, information, and the cognitive bandwidth that material security enables. The correlation between economic security and civic participation is one of the most robust findings in political science. Participatory mechanisms built on top of structural inequality tend to amplify rather than counteract that inequality, as the people with the most to gain from decisions are the least able to participate in making them. Indirectly: populations experiencing economic precarity are vulnerable to political mobilization around promises to restore the old contract — the Fordist compact of secure employment and rising wages — rather than to build the new institutions that post-labor conditions require. The political economy of post-labor transition is shaped decisively by whether material foundations are secured early enough to prevent the backlash politics that hollow structures produce.</p>
+  </div>
+
+  <div class="interlock-block">
+    <div class="interlock-header">How the pyramids depend on each other — six critical interlocks</div>
+
+    <div class="interlock-row">
+      <div class="il-left">
+        <div class="il-label prosp">Prosperity</div>
+        <div class="il-text">Universal guarantees require a democratic mandate — and ongoing democratic accountability — to remain universal. Without political voice, they are re-means-tested, restricted, or eliminated when political power shifts.</div>
+      </div>
+      <div class="il-right">
+        <div class="il-label powr">Power</div>
+        <div class="il-text">Transparency and access require material resources — digital infrastructure, plain-language capacity, accessible physical spaces — that cannot be built without secure collective resource stewardship.</div>
+      </div>
+    </div>
+
+    <div class="interlock-row">
+      <div class="il-left">
+        <div class="il-label prosp">Prosperity</div>
+        <div class="il-text">Ownership stakes in cooperatives and commons require governance mechanisms that prevent minority capture. Without participation infrastructure, democratic ownership becomes nominal ownership with oligarchic governance.</div>
+      </div>
+      <div class="il-right">
+        <div class="il-label powr">Power</div>
+        <div class="il-text">Participation mechanisms require material security to function equitably. Participatory budgeting conducted among people facing housing insecurity produces decisions shaped by desperation, not deliberation.</div>
+      </div>
+    </div>
+
+    <div class="interlock-row">
+      <div class="il-left">
+        <div class="il-label prosp">Prosperity</div>
+        <div class="il-text">Individual agency — the freedom to pursue self-determined work and contribution — requires a political environment in which that freedom is protected from capture by concentrated economic power. Prosperity without distributed governance is easily reversed.</div>
+      </div>
+      <div class="il-right">
+        <div class="il-label powr">Power</div>
+        <div class="il-text">Distributed governance requires the material conditions for civic participation — time, energy, information access — that only the prosperity foundation can provide. The most participatory governance structures on paper become elite capture in practice when members cannot afford to show up.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The four tensions builders will encounter</div>
+
+  <div class="body-text">
+    <p>Understanding the framework is different from applying it. In practice, building both pyramids simultaneously in a resource-constrained institution produces four tensions that do not resolve themselves automatically. Each requires active design choices. Each is a recurring theme in the chapters that follow.</p>
+  </div>
+
+  <div class="tension-block">
+    <div class="tension-header">Tensions in simultaneous pyramid construction</div>
+
+    <div class="tension-row">
+      <div class="tension-num">T1</div>
+      <div class="tension-content">
+        <div class="tension-name">Speed versus participation</div>
+        <div class="tension-desc">Building participation mechanisms takes time that delivering material resources does not. In an acute crisis — the mutual aid scenario, the housing emergency, the immediate food need — the institution faces pressure to act fast and consult later. Doing this consistently hollows out the participation infrastructure, producing an institution that is materially effective but democratically thin. Doing it never produces an institution that is democratically principled but unable to respond to the urgency that motivated its creation.</div>
+        <div class="tension-resolution">Resolution approach: design two-speed governance — fast response authority for acute needs with mandatory retrospective deliberation and democratic review. The speed is earned by the accountability, not purchased at its expense.</div>
+      </div>
+    </div>
+
+    <div class="tension-row">
+      <div class="tension-num">T2</div>
+      <div class="tension-content">
+        <div class="tension-name">Universality versus community specificity</div>
+        <div class="tension-desc">Universal guarantees are most powerful when they are genuinely universal — not means-tested, not conditional, not requiring navigation of bureaucratic systems that systematically disadvantage the people most in need. But the specific needs of specific communities — shaped by geography, culture, history, and circumstance — are best addressed by institutions with deep local knowledge and community-specific design. The tension between universality and specificity runs through every level of both pyramids.</div>
+        <div class="tension-resolution">Resolution approach: universal floors with locally designed and governed delivery mechanisms. The guarantee is universal; the institution delivering it is community-specific. This is the subsidiarity principle applied to service design.</div>
+      </div>
+    </div>
+
+    <div class="tension-row">
+      <div class="tension-num">T3</div>
+      <div class="tension-content">
+        <div class="tension-name">Ownership access versus ownership dilution</div>
+        <div class="tension-desc">Broadening ownership — distributing stakes in cooperatives, commons, and community wealth funds to more people — requires either diluting existing stakes or growing the asset base faster than the membership grows. In practice, growth requires capital, which is either raised from members (concentrating ownership among those who can contribute) or from external investors (diluting democratic control). The capitalization problem identified in the Chapter 2 audit of cooperatives is, at its root, a tension between the second level of the Prosperity pyramid and the institutional capacity to build it.</div>
+        <div class="tension-resolution">Resolution approach: non-dilutive financing structures — patient debt, revenue-based financing, public investment, and philanthropic capital that does not require equity — combined with legal structures that explicitly cap external ownership shares. The solution is institutional design, not financial creativity alone.</div>
+      </div>
+    </div>
+
+    <div class="tension-row">
+      <div class="tension-num">T4</div>
+      <div class="tension-content">
+        <div class="tension-name">Institutional scale versus democratic intimacy</div>
+        <div class="tension-desc">Participation mechanisms that function well in small groups — consensus processes, face-to-face deliberation, direct democracy in all decisions — do not scale to large institutions without design intervention. The democratic intimacy that makes small cooperatives and mutual aid networks feel genuinely participatory is not an automatic feature of governance design; it is a product of size constraints that disappear as institutions grow. Large post-labor institutions that do not actively design for democratic intimacy at scale produce the hollow participation that characterizes large contemporary democracies: formal voice, little practical influence, and the slow attrition of member engagement.</div>
+        <div class="tension-resolution">Resolution approach: fractal governance — nested democratic structures in which small groups have genuine authority over their domains and delegate specific decisions upward rather than delegating everything. The intimacy is preserved by keeping the effective decision-making unit small, even when the institution is large.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">How the pyramids map to the GPS</div>
+
+  <div class="body-text">
+    <p>The dual pyramid framework is the conceptual architecture on which the Governance Process Standard rests. Every category in the GPS can be located in relation to one or both pyramids. Understanding this mapping is useful for two reasons: it explains why the GPS is organized the way it is, and it provides a quick diagnostic when an institution is struggling — the question "which pyramid is weak?" often points directly to the process category most in need of development.</p>
+  </div>
+
+  <div class="gps-map-block">
+    <div class="gps-map-header">GPS categories mapped to the dual pyramids</div>
+
+    <div class="gps-map-row">
+      <div class="gps-map-level">
+        <div class="gps-level-name">Universal guarantees</div>
+        <div class="gps-level-tag prosp-tag">Prosperity L1</div>
+      </div>
+      <div class="gps-map-cats">
+        <div class="gps-cat-list"><strong>4.0 Deliver Physical Resources</strong> — housing, food, tools, infrastructure<br><strong>5.0 Deliver Services &amp; Programs</strong> — healthcare, education, economic support<br><strong>6.0 Support Community Members</strong> — direct support, case management, crisis response</div>
+      </div>
+    </div>
+
+    <div class="gps-map-row">
+      <div class="gps-map-level">
+        <div class="gps-level-name">Ownership stakes</div>
+        <div class="gps-level-tag prosp-tag">Prosperity L2</div>
+      </div>
+      <div class="gps-map-cats">
+        <div class="gps-cat-list"><strong>2.0 Design &amp; Steward Public Goods</strong> — commons design, shared infrastructure<br><strong>9.0 Steward Collective Resources</strong> — treasury, community wealth, resource allocation<br><strong>10.0 Manage Commons &amp; Shared Assets</strong> — collective property, shared tools, IP commons</div>
+      </div>
+    </div>
+
+    <div class="gps-map-row">
+      <div class="gps-map-level">
+        <div class="gps-level-name">Individual agency</div>
+        <div class="gps-level-tag prosp-tag">Prosperity L3</div>
+      </div>
+      <div class="gps-map-cats">
+        <div class="gps-cat-list"><strong>7.0 Develop Human Potential</strong> — skills, purpose, capability development<br><strong>15.0 Human Flourishing &amp; Wellbeing</strong> — meaning, self-determination, life quality</div>
+      </div>
+    </div>
+
+    <div class="gps-map-row">
+      <div class="gps-map-level">
+        <div class="gps-level-name">Transparency &amp; access</div>
+        <div class="gps-level-tag powr-tag">Power L1</div>
+      </div>
+      <div class="gps-map-cats">
+        <div class="gps-cat-list"><strong>3.0 Facilitate Access &amp; Engagement</strong> — barrier removal, equitable access, onboarding<br><strong>11.0 Institutional Integrity &amp; Equity</strong> — transparency, compliance, public reporting<br><strong>8.0 Technology &amp; AI Infrastructure</strong> — digital access, open data systems</div>
+      </div>
+    </div>
+
+    <div class="gps-map-row">
+      <div class="gps-map-level">
+        <div class="gps-level-name">Participation mechanisms</div>
+        <div class="gps-level-tag powr-tag">Power L2</div>
+      </div>
+      <div class="gps-map-cats">
+        <div class="gps-cat-list"><strong>16.0 Participatory Democracy</strong> — voting, deliberation, participatory budgeting, assemblies<br><strong>14.0 AI Governance &amp; Accountability</strong> — member rights over algorithmic decisions</div>
+      </div>
+    </div>
+
+    <div class="gps-map-row">
+      <div class="gps-map-level">
+        <div class="gps-level-name">Distributed governance</div>
+        <div class="gps-level-tag powr-tag">Power L3</div>
+      </div>
+      <div class="gps-map-cats">
+        <div class="gps-cat-list"><strong>1.0 Collective Vision &amp; Governance Strategy</strong> — purpose, governance structures, accountability<br><strong>12.0 Inter-Institutional Relations</strong> — federation, coalition, polycentric coordination</div>
+      </div>
+    </div>
+
+    <div class="gps-map-row">
+      <div class="gps-map-level">
+        <div class="gps-level-name">Both pyramids</div>
+        <div class="gps-level-tag both-tag">Foundation</div>
+      </div>
+      <div class="gps-map-cats">
+        <div class="gps-cat-list"><strong>13.0 Evolve Institutional Capabilities</strong> — learning, R&amp;D, knowledge management: required for both pyramids to improve<br><strong>11.0 Institutional Integrity &amp; Equity</strong> — spans both as the accountability layer for all processes</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">A frame, not a formula</div>
+
+  <div class="body-text">
+
+    <p>The dual pyramid framework is the most condensed statement of what post-labor institutional design is trying to accomplish. It can be held in the mind in a moment: two pyramids, each with three levels, each requiring the other. But it would be a mistake to treat it as a formula — a decision tree that produces institutional designs automatically if the inputs are correct.</p>
+
+    <p>The framework is a frame. It clarifies what questions to ask and in what order. It provides a diagnostic vocabulary for understanding why institutions that seem well-designed are underperforming — usually because one pyramid is significantly weaker than the other, or because a lower level in one pyramid is less developed than the upper levels it is supposed to be supporting. It maps cleanly to the GPS categories, which means it provides a bridge between conceptual clarity and operational detail.</p>
+
+    <p>What it does not provide is the answer to any specific design question. Should this institution use token-weighted voting or one-member-one-vote for governance decisions? Should it pursue capitalization through patient debt or community share offerings? Should it prioritize building the participation mechanisms before the service delivery infrastructure, or the reverse? These questions require judgment — judgment informed by local context, resource constraints, community relationships, and the specific problems the institution was built to address. No framework eliminates judgment. A good framework makes judgment better-informed.</p>
+
+    <p>The rest of this book is the attempt to make judgment better-informed, one process category at a time. The dual pyramid framework is the reason the process categories are organized the way they are. It is the thread that runs through every chapter and connects the operational detail of any single process to the larger purpose it serves. Before entering the detail, it is worth holding the whole picture: two pyramids, built together, pointing toward a world in which the end of the labor-value contract is not a catastrophe but a threshold — the beginning of institutional arrangements adequate to what human beings actually need to live well.</p>
+
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the framework's origins:</strong> The dual pyramid structure draws on and synthesizes several existing frameworks in the PLE literature, including David Shapiro's post-labor economics model, Ostrom's polycentric governance theory, and the social solidarity economy literature developed through the RIPESS network and related institutions. It is not a claim of original theory but a synthesis designed for institutional design application. Where it departs from existing frameworks, it does so to serve the specific purpose of this book: mapping a framework onto operational processes that institutions can actually develop and improve.</p>
+    <p><strong>On what the framework leaves out:</strong> The dual pyramid framework does not directly address ecological sustainability — the relationship between post-labor institutions and the biophysical systems they depend on. This is a significant omission that reflects the book's institutional focus rather than a judgment that ecological conditions are secondary. The GPS does address this partially through Category 2 (Steward Public Goods) and Category 10 (Manage Commons), but a full integration of ecological sustainability into the framework is identified as a priority for future development.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part I · Chapter 3</span>
+    <span class="close-next">Ch. 4 — From policy to institution: the design gap →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

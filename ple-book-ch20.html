@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 20 — Evolve Institutional Capabilities (GPS 13.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --inst: #378ADD; --inst-dim: rgba(55,138,221,0.08);
+    --inst-text: #7ab8f0; --inst-border: rgba(55,138,221,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.inst { background: var(--inst-dim); color: var(--inst-text); border: 1px solid var(--inst-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--inst); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--inst-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--inst); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--inst); background: var(--inst-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--inst-text); }
+  .pullquote p::after { content: '\201D'; color: var(--inst-text); }
+
+  /* Learning organization typology */
+  .learning-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .learning-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .learning-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+  .learning-row:last-child { border-bottom: none; }
+  .lc { padding: 14px 18px; background: var(--bg-secondary); }
+  .lc.alt { background: var(--bg-primary); }
+  .lc-label { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .lc-label.single { color: var(--m1t); opacity: 0.85; }
+  .lc-label.double { color: var(--inst-text); opacity: 0.85; }
+  .lc-text { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Strategic renewal cycle */
+  .renewal-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .renewal-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .renewal-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .renewal-row:last-child { border-bottom: none; }
+  .renewal-phase { width: 90px; min-width: 90px; padding: 14px 12px; border-right: 1px solid var(--border-subtle); background: var(--inst-dim); display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+  .renewal-phase-name { font-family: 'Crimson Pro', serif; font-size: 0.88rem; font-weight: 600; color: var(--inst-text); line-height: 1.2; }
+  .renewal-phase-num { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); letter-spacing: 0.06em; }
+  .renewal-content { padding: 14px 18px; flex: 1; }
+  .renewal-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .renewal-trap { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .renewal-trap strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--inst-dim); color: var(--inst-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--inst-dim); border-bottom: 1px solid var(--inst-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--inst-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--inst-text); font-weight: 500; }
+
+  /* Sequence */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  /* Part IV close */
+  .part-close { margin-top: 64px; padding: 32px; border: 1px solid var(--border-visible); border-radius: 8px; background: var(--bg-secondary); text-align: center; }
+  .part-close-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+  .part-close-title { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.4; }
+  .part-close-sub { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part IV · Institutional support processes</div>
+  <div class="chapter-eyebrow">Chapter 20 · GPS Category 13.0</div>
+  <h1 class="chapter-title">Evolve institutional capabilities</h1>
+  <p class="chapter-subtitle">The institution that cannot learn from itself cannot improve — how strategic planning, institutional learning, innovation discipline, and managed adaptation combine to make post-labor organizations genuinely capable of becoming more of what they intend to be</p>
+  <div class="cat-meta">
+    <span class="cat-pill inst">Institutional Support</span>
+    <span class="cat-pill inst">Institutional learning</span>
+    <span class="cat-pill inst">Strategic renewal</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">22 processes</span>
+    <span class="cat-pill neutral">14 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Seven institutional support categories precede this one — human development, technology, financial stewardship, asset governance, integrity, inter-institutional relations, and the governance and compliance infrastructure that holds the others together. Category 13.0 is the process that asks what all of those categories produce over time: whether the institution is getting better at what it does, whether it is remaining relevant to the community it serves as conditions change, whether it is translating its accumulated experience into genuine capability improvement rather than only into accumulated history. It is the meta-process — the process of examining and improving the processes — and it is also the process that is easiest to defer, easiest to reduce under resource pressure, and most consequential in its absence.</p>
+
+    <p>Institutional capability evolution requires two distinct learning capacities that organizations frequently conflate. The first is single-loop learning: detecting and correcting deviations from existing goals and standards — improving how the institution does what it already does. The second is double-loop learning: examining the goals and standards themselves — questioning whether the institution should be doing what it is doing, and whether the assumptions underlying its work remain valid as the world it operates in changes. Single-loop learning produces operational improvement. Double-loop learning produces strategic renewal. Both are necessary; neither substitutes for the other. Institutions that excel at single-loop learning become progressively better at work that may be progressively less relevant. Institutions that pursue double-loop learning without single-loop discipline produce strategic insights they cannot operationalize because their execution capability is inadequate.</p>
+
+    <p>Category 13.0 is where the GPS framework becomes explicitly recursive — where the processes of all other categories are themselves subjected to assessment, learning, and improvement. It is the process through which the institution asks: Are our governance processes producing the governance we need? Are our equity processes closing the gaps we identified? Are our financial processes building the resilience we said we needed? Are our community benefit processes producing the outcomes they were designed to produce? And, most difficult of all: Are the answers to these questions actually changing how we operate, or are we producing assessment findings that confirm our existing approaches and then continuing unchanged? The institutions that have built Category 13.0 capability can answer these questions honestly. The institutions that have not have mistaken the production of assessments for the practice of learning.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Single-loop and double-loop learning — the two speeds of institutional evolution</div>
+
+  <div class="body-text">
+    <p>The distinction between single-loop and double-loop learning — developed by Chris Argyris and Donald Schön in their foundational work on organizational learning — is the analytical framework that determines what kind of institutional evolution Category 13.0 is designed to produce. Most institutions have some single-loop learning capacity and very little double-loop learning capacity; the asymmetry is not accidental. Single-loop learning is operationally comfortable — it improves execution of existing commitments within existing frameworks. Double-loop learning is organizationally threatening — it questions whether the existing commitments and frameworks are adequate, which requires the institution to hold open the possibility that it has been wrong about something important. The processes that produce double-loop learning must actively counteract the organizational defenses that make it uncomfortable.</p>
+  </div>
+
+  <div class="learning-block">
+    <div class="learning-header">Single-loop versus double-loop learning — what each examines and what it produces</div>
+
+    <div class="learning-row">
+      <div class="lc">
+        <div class="lc-label single">Single-loop learning</div>
+        <div class="lc-text"><strong>The question it asks:</strong> Are we doing this correctly? Within the existing framework of goals, strategies, and assumptions, is the institution executing as it intends?<br><br>Single-loop learning detects deviations from targets — program completion rates below benchmark, financial ratios outside target range, equity gaps wider than committed levels — and adjusts actions to bring performance back within acceptable parameters. It takes the targets and benchmarks themselves as given.</div>
+      </div>
+      <div class="lc alt">
+        <div class="lc-label double">Double-loop learning</div>
+        <div class="lc-text"><strong>The question it asks:</strong> Are we doing the right thing? Is the existing framework of goals, strategies, and assumptions still valid given what the institution has learned from its work and what has changed in the community and environment it operates in?<br><br>Double-loop learning examines the targets and benchmarks themselves — whether they are the right measures for the right outcomes — and the assumptions underlying the institution's approach. It takes nothing as given except the mission.</div>
+      </div>
+    </div>
+
+    <div class="learning-row">
+      <div class="lc">
+        <div class="lc-label single">What it produces when working</div>
+        <div class="lc-text">Operational improvement across all GPS categories — programs that become more effective through iteration, processes that become more efficient through refinement, equity gaps that narrow through targeted intervention. Single-loop learning is the engine of consistent quality improvement across the institution's existing operations.</div>
+      </div>
+      <div class="lc alt">
+        <div class="lc-label double">What it produces when working</div>
+        <div class="lc-text">Strategic renewal — the recognition that community conditions have changed in ways that require different approaches, that the institution's existing theory of change is insufficient, that the GPS framework needs updating, or that the institution's fundamental model requires redesign. Double-loop learning is the engine of institutional relevance across changing conditions.</div>
+      </div>
+    </div>
+
+    <div class="learning-row">
+      <div class="lc">
+        <div class="lc-label single">What blocks it</div>
+        <div class="lc-text">Inadequate feedback infrastructure — measurement systems that collect data without analysis, analysis that doesn't reach decision-makers, and decision-makers who don't have clear authority to change what the data reveals should be changed. Single-loop learning is blocked by the structural failures described in Category 5.5 (evaluation without iteration) and Category 11.2 (accountability without consequence).</div>
+      </div>
+      <div class="lc alt">
+        <div class="lc-label double">What blocks it</div>
+        <div class="lc-text">Organizational defensive routines — the collective behaviors through which institutions protect existing commitments, institutional identity, and the self-image of leaders from the threatening implications of double-loop inquiry. Organizations that have built significant identity around their current approach find double-loop learning threatening in ways that single-loop learning is not, and they develop defensive routines that prevent genuine examination of underlying assumptions.</div>
+      </div>
+    </div>
+
+    <div class="learning-row">
+      <div class="lc">
+        <div class="lc-label single">How Category 13.0 enables it</div>
+        <div class="lc-text">Through structured feedback loops, KPI monitoring processes, systematic program evaluation, and the governance mechanisms that ensure performance data drives operational decisions. Processes 13.1 (learning infrastructure) and 13.2 (strategy and planning) provide the architecture; all other GPS categories provide the data.</div>
+      </div>
+      <div class="lc alt">
+        <div class="lc-label double">How Category 13.0 enables it</div>
+        <div class="lc-text">Through structured strategic review processes that explicitly surface and examine assumptions, environmental scanning that surfaces evidence of changed conditions, and the specific governance design that creates psychological safety for genuinely challenging institutional commitments. Process 13.3 (strategic renewal) and 13.4 (innovation and adaptation) provide the double-loop learning architecture.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The strategic renewal cycle — six phases of disciplined institutional evolution</div>
+
+  <div class="body-text">
+    <p>Strategic renewal is not the same as strategic planning. Strategic planning — the process through which institutions develop multi-year plans with stated goals and implementation timelines — is a familiar governance activity. Strategic renewal is less familiar and more consequential: it is the process through which institutions examine whether their existing strategy is still adequate to their mission, whether the assumptions underlying their approach remain valid, and whether the community conditions they were designed to address have changed enough to require a fundamentally different institutional response. The six-phase renewal cycle below describes this process with enough specificity that institutions can identify where they are in it and what each phase requires.</p>
+  </div>
+
+  <div class="renewal-block">
+    <div class="renewal-header">The strategic renewal cycle — six phases and their characteristic traps</div>
+
+    <div class="renewal-row">
+      <div class="renewal-phase"><div class="renewal-phase-num">Phase 1</div><div class="renewal-phase-name">Environmental scan</div></div>
+      <div class="renewal-content">
+        <div class="renewal-desc">Systematic examination of changes in the institution's operating environment — community needs, demographic shifts, funding landscape, policy environment, technology developments, peer institution emergence or disappearance, and the broader macroeconomic and social conditions that define the context in which the institution operates. The scan generates the evidence base for strategic renewal decisions.</div>
+        <div class="renewal-trap"><strong>Characteristic trap:</strong> Conducting the environmental scan in ways that confirm existing strategies — scanning for evidence that current approaches are still relevant rather than for evidence that they may be insufficient. Confirmation-biased scanning produces environmental intelligence that justifies continuation rather than renewal.</div>
+      </div>
+    </div>
+
+    <div class="renewal-row">
+      <div class="renewal-phase"><div class="renewal-phase-num">Phase 2</div><div class="renewal-phase-name">Assumption examination</div></div>
+      <div class="renewal-content">
+        <div class="renewal-desc">Explicit surfacing and examination of the assumptions underlying the institution's current strategy — about how change happens in the community, about what the institution's role is, about what approaches are effective for which populations, and about what the institution should not do. Many of these assumptions were made at institutional founding and have not been reexamined despite accumulated evidence about their validity.</div>
+        <div class="renewal-trap"><strong>Characteristic trap:</strong> Skipping assumption examination because it is uncomfortable. Surfacing assumptions that have been implicit invites the question of whether they are valid, which threatens the institutional identity built around them. Organizations develop sophisticated avoidance of this phase while believing they are engaging in genuine strategic review.</div>
+      </div>
+    </div>
+
+    <div class="renewal-row">
+      <div class="renewal-phase"><div class="renewal-phase-num">Phase 3</div><div class="renewal-phase-name">Community input</div></div>
+      <div class="renewal-content">
+        <div class="renewal-desc">Genuine engagement with community members — particularly those most affected by the institution's work — about whether the institution's current approach is serving their needs, what is missing, and what they would change. Community input in strategic renewal is different from program evaluation feedback: it asks not only "how are our current programs working?" but "are these the programs you need, and what would you need instead?"</div>
+        <div class="renewal-trap"><strong>Characteristic trap:</strong> Community input that validates existing approaches because the community members who participate in institutional processes are those who benefit most from the current approach. Genuine strategic input requires reaching the community members who are not currently well-served — the populations whose absence from institutional processes is itself evidence of strategic gaps.</div>
+      </div>
+    </div>
+
+    <div class="renewal-row">
+      <div class="renewal-phase"><div class="renewal-phase-num">Phase 4</div><div class="renewal-phase-name">Strategic choice</div></div>
+      <div class="renewal-content">
+        <div class="renewal-desc">The governance decision about what to continue, what to change, and what to stop — the explicit choices that translate environmental scanning, assumption examination, and community input into institutional direction. Strategic choice is the governance moment when the institution decides whether the evidence gathered warrants renewal or confirms continuation. It requires the institutional courage to act on uncomfortable findings rather than shelving them in a planning document that is never implemented.</div>
+        <div class="renewal-trap"><strong>Characteristic trap:</strong> Strategic choice that adds new priorities without retiring old ones — the "strategic plan as wish list" pattern in which every existing program is maintained and new priorities are added on top of existing capacity. Genuine strategic choice requires the institution to decide what it will not do, which is the organizational equivalent of declining a relationship rather than just accepting all of them.</div>
+      </div>
+    </div>
+
+    <div class="renewal-row">
+      <div class="renewal-phase"><div class="renewal-phase-num">Phase 5</div><div class="renewal-phase-name">Capability building</div></div>
+      <div class="renewal-content">
+        <div class="renewal-desc">Developing the specific capabilities — human, technological, financial, relational — required to implement the strategic choices made in Phase 4. Strategy without capability development produces strategic commitments that cannot be executed. Category 13.0 closes the loop between strategic choice and capability development by explicitly connecting the renewal cycle to the human development processes of Category 7.0, the technology processes of Category 8.0, and the financial processes of Category 9.0.</div>
+        <div class="renewal-trap"><strong>Characteristic trap:</strong> Capability building that is disconnected from the strategic choices it is supposed to implement — staff development investments in skills adjacent to the new strategy rather than required for it, technology investments that improve current operations rather than enabling new ones, and financial development that funds existing programs rather than building capacity for strategic changes.</div>
+      </div>
+    </div>
+
+    <div class="renewal-row">
+      <div class="renewal-phase"><div class="renewal-phase-num">Phase 6</div><div class="renewal-phase-name">Learning integration</div></div>
+      <div class="renewal-content">
+        <div class="renewal-desc">Capturing, documenting, and integrating the learning from the renewal cycle itself — what the institution learned about its assumptions, its community, its capabilities, and its governance through the process of renewal. Learning integration ensures that the renewal cycle produces institutional knowledge as well as institutional direction, so that each renewal cycle builds on the learning of previous ones rather than starting fresh each time.</div>
+        <div class="renewal-trap"><strong>Characteristic trap:</strong> Treating the strategic plan as the output of the renewal cycle and learning integration as an optional post-hoc activity. The learning generated in Phases 1 through 5 — about environmental conditions, about assumption validity, about community perspectives — is more valuable as ongoing institutional knowledge than as input to a plan document. Institutions that capture only the plan lose the learning.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 13.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">13.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Build and maintain institutional learning infrastructure</div>
+          <div class="proc-group-desc">Learning infrastructure is the system through which the institution collects, synthesizes, and routes information about its performance and environment to the people and governance bodies who need it to make better decisions. It is distinct from data collection — data collection produces raw information, learning infrastructure produces the analysis, interpretation, and routing that converts raw information into institutional knowledge. Most post-labor institutions collect substantially more data than they learn from, because they have data collection infrastructure without learning infrastructure: reports that are produced but not reviewed, evaluations that are conducted but not acted on, and performance information that arrives at governance meetings as documentation of the past rather than as intelligence for the future.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">13.1.1</div><div class="act-name">Design an integrated performance management system — connecting data from all major GPS categories into a coherent institutional performance picture rather than siloed category-level reporting</div></div>
+            <div class="proc-activity"><div class="act-id">13.1.2</div><div class="act-name">Implement knowledge management infrastructure — systems and practices for capturing, organizing, and making accessible the institutional knowledge generated through operations, evaluation, and external learning</div></div>
+            <div class="proc-activity"><div class="act-id">13.1.3</div><div class="act-name">Design governance learning routines — structured processes for reviewing performance information at governance body meetings in ways that produce questions and decisions rather than only passive receipt of reports</div></div>
+            <div class="proc-activity"><div class="act-id">13.1.4</div><div class="act-name">Build external intelligence gathering — systematic monitoring of relevant developments in technology, policy, funding, peer institution practice, and community conditions that affect the institution's strategy</div></div>
+            <div class="proc-activity"><div class="act-id">13.1.5</div><div class="act-name">Develop after-action review practices — structured learning processes following significant institutional events (program launches, governance transitions, financial crises, major successes) that capture lessons while the experience is fresh</div></div>
+          </div>
+          <div class="act-note">Process 13.1.3 — governance learning routines — is the most consequential learning infrastructure process for most post-labor institutions, because governance body meetings are where performance information is most frequently presented and least frequently learned from. Governance meeting design that presents performance information as a consent agenda item — for acknowledgment rather than discussion — converts the governance review function into a ritual of received information rather than a genuine learning process. Redesigning governance meetings to require substantive engagement with performance information — through structured questions, pre-read materials, and discussion time proportional to the strategic significance of performance findings — is the governance design change that most directly improves the institution's learning-from-performance capacity.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">13.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Govern strategic planning and institutional direction-setting</div>
+          <div class="proc-group-desc">Strategic planning is the governance process through which the institution translates its mission and environmental analysis into specific multi-year commitments about what it will do, how it will do it, what resources it will build, and what success will look like. It is also the governance process most frequently performed poorly: producing documents rather than decisions, consulting stakeholders rather than genuinely incorporating community knowledge, and generating plans that are referenced at launch and then filed until the next planning cycle begins. The design of strategic planning as a governance process determines whether it produces genuine institutional direction or institutional ritual.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">13.2.1</div><div class="act-name">Design a participatory strategic planning process — community members, staff, governance body, and key external stakeholders genuinely shape direction rather than validate pre-determined leadership preferences</div></div>
+            <div class="proc-activity"><div class="act-id">13.2.2</div><div class="act-name">Develop strategic plan documents that are decision-forcing — specifying what the institution will prioritize and, explicitly, what it will not do; plans that require trade-offs produce more genuine direction than plans that accommodate all existing activities</div></div>
+            <div class="proc-activity"><div class="act-id">13.2.3</div><div class="act-name">Connect strategic plan to operational resource allocation — ensuring that budget, staff allocation, and capability development decisions reflect strategic priorities; strategy that does not influence resource allocation is aspirational rather than directive</div></div>
+            <div class="proc-activity"><div class="act-id">13.2.4</div><div class="act-name">Implement structured strategy monitoring — quarterly reviews of progress against strategic commitments at governance level; not as compliance reporting but as genuine assessment of whether the strategy is working and whether adjustments are needed</div></div>
+            <div class="proc-activity"><div class="act-id">13.2.5</div><div class="act-name">Manage mid-cycle strategy adjustment — explicit governance processes for adjusting strategic direction when evidence warrants it, rather than holding rigid to a plan document through changed conditions</div></div>
+          </div>
+          <div class="act-note">Process 13.2.3 — connecting strategic plan to operational resource allocation — is the process that distinguishes genuine strategic planning from ritualistic strategic planning. A strategic plan whose priorities are not reflected in budget allocation, staff assignment, and capability development investment is a document about intention rather than a governance commitment about action. The test: can every significant budget line be connected to a specific strategic commitment? If not, either the strategic plan does not reflect real institutional priorities or the budget does not reflect the strategic plan — in either case, the governance process has failed to produce the alignment that strategic planning is supposed to produce.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">13.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Drive strategic renewal and organizational adaptation</div>
+          <div class="proc-group-desc">Strategic renewal is the deeper and less frequent process that examines whether the institution's fundamental approach — its theory of change, its organizational model, its role in the ecosystem — remains appropriate to the community conditions and strategic opportunities it faces. Where strategic planning works within the existing institutional model to optimize it, strategic renewal questions the model itself. It is the governance process that enables post-labor institutions to remain relevant as the conditions that gave rise to them change — a necessary capacity in the period of economic transition that this framework is designed to navigate.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">13.3.1</div><div class="act-name">Conduct periodic strategic renewal assessments — every three to five years, a deliberate examination of whether the institution's fundamental model remains the best available response to its mission and community context</div></div>
+            <div class="proc-activity"><div class="act-id">13.3.2</div><div class="act-name">Build assumption surfacing practices — structured processes for making explicit the assumptions underlying the institution's strategy and examining their current validity; facilitated by external parties where appropriate to reduce the organizational defenses that internal facilitation activates</div></div>
+            <div class="proc-activity"><div class="act-id">13.3.3</div><div class="act-name">Manage strategic pivots — when renewal assessment determines that a significant strategic change is required, governance processes for managing the transition without losing institutional capacity or community trust</div></div>
+            <div class="proc-activity"><div class="act-id">13.3.4</div><div class="act-name">Develop scenario planning capacity — building the institution's ability to think through multiple possible futures and develop response strategies for each, rather than planning for a single predicted future that may not materialize</div></div>
+            <div class="proc-activity"><div class="act-id">13.3.5</div><div class="act-name">Assess institutional model fitness — periodic examination of whether the institution's legal form, governance structure, size, and operating model remain appropriate for its current mission and context</div></div>
+          </div>
+          <div class="act-note">Process 13.3.2 — assumption surfacing — is the process that enables double-loop learning and the one most systematically avoided. Surfacing assumptions requires asking "why do we do this?" in ways that open the possibility that the answer is "because we always have" rather than "because it's the best current response to our mission." External facilitation — by peer practitioners, by consultants with solidarity economy experience, or by governance peers — significantly reduces the organizational defensive responses that internal assumption surfacing activates, because the assumptions are less personally identified with external facilitators and governance members are less likely to experience challenge as personal attack when it comes from outside institutional hierarchy.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">13.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Design and manage innovation, experimentation, and capability development</div>
+          <div class="proc-group-desc">Innovation in post-labor institutions has a different character from innovation in commercial enterprises. Enterprise innovation is typically oriented toward competitive advantage — developing capabilities that outperform competitors and capture market share. Post-labor innovation is oriented toward mission advancement — developing capabilities that better serve community needs, that address unmet needs the institution has not previously reached, or that demonstrate approaches that the solidarity economy needs to learn and scale. The institutional challenge is creating the protected space for innovation — the time, resources, and psychological safety for experimentation — within the operational context of an institution whose primary obligation is to current community members who depend on its programs.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">13.4.1</div><div class="act-name">Develop an innovation portfolio — distinguishing between incremental improvements to existing programs (the majority of innovation investment), adjacent innovations that extend the institution's reach or approach, and transformative experiments that test fundamentally different models</div></div>
+            <div class="proc-activity"><div class="act-id">13.4.2</div><div class="act-name">Create protected innovation capacity — explicit allocation of staff time, financial resources, and governance attention to innovation that is not subject to continuous displacement by operational needs</div></div>
+            <div class="proc-activity"><div class="act-id">13.4.3</div><div class="act-name">Design disciplined experimentation processes — small-scale, well-designed experiments with clear learning objectives and governance criteria for expansion, modification, or termination; innovation without experimental discipline produces expensive failures with little learning</div></div>
+            <div class="proc-activity"><div class="act-id">13.4.4</div><div class="act-name">Build failure tolerance and learning infrastructure — explicit institutional norms and governance processes that treat experiment failures as learning investments rather than as performance failures; failure tolerance is the cultural precondition for genuine innovation</div></div>
+            <div class="proc-activity"><div class="act-id">13.4.5</div><div class="act-name">Develop capabilities aligned with strategic direction — intentional capability development that builds toward future strategic commitments rather than only improving current operational performance</div></div>
+          </div>
+          <div class="act-note">Process 13.4.2 — protected innovation capacity — is the design decision that determines whether innovation investment is real or nominal. Innovation time and resources that are not explicitly protected from operational displacement will be displaced during every resource pressure cycle — which is precisely when the institution most needs to be developing the capabilities that will allow it to operate differently. The constraint is real: innovation investment competes with current service delivery for the same resource pools. The resolution — treating innovation capacity as a fixed budget line rather than a residual after operational needs are met — requires the institutional governance commitment that turns "we value innovation" from a value statement into a resource allocation decision.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">13.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Manage change, transition, and institutional transformation</div>
+          <div class="proc-group-desc">Change management is the process of navigating the human and organizational dimensions of institutional transition — the staff anxieties, governance tensions, community member concerns, and operational disruptions that accompany any significant institutional change. It is among the least systematized and most consequential of institutional processes: changes that are strategically sound and operationally well-designed frequently fail not because of their technical merits but because of the change management failures that produce staff resistance, governance division, and community loss of trust. Conversely, change management attention that is not grounded in substantive strategic and operational preparation becomes the institutional equivalent of rearranging the deck chairs. Both dimensions are required.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">13.5.1</div><div class="act-name">Design change management processes for major transitions — stakeholder communication, governance body management, staff engagement, and community member information for changes that significantly affect institutional operations or community members</div></div>
+            <div class="proc-activity"><div class="act-id">13.5.2</div><div class="act-name">Manage leadership and governance transitions — the specific change management requirements of leadership succession and governance body renewal, which create institutional uncertainty that must be managed proactively rather than reactively</div></div>
+            <div class="proc-activity"><div class="act-id">13.5.3</div><div class="act-name">Develop organizational resilience infrastructure — the institutional capacities (financial reserves, knowledge documentation, leadership pipeline, external relationships) that allow the institution to manage disruption without capability loss</div></div>
+            <div class="proc-activity"><div class="act-id">13.5.4</div><div class="act-name">Conduct institutional health assessments — periodic comprehensive assessments of institutional capacity, culture, and capability across all GPS categories; the GPS maturity assessment described in Chapter 7 (Using the Maturity Model) applied as an ongoing governance practice rather than as a one-time diagnostic</div></div>
+            <div class="proc-activity"><div class="act-id">13.5.5</div><div class="act-name">Manage institutional lifecycle transitions — the specific governance and operational requirements of major institutional lifecycle events: founding, scaling, merging, restructuring, and dissolution — each of which imposes distinct capability demands that standard operating processes are not designed for</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six institutional capability evolution failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in institutional learning, strategy, and evolution</div>
+
+    <div class="fail-row">
+      <div class="fail-num">E1</div>
+      <div class="fail-content">
+        <div class="fail-name">Data rich, learning poor — the institution that measures without improving</div>
+        <div class="fail-desc">The institution collects substantial data about its performance — program outcomes, equity metrics, financial ratios, staff satisfaction scores — without developing the analysis, interpretation, and governance routines that convert that data into institutional learning and changed behavior. Reports are produced on schedule; findings are received at governance meetings; performance continues on the same trajectory regardless of what the data shows. The institution has the form of a learning organization without its function.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Performance reports are consistently received at governance meetings without substantive discussion. Evaluation findings from previous years have not produced documented changes in program design, resource allocation, or operational process. Staff can describe what data the institution collects but cannot describe what decisions that data has informed. The same performance gaps appear in multiple consecutive annual reports without governance accountability for addressing them.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">E2</div>
+      <div class="fail-content">
+        <div class="fail-name">Strategic plan as shelf document — plans produced but not implemented</div>
+        <div class="fail-desc">The institution invests significant governance and staff time in strategic planning processes that produce well-designed documents that are then shelved until the next planning cycle begins. The plan is not connected to budget allocation, staff role design, or governance review priorities. Staff who participated in planning cannot describe what has changed as a result of the plan. The governance body does not review strategic plan implementation at any governance meeting in the plan period. The planning process is a ritual of institutional legitimacy rather than a governance decision about institutional direction.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Budget line items cannot be connected to specific strategic plan commitments. Strategic plan implementation has not been a governance agenda item in the past six months. Staff describe the strategic plan as a document rather than as guidance for their work. The institution is doing the same things in the third year of a strategic plan that it was doing in the first year, regardless of what the plan said about direction.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">E3</div>
+      <div class="fail-content">
+        <div class="fail-name">Strategic inertia — the institution that cannot change direction</div>
+        <div class="fail-desc">The institution's strategy has not changed significantly despite evidence that community conditions have changed, that its theory of change has not been validated, or that more effective approaches are available. The inertia is produced by the accumulation of organizational commitments — to current programs, to current funders, to current staff roles, to the institutional identity built around the current approach — that make strategic change politically costly regardless of its strategic merit. The institution continues doing what it has always done, doing it better through single-loop learning, and becoming progressively less relevant to the changed conditions it was designed to address.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution's programs and approach are substantially unchanged from five years ago despite documented changes in community conditions. Environmental scanning, when conducted, consistently confirms existing strategies rather than surfacing evidence of needed adaptation. Governance discussions about strategic change consistently conclude with decisions to continue current approaches. Staff describe the institution's theory of change as "established" rather than as a hypothesis under continuous examination.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">E4</div>
+      <div class="fail-content">
+        <div class="fail-name">Innovation theater — experiments that never scale or inform</div>
+        <div class="fail-desc">The institution invests in innovation — pilot programs, experimental projects, capacity-building initiatives — that produce interesting learnings but never inform the institution's core operations. Pilots are completed and evaluations conducted; the evaluations are positive; the programs are not scaled or integrated. The innovation investment produces demonstration projects that signal institutional dynamism without producing the operational learning that changes how the institution serves its community.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution has a consistent pattern of pilots that are described as "promising" but not scaled. Innovation investment is concentrated in new program development without corresponding investment in integrating successful innovations into existing operations. The institutional learning from completed pilots cannot be traced in any subsequent operational or programmatic change.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">E5</div>
+      <div class="fail-content">
+        <div class="fail-name">Change crisis — transition without management</div>
+        <div class="fail-desc">Significant institutional changes — strategic pivots, leadership transitions, program restructuring, organizational mergers or dissolutions — are managed without the specific change management processes that navigate the human and organizational dimensions of transition. Staff experience the change as disruptive and inexplicable. Community members lose trust in the institution's reliability. Governance bodies are divided by the change rather than united by a managed process. The change that was strategically sound produces organizational damage that undermines the strategy it was designed to implement.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Major institutional changes are announced to staff and community members as decisions rather than as processes they have been prepared for. Staff turnover spikes following major announcements. Community members report confusion or concern about institutional direction changes through informal channels rather than through institutional communication. Governance body discussions about major changes are characterized by division rather than deliberation.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">E6</div>
+      <div class="fail-content">
+        <div class="fail-name">Capability-strategy gap — strategy without the capacity to execute it</div>
+        <div class="fail-desc">The institution makes strategic commitments — to new programs, to expanded reach, to technology transformation, to equity improvements — without developing the capabilities required to execute them. The strategic commitments are genuine; the capability development is insufficient. Staff experience the resulting performance gaps as personal failure rather than as organizational design failure. Governance bodies attribute underperformance to execution quality rather than to the structural gap between strategic ambition and institutional capacity that planning failed to close.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Strategic plan commitments consistently underperform without governance analysis of whether adequate capability development preceded the commitments. Staff describe strategic initiatives as "underfunded" or "understaffed" without that description producing governance response. Capability development investment does not reflect strategic priority — the same staff development, technology, and financial investment occurs regardless of strategic direction changes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Centro de los Derechos del Migrante and mission-driven adaptation</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Centro de los Derechos del Migrante — strategic renewal through community-led learning</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Centro de los Derechos del Migrante (CDM) is a binational immigrant rights organization operating across Mexico and the United States, representing Mexican migrant workers in the US guest worker program system. Its Category 13.0 contribution is specifically in the area of processes 13.3 (strategic renewal) and 13.1 (learning infrastructure): CDM has developed an unusually rigorous practice of community-led institutional assessment that drives genuine strategic evolution rather than the confirmation of existing approaches that most institutional assessment produces.</div>
+      <div class="case-text">CDM's community-led evaluation model inverts the typical assessment hierarchy: rather than institutional staff assessing program outcomes and presenting findings to community members for feedback, CDM trains migrant worker members as evaluators who assess the institution's own performance — its responsiveness, its effectiveness, its accountability — from the perspective of the people the institution exists to serve. The evaluator-members have decision authority over the findings and recommendations, not merely input into them. This design operationalizes processes 13.1.3 (governance learning routines) and 13.3.1 (strategic renewal assessments) in ways that prevent the confirmation bias that institutional-staff-led assessment typically produces.</div>
+      <div class="case-text">CDM's strategic evolution over time — from a service provider to migrant workers to a legal rights organization to a policy advocacy organization — reflects the double-loop learning that this assessment model enables. Each strategic evolution was driven by community member assessment of what the institution was and was not accomplishing relative to the structural conditions affecting migrant workers' lives — the kind of assumption examination (process 13.3.2) that most institutions avoid because it produces uncomfortable findings about the limits of their current approaches. CDM's willingness to act on those findings — to change its institutional model in response to what its community assessment revealed — is the organizational capability that makes its strategic evolution real rather than nominal.</div>
+      <div class="case-lesson"><strong>Category 13.0 lesson:</strong> CDM's community-led evaluation model demonstrates that the most effective learning infrastructure for post-labor institutions is one that positions community members as evaluators of institutional performance rather than as subjects of institutional evaluation. When community members assess whether the institution is serving their needs effectively, the feedback is more direct, less filtered through institutional defensive routines, and more likely to surface the structural gaps that the institution needs to address. This is the Category 13.0 operationalization of the Category 16.0 principle — that community voice should shape institutional direction — applied specifically to the learning and renewal processes that determine institutional evolution.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Eileen Fisher and the organizational redesign for values alignment</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Eileen Fisher Inc. — institutional transformation through strategic renewal</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Eileen Fisher Inc., the apparel company that has transitioned toward employee ownership and B Corporation certification over the past decade, provides an instructive Category 13.0 case study in the specific challenge of process 13.3.3 (managing strategic pivots) — how to execute a significant institutional transformation that changes the ownership structure, governance model, and operating practices of an institution without losing the capabilities, culture, and community relationships that make the institution worth transforming. While Eileen Fisher is not a solidarity economy institution in the conventional sense, its transformation provides the most well-documented example available of a for-profit institution executing a strategic renewal toward collective ownership models.</div>
+      <div class="case-text">The most instructive element of the Eileen Fisher transition for Category 13.0 is the extended timeline and the explicit change management investment: the transition to partial employee ownership through the Eileen Fisher Leadership Institute and the OPUS program occurred over a multi-year period with explicit attention to the organizational culture, governance capacity, and financial structure required to make the new ownership model viable. The transition was not announced as a completed decision — it was managed as a process of developing the capabilities that the new model required while maintaining the operational effectiveness that the institution's community of employees and customers depended on. This operationalizes process 13.5.1 (designing change management for major transitions) at an institutional transformation scale.</div>
+      <div class="case-lesson"><strong>Category 13.0 lesson:</strong> The Eileen Fisher case demonstrates that strategic pivots toward collective ownership and democratic governance require the same capability development discipline as any strategic pivot — the new organizational model requires new competencies (governance literacy, democratic decision-making, financial transparency) that must be actively developed alongside the structural change rather than assumed to emerge from it. Institutions that change their governance structures without building the human capabilities required to operate those structures produce governance in name without governance in practice. Process 13.4 (innovation and capability development) must be explicitly connected to process 13.3 (strategic renewal) for transformation to be real rather than structural.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>The institution that has never asked whether it is doing the right thing — only whether it is doing things right — is an institution that has optimized itself for a world that may have already changed.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 13.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 13.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No integrated performance management system; data collected in silos without synthesis or governance-level review</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Strategic planning is episodic — conducted when required by funders or governance obligation; plans not connected to operational resource allocation</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No strategic renewal process; institutional strategy has not been fundamentally examined in more than five years</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Innovation is accidental — new approaches emerge from individual staff initiative without institutional design or governance discipline</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Major transitions are managed reactively; no change management processes; organizational resilience infrastructure absent</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Performance data collected and reported regularly; some integration across categories; governance review of performance data beginning to drive decisions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Strategic planning process participatory; plan documents produced; some connection to resource allocation; monitoring beginning</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Environmental scanning conducted; some assumption examination; strategic renewal awareness without full renewal cycle</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Innovation investment exists; some experiments conducted; learning from experiments not consistently captured or acted on</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Change management awareness; some planned transitions managed proactively; organizational resilience assessment beginning</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Integrated performance management system operational; governance learning routines producing decisions; after-action reviews conducted for major events</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Strategic plans are decision-forcing with explicit trade-offs; connected to resource allocation; quarterly strategy monitoring at governance level</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Strategic renewal cycle completed at least once; assumption examination conducted; community input incorporated in renewal; at least one strategic pivot executed</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Protected innovation capacity established; disciplined experimentation processes; learning from experiments informs core operations; failure tolerance institutionalized</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Change management processes designed and used for major transitions; organizational resilience assessed and gaps addressed; institutional health assessed across GPS categories</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Double-loop learning infrastructure operational — the institution regularly examines its own assumptions and adjusts its strategy and model in response to what it learns</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community members are active evaluators of institutional performance — not only informants to institutional evaluation but holders of evaluation authority</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Strategic renewal cycle produces measurable institutional evolution — the institution of five years ago is demonstrably different in ways driven by deliberate learning rather than only by growth</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Innovation produces operational transformation — successful experiments become standard practice; capability development anticipates strategic directions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Institutional learning frameworks and practices contributed to peer network; recognized as a learning organization resource in the solidarity economy</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 13.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Performance-to-decision conversion rate</div>
+      <div class="kpi-cell">Percentage of governance performance reviews that produce documented decisions or action items — the primary measure of whether learning infrastructure is converting data into institutional action</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Strategic plan implementation rate</div>
+      <div class="kpi-cell">Percentage of strategic commitments with documented implementation progress at mid-cycle review — measures whether strategic plans are directive or aspirational</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Strategy-resource alignment rate</div>
+      <div class="kpi-cell">Percentage of major resource allocation decisions that can be explicitly connected to strategic plan priorities — measures whether strategy drives resource allocation or vice versa</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Innovation experiment completion rate</div>
+      <div class="kpi-cell">Percentage of initiated innovation experiments completed with documented learning capture — measures whether innovation investment produces institutional learning</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Innovation-to-operations translation rate</div>
+      <div class="kpi-cell">Percentage of successful innovation experiments that are integrated into core institutional operations — measures whether innovation produces operational transformation or demonstration projects</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Strategic renewal cycle completion</div>
+      <div class="kpi-cell">Years since last completed strategic renewal cycle — alert if more than five years; renewal cycles that are never completed indicate strategic inertia</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Organizational resilience index</div>
+      <div class="kpi-cell">Composite measure across financial reserves, leadership pipeline, knowledge documentation, and external relationship infrastructure — the institutional disruption management capacity</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">GPS maturity improvement rate</div>
+      <div class="kpi-cell">Year-over-year improvement in GPS maturity scores across all categories — the terminal measure of Category 13.0 effectiveness: is the institution getting better at what it does across the full framework?</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 13.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 13.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Redesign governance performance review for learning rather than reporting</div>
+          <div class="seq-desc">Identify the three most important performance metrics the institution currently reports to its governance body. Redesign the reporting and review process for each: pre-read materials that give governance members time to understand the data before the meeting, specific discussion questions prepared in advance, and a governance decision or action item required at the end of each review. This is the governance meeting design change that most directly improves single-loop learning capacity — it converts performance reporting from a ritual of receipt into a practice of engaged assessment. Test the redesign for two consecutive governance cycles and assess whether it is producing different governance behaviors.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Performance review redesigned for three key metrics; two governance cycle test completed; at least one governance decision attributable to redesigned review process; staff and governance feedback on review quality collected.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Connect the strategic plan to the budget — make the strategy operational</div>
+          <div class="seq-desc">Take the current strategic plan and trace every major budget line to a specific strategic commitment. Where budget lines cannot be connected to strategic commitments, either the budget reflects priorities that are not in the plan (and the plan should be updated) or the plan reflects priorities that are not resourced (and the budget should be updated). The exercise will reveal the strategy-resource alignment gap — usually significant — and force the governance conversation about whether the institution is genuinely committed to the strategy it has stated or whether the strategy is aspirational and the budget reflects different priorities. Resolve the gap through explicit governance decision.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Budget-strategy alignment audit completed; alignment gaps documented and presented to governance body; explicit governance decision on resource allocation to strategic priorities; next budget cycle connected to strategic plan commitments.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a structured assumption examination with external facilitation</div>
+          <div class="seq-desc">Commission a structured assumption examination — facilitated by an external practitioner with solidarity economy experience — that surfaces and examines the core assumptions underlying the institution's current approach. The external facilitation is important: it reduces the organizational defensive responses that internal facilitation activates and creates psychological safety for genuinely questioning assumptions that institutional identity has been built around. Use the findings to assess whether current strategy reflects current conditions or assumptions that may no longer be valid. Present findings to the governance body with governance accountability for the institutional response.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Structured assumption examination completed with external facilitation; at least three core assumptions surfaced and examined; governance body reviewed findings; at least one strategic adjustment made based on assumption examination findings.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Design and run one disciplined innovation experiment</div>
+          <div class="seq-desc">Select one innovation opportunity — something the institution has wanted to try but has not formally tested — and design a proper experiment: clear learning objectives (what specific question does this experiment answer?), small-scale design that limits the cost of failure, defined evaluation criteria for deciding whether to scale, modify, or abandon, and a specific timeline for the governance decision. Protect the time and resources required for the experiment from operational displacement. Document the learning regardless of outcome. Use the experiment to develop the institutional muscles for disciplined experimentation before attempting experiments at larger scale.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> One innovation experiment designed with explicit learning objectives; experiment completed on schedule; findings documented and presented to governance body; explicit governance decision (scale, modify, or abandon) made based on experiment findings; learning integrated into institutional knowledge management system.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a GPS maturity assessment and develop a Category 13.0 improvement roadmap</div>
+          <div class="seq-desc">Apply the GPS maturity assessment framework (described in Chapter 7) across all sixteen categories to generate a current institutional maturity profile. Identify the three to five categories with the largest gaps between current maturity and the levels required for mission delivery. Use the maturity assessment as the foundation for a Category 13.0 improvement roadmap — a multi-year plan for developing the institutional capabilities that the maturity gaps reveal. Review the maturity assessment annually to track improvement and adjust development priorities. The maturity assessment is Category 13.0's primary tool for integrating single-loop learning across all other categories into a coherent institutional development strategy.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> GPS maturity assessment completed across all sixteen categories; maturity profile presented to governance body; three-year capability development roadmap adopted; first annual maturity reassessment completed with year-over-year comparison showing measurable improvement in priority categories.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On Category 13.0 as the frame for the entire GPS framework:</strong> Category 13.0 is, in a sense, where the GPS framework becomes self-aware. Every other category describes specific institutional processes and the governance infrastructure that supports them. Category 13.0 describes the process through which the institution assesses whether all of those processes are working — whether they are producing the outcomes they were designed to produce, whether they remain appropriate to current conditions, and whether they should be changed, strengthened, or redesigned. The GPS maturity assessment described in Chapter 7 and referenced in this chapter's development sequence is, at its core, a Category 13.0 activity: an examination of institutional capability evolution across all sixteen categories that produces the integrated view of institutional health that no single category can provide alone.</p>
+    <p><strong>On the relationship between double-loop learning and Category 16.0 (Participatory Democracy):</strong> Double-loop learning at the institutional level — examining whether the institution is doing the right thing rather than only doing things right — is most robust when community members participate in the examination rather than only institutional staff and governance bodies. Community members whose lives are most affected by institutional choices bring the most direct and unmediated evidence of whether those choices are appropriate. Category 16.0's participatory democracy processes are, in part, the governance architecture that makes community participation in double-loop learning possible — creating the structures through which community members have genuine influence over the strategic direction that double-loop learning is designed to examine and potentially revise.</p>
+    <p><strong>On the organizational defensive routines that block double-loop learning:</strong> Argyris and Schön's research documented that organizations develop sophisticated defenses against the threatening implications of double-loop inquiry — defenses that are so habitual they operate without conscious awareness. The most common in solidarity economy institutions are: bypassing threatening evidence (ignoring data that challenges current strategy), defensive framing (interpreting ambiguous evidence as confirmation of existing approaches), and espoused theory versus theory in use (describing the institution as more adaptable and learning-oriented than its actual governance behavior reflects). Building double-loop learning capacity requires not only designing the learning processes described in this chapter but actively identifying and working against the specific organizational defenses that the institution has developed. External assessment, community-led evaluation, and governance environments with genuine psychological safety are the primary tools for overcoming these defenses.</p>
+  </div>
+
+  <div class="part-close">
+    <div class="part-close-label">End of Part IV · Institutional support processes</div>
+    <div class="part-close-title">Seven categories. The full arc from human potential through institutional evolution.</div>
+    <div class="part-close-sub">Part V enters the novel categories — the three processes that have no APQC analog because they address governance challenges that post-labor economic transition has created and that conventional institutional frameworks have not yet developed. Beginning with Category 14.0: AI Governance and Algorithmic Accountability, the governance domain that may prove most consequential for the post-labor transition itself.</div>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part IV · Chapter 20 · GPS 13.0</span>
+    <span class="close-next">Part V begins: Ch. 21 — AI governance &amp; algorithmic accountability (GPS 14.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

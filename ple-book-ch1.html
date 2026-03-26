@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 1 — The labor-value contract is ending</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504;
+    --bg-deep: #0c0a09;
+    --bg-primary: #141210;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.12);
+    --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3;
+    --text-secondary: #a09890;
+    --text-muted: #6b6560;
+    --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07);
+    --border-visible: rgba(201,169,110,0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 40px 120px;
+  }
+  .part-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .chapter-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.35;
+    margin-bottom: 44px;
+  }
+  .body-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--text-primary);
+  }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em;
+    font-weight: 300;
+    line-height: 0.75;
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+  }
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-visible);
+  }
+  .section-break-ornament {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+  .pullquote {
+    margin: 44px 0;
+    padding: 28px 32px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 6px 6px 0;
+  }
+  .pullquote p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .pullquote p::before { content: '\201C'; color: var(--accent); }
+  .pullquote p::after  { content: '\201D'; color: var(--accent); }
+
+  /* Three-mechanism block */
+  .mechanism-block {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .mechanism-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .mechanism-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .mechanism-row:last-child { border-bottom: none; }
+  .mech-num {
+    width: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    border-right: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    opacity: 0.8;
+    padding: 18px 0;
+  }
+  .mech-content { padding: 18px 22px; flex: 1; }
+  .mech-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .mech-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+  .mech-signal {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .mech-signal strong { color: var(--accent); font-weight: 500; opacity: 0.8; }
+
+  /* Historical timeline */
+  .timeline {
+    margin: 40px 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 56px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border-visible);
+  }
+  .tl-row {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .tl-row:last-child { margin-bottom: 0; }
+  .tl-date {
+    min-width: 56px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    padding-top: 3px;
+    text-align: right;
+    padding-right: 14px;
+  }
+  .tl-dot {
+    position: absolute;
+    left: 52px;
+    top: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--bg-void);
+    border: 1px solid var(--accent);
+    opacity: 0.6;
+  }
+  .tl-content {
+    padding-left: 22px;
+    flex: 1;
+  }
+  .tl-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .tl-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* The "this time is different" argument block */
+  .compare-block {
+    margin: 40px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+  }
+  .compare-col {
+    background: var(--bg-secondary);
+    padding: 20px 22px;
+  }
+  .compare-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .compare-label.prev { color: var(--text-muted); }
+  .compare-label.now  { color: var(--accent); opacity: 0.8; }
+  .compare-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .compare-item:last-child { margin-bottom: 0; }
+  .cmp-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    margin-top: 6px;
+    min-width: 5px;
+  }
+  .cmp-dot.prev { background: var(--text-ghost); }
+  .cmp-dot.now  { background: var(--accent); opacity: 0.7; }
+  .cmp-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Institutional lag table */
+  .lag-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .lag-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .lag-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .lag-row:last-child { border-bottom: none; }
+  .lag-row.head {
+    background: var(--bg-secondary);
+  }
+  .lag-cell {
+    padding: 12px 16px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .lag-cell:last-child { border-right: none; }
+  .lag-cell.head {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .lag-cell.institution {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .note-aside {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-visible);
+    border-radius: 0 6px 6px 0;
+  }
+  .note-aside p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 0.6em;
+  }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .close-next {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+  .page-number {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part I · The great decoupling</div>
+  <div class="chapter-eyebrow">Chapter 1</div>
+  <h1 class="chapter-title">The labor-value contract is ending</h1>
+  <p class="chapter-subtitle">A clear-eyed account of what is actually happening — and why this transition is categorically different from every previous one</p>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Every stable society rests on an implicit contract — an arrangement so widely held and so deeply embedded in institutions that it rarely needs to be spoken aloud. For the better part of two centuries, the foundational contract of industrial societies has been this: show up, contribute your labor, and the economy will return to you a share of what your labor helped produce. The contract was never perfectly honored. It was honored far better for some than for others. It required constant struggle to enforce. But it was real enough, and widespread enough, that the entire architecture of modern social institutions — wages, benefits, retirement systems, social insurance, consumer markets, tax bases, democratic legitimacy, individual identity — was built on top of it.</p>
+
+    <p>That contract is ending. Not metaphorically. Not as a distant possibility requiring conditional future tenses and cautious hedges. As a structural fact that is already reshaping labor markets, already hollowing out the middle of the wage distribution, already creating categories of economic dislocation that the existing institutional framework has no vocabulary for — let alone any remedy. The word "ending" is chosen carefully: not ended, not over, but in the process of ending. The process is uneven, geographically and sectorally. It is accelerating. And it is operating well ahead of any institutional response to it.</p>
+
+    <p>This chapter is a diagnosis, not a prediction. It does not forecast what the labor market will look like in 2050. It describes what is already observable in 2025 and traces the mechanisms producing it. The diagnosis matters because the rest of this book — the framework for building institutions to replace what the contract once provided — depends on a clear-eyed reading of what we are actually dealing with. Institutions designed for the wrong problem will fail in precisely the ways their designers least expect.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The contract and its history</div>
+
+  <div class="body-text">
+    <p>To understand what is ending, it is necessary to understand what was built, and why it was built the way it was. The labor-value contract did not emerge from nature. It was constructed — through decades of industrial organizing, legislative struggle, and the specific economic conditions of the mid-twentieth century — and it was constructed in a particular form that was always contingent on conditions that have since changed.</p>
+    <p>The story moves through four phases:</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-row">
+      <div class="tl-date">1820s–1880s</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-title">The first industrial settlement — raw extraction</div>
+        <div class="tl-desc">Labor is abundant, replaceable, and organized by capital with minimal constraint. The wage is a market price, not a social compact. The factory system creates the first large-scale dependence of human survival on wage income — and the first large-scale movements to resist it. The contract exists only in its most brutal form: work or starve.</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-date">1880s–1930s</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-title">The progressive bargain — labor earns protection</div>
+        <div class="tl-desc">Through sustained collective action, labor movements extract concessions: limits on working hours, child labor prohibitions, workplace safety requirements, the legal right to organize. The state begins to recognize that unmediated market outcomes in labor produce social instability incompatible with democratic governance. The contract acquires its first institutional protections.</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-date">1945–1975</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-title">The Fordist compact — labor earns prosperity</div>
+        <div class="tl-desc">The high-water mark. Productivity gains are shared broadly through rising real wages, expanding benefits, and social insurance systems. The welfare state is built. A single income can support a family, fund a retirement, and produce economic security across a working lifetime. This is the era that all subsequent nostalgia references — and that all subsequent economic comparisons are unconsciously measured against. It was historically anomalous. The conditions producing it were specific and would not last.</div>
+      </div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-date">1975–present</div>
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-title">The divergence — productivity and wages separate</div>
+        <div class="tl-desc">Beginning in the mid-1970s, the line between productivity growth and median wage growth begins to diverge. By the 2020s, productivity in advanced economies has grown roughly 65% since 1979 while median wages have grown less than 15% in real terms. The gains from economic growth are flowing overwhelmingly to capital rather than labor. The contract is being honored in law but violated in fact.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>This history matters because the institutions built during the Fordist compact were calibrated to its specific conditions: high labor demand, rising wages, strong unions, limited capital mobility, and an economy in which the dominant firms needed large workforces and therefore had structural incentives to maintain the social contract. When those conditions changed — when capital became mobile, when technology began substituting for labor rather than complementing it, when the firm's dependence on a large stable workforce eroded — the institutions built for those conditions did not adapt. They persisted in form while hollowing out in function.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Three mechanisms of decoupling</div>
+
+  <div class="body-text">
+    <p>The divergence between productivity and wages is not produced by a single cause. Three distinct mechanisms are operating simultaneously, reinforcing each other, and together producing a structural shift that no single policy intervention is adequate to address.</p>
+  </div>
+
+  <div class="mechanism-block">
+    <div class="mechanism-header">The three mechanisms producing the decoupling</div>
+
+    <div class="mechanism-row">
+      <div class="mech-num">01</div>
+      <div class="mech-content">
+        <div class="mech-title">Automation displacing routine labor</div>
+        <div class="mech-desc">Capital equipment — initially mechanical, then digital, now AI-assisted — is substituting for human labor in tasks that are routine, codifiable, and high-volume. This is not new; it has been happening since the industrial revolution. What is new is the breadth of tasks now susceptible to substitution and the speed at which the frontier is advancing. The "routine task" that automation can replace now includes not only physical assembly and data entry but legal document review, radiology reading, financial analysis, and an expanding range of cognitive work previously considered knowledge-economy safe harbors.</div>
+        <div class="mech-signal"><strong>Observable signal:</strong> The employment polarization pattern — growth at the high-skill, high-wage end and the low-skill, low-wage end, hollowing of the middle — visible in labor market data across advanced economies since the 1990s.</div>
+      </div>
+    </div>
+
+    <div class="mechanism-row">
+      <div class="mech-num">02</div>
+      <div class="mech-content">
+        <div class="mech-title">Platform monopolization capturing value without distributing it</div>
+        <div class="mech-desc">Digital platform economics produces a structural tendency toward winner-take-most markets in which the firm that achieves network scale captures value far exceeding any comparable firm in pre-digital industries. The economic value generated by a platform's users — their data, their content, their social connections, their attention — flows almost entirely to the platform rather than to the users generating it. This is not a malfunction of the market. It is the market functioning as designed under conditions where the productive input (user-generated data and network effects) is not owned by its producers.</div>
+        <div class="mech-signal"><strong>Observable signal:</strong> The market capitalization of the five largest technology firms exceeds the GDP of most countries while their combined global workforce is a fraction of comparable-revenue firms in previous eras. Value is being created at unprecedented scale with unprecedented labor intensity.</div>
+      </div>
+    </div>
+
+    <div class="mechanism-row">
+      <div class="mech-num">03</div>
+      <div class="mech-content">
+        <div class="mech-title">AI compressing the cognitive premium</div>
+        <div class="mech-desc">For the past three decades, the standard prescription for workers displaced by automation has been education and retraining: move up the skill ladder, develop cognitive capabilities that machines cannot replicate, and the labor market will reward you. This prescription is now being invalidated in real time. Large language models and multimodal AI systems are demonstrating competence across cognitive tasks — writing, analysis, coding, design, research synthesis, customer interaction — at a speed that compresses the timeline between "safe harbor" and "automation target" from decades to years. The cognitive premium that educated workers have extracted is narrowing.</div>
+        <div class="mech-signal"><strong>Observable signal:</strong> Entry-level professional hiring freezes in law, finance, consulting, and technology in 2023–2025, as firms demonstrate that AI-assisted senior professionals can replace cohorts of junior hires. The traditional apprenticeship pipeline — through which professionals learned by doing entry-level work — is disrupted before the higher-level positions are automated.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>The standard prescription — move up the skill ladder — is being invalidated in real time. The cognitive premium is narrowing. There is no rung of the ladder that automation cannot reach; there is only a question of when it will.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Why this time is different — and why it might not be</div>
+
+  <div class="body-text">
+    <p>The most common rebuttal to this diagnosis is historical: every previous wave of technological displacement was accompanied by predictions of mass permanent unemployment, and every previous wave was followed by the creation of new categories of work that more than absorbed the displaced labor. The loom displaced handweavers; the automobile displaced coachmen; the computer displaced typists and bookkeepers. In each case, new industries emerged, new jobs were created, and the total level of employment recovered and expanded. Why should this wave be any different?</p>
+    <p>It is a serious argument and it deserves a serious answer — not dismissal. The historical pattern is real. The question is whether the conditions producing that pattern are also present this time.</p>
+  </div>
+
+  <div class="compare-block">
+    <div class="compare-col">
+      <div class="compare-label prev">Previous waves — conditions for recovery</div>
+      <div class="compare-item">
+        <div class="cmp-dot prev"></div>
+        <div class="cmp-text">New industries creating demand for large labor forces (auto manufacturing, electronics assembly, call centers)</div>
+      </div>
+      <div class="compare-item">
+        <div class="cmp-dot prev"></div>
+        <div class="cmp-text">Decades-long transition periods allowing gradual workforce reabsorption through generational turnover</div>
+      </div>
+      <div class="compare-item">
+        <div class="cmp-dot prev"></div>
+        <div class="cmp-text">Automation targeting physical tasks; cognitive work remained the clear escalation path</div>
+      </div>
+      <div class="compare-item">
+        <div class="cmp-dot prev"></div>
+        <div class="cmp-text">Geographic concentration of disruption allowing affected workers to relocate to opportunity</div>
+      </div>
+      <div class="compare-item">
+        <div class="cmp-dot prev"></div>
+        <div class="cmp-text">Rising real wages in new industries creating consumer demand that funded further growth</div>
+      </div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-label now">Current wave — conditions that differ</div>
+      <div class="compare-item">
+        <div class="cmp-dot now"></div>
+        <div class="cmp-text">New industries (platforms, AI) creating value at scale with minimal labor; trillion-dollar companies with tens of thousands of employees rather than millions</div>
+      </div>
+      <div class="compare-item">
+        <div class="cmp-dot now"></div>
+        <div class="cmp-text">Pace of advancement compressing transition periods; capabilities that took decades to develop now emerging in years</div>
+      </div>
+      <div class="compare-item">
+        <div class="cmp-dot now"></div>
+        <div class="cmp-text">Automation targeting cognitive tasks simultaneously with physical ones; the escalation path is closing at both ends</div>
+      </div>
+      <div class="compare-item">
+        <div class="cmp-dot now"></div>
+        <div class="cmp-text">Disruption simultaneous across geographies; no regional economy is insulated, no "opportunity region" to relocate toward</div>
+      </div>
+      <div class="compare-item">
+        <div class="cmp-dot now"></div>
+        <div class="cmp-text">Value captured by capital rather than distributed as wages; the consumer demand flywheel is weakening</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>The honest answer to "why is this time different?" is: it may not be. New categories of work may emerge that we cannot currently anticipate — they always have before. Human creativity, relationship, and meaning-making may generate economic activity in forms that current models cannot predict. The transition may be painful and protracted, but recoverable within the existing institutional framework if that framework is adequately supported and reformed.</p>
+    <p>But "may not be" is not sufficient grounds for institutional passivity. The scenario in which the historical pattern does not hold — in which the pace and breadth of this transition exceeds the absorptive capacity of labor markets — is not a tail risk. It is a plausible central case. And if it obtains, the institutions we need to respond to it do not exist. They need to be built before the crisis they will be required to address is fully visible. By the time a crisis of this kind is undeniable, the window for deliberate institutional design has usually closed.</p>
+    <p>This book assumes neither certainty that the worst will happen nor certainty that the market will self-correct. It assumes that the conditions for institutional design are present right now — that we have enough visibility into what is coming, and enough social and political space to act deliberately — and that failing to use this window would be a profound and irreversible error.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The distributional fault lines</div>
+
+  <div class="body-text">
+    <p>The decoupling is not happening uniformly. Its effects are distributed along existing fault lines of class, race, geography, and education in ways that are both predictable and, in their specifics, frequently misread.</p>
+    <p>The standard framing positions the disruption as primarily affecting lower-skilled workers and geographically concentrated in post-industrial regions that never recovered from the first wave of manufacturing automation. This framing is accurate as far as it goes. The communities that lost manufacturing employment in the 1980s and 1990s are indeed the communities most vulnerable to the next wave of displacement. The workers most immediately affected by the current wave are those in routine cognitive jobs: administrative processing, data entry, basic research, entry-level professional services.</p>
+    <p>But the framing misses two critical distributional dynamics that are essential to understanding the full scope of what is happening.</p>
+    <p>The first is the apprenticeship problem. Professional labor markets have historically operated as learning pipelines: junior professionals do lower-complexity work under supervision, develop skills through practice, and advance into roles of greater responsibility and compensation. The disruption of entry-level professional hiring — which is already visible in law, finance, and technology — does not only affect entry-level workers. It breaks the pipeline through which the next generation of senior professionals is developed. The long-run effect on the professional workforce is larger than the immediate effect on entry-level hiring would suggest.</p>
+    <p>The second is what might be called the care economy paradox. The work most resistant to automation — direct human care, education, social work, therapeutic relationships, community building — is also the work most systematically undervalued by existing market mechanisms. If the trajectory of automation holds, the economic future increasingly concentrates in precisely those activities that the market has proven least capable of pricing and distributing equitably. This is not a coincidence. It reflects a deep misalignment between what human labor does that is genuinely irreplaceable and what market prices reward.</p>
+  </div>
+
+  <div class="pullquote">
+    <p>The work most resistant to automation is the work the market has always been worst at valuing. The future of human labor is in care, relationship, and meaning — and we have no adequate institutional infrastructure for sustaining any of them.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The institutional lag — what was built for the contract</div>
+
+  <div class="body-text">
+    <p>The labor-value contract did not just organize economic life. It organized the entire institutional architecture of modern societies. This is the dimension of the transition that receives the least attention and carries the highest stakes. Dismantling the contract — or watching it dissolve — does not just produce economic dislocation. It hollows out institutions that were built on the assumption that most adults would participate in formal wage labor for most of their adult lives.</p>
+  </div>
+
+  <div class="lag-block">
+    <div class="lag-header">Institutions built for the contract — and what breaks when it frays</div>
+    <div class="lag-row">
+      <div class="lag-cell head">Institution</div>
+      <div class="lag-cell head">Built assuming</div>
+      <div class="lag-cell head">Breaks when</div>
+    </div>
+    <div class="lag-row">
+      <div class="lag-cell institution">Social insurance systems</div>
+      <div class="lag-cell">Continuous formal employment as the contribution base; retirement funded by payroll taxes on a growing workforce</div>
+      <div class="lag-cell">Labor force participation falls, informal and platform work evades contribution systems, the worker-to-retiree ratio collapses</div>
+    </div>
+    <div class="lag-row">
+      <div class="lag-cell institution">Healthcare access</div>
+      <div class="lag-cell">Employer-sponsored insurance as the primary delivery mechanism for the working-age population</div>
+      <div class="lag-cell">Employment becomes discontinuous, part-time, gig-based, or absent; health coverage becomes as precarious as employment itself</div>
+    </div>
+    <div class="lag-row">
+      <div class="lag-cell institution">Consumer markets</div>
+      <div class="lag-cell">Rising real wages generating the consumer demand that funds further production and employment</div>
+      <div class="lag-cell">Wage stagnation and labor displacement compress consumer purchasing power; the demand flywheel slows</div>
+    </div>
+    <div class="lag-row">
+      <div class="lag-cell institution">Democratic legitimacy</div>
+      <div class="lag-cell">Economic participation producing stake and voice; citizens with economic security engage in democratic institutions</div>
+      <div class="lag-cell">Economic precarity produces disengagement, resentment, and susceptibility to authoritarian alternatives that promise to restore the old contract</div>
+    </div>
+    <div class="lag-row">
+      <div class="lag-cell institution">Individual identity</div>
+      <div class="lag-cell">Occupation as the primary social identity and source of meaning, purpose, and community</div>
+      <div class="lag-cell">Work becomes precarious, part-time, or absent; the social and psychological infrastructure of identity built on employment collapses without replacement</div>
+    </div>
+    <div class="lag-row">
+      <div class="lag-cell institution">Tax base</div>
+      <div class="lag-cell">Labor income as the broad, stable, and administrable base for funding public goods and social insurance</div>
+      <div class="lag-cell">Value migrates to capital income and intangible assets that are harder to tax and more mobile; the fiscal basis for the welfare state erodes</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>Each of these institutions can be reformed — adjusted, extended, redesigned — to function better under post-labor conditions. Some of that reform work is already underway. Universal basic income pilots are testing alternative income distribution mechanisms. Healthcare systems in countries with less employer-dependence prove that healthcare access need not be tethered to employment. Tax reform proposals targeting capital income and wealth are gaining traction in policy debates.</p>
+    <p>But reform of existing institutions, while necessary, is not sufficient. Reform can patch what is breaking. It cannot build what has not yet been built. The institutions that will need to exist in a world where formal wage labor is no longer the primary mechanism of economic participation — institutions for governing commons, measuring flourishing, distributing ownership, organizing collective decision-making, and maintaining democratic agency without employment as the basis for social inclusion — are not reforms of anything that currently exists. They are new constructions. And they need to be designed, built, and operating before the conditions that make them necessary are fully realized.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The window</div>
+
+  <div class="body-text">
+    <p>There is a window. It is not unlimited, and it is not clearly defined, but it is real. We are in a moment — probably measured in years, possibly in a decade or two — in which the political and social space to design new institutions deliberately still exists. The crisis is visible enough to motivate action. It is not yet acute enough to have produced the political conditions — the consolidation of power by those who benefit from the current trajectory, the foreclosure of alternatives by necessity rather than choice — that make deliberate design impossible.</p>
+    <p>Historical transitions of this magnitude have not always offered this window. Sometimes the crisis arrives before the institutions are built. Sometimes the institutions that emerge are built in crisis, by whoever happens to have the organizational capacity to act quickly, in forms shaped more by urgency than by deliberate design. The labor institutions of the early twentieth century were partly products of deliberate organization and partly products of crisis response — and their quality varied enormously depending on which predominated in any given context.</p>
+    <p>Using the window well means two things. It means building the institutions themselves — cooperatives, commons, mutual aid networks, participatory democratic structures — and building them with enough operational rigor that they can function, sustain, and improve over time. And it means developing the frameworks, the vocabularies, and the shared knowledge that allow those institutions to learn from each other faster than they could learn in isolation.</p>
+    <p>The second task is what this book is for. The institutions are being built, scattered and partially, by thousands of people in thousands of places. The shared knowledge to build them better does not yet exist in adequate form. Drawing that map — incomplete, revisable, co-authored by the communities that use it — is the work of this moment.</p>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the evidence base:</strong> The claims in this chapter about productivity-wage divergence draw primarily on data from the Economic Policy Institute, the OECD, and the BLS, which have documented the divergence consistently across methodologies since the late 1970s. The claims about employment polarization draw on the foundational work of Autor, Levy, and Murnane (2003) and subsequent empirical literature. The claims about AI's effects on professional labor markets are necessarily more provisional, drawing on labor market data from 2023–2025 that is still being interpreted.</p>
+    <p><strong>On the distributional claims:</strong> The care economy paradox is developed at greater length in Chapter 22 (Human Flourishing), where it connects to the framework for measuring what post-labor institutions are actually for. The apprenticeship problem returns in Chapter 7 (the maturity model) in the context of institutional knowledge transfer.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part I · Chapter 1</span>
+    <span class="close-next">Ch. 2 — What institutions exist, and why they are insufficient →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

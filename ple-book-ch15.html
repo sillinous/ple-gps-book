@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 15 — Technology & AI Infrastructure (GPS 8.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --inst: #378ADD; --inst-dim: rgba(55,138,221,0.08);
+    --inst-text: #7ab8f0; --inst-border: rgba(55,138,221,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.inst { background: var(--inst-dim); color: var(--inst-text); border: 1px solid var(--inst-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--inst); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--inst-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--inst); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--inst); background: var(--inst-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--inst-text); }
+  .pullquote p::after { content: '\201D'; color: var(--inst-text); }
+
+  /* AI adoption tension */
+  .tension-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .tension-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .tension-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+  .tension-row:last-child { border-bottom: none; }
+  .tc { padding: 14px 18px; background: var(--bg-secondary); }
+  .tc.alt { background: var(--bg-primary); }
+  .tc-label { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .tc-label.gain { color: var(--inst-text); opacity: 0.85; }
+  .tc-label.risk { color: var(--m2t); opacity: 0.85; }
+  .tc-text { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Tech debt analysis */
+  .debt-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .debt-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .debt-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .debt-row:last-child { border-bottom: none; }
+  .debt-stage { width: 100px; min-width: 100px; padding: 14px 12px; border-right: 1px solid var(--border-subtle); background: var(--inst-dim); display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+  .debt-stage-name { font-family: 'Crimson Pro', serif; font-size: 0.9rem; font-weight: 600; color: var(--inst-text); line-height: 1.25; }
+  .debt-stage-num { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); letter-spacing: 0.06em; }
+  .debt-content { padding: 14px 18px; flex: 1; }
+  .debt-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .debt-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .debt-signal strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--inst-dim); color: var(--inst-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--inst-dim); border-bottom: 1px solid var(--inst-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--inst-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--inst-text); font-weight: 500; }
+
+  /* Sequence */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part IV · Institutional support processes</div>
+  <div class="chapter-eyebrow">Chapter 15 · GPS Category 8.0</div>
+  <h1 class="chapter-title">Technology &amp; AI infrastructure</h1>
+  <p class="chapter-subtitle">The tools that either amplify or undermine everything else — building technology capacity that serves the mission, governs itself honestly, and does not reproduce through its systems the inequities the institution was created to address</p>
+  <div class="cat-meta">
+    <span class="cat-pill inst">Institutional Support</span>
+    <span class="cat-pill inst">Operational backbone</span>
+    <span class="cat-pill inst">AI adoption tension</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">23 processes</span>
+    <span class="cat-pill neutral">14 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Every institution has technology infrastructure whether it has designed it or not. The question is not whether to have systems — for communications, for data management, for coordination, for service delivery — but whether those systems are chosen deliberately, governed accountably, and designed to serve the institution's mission rather than to serve the interests of the vendors, platforms, and technology paradigms whose defaults the institution has passively inherited. Most post-labor institutions have not made those choices deliberately. They have accumulated tools reactively — adding applications as problems emerged, accepting vendor defaults that were designed for different contexts, and deferring governance questions about data ownership and privacy until crises forced them. The resulting technology stack is typically a patchwork of disconnected tools, each rational in isolation, collectively producing an operational burden that consumes institutional capacity that could be applied to mission.</p>
+
+    <p>The arrival of broadly accessible artificial intelligence systems has added both an extraordinary opportunity and an extraordinary risk to this already-complex territory. The opportunity is genuine: AI systems can amplify the capacity of small, under-resourced post-labor institutions in ways that were previously available only to large organizations — in communications, in data analysis, in program design support, in administrative automation, and in the delivery of personalized services at scales that human staffing alone cannot achieve. For institutions working at the intersection of limited resources and ambitious missions, this amplification is not a luxury but a potential operational transformation.</p>
+
+    <p>The risk is equally genuine, and it is specifically post-labor in character: AI systems trained on data that reflects historical inequities will reproduce those inequities in their outputs unless actively designed against. AI systems deployed without community understanding or consent can undermine the trust and transparency that post-labor institutions depend on for their legitimacy. AI systems that automate decisions about community members — in resource allocation, in service eligibility, in program placement — without adequate oversight can cause the same category of harm as the bureaucratic institutional decision-making that post-labor institutions were created to replace. The risk is not theoretical. It is already materializing in the automated decision systems that government agencies and private institutions have deployed with documented discriminatory effects in housing, criminal justice, healthcare, and social services — the same domains where post-labor institutions operate.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The AI adoption tension — what post-labor institutions stand to gain and lose</div>
+
+  <div class="body-text">
+    <p>The decision about whether and how to adopt AI systems is the most consequential technology infrastructure decision most post-labor institutions will make in the coming decade. It cannot be made well through either reflexive adoption — adopting AI because it is available and powerful — or reflexive rejection — refusing AI because it is associated with the concentrated corporate power that post-labor institutions exist to counter. It requires a specific analytical framework: what does this AI system do, for whom, governed by whom, trained on what data, with what transparency, and with what recourse for community members who are affected by its outputs? The comparison below is not a recommendation for or against adoption; it is the framework that makes an informed decision possible.</p>
+  </div>
+
+  <div class="tension-block">
+    <div class="tension-header">AI adoption in post-labor institutions — gains and risks by application domain</div>
+
+    <div class="tension-row">
+      <div class="tc">
+        <div class="tc-label gain">Operational efficiency gains</div>
+        <div class="tc-text">Administrative automation — grant writing assistance, meeting summarization, document drafting, email management — frees staff capacity for direct community work. For institutions where a single staff member handles multiple functions that larger organizations split across departments, AI can effectively expand that person's productive capacity by hours per week.</div>
+      </div>
+      <div class="tc alt">
+        <div class="tc-label risk">Equity and bias risks</div>
+        <div class="tc-text">AI systems trained on historical data reflect historical patterns — including the patterns of discrimination and exclusion embedded in those datasets. Grant writing AI trained on successful corporate grant applications may produce language and framing that disadvantages community-based applicants. Hiring AI trained on past hiring decisions may reproduce the demographic biases of those decisions. Bias risks are not hypothetical; they require active mitigation by design.</div>
+      </div>
+    </div>
+
+    <div class="tension-row">
+      <div class="tc">
+        <div class="tc-label gain">Service delivery amplification</div>
+        <div class="tc-text">AI-powered navigation tools can help community members find and access services more easily, reducing the complexity barriers identified in Category 3.0. AI-assisted case management tools can surface relevant resource connections that human case managers might miss when managing large caseloads. Personalized program recommendations can improve program fit and completion rates in Category 5.0 contexts.</div>
+      </div>
+      <div class="tc alt">
+        <div class="tc-label risk">Automated decision-making risks</div>
+        <div class="tc-text">AI systems that make or strongly influence decisions about community members — who receives resources, who is admitted to programs, whose case is escalated — without adequate human oversight and community transparency introduce the category of harm that the solidarity economy exists to prevent: opaque, unaccountable decisions that affect people's lives without adequate recourse. Resource allocation AI that optimizes for measured efficiency may systematically deprioritize the most complex and costly needs — precisely those the institution most exists to serve.</div>
+      </div>
+    </div>
+
+    <div class="tension-row">
+      <div class="tc">
+        <div class="tc-label gain">Knowledge and learning amplification</div>
+        <div class="tc-text">AI systems can help institutions synthesize large bodies of research and practice knowledge, identify patterns in program outcome data that are not visible at human analytical scale, and support the evaluation and iteration processes of Category 5.0 that require more data analysis capacity than most solidarity economy institutions currently have. The knowledge commons contribution processes of Category 2.4 can be substantially amplified by AI-assisted documentation and synthesis.</div>
+      </div>
+      <div class="tc alt">
+        <div class="tc-label risk">Data sovereignty and privacy risks</div>
+        <div class="tc-text">AI systems that process community member data — case records, health information, financial data, behavioral patterns — create data sovereignty questions about who owns that data, who can access it, and how it can be used. Using commercial AI platforms to process sensitive community member data transfers that data to systems governed by terms of service designed for commercial contexts, not for the privacy and dignity standards that community data requires. Data breaches, unauthorized secondary use, and platform policy changes can all compromise community member privacy in ways that are difficult or impossible to reverse.</div>
+      </div>
+    </div>
+
+    <div class="tension-row">
+      <div class="tc">
+        <div class="tc-label gain">Communication and advocacy reach</div>
+        <div class="tc-text">AI-assisted content creation can help small institutions maintain communication infrastructure — social media, newsletters, advocacy materials — that would otherwise require dedicated communications staff. AI-assisted translation can expand multilingual communication capacity beyond the languages represented in the current staff. Community organizing tools can help institutions maintain relationships across larger community networks than human capacity alone could sustain.</div>
+      </div>
+      <div class="tc alt">
+        <div class="tc-label risk">Dependency and vendor lock-in risks</div>
+        <div class="tc-text">Deep integration of AI tools into institutional operations creates dependency on commercial vendors whose pricing, terms of service, and availability can change without notice. Vendor lock-in — the accumulation of institutional processes, data formats, and staff skills specific to a single vendor's systems — is more consequential for AI platforms than for most other technology categories because the switching cost includes not only data migration but the retraining of the AI systems themselves. Institutions that have delegated core operational functions to AI systems controlled by single vendors have created a concentration of operational risk that they cannot manage.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Technology debt accumulation — the four stages of a familiar crisis</div>
+
+  <div class="body-text">
+    <p>Most post-labor institutions that have operated for more than five years have accumulated technology debt — the accumulated cost of deferred technology decisions, reactive tool adoption, and unmanaged system complexity that now imposes ongoing operational burdens disproportionate to the benefit being received. Understanding the stages of technology debt accumulation helps institutions recognize where they are in the cycle and what intervention is appropriate at each stage.</p>
+  </div>
+
+  <div class="debt-block">
+    <div class="debt-header">Technology debt accumulation — four stages and their indicators</div>
+
+    <div class="debt-row">
+      <div class="debt-stage"><div class="debt-stage-num">Stage 1</div><div class="debt-stage-name">Reactive adoption</div></div>
+      <div class="debt-content">
+        <div class="debt-desc">Tools are adopted as problems emerge, without a technology strategy or architecture. Each tool solves a specific problem in isolation. The stack grows incrementally — a new CRM when contact management breaks down, a new project tool when coordination fails, a new communications platform when the old one becomes inadequate. No governance of the selection process exists; tools are chosen by whoever encounters the problem, using whatever is free or cheap or familiar.</div>
+        <div class="debt-signal"><strong>Stage 1 indicator:</strong> The number of active software tools exceeds the number of staff. No one has a complete list of all tools in use. Different teams use different tools for the same function. Staff spend time re-entering data between systems.</div>
+      </div>
+    </div>
+
+    <div class="debt-row">
+      <div class="debt-stage"><div class="debt-stage-num">Stage 2</div><div class="debt-stage-name">Fragmentation tax</div></div>
+      <div class="debt-content">
+        <div class="debt-desc">The accumulated tool proliferation begins to impose ongoing operational costs — staff time spent on manual data transfer between systems, information trapped in tools that don't communicate with each other, institutional knowledge scattered across platforms with no unified access, and onboarding complexity that requires new staff to learn multiple disconnected systems. The fragmentation tax is paid continuously but not visibly — it is embedded in everyone's work as friction rather than appearing as a discrete budget line.</div>
+        <div class="debt-signal"><strong>Stage 2 indicator:</strong> Staff regularly describe "spending too much time on administrative tasks." Information requested by leadership or governance cannot be quickly assembled because it lives in multiple systems. Onboarding new staff requires weeks of tool introduction rather than days. Data quality is inconsistent because different systems contain different versions of the same information.</div>
+      </div>
+    </div>
+
+    <div class="debt-row">
+      <div class="debt-stage"><div class="debt-stage-num">Stage 3</div><div class="debt-stage-name">Capability ceiling</div></div>
+      <div class="debt-content">
+        <div class="debt-desc">The technology stack now actively constrains institutional capability — the institution cannot do things it wants to do because its technology infrastructure makes them impossible or prohibitively expensive. It cannot produce integrated reports on community outcomes because data is fragmented across systems. It cannot scale its services because its case management system is manual and staff-intensive. It cannot implement the evaluation processes of Category 5.0 because it has no infrastructure for collecting and analyzing outcome data systematically. Technology has become a binding constraint on mission delivery.</div>
+        <div class="debt-signal"><strong>Stage 3 indicator:</strong> Specific strategic initiatives are blocked by technology limitations. Leadership describes technology as a reason the institution cannot do things it wants to do. Technology-related work is consuming a disproportionate share of staff time. The cost of addressing the technology situation has become a significant strategic concern.</div>
+      </div>
+    </div>
+
+    <div class="debt-row">
+      <div class="debt-stage"><div class="debt-stage-num">Stage 4</div><div class="debt-stage-name">Crisis transition</div></div>
+      <div class="debt-content">
+        <div class="debt-desc">A forced technology transition — triggered by vendor discontinuation, security breach, data loss, or operational collapse — requires rapid and expensive remediation under conditions of crisis. The crisis transition consumes staff capacity, budget reserves, and organizational attention at exactly the moment when mission delivery demands are highest. Decisions made under crisis conditions produce the next generation of reactive adoption and technology debt.</div>
+        <div class="debt-signal"><strong>Stage 4 indicator:</strong> A specific technology failure has become the primary organizational crisis. Staff are diverted from mission work to technology remediation. Emergency technology spending has disrupted the annual budget. The institution is making technology decisions without adequate time for evaluation, governance, or community member impact assessment.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 8.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">8.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Plan, govern, and manage technology strategy and architecture</div>
+          <div class="proc-group-desc">Technology governance is the process through which the institution makes intentional, accountable decisions about its technology stack rather than accumulating tools reactively. It requires integrating technology planning with strategic planning — asking not "what tools do we need this year" but "what technology capabilities does our mission strategy require, and what architecture supports those capabilities sustainably?" Technology governance in post-labor institutions must be accessible to non-technical staff and governance bodies — not a purely technical function managed by whoever happens to have technology expertise, but a shared institutional responsibility that includes community member perspectives on how technology affects their relationship with the institution.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">8.1.1</div><div class="act-name">Develop and maintain a technology strategy aligned with mission and strategic plan — defining required technology capabilities, preferred architectural principles, and technology investment priorities</div></div>
+            <div class="proc-activity"><div class="act-id">8.1.2</div><div class="act-name">Establish a technology governance process — decision rights for technology adoption, a tool evaluation framework, and a designated governance body or role accountable for technology decisions</div></div>
+            <div class="proc-activity"><div class="act-id">8.1.3</div><div class="act-name">Conduct and maintain a technology inventory — a current, accurate list of all systems in use, their costs, their data touchpoints, their renewal timelines, and their dependencies</div></div>
+            <div class="proc-activity"><div class="act-id">8.1.4</div><div class="act-name">Manage vendor relationships — contract terms, pricing, exit rights, and data portability provisions; ensuring the institution retains the rights to its own data in formats it can use independently of any specific vendor</div></div>
+            <div class="proc-activity"><div class="act-id">8.1.5</div><div class="act-name">Plan and budget for technology lifecycle — upgrade cycles, renewal costs, and the periodic technology rationalization (stack simplification and consolidation) that prevents technology debt from compounding</div></div>
+            <div class="proc-activity"><div class="act-id">8.1.6</div><div class="act-name">Build technology literacy across the institution — ensuring that non-technical staff and governance bodies can participate meaningfully in technology decisions that affect their work and the community members they serve</div></div>
+          </div>
+          <div class="act-note">Process 8.1.4 — vendor contract management — requires specific attention to data portability provisions that most institutions overlook when adopting new tools. The question to ask before committing to any significant software platform is: "If we need to leave this vendor, can we export all of our data in a format we can use elsewhere, and at what cost?" Vendors whose terms do not provide adequate data portability are creating lock-in that transfers operational control to the vendor, not the institution. This is particularly consequential for community member data — case records, program participation data, contact information — where the institution has ethical obligations to maintain the integrity and accessibility of that data independent of any vendor relationship.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">8.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Deploy and manage digital platforms, tools, and operations</div>
+          <div class="proc-group-desc">The operational management of the technology stack — implementation, configuration, integration, maintenance, support, and the day-to-day management of the digital systems through which institutional operations run. For post-labor institutions without dedicated IT staff, this process group is often managed by staff who are technically capable relative to their colleagues but who carry technology management responsibilities alongside their primary role responsibilities — a capacity fragility that becomes acutely visible when those staff depart or when a technology failure requires more sustained attention than their time allows.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">8.2.1</div><div class="act-name">Manage core operational systems — email and communications platforms, document management, project coordination, financial management, and the integration points between them</div></div>
+            <div class="proc-activity"><div class="act-id">8.2.2</div><div class="act-name">Maintain a community-facing digital presence — website, community portal, and the digital access points through which community members interact with the institution; maintained to the accessibility and language standards of Category 3.3</div></div>
+            <div class="proc-activity"><div class="act-id">8.2.3</div><div class="act-name">Implement and maintain a case management or community data system — the primary repository for community member information, designed for staff usability, data integrity, and community member privacy</div></div>
+            <div class="proc-activity"><div class="act-id">8.2.4</div><div class="act-name">Manage system integrations — the connections between platforms that reduce manual data transfer and maintain data consistency across the stack</div></div>
+            <div class="proc-activity"><div class="act-id">8.2.5</div><div class="act-name">Provide staff technology support — training, troubleshooting, and the ongoing capability development that keeps the staff who use the tools able to use them effectively</div></div>
+            <div class="proc-activity"><div class="act-id">8.2.6</div><div class="act-name">Manage technology documentation — operational runbooks, configuration records, and the system knowledge that must survive individual staff transitions</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">8.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Implement AI and automation responsibly and equitably</div>
+          <div class="proc-group-desc">The AI adoption process group operationalizes the analytical framework described earlier in this chapter — providing the specific processes through which institutions make, implement, govern, and review AI adoption decisions in ways that capture the genuine operational benefits while actively mitigating the equity and accountability risks. The word "responsibly" in this process group's name is not a values statement — it is an operational requirement. AI systems that are not responsibly implemented create legal, ethical, and community trust liabilities that can be more damaging than the operational problems they were adopted to solve.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">8.3.1</div><div class="act-name">Develop an AI adoption framework — the institutional criteria for evaluating AI adoption decisions, including equity impact assessment, data governance requirements, transparency standards, and community member consent processes</div></div>
+            <div class="proc-activity"><div class="act-id">8.3.2</div><div class="act-name">Conduct equity impact assessment for each AI adoption — specifically assessing whether the AI system's training data and design could produce discriminatory outputs in the institution's specific context and community population</div></div>
+            <div class="proc-activity"><div class="act-id">8.3.3</div><div class="act-name">Implement AI transparency requirements — informing community members when AI systems are being used in ways that affect them, what data those systems use, and what recourse exists for decisions they believe are incorrect</div></div>
+            <div class="proc-activity"><div class="act-id">8.3.4</div><div class="act-name">Maintain human oversight of AI-assisted decisions affecting community members — no AI system should make unreviewed binding decisions about resource allocation, program eligibility, or service provision for individual community members</div></div>
+            <div class="proc-activity"><div class="act-id">8.3.5</div><div class="act-name">Implement administrative AI with lower governance thresholds — tools that assist staff in drafting, summarizing, and organizing institutional work (not community member decisions) can be adopted with lighter governance processes than AI systems that affect community member outcomes directly</div></div>
+            <div class="proc-activity"><div class="act-id">8.3.6</div><div class="act-name">Review AI system performance for equity outcomes — ongoing monitoring of whether AI-assisted processes are producing equitable outcomes across demographic subgroups, with a defined process for disabling systems that are producing discriminatory outputs</div></div>
+          </div>
+          <div class="act-note">The distinction in 8.3.5 between administrative AI (assisting staff with internal work) and community-facing AI (affecting community members directly) is the most important governance design decision in this process group. Administrative AI — drafting emails, summarizing meeting notes, organizing documents, supporting grant writing — carries relatively low community impact risk and can be adopted with relatively light governance processes. Community-facing AI — eligibility screening, resource matching, risk assessment, automated communication — carries high community impact risk and requires the full governance process including equity impact assessment, transparency requirements, and human oversight. Conflating the two governance tiers — either over-governing administrative AI (which slows adoption of genuinely useful tools) or under-governing community-facing AI (which creates discriminatory harm) — produces the wrong outcome in both directions.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">8.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Govern data, privacy, security, and institutional cybersecurity</div>
+          <div class="proc-group-desc">Data governance is the framework through which the institution manages one of its most consequential assets and most serious liabilities: the data it holds about community members. Post-labor institutions hold sensitive data — health information, financial situations, housing status, legal histories, family composition, mental health status — that, if improperly managed, can cause profound harm to the community members who trusted the institution with their information. Data governance is not a compliance function that protects the institution from legal liability; it is a community trust function that protects community members from harm. The distinction matters because it determines where the obligation is directed: toward the institution's legal risk or toward the community members whose vulnerability the institution is holding.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">8.4.1</div><div class="act-name">Develop a data governance policy — what data the institution collects, why, how it is stored, who can access it, how long it is retained, and how it is disposed of; reviewed and approved by governance body, not only by staff</div></div>
+            <div class="proc-activity"><div class="act-id">8.4.2</div><div class="act-name">Implement informed consent processes for community member data — consent that is genuine (not buried in terms of service), specific (not blanket authorization), and revocable (community members can request data deletion)</div></div>
+            <div class="proc-activity"><div class="act-id">8.4.3</div><div class="act-name">Design data minimization practices — collecting only the data that is actually necessary for the stated purpose; data that is not collected cannot be breached, misused, or shared without consent</div></div>
+            <div class="proc-activity"><div class="act-id">8.4.4</div><div class="act-name">Implement cybersecurity fundamentals — multi-factor authentication, regular backup testing, phishing resistance training, access controls, and the basic security hygiene that prevents the majority of security incidents</div></div>
+            <div class="proc-activity"><div class="act-id">8.4.5</div><div class="act-name">Develop and test incident response plans — documented procedures for responding to data breaches or security incidents, including community member notification procedures and regulatory reporting requirements</div></div>
+            <div class="proc-activity"><div class="act-id">8.4.6</div><div class="act-name">Audit data sharing — a complete and current accounting of what community member data is shared with which external parties (funders, government agencies, partner organizations, technology vendors) under what conditions</div></div>
+          </div>
+          <div class="act-note">Process 8.4.6 — data sharing audit — is among the most consequential and least commonly performed data governance processes. Many institutions share community member data with external parties without adequate awareness of all the sharing relationships that have accumulated over time. Funders require data as a condition of funding; government agencies require reporting as a condition of licensure; technology vendors receive data as a condition of their terms of service; partner organizations receive data as a condition of referral relationships. Mapping all of these relationships comprehensively, assessing whether each has adequate consent authorization, and surfacing any sharing that community members would find surprising or objectionable — this is the data governance exercise that most consistently surfaces practices that require change.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">8.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Build digital equity and community technology access</div>
+          <div class="proc-group-desc">As post-labor institutions digitize their operations, communications, governance, and service delivery, they create access barriers for community members with limited digital connectivity, device access, or digital literacy. Category 8.5 is the internal process group responsible for ensuring that the institution's technology infrastructure does not become an access barrier — that the digital capabilities the institution builds amplify rather than restrict community engagement. It connects directly to Category 3.2 (barrier removal processes) and specifically addresses the digital barrier type identified there as one of the six primary access failure modes.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">8.5.1</div><div class="act-name">Audit digital access assumptions in all institutional processes — identifying where the institution has implicitly required device ownership, reliable connectivity, or digital literacy as prerequisites for participation</div></div>
+            <div class="proc-activity"><div class="act-id">8.5.2</div><div class="act-name">Design and maintain non-digital participation pathways as first-class alternatives — phone, in-person, and paper alternatives to digital processes that are fully functional, not degraded fallbacks</div></div>
+            <div class="proc-activity"><div class="act-id">8.5.3</div><div class="act-name">Build digital literacy support — training and navigation assistance for community members who want to develop digital skills, without making digital literacy a prerequisite for service access</div></div>
+            <div class="proc-activity"><div class="act-id">8.5.4</div><div class="act-name">Maintain device and connectivity lending or access programs — for community members who lack the equipment required to participate in digital processes the institution uses</div></div>
+            <div class="proc-activity"><div class="act-id">8.5.5</div><div class="act-name">Design all community-facing digital tools to accessibility standards — WCAG compliance, screen reader compatibility, multilingual interfaces, and the technical accessibility that makes digital tools usable across a genuinely diverse community</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six technology and AI failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in technology governance and AI adoption</div>
+
+    <div class="fail-row">
+      <div class="fail-num">T1</div>
+      <div class="fail-content">
+        <div class="fail-name">Tool proliferation without architecture — the unmanaged stack</div>
+        <div class="fail-desc">The institution has accumulated more tools than it can effectively manage, each adopted reactively to solve a specific problem, without architectural coherence or governance oversight. The resulting stack imposes a fragmentation tax — staff time spent on manual data transfer, inconsistent information across systems, onboarding complexity — that accumulates invisibly as embedded operational friction rather than appearing as a discrete budget line.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> No one in the institution has a complete list of all active software subscriptions and their costs. Staff regularly complain about time spent on administrative technology tasks. Different teams use different tools for the same function. A newly onboarded staff member requires weeks of tool introduction before becoming operationally effective.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">T2</div>
+      <div class="fail-content">
+        <div class="fail-name">Data trapped in silos — the fragmented truth problem</div>
+        <div class="fail-desc">Community member data exists in multiple disconnected systems — case management data in one tool, program participation data in another, financial data in a third, communications history in a fourth. The institution cannot answer basic questions about community members' full experience across its services because no integrated view exists. This is not only an operational inefficiency — it is a service quality failure: case managers cannot see the full picture of the community members they are supposed to be supporting.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Producing a report on community outcomes requires manual data assembly from multiple systems. Different staff give different answers to questions about community member status because they are looking at different system records. Case managers describe learning about other services a community member is receiving from the community member rather than from institutional records.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">T3</div>
+      <div class="fail-content">
+        <div class="fail-name">Ungoverned AI adoption — the equity risk that arrives ahead of the governance</div>
+        <div class="fail-desc">The institution deploys AI systems — for content generation, for service navigation, for administrative decision support — without the equity impact assessment, transparency requirements, and human oversight processes that responsible adoption requires. Staff use commercial AI tools with community member data without realizing that those tools' terms of service permit vendor use of submitted data for training. Automated systems make or influence decisions about community members without adequate disclosure or recourse.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff are using commercial AI tools for work that involves community member data without centralized awareness or governance. No AI adoption framework exists. No equity impact assessment has been conducted for any AI system in use. Community members have not been informed about the AI systems that affect their interactions with the institution.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">T4</div>
+      <div class="fail-content">
+        <div class="fail-name">Data breach unprepared — holding sensitive data without protecting it</div>
+        <div class="fail-desc">The institution holds sensitive community member data — health information, legal histories, financial situations, family details — without the security infrastructure appropriate to the sensitivity of that data. Multi-factor authentication is not universally implemented. Staff devices with access to community data are not protected. Incident response plans do not exist. When a breach occurs — and the probability of a breach increases with each year of inadequate security — the institution is not prepared to respond, and community members bear the consequences.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Multi-factor authentication is not required for systems containing community member data. No security incident has ever triggered a formal response process. Staff use personal devices to access institutional systems without security requirements. The institution has never tested its backup systems or conducted a security audit.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">T5</div>
+      <div class="fail-content">
+        <div class="fail-name">Digital exclusion by design — technology that only some community members can use</div>
+        <div class="fail-desc">The institution has moved significant operational, communication, and participation functions to digital-only channels without maintaining adequate non-digital alternatives, effectively excluding community members with limited digital access from participation. This is a Category 3.0 access failure (the digital barrier type) with a Category 8.0 cause: technology infrastructure decisions that prioritized institutional efficiency over community access equity.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Program enrollment, governance participation, and service access have all moved to online processes without maintained non-digital pathways. Community members who lack devices or reliable connectivity are unable to complete processes the institution now requires digitally. Participation rates among populations with lower digital access have declined since digitization without institutional recognition of the connection.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">T6</div>
+      <div class="fail-content">
+        <div class="fail-name">Vendor dependency without exit rights — the platform trap</div>
+        <div class="fail-desc">The institution has become deeply operationally dependent on specific technology vendors whose pricing, terms, and availability it cannot influence and from which it cannot easily exit. Critical community member data is held in formats or platforms that would be difficult and expensive to migrate. The switching cost has become a governance constraint: decisions about technology that would be appropriate on their merits are not made because the exit cost from current platforms is too high. The institution has transferred operational control to vendors.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Technology contract renewals are processed without negotiation because the switching cost makes renegotiation feel impossible. Staff cannot describe how the institution would migrate its data if a primary vendor changed its pricing or discontinued its product. A significant portion of the institution's historical community member data exists in a format that is only readable through a specific vendor's proprietary software.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Benetech and the technology commons</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Benetech — building technology for social good as a commons investment</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Benetech is a nonprofit technology company that develops software and data tools specifically for social good organizations — a direct institutional response to the technology access gap that leaves most post-labor institutions dependent on commercial tools designed for different contexts. Its Martus platform, which provides secure, encrypted documentation for human rights defenders and survivors of human rights violations, is one of the most instructive Category 8.0 case studies available: it demonstrates what technology infrastructure looks like when it is designed from the ground up for the specific data security, community trust, and operational requirements of organizations working with vulnerable populations.</div>
+      <div class="case-text">Martus's design principles operationalize Category 8.4 directly: end-to-end encryption ensures that even Benetech itself cannot access the case documentation stored in the system; data is stored locally with distributed backup rather than in a centralized server that creates a single breach target; the system works in low-bandwidth environments that commercial SaaS platforms assume away; and the user interface was designed with field workers in high-stress environments rather than with technology-comfortable administrative staff. These are not features that were added to a commercial platform — they are the design requirements that determined the architecture from the beginning.</div>
+      <div class="case-text">Benetech's broader contribution to Category 8.0 practice is its institutional model: a nonprofit technology organization that builds the technology commons that mission-driven institutions need but that commercial markets will not produce because the customer base is under-resourced and the profit margins are inadequate. The Benetech model — and similar organizations like Civic Tech Field Guide partners — suggests that the technology infrastructure problem for post-labor institutions is partly a market failure that requires commons-based institutional responses, not only better procurement decisions by individual institutions.</div>
+      <div class="case-lesson"><strong>Category 8.0 lesson:</strong> Benetech's Martus demonstrates that the specific data security and privacy requirements of organizations working with vulnerable populations cannot be adequately met through commercial platforms designed for corporate contexts. Category 8.4's data governance framework is most fully realized when the technology architecture itself enforces the governance principles rather than depending on policy compliance alone. Institutions working with the most sensitive community data — human rights defenders, domestic violence survivors, undocumented immigrants — should treat community-appropriate technology architecture as a non-negotiable requirement, not as a nice-to-have, and should explore solidarity economy technology providers before defaulting to commercial alternatives.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — NTEN and technology capacity for the nonprofit sector</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">NTEN — building sector-wide technology literacy as a commons</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">NTEN (Nonprofit Technology Network) is a membership organization that has operated at the intersection of technology and social good since 1999, building the shared technology literacy infrastructure that individual nonprofits and solidarity economy institutions cannot build alone. Its contribution to Category 8.0 practice is not in building specific technology tools but in building the institutional capacity to make good technology decisions — the governance frameworks, the evaluation methodologies, the professional community, and the collective knowledge infrastructure that lift the sector's overall technology capability.</div>
+      <div class="case-text">NTEN's approach to AI adoption guidance for the nonprofit sector is a useful model for the Category 8.3 framework described in this chapter. Rather than producing a recommendation list of AI tools to adopt or avoid, NTEN has developed evaluation frameworks — sets of questions and criteria that institutions can apply to specific adoption decisions in their specific contexts. This approach reflects a sophisticated understanding that AI adoption decisions cannot be made at the sector level because the equity risks, the community populations affected, and the governance capacities of different organizations vary too significantly for universal recommendations to be appropriate. The frameworks build institutional capacity for decision-making rather than substituting for it.</div>
+      <div class="case-lesson"><strong>Category 8.0 lesson:</strong> NTEN's model demonstrates that technology capacity for under-resourced institutions is most efficiently built as a commons — shared frameworks, shared professional learning, and shared knowledge infrastructure that reduce the cost of individual institutional technology decisions without requiring every institution to reinvent the same analytical approaches. The GPS Category 2.4 principle (knowledge commons contribution as institutional obligation) applies directly to technology practice knowledge: institutions that develop Category 8.0 capability should contribute their frameworks, evaluation criteria, and decision-making processes to sector-level knowledge commons, rather than treating them as proprietary institutional assets. The technology capacity gap in the solidarity economy is too large to be solved by individual institutional investment alone.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>AI systems that are not responsibly implemented create liabilities that can be more damaging than the operational problems they were adopted to solve. The efficiency gain is real. So is the harm potential. Both require design.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 8.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 8.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No technology strategy; tools adopted reactively without governance; no complete inventory of systems in use</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">AI tools adopted without governance framework; staff using commercial AI with community data without awareness of data implications</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No data governance policy; consent practices informal and inconsistent; no data security audit has been conducted</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Digital-only pathways proliferating without maintained non-digital alternatives; no digital access audit has been conducted</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Technology documentation sparse; system knowledge lives in individuals rather than institutional records</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Technology inventory maintained; basic governance process for major tool adoption; technology costs tracked and budgeted</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">AI adoption framework developing; administrative and community-facing AI beginning to be differentiated; some equity considerations documented</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Data governance policy drafted; basic security measures in place (MFA for primary systems); backup tested at least annually</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Digital access audit conducted; highest-priority non-digital alternatives restored or maintained; basic accessibility standard applied to community-facing tools</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Core system documentation maintained; vendor data portability provisions reviewed for primary platforms</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Technology strategy aligned with mission and strategic plan; technology governance process consistently followed; technology literacy investment for non-technical staff active</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">AI adoption framework implemented; equity impact assessment conducted for community-facing AI; transparency requirements and human oversight in place; ongoing equity monitoring operational</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Data governance policy implemented and followed; informed consent processes operational; data sharing audit completed; incident response plan documented and tested</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Non-digital pathways maintained as first-class alternatives; digital literacy support available; WCAG accessibility standard met for community-facing tools</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Technology stack rationalized — active tools match actual needs; fragmentation tax assessed and reduction plan active; vendor dependency managed with documented exit provisions</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Technology strategy contributes to collective field knowledge; institution participates in sector-level technology commons development</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">AI governance framework contributed to peer institutions; institution's equity impact assessment methodology shared as commons knowledge; community members involved in AI governance oversight</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community members have meaningful visibility into and agency over institutional data practices — not only consent at intake but ongoing relationship with their own data</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Technology infrastructure actively supports rather than constrains mission innovation; technology enables capabilities that were not possible at lower maturity levels</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Institution preference for community-owned and solidarity economy technology providers documented and actively operationalized in procurement decisions</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 8.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Technology cost as % of operating budget</div>
+      <div class="kpi-cell">Total technology spending relative to institutional size — measures whether technology investment is proportional and whether fragmentation is generating excess cost</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Staff technology friction score</div>
+      <div class="kpi-cell">Survey measure of the time staff spend on administrative technology tasks versus mission work — the primary measure of the fragmentation tax</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">AI equity audit completion rate</div>
+      <div class="kpi-cell">Percentage of community-facing AI systems with completed equity impact assessments — measures governance compliance for the highest-risk AI category</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Data breach incident rate</div>
+      <div class="kpi-cell">Number of data security incidents involving community member data per year — the primary security outcome measure; any incident above zero triggers formal review</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Non-digital pathway availability rate</div>
+      <div class="kpi-cell">Percentage of digital participation processes with maintained non-digital alternatives — measures digital access equity compliance</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Data portability coverage rate</div>
+      <div class="kpi-cell">Percentage of systems holding significant community data with documented and tested data export capabilities — measures vendor dependency risk</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community digital access gap</div>
+      <div class="kpi-cell">Difference in participation rates between digitally connected and digitally limited community members — measures whether technology infrastructure is creating access barriers</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Security hygiene compliance rate</div>
+      <div class="kpi-cell">Percentage of staff with MFA enabled, current phishing training, and device security requirements met — the primary leading indicator of breach prevention readiness</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 8.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 8.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a technology inventory and fragmentation audit</div>
+          <div class="seq-desc">Before changing any technology, develop an accurate picture of what the institution currently has: a complete list of all active software subscriptions, their costs, their data touchpoints, and their stated purpose. Assess the fragmentation tax — interview staff about the time spent on administrative technology tasks, manual data transfer, and context-switching between tools. Identify the five highest-cost fragmentation points. This audit converts the diffuse sense that "technology is a problem" into a specific, costed account of where technology is consuming institutional capacity, which is the prerequisite for prioritizing investment.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Complete technology inventory maintained and current; fragmentation tax assessed in staff-hours per week; top five rationalization opportunities identified; technology governance role assigned.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement data governance foundations and basic security</div>
+          <div class="seq-desc">Draft and adopt a data governance policy — what data the institution collects, why, how it is protected, who can access it, how long it is retained. Implement multi-factor authentication for all systems that contain community member data. Conduct a data sharing audit to identify all external parties receiving community data. Test backup systems. Implement basic phishing resistance training for all staff. These investments are the minimum floor below which the institution is holding sensitive community data without adequate protection — and the cost of a breach that occurs before these measures are in place is almost certainly higher than the cost of implementing them.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Data governance policy adopted; MFA implemented for all community data systems; data sharing audit completed; backup test completed; all staff completed security training.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Develop an AI adoption framework before the next AI adoption decision</div>
+          <div class="seq-desc">Develop an institutional AI adoption framework before the next AI adoption decision is made — not after. The framework needs to answer: What is the distinction between administrative AI and community-facing AI in our institution? What are the equity impact assessment requirements for each category? What transparency and consent requirements apply to community-facing AI? What human oversight is required for AI-assisted decisions affecting community members? Who has decision authority over AI adoption? This framework will be used within months of its development; the urgency of AI adoption decisions in the current environment makes pre-investment in governance frameworks a matter of weeks, not years.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> AI adoption framework adopted by governance body; first equity impact assessment completed for any existing community-facing AI system; transparency policy communicated to community members; human oversight requirements implemented.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Audit and repair digital access equity</div>
+          <div class="seq-desc">Systematically assess every institutional process that has migrated to digital channels: program enrollment, governance participation, service access, communications, and feedback mechanisms. For each, assess whether an adequate non-digital alternative exists and whether that alternative is a genuine first-class option or a degraded fallback. Implement the highest-priority repairs — restoring non-digital pathways for the processes whose digital-only status most restricts access for digitally limited community members. Review community-facing digital tools for WCAG accessibility compliance and prioritize remediation.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Digital access audit completed; non-digital alternatives implemented for top five access-critical processes; WCAG compliance audit completed; remediation plan adopted.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Develop a technology strategy aligned with mission and reduce the stack</div>
+          <div class="seq-desc">Develop a technology strategy document that articulates what technology capabilities the institution needs to deliver its mission strategy, what architectural principles should govern tool selection (interoperability, data portability, accessibility, vendor independence), and what the priority technology investments are over the next three years. Using the strategy as a guide, begin rationalizing the current stack — consolidating tools with overlapping functions, eliminating tools that are not delivering proportional value, and selecting replacements based on the strategy criteria rather than on reactive need. Stack rationalization is a multi-year effort; the key is establishing the direction and governance discipline, not achieving the destination in year one.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Technology strategy document adopted by governance body; at least three tools eliminated through rationalization; integration gaps between primary systems addressed; technology budget aligned with strategy priorities.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 8.0 and Category 14.0 (AI Governance):</strong> Category 8.0 addresses the operational technology infrastructure of the institution — including the responsible adoption and management of AI tools in institutional operations. Category 14.0 addresses the deeper governance challenge of AI that affects community members' lives through algorithmic decision-making, automated screening, and the deployment of AI systems at the community level rather than just the institutional level. The boundary is operational AI (8.0) versus community-governance AI (14.0). An AI tool that helps staff draft documents is a Category 8.3 question. An AI system that determines which community members are eligible for housing is a Category 14.0 question that requires the full algorithmic accountability framework described in Part V. Category 8.3 process 8.3.4 (human oversight of AI-assisted decisions affecting community members) is the bridge between the two categories: the institutional operational process that enforces the governance requirements that Category 14.0 establishes at the principle level.</p>
+    <p><strong>On open source and solidarity economy technology:</strong> The tension between using commercial technology platforms (which are well-resourced, feature-rich, and reliably maintained but governed by commercial interests) and community-owned or open source alternatives (which are mission-aligned but often under-resourced and less polished) is a genuine design choice for Category 8.0. The answer is not dogmatic: some commercial tools have adequate privacy practices and acceptable terms of service and provide genuine operational value that their open source alternatives do not currently match. Others do not. The appropriate approach is tool-by-tool evaluation using the governance framework of process 8.1.2 rather than blanket adoption of either commercial or open source categories. Institutions with the technical capacity to operate open source alternatives well should consider them seriously for any tool involving sensitive community data. Institutions without that capacity should not sacrifice operational reliability for ideological consistency.</p>
+    <p><strong>On technology as a justice question, not only an operational one:</strong> The data sovereignty implications of technology infrastructure choices extend beyond operational efficiency into the political economy of post-labor institutions. When community organizations store their data in commercial cloud platforms, process their communications through advertising-supported services, and deploy AI systems trained by corporate entities, they are transferring information about their communities — their needs, their patterns, their relationships, their vulnerabilities — to institutions whose interests are not aligned with theirs. This is not only a privacy risk — it is a structural dependency that the solidarity economy exists to reduce. Category 8.0 at its most mature level is not only about operational effectiveness; it is about building the technological sovereignty that allows post-labor institutions to operate with genuine independence from the commercial and governmental data systems whose design reflects interests other than community wellbeing.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part IV · Chapter 15 · GPS 8.0</span>
+    <span class="close-next">Ch. 16 — Steward collective resources (GPS 9.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

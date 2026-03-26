@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 16 — Steward Collective Resources (GPS 9.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --inst: #378ADD; --inst-dim: rgba(55,138,221,0.08);
+    --inst-text: #7ab8f0; --inst-border: rgba(55,138,221,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.inst { background: var(--inst-dim); color: var(--inst-text); border: 1px solid var(--inst-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--inst); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--inst-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--inst); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--inst); background: var(--inst-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--inst-text); }
+  .pullquote p::after { content: '\201D'; color: var(--inst-text); }
+
+  /* Revenue diversification matrix */
+  .revenue-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .revenue-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .revenue-row { display: grid; grid-template-columns: 140px 1fr 1fr; border-bottom: 1px solid var(--border-subtle); }
+  .revenue-row:last-child { border-bottom: none; }
+  .revenue-row.head { background: var(--bg-secondary); }
+  .revenue-cell { padding: 13px 16px; font-family: 'Outfit', sans-serif; font-size: 0.74rem; color: var(--text-secondary); line-height: 1.55; border-right: 1px solid var(--border-subtle); }
+  .revenue-cell:last-child { border-right: none; }
+  .revenue-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .revenue-cell.stream-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
+
+  /* Financial health framework */
+  .health-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .health-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .health-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .health-row:last-child { border-bottom: none; }
+  .health-metric { width: 130px; min-width: 130px; padding: 14px 14px; border-right: 1px solid var(--border-subtle); background: var(--inst-dim); display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+  .health-metric-name { font-family: 'Crimson Pro', serif; font-size: 0.9rem; font-weight: 600; color: var(--inst-text); line-height: 1.2; }
+  .health-metric-target { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); letter-spacing: 0.05em; margin-top: 2px; }
+  .health-content { padding: 14px 18px; flex: 1; }
+  .health-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .health-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .health-signal strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--inst-dim); color: var(--inst-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--inst-dim); border-bottom: 1px solid var(--inst-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--inst-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--inst-text); font-weight: 500; }
+
+  /* Sequence */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part IV · Institutional support processes</div>
+  <div class="chapter-eyebrow">Chapter 16 · GPS Category 9.0</div>
+  <h1 class="chapter-title">Steward collective resources</h1>
+  <p class="chapter-subtitle">Money is not the mission — but without it the mission stops — the financial stewardship processes that sustain post-labor institutions without surrendering their governance or distorting their purpose</p>
+  <div class="cat-meta">
+    <span class="cat-pill inst">Institutional Support</span>
+    <span class="cat-pill inst">Financial sustainability</span>
+    <span class="cat-pill inst">Revenue sovereignty</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">22 processes</span>
+    <span class="cat-pill neutral">16 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>There is a peculiar reluctance in many post-labor institutions to talk directly about money — about the financial structures that determine whether the institution survives, about the specific choices that produce financial health or financial fragility, about the ways in which resource dependencies shape mission choices even when they are not supposed to. The reluctance is understandable: financial conversations can feel at odds with a culture that places community values over financial metrics, and the transparency required for genuine financial stewardship can expose governance bodies to uncomfortable truths about institutional sustainability. But the reluctance is consequential. Institutions that do not discuss money clearly end up governed by financial pressures that are invisible in their official decision-making — shaped by the funding landscape in ways that are real but unacknowledged, making decisions about mission priorities based on what is fundable rather than what is needed, and sustaining financial fragility through the accumulated effect of avoided conversations.</p>
+
+    <p>Category 9.0 is the process domain for the financial life of the institution: how it generates revenue, how it manages that revenue against obligations, how it builds the financial resilience that protects the mission from financial disruption, and how the governance of its collective financial resources reflects the same values it applies to every other domain of its operations. Financial stewardship in post-labor institutions is not the same as financial management in enterprises. The goal is not to maximize surplus, to grow the balance sheet, or to generate returns for shareholders. The goal is sufficiency: enough financial resources to deliver the mission reliably over time, held with appropriate care, governed with genuine transparency, and managed in ways that do not compromise the institution's independence or distort its priorities in service of financial pressures.</p>
+
+    <p>The core stewardship challenge is the funder dependency problem — the specific financial structure of most post-labor institutions in which a significant proportion of revenue comes from a small number of sources (government agencies, foundations, major donors) whose preferences and requirements substantially shape what the institution does and how it does it. Funder dependency is not a sign of poor management; it is the predictable financial structure of institutions providing public goods in a society that has not yet built the public finance mechanisms to fund them adequately. But it is a governance challenge: institutions that are operationally dependent on funders whose preferences diverge from community needs must choose, repeatedly and often implicitly, between financial stability and mission fidelity. Making that choice explicitly — with full governance visibility — is the beginning of financial stewardship that serves the mission rather than substituting for it.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The financial health framework — five essential metrics</div>
+
+  <div class="body-text">
+    <p>Financial health in post-labor institutions cannot be assessed through a single metric. Revenue growth, which markets use as the primary health signal for enterprises, is inadequate for institutions whose purpose is not growth but sustainability. The five financial health metrics below are the minimum dashboard required to assess whether an institution's financial structure is adequate for its mission delivery obligations. Each measures something different, and each can appear healthy while others are distressed — which is why the five must be assessed together rather than in isolation.</p>
+  </div>
+
+  <div class="health-block">
+    <div class="health-header">Five financial health metrics — what they measure and what deterioration looks like</div>
+
+    <div class="health-row">
+      <div class="health-metric">
+        <div class="health-metric-name">Operating reserve ratio</div>
+        <div class="health-metric-target">Target: 3–6 months operating expenses</div>
+      </div>
+      <div class="health-content">
+        <div class="health-desc">The proportion of annual operating expenses held in unrestricted liquid reserves — the institution's capacity to continue operations through revenue disruptions, unexpected expenses, or the transition between funding cycles. The operating reserve is the single most important indicator of financial resilience: institutions with adequate reserves can absorb disruption; institutions without them cannot. Three months is the minimum for operational continuity; six months provides meaningful strategic flexibility.</div>
+        <div class="health-signal"><strong>Deterioration signal:</strong> Reserve ratio falls below two months of operating expenses. Reserve is regularly used to cover operating shortfalls rather than only genuine emergencies. Grant-funded reserve replenishment has been budgeted but not executed in two or more consecutive years.</div>
+      </div>
+    </div>
+
+    <div class="health-row">
+      <div class="health-metric">
+        <div class="health-metric-name">Revenue concentration ratio</div>
+        <div class="health-metric-target">Alert: Any single source &gt; 30%</div>
+      </div>
+      <div class="health-content">
+        <div class="health-desc">The proportion of total revenue from the single largest revenue source — the primary measure of revenue fragility. Institutions with high revenue concentration are institutionally dependent on the decisions of a single funder whose priorities, budget cycles, and policy directions they cannot control. When that funder changes priorities, reduces allocations, or terminates funding, the concentrated institution faces an existential financial crisis rather than a manageable revenue adjustment.</div>
+        <div class="health-signal"><strong>Deterioration signal:</strong> A single funder provides more than 40% of operating revenue. The institution has not developed alternative revenue streams in three or more years. Leadership describes the relationship with the primary funder as one the institution "cannot afford to risk." Program development is driven by funder priorities rather than community needs.</div>
+      </div>
+    </div>
+
+    <div class="health-row">
+      <div class="health-metric">
+        <div class="health-metric-name">Unrestricted revenue ratio</div>
+        <div class="health-metric-target">Target: &gt;30% of total revenue</div>
+      </div>
+      <div class="health-content">
+        <div class="health-desc">The proportion of total revenue that is unrestricted — available for any institutional purpose rather than designated for specific programs or activities by donor or grant conditions. Institutions with very low unrestricted revenue ratios have adequate total resources but inadequate operational flexibility: they cannot fund innovation, respond to emerging community needs, cover overhead not included in restricted grants, or absorb unexpected costs without a financial crisis.</div>
+        <div class="health-signal"><strong>Deterioration signal:</strong> Unrestricted revenue falls below 20% of total revenue. Overhead costs are chronically underfunded because no grant covers them. Staff time cannot be redeployed to emerging needs because all staff time is allocated to restricted grants. The institution is consistently "grant rich and cash poor."</div>
+      </div>
+    </div>
+
+    <div class="health-row">
+      <div class="health-metric">
+        <div class="health-metric-name">Program efficiency ratio</div>
+        <div class="health-metric-target">Target: &gt;65% to programs</div>
+      </div>
+      <div class="health-content">
+        <div class="health-desc">The proportion of total expenditure directed to program delivery rather than to administrative and fundraising functions — a measure of whether the institution's financial structure allows adequate investment in its actual work. The program efficiency ratio is often misused as a primary quality indicator (higher is always better) when it is better understood as a balance indicator: too low (below 60%) indicates administrative inefficiency; too high (above 85%) indicates administrative underinvestment that produces the management and governance failures documented throughout this framework.</div>
+        <div class="health-signal"><strong>Deterioration signal:</strong> Program ratio below 60% (administrative overhead disproportionate) or above 85% (institutional capacity systematically underfunded). The ratio is optimized for funder reporting rather than for institutional health. Administrative and governance functions are chronically underfunded to maintain a high program ratio.</div>
+      </div>
+    </div>
+
+    <div class="health-row">
+      <div class="health-metric">
+        <div class="health-metric-name">Revenue growth sustainability</div>
+        <div class="health-metric-target">Track: 3-year trend</div>
+      </div>
+      <div class="health-content">
+        <div class="health-desc">The three-year trend in revenue by stream — measuring whether the institution's revenue base is growing, stable, or declining, and whether growth is occurring in the streams that most support financial independence (earned revenue, community-sourced philanthropy, unrestricted giving) or in the streams that most increase dependency (single large grants, government contracts). Trend data over three years is more meaningful than any single year's revenue, because post-labor institutions operate in funding environments with significant year-to-year variability.</div>
+        <div class="health-signal"><strong>Deterioration signal:</strong> Three-year revenue trend declining across multiple streams. Revenue growth concentrated in restricted grants while unrestricted and earned revenue stagnates. The institution is growing in total revenue but increasing in financial dependency simultaneously.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Revenue diversification — the strategic case and the practical pathways</div>
+
+  <div class="body-text">
+    <p>Revenue diversification is the primary financial strategy available to post-labor institutions for reducing funder dependency without growing total revenue proportionally. The goal is not to have the maximum number of revenue streams — maintaining many small revenue streams imposes administrative overhead that can exceed their value — but to ensure that no single source or source category can threaten institutional continuity through reduction or withdrawal. The practical question is which revenue streams are genuinely available to a given institution, at what development cost, with what funder relationship implications, and with what mission alignment constraints. The framework below maps the primary revenue streams available to post-labor institutions with honest assessment of each.</p>
+  </div>
+
+  <div class="revenue-block">
+    <div class="revenue-header">Revenue stream diversification — sources, development investment, and mission alignment</div>
+    <div class="revenue-row head">
+      <div class="revenue-cell head">Revenue stream</div>
+      <div class="revenue-cell head">Development pathway and investment required</div>
+      <div class="revenue-cell head">Mission alignment and governance implications</div>
+    </div>
+    <div class="revenue-row">
+      <div class="revenue-cell stream-name">Government grants and contracts</div>
+      <div class="revenue-cell">Requires demonstrated track record, compliance infrastructure, and capacity to manage reporting requirements. High potential revenue but high administrative burden. Multi-year contracts provide stability; annual grants create planning difficulty. Requires grant writer capacity and compliance management.</div>
+      <div class="revenue-cell">High mission alignment potential but high mission distortion risk — government funding priorities shift, often creating pressure to adapt programs to funding categories rather than community needs. Contract language may restrict programmatic flexibility. Payment often lags service delivery, requiring working capital capacity.</div>
+    </div>
+    <div class="revenue-row">
+      <div class="revenue-cell stream-name">Foundation grants</div>
+      <div class="revenue-cell">Requires relationship development with program officers, alignment with foundation priority areas, and significant proposal writing investment. Most foundation grants are restricted (project-specific) and time-limited (1–3 years). Requires active pipeline management to replace expiring grants. High staff time per revenue dollar at small grant sizes.</div>
+      <div class="revenue-cell">Mission alignment varies by foundation; most foundations have specific priority areas that may or may not align with institutional needs. The systemic risk is portfolio homogeneity — institutions that have developed strong relationships with foundations sharing a specific ideology or theory of change face correlated risk if that funding community contracts. General operating support grants are rare and highly valuable.</div>
+    </div>
+    <div class="revenue-row">
+      <div class="revenue-cell stream-name">Individual philanthropy — major donors</div>
+      <div class="revenue-cell">Requires cultivation infrastructure, donor stewardship capacity, and leadership time for relationship development. High revenue per donor relationship but high relationship maintenance cost. Requires prospect identification and qualification process, not only relationship management.</div>
+      <div class="revenue-cell">Mission alignment strong when donors are from or connected to the community served. Mission distortion risk when large individual donors develop opinions about institutional direction that they express through giving or withdrawal decisions. Bequest and endowment giving provides the most mission-protective form of major donor revenue.</div>
+    </div>
+    <div class="revenue-row">
+      <div class="revenue-cell stream-name">Community-sourced philanthropy — broad base</div>
+      <div class="revenue-cell">Requires communications infrastructure, donor acquisition and retention processes, and consistent donor engagement. Lower revenue per relationship but lower individual relationship dependency. Highly scalable if online giving infrastructure is developed. Most mission-protective form of philanthropic revenue — no single donor can threaten continuity.</div>
+      <div class="revenue-cell">Highest mission alignment: broad community giving reflects actual community investment in the institution's work, provides an independent validation of mission relevance, and creates the most resilient revenue base. Requires investment in donor communications and community relationship maintenance, which aligns with Category 3.0 engagement processes already required for mission delivery.</div>
+    </div>
+    <div class="revenue-row">
+      <div class="revenue-cell stream-name">Earned revenue — fees for service</div>
+      <div class="revenue-cell">Requires service design for external markets, pricing strategy, sales or business development capacity, and typically a longer development timeline than philanthropic revenue. Unrestricted by design — the highest-value revenue category for operational flexibility. Most viable when the institution has capabilities that other organizations will pay for.</div>
+      <div class="revenue-cell">Mission alignment variable — earned revenue from services aligned with the institution's mission is additive; earned revenue that diverts staff capacity from mission work to revenue generation is dilutive. The key design question is whether the paying customer for the earned revenue is the community the institution serves (fee-for-service from members) or an external entity (consulting, training, licensing).</div>
+    </div>
+    <div class="revenue-row">
+      <div class="revenue-cell stream-name">Member dues and assessments</div>
+      <div class="revenue-cell">Requires membership infrastructure, clear value proposition for dues-paying members, and the governance design that makes membership meaningful. Most viable in cooperative and mutual aid institutions where membership is central to institutional identity. Revenue is typically modest but highly unrestricted and community-sourced.</div>
+      <div class="revenue-cell">Highest mission alignment of any revenue source: member dues reflect community ownership of the institution and create the governance accountability relationship that makes the institution genuinely accountable to its community rather than to external funders. Member dues revenue reduces funder dependency while strengthening community governance simultaneously.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 9.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">9.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Develop and diversify revenue and resource streams</div>
+          <div class="proc-group-desc">Revenue development is not fundraising — it is a strategic function that determines the institution's financial independence and mission sovereignty over time. The distinction matters because fundraising is oriented toward near-term revenue generation while revenue development is oriented toward building the financial structure that protects long-term mission delivery. An institution that excels at fundraising but neglects revenue development accumulates revenue while its financial dependency increases, becoming progressively more vulnerable to the funder priority shifts it has no mechanism to withstand.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">9.1.1</div><div class="act-name">Develop a multi-year revenue development strategy — setting diversification targets, identifying development priorities by revenue stream, and allocating development investment based on projected revenue contribution relative to mission alignment</div></div>
+            <div class="proc-activity"><div class="act-id">9.1.2</div><div class="act-name">Manage foundation and government grant pipeline — prospecting, proposal development, relationship management, reporting, and renewal, treated as a portfolio rather than as individual transactions</div></div>
+            <div class="proc-activity"><div class="act-id">9.1.3</div><div class="act-name">Develop individual donor program — major donor cultivation and stewardship, broad-base community fundraising, and the communication and relationship infrastructure that converts community engagement into community financial investment</div></div>
+            <div class="proc-activity"><div class="act-id">9.1.4</div><div class="act-name">Build earned revenue capacity where mission-aligned — identifying services or capabilities the institution has that others will pay for, designing and pricing them, and building the business development capacity to generate revenue from them</div></div>
+            <div class="proc-activity"><div class="act-id">9.1.5</div><div class="act-name">Develop member and community investment mechanisms — dues structures, community investment funds, and the financial instruments through which community members can invest in the institution's long-term viability</div></div>
+            <div class="proc-activity"><div class="act-id">9.1.6</div><div class="act-name">Track revenue diversification progress — monitoring revenue concentration ratios, unrestricted revenue ratios, and progress against diversification targets annually; reporting to governance body, not only to leadership</div></div>
+          </div>
+          <div class="act-note">Process 9.1.5 — member and community investment mechanisms — is the revenue development process most directly aligned with post-labor institutional values and most frequently underdeveloped. Community investment funds, community bond programs, and revolving loan funds through which community members can invest in the institution's physical assets or program infrastructure are genuinely available to many post-labor institutions and remain largely unexplored. These mechanisms convert community members from recipients of services into investors in the institution's future — strengthening the governance relationship while building the financial independence that philanthropic revenue alone cannot provide. The Calvert Foundation's community investment model and the Slow Money network's community investment frameworks provide design precedents that post-labor institutions can adapt.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">9.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Manage budgeting, financial planning, and resource allocation</div>
+          <div class="proc-group-desc">Budget development is not a technical function that finance staff perform and governance bodies approve. It is the primary resource allocation decision of the institution — the annual articulation of what the institution values enough to fund and what it values less than the cost of funding it. Budget processes that are opaque, rushed, or technically inaccessible to non-finance governance body members systematically undermine the governance accountability that is the institution's most fundamental commitment to its community. A budget that community members and governance body members cannot understand is a budget that concentrates financial decision-making power in the hands of whoever can translate it — typically leadership and finance staff — regardless of the formal governance structure.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">9.2.1</div><div class="act-name">Develop participatory budget process — program staff, governance body members, and where appropriate community members participate in budget development, not only in budget approval</div></div>
+            <div class="proc-activity"><div class="act-id">9.2.2</div><div class="act-name">Conduct multi-year financial planning — three-year financial projections that connect strategic plan commitments to financial requirements, surfacing resource gaps before they become crises</div></div>
+            <div class="proc-activity"><div class="act-id">9.2.3</div><div class="act-name">Design budget documents for governance accessibility — financial reports and budget presentations accessible to governance body members without financial expertise; narrative explanation of financial choices alongside numerical tables</div></div>
+            <div class="proc-activity"><div class="act-id">9.2.4</div><div class="act-name">Implement budget-to-actuals monitoring — monthly or quarterly comparison of actual financial performance against budget, reviewed by governance body with responsibility to investigate and respond to material variances</div></div>
+            <div class="proc-activity"><div class="act-id">9.2.5</div><div class="act-name">Manage funder reporting and compliance — accurate, timely financial reporting to funders that reflects actual use of restricted funds; systems that prevent commingling of restricted and unrestricted funds</div></div>
+            <div class="proc-activity"><div class="act-id">9.2.6</div><div class="act-name">Conduct scenario planning — financial projections under multiple revenue scenarios (optimistic, base case, pessimistic) that enable governance bodies to make pre-emptive decisions rather than crisis-driven ones</div></div>
+          </div>
+          <div class="act-note">Process 9.2.6 — financial scenario planning — is the governance function most frequently absent in post-labor institutions and most valuable in the funding environments they navigate. The question "What do we do if our largest grant is not renewed?" should be answered before the renewal decision arrives, not after. Institutions that have worked through financial scenario plans know what their response options are, what commitments they will maintain and what they will reduce, and what their trigger points are for different response actions. Institutions that have not done this work discover those options under conditions of crisis — when staff are anxious, when governance bodies are reactive, and when the quality of decision-making is at its lowest.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">9.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Manage accounting, internal controls, and financial operations</div>
+          <div class="proc-group-desc">Financial operations — the day-to-day management of accounts payable and receivable, payroll, bank reconciliations, grant tracking, and the internal control environment that prevents and detects financial mismanagement — are the operational bedrock of financial stewardship. Financial operations failures are among the most damaging events in post-labor institutional life: the embezzlement that destroys community trust, the grant compliance failure that triggers audit findings and funder sanctions, the payroll error that harms staff, the cash flow crisis that produces payroll delay. These failures are not inevitable — they are the predictable consequence of inadequate internal control environments that most solidarity economy institutions have not invested in because internal controls feel like bureaucratic overhead rather than mission-critical infrastructure.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">9.3.1</div><div class="act-name">Implement segregation of duties — no single person has sole control over the full cycle of any financial transaction: authorization, execution, and recording must be separated across at least two roles</div></div>
+            <div class="proc-activity"><div class="act-id">9.3.2</div><div class="act-name">Manage chart of accounts and fund accounting — maintaining the financial infrastructure that tracks restricted and unrestricted funds separately and produces the programmatic financial reporting that funders and governance bodies require</div></div>
+            <div class="proc-activity"><div class="act-id">9.3.3</div><div class="act-name">Implement accounts payable and receivable management — timely vendor payment, active grant billing and collection, and the cash flow management that prevents shortfalls from becoming crises</div></div>
+            <div class="proc-activity"><div class="act-id">9.3.4</div><div class="act-name">Manage payroll and benefits administration — accurate, timely payroll with appropriate withholding and benefits management; the financial operation with the highest direct impact on staff trust and wellbeing</div></div>
+            <div class="proc-activity"><div class="act-id">9.3.5</div><div class="act-name">Conduct and support financial audits — annual audit or review by an independent auditor, with audit findings reviewed by the governance body and responded to through documented remediation plans</div></div>
+          </div>
+          <div class="act-note">Segregation of duties in 9.3.1 is the most important single internal control requirement, and the one most frequently compromised in small post-labor institutions with limited staff. When one person approves payments, signs checks, reconciles bank accounts, and records transactions, the internal control environment is absent — any misappropriation can go undetected for years. At minimum: whoever initiates a payment should not also approve it; whoever approves a payment should not also process it; whoever processes payments should not also reconcile bank accounts. In very small institutions where complete segregation is not possible, compensating controls — dual signatures for payments above a threshold, regular governance body review of bank statements — can provide partial protection.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">9.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Build and steward financial reserves and endowments</div>
+          <div class="proc-group-desc">Financial reserves are the difference between an institution that can weather disruption and one that cannot. They are also the most consistently underdeveloped financial asset in the post-labor sector — because building reserves requires generating surplus above operating expenses, which requires either earning more than the institution spends or receiving unrestricted gifts designated for reserve building, both of which feel counterintuitive to institutions whose orientation is toward deploying every available dollar for mission delivery. The framing that produces reserve building is not "saving money we could be spending on programs" but "building the operational continuity infrastructure that protects all programs from financial disruption."</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">9.4.1</div><div class="act-name">Develop a reserve policy — documenting target reserve level, acceptable uses of reserves, conditions for reserve drawdown, and the replenishment plan that follows any drawdown</div></div>
+            <div class="proc-activity"><div class="act-id">9.4.2</div><div class="act-name">Build operating reserves through budgeted annual surplus — treating reserve building as a budget line item rather than as what is left over after all expenses, ensuring consistent accumulation rather than episodic windfalls</div></div>
+            <div class="proc-activity"><div class="act-id">9.4.3</div><div class="act-name">Manage reserve investment — investing reserves in instruments appropriate to the institution's liquidity needs and risk tolerance, with governance body oversight of investment policy</div></div>
+            <div class="proc-activity"><div class="act-id">9.4.4</div><div class="act-name">Develop endowment where appropriate — long-term capital that generates investment income for institutional operations, providing the most durable form of financial independence available to post-labor institutions</div></div>
+            <div class="proc-activity"><div class="act-id">9.4.5</div><div class="act-name">Report reserve status to governance body quarterly — ensuring that governance bodies have current awareness of the institution's financial resilience position, not only its revenue and expense performance</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">9.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Govern financial transparency and community accountability</div>
+          <div class="proc-group-desc">Financial transparency in post-labor institutions is both an ethical commitment and a governance requirement — the mechanism through which the institution demonstrates to its community that the resources entrusted to it are being managed with integrity. Transparency is not the same as disclosure: disclosure is making financial information available to those who ask; transparency is designing financial communication so that community members can understand how their resources are being used without requiring financial expertise or special effort to access the information. The difference between disclosure and transparency is the difference between putting audited financials on a website and designing a financial report that tells the community's story in terms the community can use.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">9.5.1</div><div class="act-name">Design community financial reports — annual financial communications that explain the institution's financial position, revenue sources, resource allocation, and reserve status in accessible, non-technical language for community members</div></div>
+            <div class="proc-activity"><div class="act-id">9.5.2</div><div class="act-name">Implement financial governance training for governance body members — ensuring that all governance body members, regardless of financial background, can meaningfully participate in financial oversight rather than deferring to those with financial expertise</div></div>
+            <div class="proc-activity"><div class="act-id">9.5.3</div><div class="act-name">Conduct funder relationship governance — explicit governance body oversight of major funder relationships, including review of grant terms, assessment of mission alignment, and decisions about whether to accept funding with conditions that constrain institutional direction</div></div>
+            <div class="proc-activity"><div class="act-id">9.5.4</div><div class="act-name">Manage conflicts of interest — financial conflict of interest policies for governance body members and staff, consistently applied and documented, that prevent personal financial interests from influencing institutional financial decisions</div></div>
+            <div class="proc-activity"><div class="act-id">9.5.5</div><div class="act-name">Develop and implement compensation equity policy — transparent compensation bands, pay equity analysis, and the public communication of compensation philosophy that demonstrates that the institution's values extend to how it compensates those who work for it</div></div>
+          </div>
+          <div class="act-note">Process 9.5.3 — funder relationship governance — is the most consequential financial governance process and the one most frequently delegated entirely to leadership rather than engaged by governance bodies. When the governance body is unaware of the specific conditions attached to major grants, it cannot assess whether those conditions are constraining institutional direction in ways that contradict the community's governance mandate. Governance bodies should review major grant terms before acceptance — specifically asking: does this funding require us to do things we would not otherwise do, or prohibit us from doing things we would otherwise do? If yes, is the financial benefit sufficient to justify the mission constraint? This conversation, held before acceptance rather than after implementation, is the practice of genuine financial governance.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six collective resource stewardship failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in financial stewardship and resource governance</div>
+
+    <div class="fail-row">
+      <div class="fail-num">F1</div>
+      <div class="fail-content">
+        <div class="fail-name">Funder capture — the institution the funders designed</div>
+        <div class="fail-desc">The institution's programming, staffing, organizational structure, and strategic priorities have been progressively shaped by funder preferences rather than community needs — not through explicit negotiation but through the accumulated effect of grant-driven decisions made without explicit governance assessment of their mission implications. The institution still describes itself in mission terms, but its actual work has drifted toward what is funded, which is not the same as what is needed. The community it nominally serves receives services shaped by funder priorities that may differ significantly from community priorities.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Program launches are consistently timed to grant availability rather than community need. Staff describe programs as existing "because of the grant" rather than because the community needs them. When asked about unmet community needs, leadership refers to funding gaps rather than program design opportunities. Governance discussions about program priorities center on what is fundable, not what is needed.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">F2</div>
+      <div class="fail-content">
+        <div class="fail-name">Perpetual fragility — operating without reserves for years</div>
+        <div class="fail-desc">The institution has operated without adequate operating reserves for multiple years — not as an emergency condition but as a chronic operating reality that leadership has normalized. Every unexpected expense creates a cash crisis. Grant payment delays produce payroll anxiety. The institution cannot take strategic risks because it has no financial cushion to absorb the consequences of failure. Leadership spends disproportionate time managing financial fragility rather than advancing mission, and the community served is one funder decision away from service disruption at any time.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution regularly carries accounts payable beyond 60 days. Payroll has been delayed in the past two years for any reason. The operating reserve is below one month of operating expenses and has been for more than 12 months. Leadership describes the financial situation as "always tight" without a plan to change the structural conditions that produce tightness.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">F3</div>
+      <div class="fail-content">
+        <div class="fail-name">Financial opacity — governance without visibility</div>
+        <div class="fail-desc">The governance body formally oversees institutional finances but does not actually understand them — because financial reports are too technical, too infrequent, or too summary to provide genuine oversight capacity. Governance members who lack financial expertise defer to those who have it, concentrating effective financial governance in a small subset of the governance body regardless of formal governance structure. The institution's finances are technically compliant with governance requirements while the governance accountability those requirements are designed to produce is absent.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Governance body members cannot explain the institution's current financial position when asked outside of a formal meeting context. Financial agenda items at governance meetings receive less discussion time than program items despite equal governance importance. Governance body members describe themselves as "trusting" the finance committee or executive director with financial decisions they are formally responsible to oversee.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">F4</div>
+      <div class="fail-content">
+        <div class="fail-name">Internal control failure — the embezzlement that could have been prevented</div>
+        <div class="fail-desc">The institution's internal control environment is inadequate to prevent or detect financial misappropriation. A single person has unchecked access to institutional funds. Bank statements are not reviewed by anyone without transactional authority. Expense approvals are nominal rather than genuine. When misappropriation occurs — which is a function of opportunity, not of staff character — it causes financial harm to the community the institution serves and community trust damage that may be more lasting than the financial loss.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The same person who initiates payments also approves them and reconciles bank accounts. No one other than the bookkeeper reviews bank statements. Expense reports are approved by supervisors who do not examine supporting documentation. A financial audit has not been conducted in more than three years.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">F5</div>
+      <div class="fail-content">
+        <div class="fail-name">Indirect cost under-recovery — subsidizing funders through institutional overhead</div>
+        <div class="fail-desc">The institution chronically under-recovers its indirect costs — the administrative, governance, technology, and facility overhead that supports all program delivery — from restricted grants that fund only direct program costs. The result is a structural annual deficit in institutional overhead that is covered by unrestricted revenue (which is therefore unavailable for reserve building or strategic investment) or simply goes unfunded (producing the management and governance failures documented throughout this framework). The institution is effectively subsidizing its funders' programs by absorbing overhead costs the funders do not pay.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution has never calculated its actual indirect cost rate and compared it to the indirect cost rates in its grant budgets. Indirect cost rates in grant proposals are set at what funders will accept rather than at what the institution actually incurs. The institution's actual administrative overhead exceeds what it recovers through grants, and the gap is covered by unrestricted donations that could otherwise build reserves.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">F6</div>
+      <div class="fail-content">
+        <div class="fail-name">Windfall dependency — building on unrepeatable revenue</div>
+        <div class="fail-desc">The institution received significant one-time or extraordinary revenue — a large estate gift, a pandemic relief grant, a foundation capital investment — and built ongoing operating commitments (staff positions, program expansions, facility leases) on the assumption that the revenue pattern would continue. When the one-time revenue does not recur, the institution faces a structural deficit that requires either program contraction or a fundraising campaign to replace unrepeatable revenue with sustainable sources. The pattern is among the most common in post-labor institutional financial history and among the most predictable: one-time revenue is one-time revenue, and operating commitments endure.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Significant new program or staffing commitments were made in a year with unusual revenue without explicit analysis of revenue sustainability. The institution cannot describe how the new commitments will be funded after the extraordinary revenue is exhausted. Financial projections assume continuation of one-time revenue sources without marking them as non-recurring.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — RSF Social Finance and values-aligned capital</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">RSF Social Finance — rethinking the relationship between money and mission</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">RSF Social Finance is a nonprofit financial services organization that has spent four decades developing financial instruments specifically designed for organizations whose missions are not well-served by conventional capital markets. Its contribution to Category 9.0 practice is not only in the specific products it offers — its social investment fund, its integrated capital approach, and its donor-advised fund alternatives — but in the philosophy of money management it has developed and documented for mission-driven organizations navigating the tension between financial sustainability and mission integrity.</div>
+      <div class="case-text">RSF's most instructive Category 9.0 contribution is its "Integrated Capital" approach — a framework for thinking about all the forms of financial support available to post-labor institutions (grants, loans, investments, guarantees, patient capital) in terms of their appropriate use given specific institutional circumstances, rather than treating grants as the default and other forms as alternatives for special situations. In RSF's framework, the question is not "can we get a grant for this?" but "what financial instrument best matches the nature of this need, the time horizon of this investment, and the risk tolerance of this institution?" This reframing opens up financial strategies — community development loan funds, revolving credit facilities, program-related investments from foundations — that many post-labor institutions never explore because their financial imagination is bounded by the grant paradigm.</div>
+      <div class="case-text">RSF's Community Pricing Meetings — in which loan rates are set through a transparent conversation among borrowers, lenders, and RSF staff about the financial needs of both sides — are a specific operationalization of process 9.5.1 (community financial transparency) that goes beyond disclosure to genuine co-governance of financial terms. The model demonstrates that financial relationships between institutions and their capital providers can be designed around transparency and mutual benefit rather than around the information asymmetry and power differential that characterizes conventional lending.</div>
+      <div class="case-lesson"><strong>Category 9.0 lesson:</strong> RSF's model demonstrates that the financial infrastructure available to post-labor institutions is substantially wider than the grant-philanthropy paradigm most institutions operate within. Institutions that have developed to Level 3 financial maturity have typically exhausted the straightforward approaches — grant diversification, reserve building, earned revenue development — and are ready to explore the patient capital, community investment, and integrated capital instruments that RSF's model makes accessible. The most important single contribution of RSF's approach to Category 9.0 practice is the reframing of financial sustainability as a design challenge rather than a fundraising challenge: the question is not only "how do we raise more money?" but "what financial architecture best serves our mission over time?"</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — The Working World and non-extractive finance</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">The Working World — democratizing capital access for worker cooperatives</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Working World is a non-extractive investment fund that provides financing to worker cooperatives and solidarity economy institutions that cannot access conventional capital markets on terms compatible with their governance structures. Its Category 9.0 contribution is specifically in the domain of process 9.1.4 (earned revenue and alternative capital) and process 9.1.5 (community investment mechanisms) — demonstrating at institutional scale that the financial instruments available to post-labor institutions can be designed to reinforce rather than undermine the governance principles that define them.</div>
+      <div class="case-text">The Working World's non-extractive lending model is built around a core principle that distinguishes it from conventional development finance: repayment is linked to business performance rather than guaranteed, which means that the financial instrument does not impose survival-threatening obligations on institutions during downturns. The fund accepts equity-like risk while maintaining debt-like structures that preserve worker-owner governance rather than diluting it through equity investment. This design resolves the fundamental tension between capital access and governance integrity that causes many worker cooperatives to remain under-capitalized rather than accept capital structures that compromise their governance.</div>
+      <div class="case-lesson"><strong>Category 9.0 lesson:</strong> The Working World's model demonstrates that the terms of financial instruments are themselves a governance design question. Capital structured to extract maximum return from post-labor institutions concentrates financial risk in the institution while limiting its operational flexibility — the opposite of what the institution needs. Capital structured on non-extractive terms shares risk with the institution, preserves governance, and aligns the capital provider's interests with institutional sustainability rather than return. Process group 9.1's revenue diversification work should include explicit assessment of capital instrument terms, not only revenue stream diversification — because how money arrives shapes what the institution can do with it as much as how much arrives.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>The institution that cannot discuss its finances clearly is governed by them invisibly. Financial pressure that is unacknowledged does not disappear — it shows up in program decisions as if they were strategic choices.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 9.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 9.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No revenue development strategy; funding is reactive — pursuing opportunities as they emerge without portfolio management</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Budget is a year-end exercise rather than a planning tool; no budget-to-actuals monitoring; governance body does not review financial performance regularly</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No segregation of duties; one person controls the full financial transaction cycle; internal controls absent or nominal</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No operating reserve; institution operates month-to-month; financial crises are regular occurrences managed reactively</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Financial reporting to governance body is infrequent, technical, and inaccessible; governance members defer entirely to leadership on financial matters</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Grant pipeline managed as portfolio; some revenue diversification underway; revenue concentration tracked though not yet at target levels</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Annual budget developed with some participation; quarterly financial reporting to governance body; budget-to-actuals monitoring beginning</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Basic segregation of duties implemented for primary transactions; annual review or audit conducted; internal control improvements underway</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Reserve policy developed; operating reserve below target but building; no payroll delays in the past 12 months</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Financial governance training offered to governance body members; financial reports improving in accessibility; conflict of interest policy in place</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Multi-year revenue development strategy in place; revenue concentration below 40% from any single source; diversification progress tracked and reported to governance body</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Participatory budget process; multi-year financial projections; scenario planning conducted annually; governance body actively engaged in financial oversight</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Full segregation of duties across all financial transaction cycles; annual audit with clean opinion; internal control environment reviewed annually</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Operating reserve at three or more months of operating expenses; reserve policy implemented with governance body oversight; reserve investment managed appropriately</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community financial report published annually; governance body can explain institutional financial position; funder relationship governance active; compensation equity policy implemented</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Revenue sovereignty achieved — no single funder can threaten institutional continuity; community-sourced revenue exceeds 40% of total; earned revenue or member dues meaningful contributors</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Financial strategy and institutional strategy fully integrated; capital instrument design explored beyond grant paradigm; endowment or long-term reserves in development</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community members genuinely understand and engage with institutional financial governance; financial transparency produces community trust, not only compliance</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Institution contributes financial stewardship knowledge to peer network; participates in solidarity economy financial infrastructure development (CDFIs, community investment funds)</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Indirect cost fully recovered across grant portfolio; compensation approaching market rates through sustained multi-year strategy; financial equity commitments reflected in actual compensation outcomes</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 9.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Operating reserve ratio</div>
+      <div class="kpi-cell">Months of operating expenses held in unrestricted liquid reserves — the primary financial resilience indicator; target 3–6 months</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Revenue concentration ratio</div>
+      <div class="kpi-cell">Percentage of total revenue from the single largest source — the primary revenue fragility measure; alert above 30%, critical above 40%</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Unrestricted revenue ratio</div>
+      <div class="kpi-cell">Percentage of total revenue that is unrestricted — the primary measure of operational financial flexibility; target above 30%</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community-sourced revenue ratio</div>
+      <div class="kpi-cell">Percentage of revenue from community members (dues, small donations, local philanthropy) — measures degree of financial accountability to the community served</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Indirect cost recovery rate</div>
+      <div class="kpi-cell">Percentage of actual indirect costs recovered through grant indirect cost allocations — measures whether funders are paying their share of institutional overhead</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Budget variance rate</div>
+      <div class="kpi-cell">Average percentage variance between budgeted and actual revenue and expenses — measures financial planning accuracy and budget governance quality</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Days cash on hand</div>
+      <div class="kpi-cell">Total liquid assets divided by average daily operating expense — the most immediate liquidity measure; below 30 days indicates cash flow crisis risk</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Grant pipeline renewal rate</div>
+      <div class="kpi-cell">Percentage of expiring grants renewed at equivalent or higher funding levels — measures the sustainability of the grant revenue base</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 9.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 9.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a financial health assessment and establish the five core metrics</div>
+          <div class="seq-desc">Before any other Category 9.0 development, establish a clear, honest picture of current financial health using the five metrics described in this chapter: operating reserve ratio, revenue concentration ratio, unrestricted revenue ratio, program efficiency ratio, and revenue trend. Calculate each metric from current financial statements. Present findings to the governance body — including the uncomfortable ones — with an honest characterization of financial health and risk. This assessment is the foundation for all subsequent Category 9.0 development priorities, which should be sequenced based on the specific health deficits it reveals.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Five financial health metrics calculated and presented to governance body; honest characterization of financial position and risk adopted; top three financial health priorities identified and development investment committed.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement segregation of duties and pursue annual financial audit</div>
+          <div class="seq-desc">Before any financial growth or reserve building, ensure the institution has the internal control environment to protect what it already has. Assess the current segregation of duties: who initiates, approves, processes, and records financial transactions? Redesign roles and authorization levels to achieve basic segregation for all material transactions. Engage an independent auditor for an annual audit or review. These investments protect the institution's current financial assets and are the minimum internal control floor below which reserve building is not meaningful — reserves that are not adequately controlled are not reserves that can be relied on.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Segregation of duties implemented for all material transaction cycles; first independent audit or review completed; audit findings documented and remediation plan adopted by governance body.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Develop a reserve policy and begin systematic reserve building</div>
+          <div class="seq-desc">Draft and adopt a reserve policy that specifies the target reserve level, acceptable uses, drawdown conditions, and replenishment plan. Then design the budget to build reserves systematically — treating reserve building as a budget line item (a contribution to reserves of at least 2–3% of operating budget per year) rather than as what is left after expenses. If the current financial structure cannot generate any surplus, the reserve building conversation requires a harder discussion about either increasing unrestricted revenue or reducing operating commitments — a conversation that is best had deliberately rather than forced by the next financial crisis.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Reserve policy adopted; reserve building budget line implemented in two consecutive annual budgets; operating reserve ratio improved by at least one month over a three-year period.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Address the highest-priority revenue diversification gap</div>
+          <div class="seq-desc">Using the revenue concentration ratio as the guide, identify the revenue diversification investment with the highest potential impact on institutional resilience. For most institutions, this will be in one of two areas: developing broad-base community philanthropy (which reduces the power of any single funder while deepening community financial accountability) or negotiating improved indirect cost recovery rates with existing funders (which addresses the overhead subsidy problem without requiring new revenue sources). Both investments are multi-year commitments — the revenue impact of diversification work typically lags the investment by 12–24 months.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Top revenue diversification priority identified and development investment committed; 12-month progress benchmark set; revenue concentration ratio trend improving over two-year period.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Improve governance financial literacy and implement community financial transparency</div>
+          <div class="seq-desc">Develop and deliver financial governance training for all governance body members, calibrated to non-financial audiences — the goal is not to make governance members into financial experts but to ensure they can meaningfully participate in financial oversight rather than deferring entirely to those with expertise. Simultaneously, design and publish the first community financial report — a non-technical annual communication that explains the institution's financial health, revenue sources, resource allocation, and strategic financial direction to the community it serves. The governance body review and the community publication should happen on the same annual cycle, reinforcing the same transparency norm.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Financial governance training completed for all governance body members; first community financial report published; quarterly governance financial review established with documented governance body engagement.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 9.0 and Category 1.0:</strong> Category 9.0 manages the financial resources of the institution. Category 1.0 governs the institution's strategic direction. The connection is direct and frequently underdesigned: budget decisions are governance decisions, revenue development choices are strategic choices, and the financial structure of the institution shapes its strategic options as much as any explicitly strategic choice. Institutions that treat financial management as a separate functional domain from governance regularly discover that their financial structure has been making their strategic choices for them — through the accumulated effect of grant-driven program decisions, through the constraints imposed by funder conditions, and through the strategic options foreclosed by financial fragility. The integration of financial planning into strategic planning — so that financial scenario planning informs strategic commitments, and strategic commitments are stress-tested against realistic financial projections — is the process integration that connects Category 9.0 and Category 1.0 into a coherent governance function rather than two parallel but disconnected processes.</p>
+    <p><strong>On the overhead myth and its consequences:</strong> The "overhead myth" — the mistaken belief that lower overhead ratios indicate better nonprofit performance — has caused systematic damage to the financial health of post-labor and solidarity economy institutions by creating funder incentives to underfund the institutional infrastructure that makes programs effective. Program efficiency ratios that are artificially high (because overhead is systematically underfunded) are not indicators of institutional effectiveness — they are indicators of the institutional starvation that produces the management, governance, and staff sustainability failures documented throughout this framework. Institutions negotiating with funders about indirect cost rates should have data on what peer organizations actually spend on institutional overhead and should negotiate firmly from that data rather than accepting the 10–15% indirect rates that many funders offer as a standard. The advocacy work that NTEN, the Center for Effective Philanthropy, and the Hattaway Communications team behind the Overhead Myth campaign have done to change funder norms on this issue is ongoing, and institutions should engage with it as active participants rather than passive beneficiaries.</p>
+    <p><strong>On community development financial institutions as partners:</strong> Community Development Financial Institutions (CDFIs) are mission-aligned lenders that provide capital to post-labor institutions and communities underserved by conventional financial markets. They are an underutilized financial partner for Category 9.0 resource stewardship — providing working capital loans for cash flow management, capital loans for facility acquisition and improvement, and technical assistance on financial management that many solidarity economy institutions cannot access elsewhere. The CDFI fund maintained by the U.S. Treasury has certified over 1,000 CDFIs operating across the country, covering most geographic markets. Institutions that have not established a relationship with their local CDFI are missing a financial partner specifically designed for their context.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part IV · Chapter 16 · GPS 9.0</span>
+    <span class="close-next">Ch. 17 — Manage commons &amp; shared assets (GPS 10.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 19 — Inter-Institutional Relations (GPS 12.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --inst: #378ADD; --inst-dim: rgba(55,138,221,0.08);
+    --inst-text: #7ab8f0; --inst-border: rgba(55,138,221,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.inst { background: var(--inst-dim); color: var(--inst-text); border: 1px solid var(--inst-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--inst); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--inst-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--inst); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--inst); background: var(--inst-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--inst-text); }
+  .pullquote p::after { content: '\201D'; color: var(--inst-text); }
+
+  /* Relationship typology */
+  .reltype-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .reltype-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .reltype-row { display: grid; grid-template-columns: 130px 1fr 1fr; border-bottom: 1px solid var(--border-subtle); }
+  .reltype-row:last-child { border-bottom: none; }
+  .reltype-row.head { background: var(--bg-secondary); }
+  .reltype-cell { padding: 13px 16px; font-family: 'Outfit', sans-serif; font-size: 0.74rem; color: var(--text-secondary); line-height: 1.55; border-right: 1px solid var(--border-subtle); }
+  .reltype-cell:last-child { border-right: none; }
+  .reltype-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .reltype-cell.rel-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
+
+  /* Network logic block */
+  .network-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .network-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .network-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .network-row:last-child { border-bottom: none; }
+  .network-type { width: 110px; min-width: 110px; padding: 14px 12px; border-right: 1px solid var(--border-subtle); background: var(--inst-dim); display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+  .network-type-name { font-family: 'Crimson Pro', serif; font-size: 0.88rem; font-weight: 600; color: var(--inst-text); line-height: 1.2; }
+  .network-content { padding: 14px 18px; flex: 1; border-right: 1px solid var(--border-subtle); }
+  .network-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .network-example { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .network-example strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+  .network-gps { width: 130px; min-width: 130px; padding: 14px 14px; }
+  .network-gps-text { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); line-height: 1.5; }
+  .network-gps-text strong { color: var(--inst-text); font-weight: 500; opacity: 0.8; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--inst-dim); color: var(--inst-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--inst-dim); border-bottom: 1px solid var(--inst-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--inst-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--inst-text); font-weight: 500; }
+
+  /* Sequence */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part IV · Institutional support processes</div>
+  <div class="chapter-eyebrow">Chapter 19 · GPS Category 12.0</div>
+  <h1 class="chapter-title">Inter-institutional relations</h1>
+  <p class="chapter-subtitle">No institution has ever changed a system alone — the partnership disciplines, network practices, and policy engagement strategies through which solidarity economy institutions multiply their impact beyond the boundaries of any single organization</p>
+  <div class="cat-meta">
+    <span class="cat-pill inst">Institutional Support</span>
+    <span class="cat-pill inst">Network infrastructure</span>
+    <span class="cat-pill inst">Collective power</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">21 processes</span>
+    <span class="cat-pill neutral">13 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>The solidarity economy is not an aggregation of independent institutions. It is a network — or, more precisely, an aspiration toward a network that the actual relationship infrastructure of most solidarity economy institutions does not yet fully realize. Individual institutions address bounded community needs with bounded resources. The problems they are addressing are not bounded: structural unemployment, housing insecurity, food system inequity, racial wealth gaps, and the distributional consequences of technological displacement are systemic conditions that no single institution, however mature its internal processes, can address from within its own organizational boundary. The institutional boundaries that define Category 7.0 through 11.0 — the human development, technology, financial, asset, integrity, and equity processes of a single institution — are necessary and insufficient. Systemic problems require systemic responses, and systemic responses require the inter-institutional relationships through which individual organizations become network participants, movement actors, and collective power builders.</p>
+
+    <p>Category 12.0 is the process domain for the relationship infrastructure that converts a collection of independent institutions into something more consequential: a network of peers that shares knowledge and resources, a coalition of actors with shared policy goals, a movement with coordinated strategy and distributed capacity. This is not aspirational language — it is a process design specification. The question Category 12.0 answers is not "should post-labor institutions collaborate?" (the answer is obvious) but "what specific processes make collaboration disciplined enough to produce collective impact rather than consuming relationship energy without commensurate return?"</p>
+
+    <p>The practical challenge that most post-labor institutions face in Category 12.0 is the relationship investment problem: genuine inter-institutional relationships require sustained investment — staff time, leadership attention, governance commitment — that competes directly with the internal processes of Categories 7.0 through 11.0 and with the civic operating work of Categories 1.0 through 6.0. Institutions facing resource pressure routinely reduce inter-institutional relationship investment before reducing internal operations, because the return on relationship investment is diffuse and long-horizon while the cost is immediate and direct. This is individually rational and collectively counterproductive: the cumulative effect of every institution reducing inter-institutional investment during resource pressure is a solidarity economy that is weakest precisely when systemic conditions make collective response most necessary.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Relationship typology — the architecture of solidarity economy networks</div>
+
+  <div class="body-text">
+    <p>Inter-institutional relationships exist at multiple scales and serve different strategic functions. The typology below maps the primary relationship types that post-labor institutions need to develop and maintain — from bilateral service partnerships through peer learning networks through political coalitions through government relationships — with honest assessment of what each requires to sustain, what it produces when it works, and what failure modes characterize each relationship type. No single institution needs to maintain all relationship types at full depth simultaneously; the question is which types are strategically most important given the institution's specific mission, scale, and political context.</p>
+  </div>
+
+  <div class="reltype-block">
+    <div class="reltype-header">Inter-institutional relationship typology — what each type requires and produces</div>
+    <div class="reltype-row head">
+      <div class="reltype-cell head">Relationship type</div>
+      <div class="reltype-cell head">What it requires to sustain</div>
+      <div class="reltype-cell head">What it produces when working</div>
+    </div>
+    <div class="reltype-row">
+      <div class="reltype-cell rel-name">Service partnerships and referral networks</div>
+      <div class="reltype-cell">Maintained awareness of partner capacity and eligibility criteria; warm handoff protocols; regular relationship maintenance between staff who process referrals; data sharing agreements where needed. Lower governance burden than deeper partnerships but requires operational consistency to be reliable.</div>
+      <div class="reltype-cell">Community members receiving comprehensive service from a network rather than a single institution; reduced duplication of intake and assessment; increased reach for specialized services without requiring each institution to build that capacity internally.</div>
+    </div>
+    <div class="reltype-row">
+      <div class="reltype-cell rel-name">Resource sharing and mutual aid agreements</div>
+      <div class="reltype-cell">Formalized agreements specifying what is shared, under what conditions, with what governance of the sharing arrangement. Trust between institutions developed over time, not assumed from shared values. Reciprocity mechanisms that prevent systematic one-directional extraction.</div>
+      <div class="reltype-cell">Supply chain resilience (as described in Category 4.0); financial resilience through inter-institutional emergency borrowing; human resource resilience through staff secondments during demand peaks; capital resilience through shared facility arrangements.</div>
+    </div>
+    <div class="reltype-row">
+      <div class="reltype-cell rel-name">Peer learning networks and communities of practice</div>
+      <div class="reltype-cell">Consistent participation investment from all members; governance of what is shared and how learning is captured and distributed; explicit reciprocity — peer learning networks that function as one institution extracting knowledge from better-resourced peers without contribution are extractive, not collaborative.</div>
+      <div class="reltype-cell">Accelerated organizational learning; shared solutions to common problems that each institution would otherwise solve independently; cross-institutional quality improvement; the knowledge commons contribution that Chapter 9 identified as an institutional obligation.</div>
+    </div>
+    <div class="reltype-row">
+      <div class="reltype-cell rel-name">Policy coalitions and advocacy alliances</div>
+      <div class="reltype-cell">Shared policy analysis; negotiated common positions on contested issues; governance of coalition decision-making that honors constituent institutions' autonomy while enabling collective action; long-term relationship maintenance between campaigns and advocacy moments.</div>
+      <div class="reltype-cell">Policy wins that no single institution could achieve; amplified voice in political processes; collective legitimacy beyond what individual institutions could establish; the political infrastructure that makes systemic change possible across the long timeframes that systemic change requires.</div>
+    </div>
+    <div class="reltype-row">
+      <div class="reltype-cell rel-name">Government and regulatory engagement</div>
+      <div class="reltype-cell">Institutional knowledge of the regulatory and legislative environment; relationships with government officials and staff maintained between advocacy moments; compliance management; the institutional credibility that comes from demonstrated operational effectiveness rather than only from advocacy claims.</div>
+      <div class="reltype-cell">Favorable policy and regulatory environments for solidarity economy institutional forms; government contracts and grants that fund mission-aligned work; regulatory protections for community institutions; the legitimacy of government recognition that institutional advocacy alone cannot produce.</div>
+    </div>
+    <div class="reltype-row">
+      <div class="reltype-cell rel-name">Federated networks and ecosystem development</div>
+      <div class="reltype-cell">Shared governance infrastructure for the network itself; agreement on the scope and boundaries of collective action; network-level resources and coordination capacity; the long-term relationship investment that produces genuine network cohesion rather than nominal membership.</div>
+      <div class="reltype-cell">Collective capacity that exceeds the sum of member institutions; shared infrastructure (technology, financial, communications) that reduces member costs; common identity and brand that amplifies member reach; the network effects that make the solidarity economy a recognizable sector rather than a collection of independent organizations.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The network logic — why systemic change requires collective infrastructure</div>
+
+  <div class="body-text">
+    <p>The argument for Category 12.0 investment is ultimately a theory of change argument: post-labor institutions that remain confined to their organizational boundaries can improve conditions within those boundaries — serving more community members, delivering better outcomes, building more durable institutional infrastructure — without changing the conditions that produce the need for those services in the first place. Changing structural conditions requires collective action at a scale that individual institutions cannot achieve alone. The network logic below maps the specific types of collective impact that require inter-institutional infrastructure and the GPS process groups that develop the capacity to pursue them.</p>
+  </div>
+
+  <div class="network-block">
+    <div class="network-header">Network logic — types of collective impact and the inter-institutional capacity they require</div>
+
+    <div class="network-row">
+      <div class="network-type"><div class="network-type-name">Knowledge amplification</div></div>
+      <div class="network-content">
+        <div class="network-desc">Individual institutions generate knowledge from their operations — what works, what doesn't, and why — that is valuable to the entire solidarity economy if shared. Without network infrastructure for knowledge sharing, that knowledge remains institutional and depreciates with staff turnover. With network infrastructure, it becomes collective capital that compounds across the network.</div>
+        <div class="network-example"><strong>Example:</strong> An institution that develops an effective trauma-informed intake protocol shares it through a peer learning network. Fifteen peer institutions implement adapted versions over two years, improving their intake quality. None of the fifteen would have invested in developing the protocol independently; the network multiplied the value of one institution's development investment across all fifteen.</div>
+      </div>
+      <div class="network-gps">
+        <div class="network-gps-text"><strong>GPS 12.3</strong> — peer learning and knowledge exchange processes</div>
+      </div>
+    </div>
+
+    <div class="network-row">
+      <div class="network-type"><div class="network-type-name">Resource resilience</div></div>
+      <div class="network-content">
+        <div class="network-desc">Individual institutions face financial and resource shocks — grant non-renewal, unexpected demand surges, facility failures — that would be survivable with short-term support from peer institutions but are institution-threatening without it. Network relationships that include mutual aid provisions convert individual institution risk into shared network risk that is more manageable in aggregate.</div>
+        <div class="network-example"><strong>Example:</strong> An emergency food network's largest warehouse is damaged by flooding. Three peer organizations in the network have available storage and activate their mutual aid agreements, temporarily absorbing the damaged institution's storage and distribution functions while the facility is repaired. Without the mutual aid agreement, the institution would have halted distribution for weeks; with it, community members experience minimal service disruption.</div>
+      </div>
+      <div class="network-gps">
+        <div class="network-gps-text"><strong>GPS 12.2</strong> — resource sharing and mutual aid agreements</div>
+      </div>
+    </div>
+
+    <div class="network-row">
+      <div class="network-type"><div class="network-type-name">Policy power</div></div>
+      <div class="network-content">
+        <div class="network-desc">Individual institutions may have relationships with specific elected officials or agency staff, and those relationships have value. But policy influence at the scale required to change the structural conditions that produce institutional service needs requires collective voice — the demonstrated constituency that comes from a network speaking together rather than institutions speaking independently.</div>
+        <div class="network-example"><strong>Example:</strong> A coalition of affordable housing institutions represents 40,000 community members across a metropolitan region. When state affordable housing funding is threatened, the coalition's coordinated testimony, media presence, and constituent mobilization carries significantly more weight than any single institution's advocacy. The housing funding is preserved; it would not have been without the coalition.</div>
+      </div>
+      <div class="network-gps">
+        <div class="network-gps-text"><strong>GPS 12.4</strong> — coalition and advocacy infrastructure</div>
+      </div>
+    </div>
+
+    <div class="network-row">
+      <div class="network-type"><div class="network-type-name">Infrastructure efficiency</div></div>
+      <div class="network-content">
+        <div class="network-desc">Individual institutions build and maintain operational infrastructure — technology platforms, financial systems, training programs, communications tools — at significant cost. When multiple institutions need similar infrastructure, building it collectively is more efficient than building it independently, and shared infrastructure produces network integration benefits that individually built infrastructure cannot.</div>
+        <div class="network-example"><strong>Example:</strong> A network of worker cooperatives develops a shared back-office platform — payroll, accounting, HR compliance — that each cooperative accesses at a fraction of the cost of building equivalent capacity independently. The platform also enables network-level financial reporting that makes collective grant applications and network financial management possible.</div>
+      </div>
+      <div class="network-gps">
+        <div class="network-gps-text"><strong>GPS 12.1</strong> — partnership development and shared infrastructure</div>
+      </div>
+    </div>
+
+    <div class="network-row">
+      <div class="network-type"><div class="network-type-name">Legitimacy amplification</div></div>
+      <div class="network-content">
+        <div class="network-desc">Individual institutions have limited institutional credibility with funders, media, and government actors who are more likely to engage with networks than with individual organizations. Network membership and network-level endorsement amplifies individual institution credibility and opens relationships that would not be accessible to any single institution in the network.</div>
+        <div class="network-example"><strong>Example:</strong> A new community land trust is founded by a team with strong community roots but no institutional track record. Its membership in the national Community Land Trust Network provides credibility with state housing finance agencies, connection to experienced peer institutions, and access to technical assistance that makes its early operations significantly more effective than they would be without the network relationship.</div>
+      </div>
+      <div class="network-gps">
+        <div class="network-gps-text"><strong>GPS 12.5</strong> — movement building and sector development</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 12.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">12.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Develop, govern, and manage strategic partnerships</div>
+          <div class="proc-group-desc">Partnership development is the process through which institutions identify, establish, and sustain relationships with specific peer organizations that advance shared objectives — not all possible relationships with all possible peers, but the specific relationships that are worth the investment of institutional time, resources, and governance attention required to sustain them. The most common Category 12.1 failure is treating partnership as the default mode for all inter-institutional contact: a phone call from a neighboring organization becomes a partnership, a shared funder becomes a collaborative, and the institution accumulates nominal partnerships that consume relationship management capacity without producing commensurate value. Effective partnership development requires deliberate selection based on strategic alignment, operational compatibility, and mutual benefit — and deliberate non-partnership with organizations where the case for sustained relationship investment is weak relative to other priorities.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">12.1.1</div><div class="act-name">Develop a partnership strategy — explicitly mapping which relationship types the institution most needs to develop, with which categories of peer organizations, in service of which specific strategic objectives</div></div>
+            <div class="proc-activity"><div class="act-id">12.1.2</div><div class="act-name">Design and implement partnership governance — written agreements specifying shared objectives, roles and responsibilities, resource contributions, decision rights, conflict resolution processes, and exit conditions for significant partnerships</div></div>
+            <div class="proc-activity"><div class="act-id">12.1.3</div><div class="act-name">Manage the partnership portfolio — maintaining an active view of all current partnerships, their health, their value, and the investment they require; making explicit decisions about which partnerships to deepen, maintain, and let lapse</div></div>
+            <div class="proc-activity"><div class="act-id">12.1.4</div><div class="act-name">Build and maintain referral networks — the service partnership infrastructure that connects community members to the full range of services they need without requiring any single institution to provide all of them</div></div>
+            <div class="proc-activity"><div class="act-id">12.1.5</div><div class="act-name">Develop shared infrastructure with strategic partners — technology platforms, training programs, financial systems, and communications infrastructure that are more efficiently built and operated collectively than independently</div></div>
+            <div class="proc-activity"><div class="act-id">12.1.6</div><div class="act-name">Assess partnership value and equity — regular evaluation of whether partnerships are producing mutual benefit or asymmetric extraction; specific attention to power differentials between larger and smaller partner institutions</div></div>
+          </div>
+          <div class="act-note">Process 12.1.6 — partnership equity assessment — is the most commonly avoided evaluation process in inter-institutional relationships, because the power differentials between larger and smaller partner institutions are real and produce the asymmetric dynamics that equity assessment is designed to surface. Partnerships between institutions of very different sizes typically impose higher administrative burden on the smaller institution (which must adapt to the larger institution's systems, timelines, and reporting requirements) while directing most of the strategic benefit to the larger institution (which gains service reach, community relationships, and reputational association). Making this dynamic visible — through honest mutual assessment rather than the diplomatic non-evaluation that characterizes most partnership reviews — is the prerequisite for redesigning the partnership toward genuine mutuality.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">12.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Build and maintain mutual aid and resource-sharing agreements</div>
+          <div class="proc-group-desc">Resource-sharing agreements are the inter-institutional equivalent of individual mutual aid — the formalized practices through which institutions support each other during resource shocks, demand peaks, and operational disruptions. They are the specific implementation of the supply chain resilience infrastructure that Category 4.1 identified as essential for physical resource institutions and that applies equally across all resource domains: financial resources during cash flow crises, human resources during staffing peaks, physical resources during facility disruptions, and knowledge resources during organizational transitions. Resource sharing requires more governance formalization than the informal mutual support that characterizes good peer relationships, because formalized agreements survive leadership transitions and activate under conditions of stress when informal arrangements often dissolve.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">12.2.1</div><div class="act-name">Develop resource sharing agreements with peer institutions — formally specifying what resources are available for sharing, under what conditions, with what reciprocity obligations, and through what governance process</div></div>
+            <div class="proc-activity"><div class="act-id">12.2.2</div><div class="act-name">Establish emergency mutual aid protocols — the specific activation procedures for resource sharing during institutional crises; protocols that are practiced before crises rather than designed during them</div></div>
+            <div class="proc-activity"><div class="act-id">12.2.3</div><div class="act-name">Participate in inter-institutional resource pools — shared financial reserves, shared equipment libraries, shared human resource capacity that provide resilience to all participants at lower cost than individual reserve building alone</div></div>
+            <div class="proc-activity"><div class="act-id">12.2.4</div><div class="act-name">Manage reciprocity in resource sharing relationships — tracking resource flows across sharing relationships to ensure they are genuinely mutual rather than consistently one-directional; addressing imbalances before they create institutional resentment</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">12.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Participate in and contribute to peer learning networks and practice communities</div>
+          <div class="proc-group-desc">Peer learning networks are the knowledge commons infrastructure that converts individual institutional learning into collective movement learning — the inter-institutional equivalent of the individual learning culture described in Category 7.0. They require the same design attention: protected time, integration with institutional work, and genuine knowledge contribution as well as knowledge consumption. The failure mode of peer learning — one institution extracting knowledge from better-resourced peers without contributing its own learning — is the network-level equivalent of the knowledge hoarding failure mode that Category 2.4 addresses at the institutional level. Peer learning networks that function well produce network-level learning curves: the whole solidarity economy learns faster than any institution within it could learn alone.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">12.3.1</div><div class="act-name">Participate actively in peer learning networks — not only attending learning events but contributing institutional knowledge, sharing evaluation findings, and serving in facilitation or governance roles in networks the institution values</div></div>
+            <div class="proc-activity"><div class="act-id">12.3.2</div><div class="act-name">Develop and share practice frameworks, tools, and documentation — the specific knowledge contribution that individual institutions can make to collective movement learning; includes evaluation findings, process designs, governance frameworks, and program models</div></div>
+            <div class="proc-activity"><div class="act-id">12.3.3</div><div class="act-name">Host peer learning with other institutions — welcoming peer institutions for observation and learning from institutional practice; the relational knowledge sharing that formal documentation cannot fully capture</div></div>
+            <div class="proc-activity"><div class="act-id">12.3.4</div><div class="act-name">Build staff capacity for network participation — ensuring that inter-institutional engagement is a recognized and supported part of relevant staff roles, not an add-on to full workloads that gets dropped when pressure increases</div></div>
+            <div class="proc-activity"><div class="act-id">12.3.5</div><div class="act-name">Assess network learning return on investment — periodically evaluating whether the institution's peer network participation is producing learning returns commensurate with the time investment, and adjusting participation accordingly</div></div>
+          </div>
+          <div class="act-note">Process 12.3.4 — building staff capacity for network participation — is the process that makes the difference between network engagement as a leadership activity and network engagement as an institutional capacity. When only the executive director participates in peer networks, the network relationships are leadership-dependent and do not survive leadership transitions. When staff at multiple levels have peer network relationships — program staff with peer program staff, finance staff with peer finance staff, governance members with peer governance members — the inter-institutional relationship infrastructure is woven into the institution's operational fabric rather than depending on a single relationship holder.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">12.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Build policy advocacy, government relations, and coalition infrastructure</div>
+          <div class="proc-group-desc">Policy advocacy is the process through which post-labor institutions attempt to change the structural conditions — the laws, regulations, funding systems, and institutional frameworks — that shape the environment in which they operate and within which their community members live. It is the most direct response available to the theory of change limitation identified in Chapter 12 (GPS 5.0): individual-level interventions produce limited outcomes when structural barriers constrain what individual improvement can achieve. Changing those barriers requires policy change, and policy change in democratic systems requires organized constituent voice — which is what coalition-based advocacy produces at its most effective. Policy advocacy in post-labor institutions is not optional political activity; it is the strategic complement to program delivery that addresses structural conditions rather than only individual circumstances.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">12.4.1</div><div class="act-name">Develop a policy agenda — identifying the specific legislative, regulatory, and funding changes that would most improve the institutional operating environment and the community conditions being addressed</div></div>
+            <div class="proc-activity"><div class="act-id">12.4.2</div><div class="act-name">Build and participate in policy coalitions — with peer institutions, community organizations, and other stakeholders sharing relevant policy objectives; coalition governance that enables collective action without requiring unanimity on all positions</div></div>
+            <div class="proc-activity"><div class="act-id">12.4.3</div><div class="act-name">Develop and maintain government relationships — with elected officials, agency staff, and regulatory bodies at the local, state, and federal levels relevant to the institution's operations and community; relationships maintained between advocacy campaigns, not only activated during them</div></div>
+            <div class="proc-activity"><div class="act-id">12.4.4</div><div class="act-name">Manage regulatory compliance and government contracting — the day-to-day government relations that support institutional operations rather than only the advocacy relationships that change structural conditions</div></div>
+            <div class="proc-activity"><div class="act-id">12.4.5</div><div class="act-name">Develop constituent voice for policy advocacy — building community members' capacity and willingness to engage in policy processes on their own behalf, rather than substituting institutional advocacy for community voice</div></div>
+          </div>
+          <div class="act-note">Process 12.4.5 — developing constituent voice — is the process that distinguishes advocacy by institutions on behalf of communities from advocacy by communities through institutional infrastructure. The former produces service delivery organizations that also advocate; the latter produces organizing institutions that support community members in shaping the conditions of their own lives. Both are valuable; the distinction matters because constituent voice-based advocacy is more durable, more legitimate, and more difficult to dismiss than institutional advocacy alone. Community members describing their own experiences and demanding their own policy changes carry political weight that institutional representatives speaking on their behalf cannot fully replicate — which is why the best policy advocacy organizations invest heavily in developing community members' civic capacity rather than primarily in developing their own institutional advocacy capacity.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">12.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Contribute to solidarity economy movement building and sector development</div>
+          <div class="proc-group-desc">Movement building is the long-horizon investment in the social infrastructure — the shared narrative, the visible identity, the connected network, the policy agenda — that makes the solidarity economy a recognized and politically potent sector rather than a collection of independent organizations sharing similar values but without the connective tissue that converts shared values into collective power. It is also the most diffuse and hardest-to-resource activity in Category 12.0: movement building produces returns that are systemic, long-horizon, and shared across all participants — the classic conditions for under-investment relative to the collective benefit it produces. Institutions that invest in movement building are making a commitment to the solidarity economy's long-term viability that market logic would not produce and that each institution must make as a deliberate governance choice.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">12.5.1</div><div class="act-name">Participate in solidarity economy sector bodies — membership and governance participation in networks, federations, and associations that build the institutional infrastructure of the solidarity economy as a sector</div></div>
+            <div class="proc-activity"><div class="act-id">12.5.2</div><div class="act-name">Contribute to shared narrative and communications — the collective story of what the solidarity economy is, what it does, and why it matters; shared across institutions to build the public awareness and political legitimacy that individual institutional communications cannot build alone</div></div>
+            <div class="proc-activity"><div class="act-id">12.5.3</div><div class="act-name">Support emerging institutions — providing mentorship, technical assistance, and network access to institutions in their early development stages; investing in the growth of the solidarity economy ecosystem as an institutional commitment</div></div>
+            <div class="proc-activity"><div class="act-id">12.5.4</div><div class="act-name">Contribute to solidarity economy research and documentation — supporting the research and knowledge development that builds the evidence base for solidarity economy approaches; sharing institutional data and experience for research purposes</div></div>
+            <div class="proc-activity"><div class="act-id">12.5.5</div><div class="act-name">Participate in solidarity economy ecosystem development — CDFIs, community investment funds, shared technology platforms, legal infrastructure, and the other shared resources that all solidarity economy institutions benefit from and that none can build independently</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six inter-institutional failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in inter-institutional relationships and network engagement</div>
+
+    <div class="fail-row">
+      <div class="fail-num">N1</div>
+      <div class="fail-content">
+        <div class="fail-name">Partnership inflation — nominal collaboration without value</div>
+        <div class="fail-desc">The institution has accumulated a large number of nominal partnerships — MOU signatories, coalition members, network participants — whose practical effect on institutional operations and community outcomes is negligible. Partnership management consumes staff time without producing commensurate value. The institution cannot describe what specific outcomes any given partnership has produced. The partnership portfolio exists to demonstrate collaborative intentions rather than to produce collaborative impact.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff cannot describe specific community outcomes attributable to specific partnerships. The institution has never let a partnership lapse despite low value, because doing so feels like a statement about the relationship. Partnership reviews do not distinguish between productive and nominal relationships. The number of listed partnerships on the institutional website far exceeds the partnerships in which staff have active working relationships.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">N2</div>
+      <div class="fail-content">
+        <div class="fail-name">Asymmetric collaboration — the extractive partnership</div>
+        <div class="fail-desc">Partnership relationships between institutions of different sizes systematically extract value from smaller, less resourced institutions while directing most of the benefit to larger, better-resourced ones. The smaller institution provides community relationships, trust, and local credibility; the larger institution provides resources, legitimacy, and scale but imposes administrative burden, decision timelines, and reporting requirements designed for its own internal systems rather than the smaller partner's capacity. The partnership is described as collaborative; it functions as a subcontract with relational language.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff at the smaller institution describe feeling like "junior partners" despite nominally equal status. Administrative burden of the partnership is disproportionately borne by the smaller institution. Decision-making timelines are determined by the larger institution's governance cycles without accommodation for the smaller institution's. Staff time consumed by the partnership at the smaller institution significantly exceeds the value received.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">N3</div>
+      <div class="fail-content">
+        <div class="fail-name">Competitive isolation — institutions that treat peers as rivals</div>
+        <div class="fail-desc">The institution treats peer organizations in similar service domains as competitors — for funding, for community members, for media attention, for institutional legitimacy — rather than as potential collaborators in addressing shared problems. This orientation is partially rational (institutions do compete for restricted funding sources) but produces a systematic under-investment in the inter-institutional relationships that would benefit all participants, because the competitive frame makes collaboration feel strategically risky rather than strategically valuable.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff describe peer organizations in service domains as competitors rather than collaborators. The institution does not share program evaluation data, outcomes evidence, or practice frameworks with peer organizations. Leadership decisions about participation in peer networks are filtered through competitive impact analysis. The institution's communications emphasize its distinctiveness from peer organizations rather than its common cause with them.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">N4</div>
+      <div class="fail-content">
+        <div class="fail-name">Policy quietism — direct service without structural advocacy</div>
+        <div class="fail-desc">The institution delivers effective direct services to its community while systematically avoiding policy advocacy on the structural conditions that produce the need for those services. The avoidance is rationalized as mission focus ("we're service providers, not advocates"), as funder risk management ("advocacy might jeopardize our government contracts"), or as resource scarcity ("we don't have the capacity for advocacy work"). The result is an institution that is effectively managing the symptoms of structural problems without contributing to the structural changes that would reduce those symptoms.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution's staff can describe the structural conditions (policy failures, legal gaps, funding deficiencies) that produce the community needs it addresses but has no strategy for contributing to changing them. Policy advocacy is explicitly excluded from the institution's scope. Community members are not supported in civic engagement related to the conditions affecting their lives. No partnerships with advocacy-focused organizations exist.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">N5</div>
+      <div class="fail-content">
+        <div class="fail-name">Network extraction — consuming movement infrastructure without contributing to it</div>
+        <div class="fail-desc">The institution participates in solidarity economy networks, coalitions, and movement infrastructure as a consumer rather than as a contributor — accessing the collective resources, knowledge, legitimacy, and policy power that movement infrastructure provides without investing in sustaining that infrastructure. The behavior is individually rational (free riding is optimal from a narrow institutional perspective) and collectively destructive (movement infrastructure that is not sustained depletes). Institutions that consume movement infrastructure without contributing to it are free riding on the contributions of others in ways that, if generalized across the network, would destroy the infrastructure they depend on.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution participates in solidarity economy networks and coalitions without holding governance or leadership roles. Staff do not contribute knowledge, tools, or practice frameworks to peer networks. The institution benefits from coalition policy wins without contributing to coalition advocacy capacity. Leadership describes movement participation as networking rather than as a strategic institutional obligation.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">N6</div>
+      <div class="fail-content">
+        <div class="fail-name">Relationship fragility — inter-institutional relationships that collapse with leadership transitions</div>
+        <div class="fail-desc">The institution's inter-institutional relationships are held by specific leadership figures rather than by the institution as a whole — dependent on the personal relationships of the executive director, key program staff, or governance members rather than on institutional relationships maintained through formal agreements, multi-level staff engagement, and documented relationship history. When those individuals depart, the relationships collapse, and the institution must rebuild its network from near-zero despite years of relationship investment by the previous leadership.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Key partnership relationships are described primarily in terms of the personal connection between specific leaders. No formal partnership agreements or relationship documentation exists for significant inter-institutional relationships. New leadership describes needing to "start over" on external relationships. Staff-level peer relationships in partner organizations are absent or minimal.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — US Federation of Worker Cooperatives and the sector-building investment</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">US Federation of Worker Cooperatives — building the infrastructure of a sector</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The US Federation of Worker Cooperatives (USFWC) is the primary national membership organization for worker cooperatives in the United States, providing the sector-building infrastructure — networking, peer learning, policy advocacy, and public narrative — that individual worker cooperatives cannot build independently. Its Category 12.0 contribution is specifically in operationalizing what process 12.5 describes as solidarity economy ecosystem development: the USFWC provides the shared infrastructure that makes the worker cooperative sector recognizable, navigable, and politically relevant rather than a collection of interesting but isolated enterprises.</div>
+      <div class="case-text">The USFWC's most instructive Category 12.0 practices are in the area of member knowledge exchange and technical assistance. Its annual conference, its peer learning programming, and its Democracy at Work Institute training programs operationalize process 12.3 at sector scale — creating the systematic infrastructure through which individual worker cooperatives access knowledge they could not develop independently and contribute knowledge that raises the sector's collective capability. The USFWC's explicit policy that member institutions are contributors to as well as consumers of sector knowledge — operationalized through peer facilitation programs, member-developed resources, and governance roles open to member representatives — is the design mechanism that prevents the network extraction failure mode (N5) from characterizing member participation.</div>
+      <div class="case-text">The USFWC's policy work demonstrates the coalition infrastructure described in process 12.4: its collaboration with state-level cooperative development organizations, labor unions, and community development institutions has produced enabling legislation for worker cooperatives in multiple states, favorable regulatory treatment in several federal programs, and the policy visibility that individual worker cooperatives could not achieve through their own advocacy. The policy returns are systemic and accrue to all member cooperatives, not only to those that contributed most heavily to the advocacy effort — the intended design of collective policy infrastructure.</div>
+      <div class="case-lesson"><strong>Category 12.0 lesson:</strong> The USFWC's model demonstrates that sector-level infrastructure requires the same deliberate design, sustained investment, and governance discipline that individual institutional operations require. Sector infrastructure does not self-organize from shared values; it is built through specific governance decisions about what to fund, what to govern, what to share, and what to require of members. The USFWC's design choices — what technical assistance to offer, how to govern member knowledge contribution, which policy campaigns to pursue collectively — are Category 12.5 governance decisions that determine whether sector participation produces sector benefit or only sector identity.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Right to the City Alliance and coalition governance</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Right to the City Alliance — governing a coalition of diverse institutional actors</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Right to the City Alliance is a national coalition of urban community organizations and tenant associations working on housing, gentrification, and urban land rights — a coalition that must govern the collective action of member organizations with significantly different scales, governance structures, issue priorities, and political orientations while maintaining sufficient cohesion to pursue shared policy objectives. Its Category 12.0 contribution is specifically in the governance design of policy coalitions: how to coordinate collective action among peer institutions with shared values but divergent positions on many specific questions.</div>
+      <div class="case-text">Right to the City's governance model operationalizes several elements of process 12.4.2 in ways that distinguish it from coalitions with nominally collaborative governance but practically concentrated decision-making. Its consensus decision-making model for collective positions — which requires each member organization to genuinely agree rather than simply not oppose — is slower than majority-rule governance and produces a more limited range of collective positions. It also produces more durable commitments: member organizations that have genuinely agreed to a position are more reliable advocates for it than organizations that were outvoted. The coalition's explicit autonomy protections — which affirm each member organization's right to pursue independent positions outside the coalition framework — reduce the governance cost of consensus by making the cost of disagreement lower.</div>
+      <div class="case-text">Right to the City's approach to power analysis within the coalition is instructive for process 12.1.6 (partnership equity assessment): the coalition explicitly tracks participation, voice, and benefit across member organizations by organizational size and community demographics, and designs governance mechanisms to amplify the voice of smaller member organizations whose community constituencies are most directly affected by the coalition's policy agenda. This is the coalition-level operationalization of the equity audit framework described in Chapter 18.</div>
+      <div class="case-lesson"><strong>Category 12.0 lesson:</strong> Right to the City's governance model demonstrates that coalition effectiveness requires explicit governance design that manages the power differentials between member organizations, not only shared commitment to common goals. Coalitions that assume power equity among members produce governance that is formally equal and practically dominated by the largest and best-resourced members. Coalitions that explicitly design for power equity — through voice amplification mechanisms, weighted governance, and equity auditing of coalition participation patterns — produce more genuinely collective decision-making and more durable commitments from members whose concerns are reflected in coalition positions.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>No institution has ever changed a system alone. The work inside the institution matters. The relationships between institutions matter more for structural change — and they require the same deliberate design as any other process the institution builds.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 12.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 12.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Inter-institutional relationships are informal and leadership-dependent; no formal partnership agreements or governance</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No resource-sharing agreements; mutual aid is episodic and ad hoc during crises rather than designed and activated</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Network participation is passive — attending events without contributing knowledge or governance capacity</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No policy agenda; advocacy is reactive rather than strategic; no coalition infrastructure</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No movement building investment; institution does not participate in solidarity economy sector bodies</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Formal partnership agreements for primary service partnerships; referral network documented and maintained; partnership value beginning to be assessed</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Informal resource sharing practices formalized for major resource categories; emergency contacts established with peer institutions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Active participation in one or two peer learning networks; some knowledge contribution to peer institutions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Policy priorities identified; participation in one policy coalition; some government relationships maintained</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Membership in solidarity economy sector body; some participation in sector governance or programming</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Partnership portfolio actively managed with value assessment; formal governance for significant partnerships; partnership equity assessed annually; multi-level staff relationships with key partners</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Formal resource-sharing agreements activated at least once; emergency protocols practiced; participation in at least one inter-institutional resource pool</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Active contribution to peer learning networks — knowledge sharing, facilitation roles, governance participation; institutional evaluation findings shared with peers</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Policy agenda developed and updated; coalition participation with governance roles; government relationships maintained between campaigns; constituent voice developed for advocacy</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Governance roles in solidarity economy sector bodies; active contribution to shared narrative; support for emerging institutions; participation in ecosystem development</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Inter-institutional relationships are institutionalized — embedded in staff roles, documented in formal agreements, and surviving leadership transitions without rebuilding</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Resource sharing is network-level — the institution participates in collective resilience infrastructure that reduces each participant's need for independent reserves</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">The institution is recognized as a knowledge resource by peer institutions — its practice frameworks, tools, and evaluation findings are actively used by peers across the network</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Policy wins attributable in part to the institution's coalition participation; community members are active policy advocates in their own right through institutional capacity building</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">The institution contributes to the solidarity economy's long-term infrastructure — CDFIs, shared platforms, legal frameworks, research — as a strategic governance commitment</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 12.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Active partnership count and health score</div>
+      <div class="kpi-cell">Number of partnerships producing documented mutual value, assessed as active and healthy — the primary partnership portfolio quality measure; counts productive relationships, not nominal ones</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Resource sharing activation rate</div>
+      <div class="kpi-cell">Number of times formal resource-sharing agreements were activated in the past year — measures whether resource sharing infrastructure is real or nominal; zero activations may indicate agreements exist on paper without real relationships</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Knowledge contribution index</div>
+      <div class="kpi-cell">Volume and uptake of practice knowledge contributed to peer institutions — tools shared, training delivered, evaluation findings published, facilitation provided; measures knowledge commons contribution</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community referral completion rate</div>
+      <div class="kpi-cell">Percentage of community member referrals to partner institutions resulting in successful service receipt — measures whether referral network functions operationally, not only organizationally</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Policy coalition engagement depth</div>
+      <div class="kpi-cell">Number of coalitions in which the institution holds active governance or facilitation roles (not merely membership) — measures whether coalition participation is substantive or nominal</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Relationship institutionalization rate</div>
+      <div class="kpi-cell">Percentage of significant inter-institutional relationships documented in formal agreements with multi-staff engagement — measures whether relationships survive leadership transitions</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Partnership equity index</div>
+      <div class="kpi-cell">Assessment of mutuality across active partnerships — whether administrative burden, decision authority, and strategic benefit are equitably distributed; identifies asymmetric relationships requiring redesign</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Movement infrastructure investment ratio</div>
+      <div class="kpi-cell">Institutional resources invested in solidarity economy ecosystem development (sector bodies, CDFIs, shared platforms) as a percentage of total institutional resources — measures whether movement building investment is proportional to movement benefits received</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 12.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 12.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Audit the current relationship portfolio and identify the highest-value gaps</div>
+          <div class="seq-desc">Before building new relationships, develop an honest assessment of the current relationship portfolio: which partnerships are producing genuine mutual value, which are nominal, and which relationship types are absent but strategically important. Map the referral network — what partner institutions does the institution currently send community members to, and which community needs are not currently served by any referral relationship? Identify the two or three relationship types (service partnership, resource sharing, peer learning, policy coalition, movement participation) where the gap between current investment and strategic value is largest. This assessment is the foundation for Category 12.0 development priorities.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Current partnership portfolio audited with value assessment; referral network mapped against unmet community needs; top two relationship investment priorities identified with governance body commitment to resource them.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Formalize the most important service partnerships with written agreements</div>
+          <div class="seq-desc">Select the three to five partnerships most important for community service continuity — the organizations to which the institution most frequently refers community members and from which it most frequently receives referrals. Develop written partnership agreements for each: shared understanding of each organization's services and eligibility criteria, warm handoff protocols, data sharing provisions where needed, and a regular relationship maintenance cadence. The agreements need not be elaborate — even a one-page memorandum of understanding with contact lists, referral procedures, and a commitment to quarterly check-ins dramatically outperforms the informal "we know each other" relationships that most service partnerships rest on.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Written partnership agreements for three to five primary service partnerships; warm handoff protocols implemented; referral tracking system operational; first annual partnership review conducted.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Join and actively participate in one peer learning network</div>
+          <div class="seq-desc">Select one peer learning network — a community of practice, a regional solidarity economy network, a national field-specific peer learning program — that is genuinely relevant to the institution's primary practice areas. Join with an explicit commitment to active participation: attending regularly, contributing knowledge as well as consuming it, and taking on a facilitation or governance role within 12 months. Build inter-network participation into a relevant staff member's role description so that it survives individual leadership transitions. The test of whether participation is genuine is whether the institution can name specific knowledge it has shared with the network and specific knowledge it has learned from it.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Active participation in one peer learning network sustained for 18 months; at least one knowledge contribution (tool, framework, evaluation finding, or training) made to the network; governance or facilitation role held; inter-network participation embedded in staff role description.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Develop resource-sharing agreements with the two closest peer institutions</div>
+          <div class="seq-desc">Identify the two peer institutions with the most operational overlap — similar service domains, similar geographic area, similar scale — and develop formal resource-sharing agreements covering the resource types most relevant to institutional resilience: emergency financial assistance, facility backup, human resource coverage during demand peaks, or supply chain resilience for physical resource institutions. Practice the activation of the agreements before they are needed urgently — a tabletop exercise of "what would we do if X happened?" with a peer institution is a cost-effective way to identify gaps in the agreements before those gaps become consequential.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Resource-sharing agreements with two peer institutions; at least one agreement exercise or activation documented; reciprocity balanced across agreements; emergency contact protocols current and tested.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Develop a policy agenda and join one policy coalition</div>
+          <div class="seq-desc">Develop a written policy agenda — the specific legislative, regulatory, or funding changes that would most improve the community conditions the institution addresses and the institutional operating environment — through a process that includes community member input on what structural changes they most want. Join one policy coalition whose agenda aligns with the institution's priorities and commit to active participation rather than nominal membership. Over time, develop community members' capacity to participate in advocacy on their own behalf rather than depending entirely on institutional representation. The policy agenda should be reviewed and updated annually as the regulatory and political environment evolves.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Policy agenda developed with community member input; active participation in one policy coalition with governance or facilitation role; at least one policy campaign in which the institution's participation was substantive; community member civic engagement program initiated.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 12.0 and Categories 5.0 and 16.0:</strong> Category 5.0 (Deliver Services and Programs) identified the structural barrier problem — the limit of what individual-level interventions can achieve when structural conditions constrain individual outcomes. Category 12.0's policy advocacy processes (12.4) are the institutional mechanism for addressing those structural barriers at the source rather than managing their consequences at the service level. The connection is explicit: institutions that have identified specific structural barriers in their program evaluation work (Category 5.5.6) have the most credible and specific basis for policy advocacy, because their advocacy is grounded in documented community experience rather than only in institutional position. Category 16.0 (Participatory Democracy) extends this connection further: community members who participate in institutional governance through Category 16.0 processes develop the civic skills and political consciousness that make them effective advocates for structural change through Category 12.4's constituent voice development processes.</p>
+    <p><strong>On the ethics of collaboration in a competitive funding environment:</strong> The competitive funding environment — in which peer institutions compete for the same restricted grants, the same government contracts, and the same foundation priorities — creates genuine tensions with the collaborative orientation that Category 12.0 describes. These tensions are real and require active management rather than denial. Specific strategies for managing them: separate the competitive relationship (funding applications) from the collaborative relationship (service delivery, peer learning, advocacy), which are not inherently in conflict; develop the community-sourced and earned revenue that reduces competitive dependency on restricted grants; participate in collective advocacy for increased public investment in the solidarity economy as a sector, which grows the funding pool rather than only competing for the existing one. The most effective long-term response to the competitive funding dynamic is to change the funding environment through Category 12.4 policy advocacy rather than to accept it as a permanent constraint on inter-institutional collaboration.</p>
+    <p><strong>On the movement relationship between institutional infrastructure and social movements:</strong> The solidarity economy institutions described throughout this framework are not social movements — they are institutional actors that provide services, manage assets, and operate within legal and regulatory frameworks. Social movements are collective efforts to change political and social conditions through organized constituent power rather than through institutional service delivery. The relationship between institutions and movements is critical and often poorly navigated: institutions that behave as though they are movements (substituting institutional positioning for constituent organizing) underperform as service institutions and overreach as movement actors. Movements that dismiss institutions as bureaucratic compromises of radical politics forgo the service capacity, legal standing, and resource management that institutions provide and that movements require to sustain long-term campaigns. Category 12.0's movement building processes (12.5) are designed for institutional actors that understand themselves as part of a broader movement ecosystem — providing specific institutional contributions (services, research, legal standing, financial infrastructure) to movement goals that they cannot pursue alone but that the movement cannot achieve without them.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part IV · Chapter 19 · GPS 12.0</span>
+    <span class="close-next">Ch. 20 — Evolve institutional capabilities (GPS 13.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

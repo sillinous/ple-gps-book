@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 18 — Institutional Integrity & Equity (GPS 11.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --inst: #378ADD; --inst-dim: rgba(55,138,221,0.08);
+    --inst-text: #7ab8f0; --inst-border: rgba(55,138,221,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.inst { background: var(--inst-dim); color: var(--inst-text); border: 1px solid var(--inst-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--inst); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--inst-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--inst); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--inst); background: var(--inst-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--inst-text); }
+  .pullquote p::after { content: '\201D'; color: var(--inst-text); }
+
+  /* Integrity vs compliance */
+  .compare-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .compare-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+  .compare-row:last-child { border-bottom: none; }
+  .cc { padding: 14px 18px; background: var(--bg-secondary); }
+  .cc.alt { background: var(--bg-primary); }
+  .cc-label { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .cc-label.integ { color: var(--inst-text); opacity: 0.85; }
+  .cc-label.comp { color: var(--m1t); opacity: 0.85; }
+  .cc-text { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Equity audit framework */
+  .audit-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .audit-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .audit-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .audit-row:last-child { border-bottom: none; }
+  .audit-domain { width: 120px; min-width: 120px; padding: 14px 14px; border-right: 1px solid var(--border-subtle); background: var(--inst-dim); display: flex; flex-direction: column; justify-content: center; }
+  .audit-domain-name { font-family: 'Crimson Pro', serif; font-size: 0.9rem; font-weight: 600; color: var(--inst-text); line-height: 1.2; }
+  .audit-content { padding: 14px 18px; flex: 1; border-right: 1px solid var(--border-subtle); }
+  .audit-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .audit-questions { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; }
+  .audit-questions strong { color: var(--inst-text); font-weight: 500; opacity: 0.85; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--inst-dim); color: var(--inst-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--inst-dim); border-bottom: 1px solid var(--inst-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--inst-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--inst-text); font-weight: 500; }
+
+  /* Sequence */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part IV · Institutional support processes</div>
+  <div class="chapter-eyebrow">Chapter 18 · GPS Category 11.0</div>
+  <h1 class="chapter-title">Institutional integrity &amp; equity</h1>
+  <p class="chapter-subtitle">The gap between what an institution says it is and what it actually does — closing it through process rather than aspiration, and sustaining closure through accountability mechanisms that function even when values are not enough</p>
+  <div class="cat-meta">
+    <span class="cat-pill inst">Institutional Support</span>
+    <span class="cat-pill inst">Values in practice</span>
+    <span class="cat-pill inst">Accountability architecture</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">21 processes</span>
+    <span class="cat-pill neutral">15 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Post-labor institutions have, almost without exception, better articulated values than they have processes for living them. They describe commitments to equity with precision and operationalize those commitments with vagueness. They hold accountability as a core governance principle while designing governance structures that diffuse accountability across bodies with overlapping authorities and unclear decision rights. They claim commitment to transparency while managing communications that carefully curate what is visible to community members and what is not. These are not hypocrisies — they are the predictable consequences of prioritizing values articulation over process design, of believing that stating commitments clearly is most of the work of honoring them. It is not.</p>
+
+    <p>Category 11.0 is the process domain for the distance between what the institution says and what it does — for the systematic, designed reduction of that distance through accountability mechanisms, equity auditing, conflict of interest governance, whistleblower protection, and the continuous practice of values-alignment assessment. It is also the most morally charged category in the framework, because the failures it addresses are failures of an institution against its own stated commitments — a category of failure that is more damaging to community trust than external criticism precisely because it comes from inside the institution's own governance.</p>
+
+    <p>The central design question of Category 11.0 is what kind of accountability architecture actually works — not what sounds rigorous in a governance document but what produces the behavioral changes and outcome improvements that accountability is supposed to produce. The answer is neither pure proceduralism (accountability through process compliance, which produces the performance of accountability without its substance) nor pure values commitment (accountability through shared mission alignment, which produces genuine accountability in favorable conditions and none in adverse ones). It is the specific combination of structural mechanisms, cultural practices, and individual accountability relationships that makes integrity a designed institutional capacity rather than a dependent variable of whoever happens to be in leadership.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Integrity versus compliance — the distinction that determines the design</div>
+
+  <div class="body-text">
+    <p>The most consequential design choice in Category 11.0 is whether to build an integrity system or a compliance system — because the two are designed differently, produce different organizational cultures, and fail in different and characteristic ways. Compliance systems ask "did we follow the rules?" Integrity systems ask "did we do what we said we would do, and did it produce the outcomes we committed to?" Compliance without integrity produces institutions that are technically adherent to their stated policies while systematically diverging from their stated values. Integrity without compliance infrastructure produces institutions whose values are genuine but whose accountability mechanisms are too informal to sustain value adherence through leadership transitions, resource pressures, and the countless small decisions that constitute institutional behavior over time. The design target is integrity infrastructure — the specific processes that make living values a designed institutional capability rather than a character-dependent one.</p>
+  </div>
+
+  <div class="compare-block">
+    <div class="compare-header">Integrity versus compliance — how the design differs across five dimensions</div>
+
+    <div class="compare-row">
+      <div class="cc">
+        <div class="cc-label integ">Integrity orientation</div>
+        <div class="cc-text"><strong>Primary question:</strong> Are we doing what we said we would do, and are our actions producing the outcomes we committed to? The institution regularly examines whether its actual behavior matches its stated commitments — not whether it has followed its stated procedures, but whether those procedures are producing the results the commitments promised.</div>
+      </div>
+      <div class="cc alt">
+        <div class="cc-label comp">Compliance orientation</div>
+        <div class="cc-text"><strong>Primary question:</strong> Have we followed the required procedures? The institution examines whether required steps were completed, required documents were filed, and required approvals were obtained — without systematic examination of whether those procedures are producing the outcomes they were designed to produce.</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="cc">
+        <div class="cc-label integ">Accountability target</div>
+        <div class="cc-text">The institution is accountable for outcomes — for the actual consequences of its decisions on community members, on staff, and on the commons it stewards. When outcomes diverge from commitments, the institution treats this as a governance failure requiring investigation and structural response rather than as individual underperformance requiring performance management.</div>
+      </div>
+      <div class="cc alt">
+        <div class="cc-label comp">Accountability target</div>
+        <div class="cc-text">The institution is accountable for process — for following required procedures regardless of whether those procedures are producing intended outcomes. When outcomes diverge from commitments, the institution examines whether the required procedures were followed, not whether the procedures themselves are adequate.</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="cc">
+        <div class="cc-label integ">Response to failure</div>
+        <div class="cc-text">Failures are treated as systemic information — evidence that the institution's design, culture, or resource allocation is not producing the outcomes its values require. Response involves examining the institutional conditions that produced the failure and redesigning them. Individual accountability is proportionate to institutional accountability for having created those conditions.</div>
+      </div>
+      <div class="cc alt">
+        <div class="cc-label comp">Response to failure</div>
+        <div class="cc-text">Failures are treated as individual deviations from required procedures — evidence that a specific person did not follow required processes. Response involves investigating whether procedures were followed and sanctioning the individual responsible for the deviation. Institutional conditions that produced the individual's failure are not examined.</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="cc">
+        <div class="cc-label integ">Equity integration</div>
+        <div class="cc-text">Equity is not a separate compliance requirement — it is a dimension of every process, decision, and outcome assessment. The institution regularly asks "who benefits from this and who does not?" and treats systematic disparities in benefit as governance failures requiring structural response rather than as natural variation requiring accommodation.</div>
+      </div>
+      <div class="cc alt">
+        <div class="cc-label comp">Equity integration</div>
+        <div class="cc-text">Equity appears as a specific compliance requirement — a set of policies (non-discrimination, diversity targets, pay equity audits) that must be followed. The compliance approach treats equity as met when the required policies are in place, without examining whether those policies are producing equitable outcomes in practice.</div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="cc">
+        <div class="cc-label integ">Culture produced</div>
+        <div class="cc-text">An institutional culture in which staff feel responsible for the outcomes of their work and empowered to raise concerns when institutional behavior diverges from institutional values — because the institution has designed mechanisms that make raising concerns safe and consequential rather than suppressed and futile.</div>
+      </div>
+      <div class="cc alt">
+        <div class="cc-label comp">Culture produced</div>
+        <div class="cc-text">An institutional culture in which staff learn to demonstrate compliance rather than to pursue outcomes — in which the incentive is to document adherence to required procedures rather than to assess whether those procedures are working. Staff become skilled at performing accountability rather than practicing it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The equity audit framework — making equity observable across six domains</div>
+
+  <div class="body-text">
+    <p>Equity commitments that are not measured cannot be held accountable. The equity audit framework provides the specific measurement domains that make equity observable — not as an abstract commitment but as a set of empirical questions with answers that are either satisfactory or require institutional response. Conducting an equity audit requires accepting that the answers may be uncomfortable, that the discomfort is evidence of a real problem rather than a reflection on good intentions, and that the appropriate response to uncomfortable findings is institutional redesign rather than interpretive framing that makes the findings seem less concerning than they are.</p>
+  </div>
+
+  <div class="audit-block">
+    <div class="audit-header">Equity audit framework — six domains, what they examine, and what questions require answers</div>
+
+    <div class="audit-row">
+      <div class="audit-domain"><div class="audit-domain-name">Service access equity</div></div>
+      <div class="audit-content">
+        <div class="audit-desc">Who is receiving the institution's services, programs, and resources relative to who needs them — assessed by demographic subgroup, geographic area, and population vulnerability. The equity question is not "who is eligible?" but "who is actually being served at what rate relative to their need?"</div>
+        <div class="audit-questions"><strong>Audit questions:</strong> Does the demographic profile of service recipients match the demographic profile of the target community? Which populations are systematically underserved relative to documented need? What barriers account for participation gaps by subgroup? Are resources allocated proportionally to need or to utilization?</div>
+      </div>
+    </div>
+
+    <div class="audit-row">
+      <div class="audit-domain"><div class="audit-domain-name">Outcome equity</div></div>
+      <div class="audit-content">
+        <div class="audit-desc">Whether the institution's programs and services are producing equivalent outcomes across demographic subgroups — addressing the possibility that programs serve diverse populations while producing benefits primarily for the least marginalized. Outcome equity is the hardest equity dimension to assess and the most consequential for institutional effectiveness claims.</div>
+        <div class="audit-questions"><strong>Audit questions:</strong> Do outcome achievement rates differ significantly by demographic subgroup? Are the highest-need populations experiencing the lowest outcome rates? Does the institution's theory of change work equivalently across all population subgroups it claims to serve?</div>
+      </div>
+    </div>
+
+    <div class="audit-row">
+      <div class="audit-domain"><div class="audit-domain-name">Workforce equity</div></div>
+      <div class="audit-content">
+        <div class="audit-desc">Whether the institution's workforce — across hiring, compensation, advancement, and retention — reflects its equity commitments. Workforce equity is the domain where the gap between stated values and actual institutional practice is most visible, because it is produced by the institution's own decisions rather than by external conditions it might attribute the gap to.</div>
+        <div class="audit-questions"><strong>Audit questions:</strong> Does demographic representation decline from entry-level to senior roles? Are there compensation disparities by demographic subgroup controlling for role and tenure? Are development investment and advancement opportunities equitably distributed? Is attrition higher among marginalized demographic groups?</div>
+      </div>
+    </div>
+
+    <div class="audit-row">
+      <div class="audit-domain"><div class="audit-domain-name">Governance equity</div></div>
+      <div class="audit-content">
+        <div class="audit-desc">Whether governance participation — at the level of formal governance bodies and at the level of informal influence over institutional decisions — reflects the demographics and lived experience of the community the institution serves. Governance equity is the domain where the distance between mission and practice is most politically charged, because it concerns power rather than service.</div>
+        <div class="audit-questions"><strong>Audit questions:</strong> Does the governance body's demographic composition reflect the community served? Who participates in informal governance (advisory committees, working groups, staff leadership teams)? Are governance processes accessible to community members with less institutional privilege? Does the community primarily served by the institution have decision rights proportionate to their stake?</div>
+      </div>
+    </div>
+
+    <div class="audit-row">
+      <div class="audit-domain"><div class="audit-domain-name">Resource equity</div></div>
+      <div class="audit-content">
+        <div class="audit-desc">Whether institutional resources — financial investment, staff time, technology, and facility access — are allocated proportionately to the needs of different populations served, or whether allocation patterns concentrate resources on populations whose needs are easier to address or whose voices are louder in governance processes.</div>
+        <div class="audit-questions"><strong>Audit questions:</strong> Is per-capita investment equivalent across the populations the institution serves? Are the highest-need programs receiving proportional resource allocation? Is there evidence that resource allocation responds to community need or to funder priorities? Are resource allocation decisions made transparently with community input?</div>
+      </div>
+    </div>
+
+    <div class="audit-row">
+      <div class="audit-domain"><div class="audit-domain-name">Process equity</div></div>
+      <div class="audit-content">
+        <div class="audit-desc">Whether the institution's processes — for participation, for grievance, for decision-making, for access to staff and leadership — impose differential burdens on community members based on their institutional familiarity, language, digital access, or social proximity to institutional insiders. Process equity is often the least visible and most consequential equity dimension, because processes that appear universal often function inequitably in practice.</div>
+        <div class="audit-questions"><strong>Audit questions:</strong> Do institutional processes require knowledge or resources that are unevenly distributed among community members? Are the same processes equally accessible to community members with different levels of institutional familiarity? Do informal process variations advantage those with more social proximity to institutional insiders? Are processes regularly reviewed from the perspective of the most marginalized users?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 11.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">11.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Operationalize institutional values and conduct values-alignment assessment</div>
+          <div class="proc-group-desc">Values operationalization is the process through which abstract institutional commitments are translated into specific, observable behaviors and outcomes that can be monitored and assessed. It is the process most neglected in post-labor institutions and most consequential for the gap between stated and lived values. Most institutional values are articulated at the level of commitment — "we value equity," "we are committed to transparency" — without the operational specification that would allow anyone to assess whether the commitment is being honored. Operational values specification requires asking, for each stated value, "What would this institution look like if this value were fully honored, and what would it look like if it were not? What specifically do we look for as evidence that this value is operative in our actual behavior?"</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">11.1.1</div><div class="act-name">Develop operational definitions for each institutional value — translating abstract commitments into specific, observable behaviors that can be monitored; community members and staff participate in defining what each value means in practice</div></div>
+            <div class="proc-activity"><div class="act-id">11.1.2</div><div class="act-name">Design values-alignment indicators — specific measures that allow regular assessment of whether institutional behavior is consistent with stated values; indicators reviewed and updated annually as institutional context evolves</div></div>
+            <div class="proc-activity"><div class="act-id">11.1.3</div><div class="act-name">Conduct annual values-alignment assessment — systematic comparison of institutional behavior against values-alignment indicators, using both quantitative data and qualitative input from staff, governance members, and community members</div></div>
+            <div class="proc-activity"><div class="act-id">11.1.4</div><div class="act-name">Report values-alignment findings to governance body — with explicit accountability for responding to gaps between stated and lived values; assessment findings are not managed communications but honest governance inputs</div></div>
+            <div class="proc-activity"><div class="act-id">11.1.5</div><div class="act-name">Implement values-alignment improvement plans — for each identified gap between stated and lived values, develop specific, time-bound institutional responses rather than restating the commitment more forcefully</div></div>
+          </div>
+          <div class="act-note">Process 11.1.1 — operational value definitions — is the foundation of the entire Category 11.0 process group, and the step most commonly skipped because it requires the most uncomfortable institutional work. To operationally define "equity" as a value, an institution must specify what equitable access, equitable outcomes, equitable governance, equitable compensation, and equitable resource allocation look like in its specific context — and then must confront the gap between those specifications and current reality. Institutions that articulate values without operationalizing them can maintain the fiction of value alignment indefinitely; institutions that operationalize them cannot. This is precisely why operationalization is so often avoided and precisely why it is so necessary.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">11.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Build and maintain accountability architecture — oversight, reporting, and consequence</div>
+          <div class="proc-group-desc">Accountability architecture is the structural framework through which the institution ensures that those who hold authority for decisions are answerable for the outcomes of those decisions — not only that they followed required procedures but that their decisions produced the results the institution committed to. Effective accountability architecture has three components that must all be present: oversight (someone with authority to assess whether commitments are being honored), reporting (information flow that makes performance against commitments visible to oversight bodies), and consequence (something changes when commitments are not honored, including governance responses proportionate to the severity of the gap). Any accountability architecture missing one of these three components is not functional accountability — it is the performance of oversight without its substance.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">11.2.1</div><div class="act-name">Design explicit accountability relationships — mapping who is accountable to whom for which commitments; the accountability map should cover program outcomes, equity commitments, financial stewardship, and governance obligations</div></div>
+            <div class="proc-activity"><div class="act-id">11.2.2</div><div class="act-name">Implement performance reporting against commitments — regular reports to governance bodies that measure actual performance against stated commitments rather than only reporting activities completed</div></div>
+            <div class="proc-activity"><div class="act-id">11.2.3</div><div class="act-name">Design governance response protocols for accountability failures — what the governance body does when commitments are not met; responses proportionate to severity and to whether failures reflect inadequate institutional design or inadequate individual performance</div></div>
+            <div class="proc-activity"><div class="act-id">11.2.4</div><div class="act-name">Manage executive accountability — the governance body's process for assessing and holding accountable the executive director or equivalent, including regular performance review, compensation alignment, and the decision criteria for leadership transitions</div></div>
+            <div class="proc-activity"><div class="act-id">11.2.5</div><div class="act-name">Implement community accountability mechanisms — ways in which community members (not only governance bodies) can assess and hold accountable the institution's performance against its stated commitments; closing the accountability loop with the community the institution most directly serves</div></div>
+          </div>
+          <div class="act-note">Process 11.2.5 — community accountability mechanisms — is the accountability process most specific to post-labor institutional design, and the one that distinguishes genuine community accountability from governance body accountability. Governance bodies are accountable to the institution's legal framework and to each other. Community members are accountable to the community the institution serves — which is a different and more direct form of accountability for post-labor institutions whose legitimacy depends on community trust rather than regulatory compliance. Designing mechanisms through which community members can systematically assess institutional performance — annual community report cards, community accountability sessions, public commitment tracking — is the most direct form of the transparency and accountability that post-labor institutions claim as values.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">11.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Govern conflict of interest and manage ethics compliance</div>
+          <div class="proc-group-desc">Conflict of interest governance is the process through which the institution ensures that individuals holding institutional authority — governance body members, leadership, senior staff — are not making institutional decisions based on personal interests that diverge from institutional interests. It is also the governance process most susceptible to nominal compliance without substantive effect: conflict of interest policies are nearly universal in nonprofit governance, annual disclosure forms are nearly universal, and yet the pattern of related-party transactions, governance capture, and institutional decisions made in service of personal benefit that those policies are designed to prevent remains common. The gap between policy and practice is produced by the difference between conflict of interest as a disclosure requirement and conflict of interest as a genuine governance commitment that changes institutional behavior when conflicts are identified.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">11.3.1</div><div class="act-name">Implement annual conflict of interest disclosure — all governance body members and senior staff disclose financial interests, organizational affiliations, and personal relationships that could create conflicts with institutional interests; disclosure reviewed, not merely filed</div></div>
+            <div class="proc-activity"><div class="act-id">11.3.2</div><div class="act-name">Design and enforce recusal procedures — clear, consistently applied procedures for recusing conflicted individuals from decisions where their interests diverge; recusal decisions documented and the decision-making impact documented</div></div>
+            <div class="proc-activity"><div class="act-id">11.3.3</div><div class="act-name">Audit related-party transactions — annual review of all financial transactions with entities related to governance members, leadership, or senior staff; assessment of whether transactions were at fair market value and whether recusal procedures were followed</div></div>
+            <div class="proc-activity"><div class="act-id">11.3.4</div><div class="act-name">Manage ethics violations — documented processes for investigating and responding to alleged ethics violations, with outcomes proportionate to severity and consistently applied across institutional hierarchy</div></div>
+            <div class="proc-activity"><div class="act-id">11.3.5</div><div class="act-name">Conduct ethics culture assessments — periodic surveys of governance members and staff on institutional ethics culture; specifically assessing whether ethics policies are consistently applied across institutional hierarchy or enforced selectively for lower-status individuals</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">11.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Implement equity auditing and disparity response</div>
+          <div class="proc-group-desc">Equity auditing is the process through which the institution converts its equity commitments into measurable outcomes assessments — applying the six-domain framework described earlier in this chapter across institutional operations on a regular cycle. It is the institutional equivalent of financial auditing: a systematic, evidence-based examination of whether the institution is performing as it claims. Like financial auditing, equity auditing produces findings that require governance response — and the quality of that response, not the quality of the audit alone, determines whether equity commitments are operationally real. The most important thing an equity audit can produce is not a clean report but a credible improvement plan with time-bound commitments and governance accountability for implementation.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">11.4.1</div><div class="act-name">Conduct annual equity audit across six domains — service access, outcome, workforce, governance, resource, and process equity; using disaggregated data, not aggregate averages that conceal within-group variation</div></div>
+            <div class="proc-activity"><div class="act-id">11.4.2</div><div class="act-name">Analyze disparity root causes — when equity gaps are identified, investigating the institutional design, resource allocation, or practice factors that produce them; not attributing gaps to community characteristics without examining institutional contribution</div></div>
+            <div class="proc-activity"><div class="act-id">11.4.3</div><div class="act-name">Develop and implement equity improvement plans — time-bound, resourced plans for closing identified equity gaps; reviewed by governance body with explicit accountability for implementation</div></div>
+            <div class="proc-activity"><div class="act-id">11.4.4</div><div class="act-name">Track equity trend data — year-over-year comparison of equity metrics across all six domains; trend improvement or deterioration reported to governance body and to the community</div></div>
+            <div class="proc-activity"><div class="act-id">11.4.5</div><div class="act-name">Publish equity audit findings — sharing equity audit results with community members as a transparency and accountability practice; institutions that publish equity findings commit to community scrutiny that reinforces governance accountability for improvement</div></div>
+          </div>
+          <div class="act-note">Process 11.4.2 — equity disparity root cause analysis — is the most intellectually demanding and most commonly avoided process in equity auditing. When a gap is identified — lower outcome rates for a specific demographic group, lower compensation for a specific demographic cohort, lower governance participation by a specific community population — the institutional reflex is to attribute the gap to characteristics of the affected population rather than to institutional design. Root cause analysis requires reversing this reflex: assuming that institutional design is a significant contributor to any observed disparity until a thorough investigation demonstrates otherwise. This assumption is warranted by the evidence that institutional design systematically produces disparities in most domains where they are found; it is also uncomfortable precisely because it locates the responsibility for change within the institution rather than in the populations experiencing inequity.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">11.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Protect whistleblowers and maintain internal ethics reporting</div>
+          <div class="proc-group-desc">Whistleblower protection is the accountability mechanism that closes the most consequential gap in institutional integrity governance: the gap between what leadership reports to governance bodies and what actually happens in institutional operations. Governance bodies can only hold leadership accountable for what they know; and what they know is largely what leadership tells them. Staff members who observe institutional behavior that diverges from stated values, who witness ethics violations, who see resource mismanagement, or who experience or observe discrimination are the primary source of information governance bodies need to provide genuine oversight. Protecting those staff members — and providing them with accessible, independent, and genuinely confidential reporting channels — is the infrastructure that makes governance accountability real rather than nominal.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">11.5.1</div><div class="act-name">Design and implement whistleblower policy — clear protections against retaliation for reporting institutional concerns in good faith; policies that cover internal reporting, external reporting, and the specific protections available to reporters at each reporting level</div></div>
+            <div class="proc-activity"><div class="act-id">11.5.2</div><div class="act-name">Establish independent ethics reporting channels — reporting mechanisms that bypass leadership (whose behavior may be the subject of the report) and go directly to governance body members or an independent third party</div></div>
+            <div class="proc-activity"><div class="act-id">11.5.3</div><div class="act-name">Manage ethics reports — documented, confidential investigation process with timelines, escalation procedures, and governance body notification requirements for material reports</div></div>
+            <div class="proc-activity"><div class="act-id">11.5.4</div><div class="act-name">Monitor for retaliation — active monitoring of employment, role, and experience outcomes for individuals who have made ethics reports; investigation of any adverse outcomes that occur within a reasonable period following a report</div></div>
+            <div class="proc-activity"><div class="act-id">11.5.5</div><div class="act-name">Communicate whistleblower protections actively — annual communication to all staff about reporting channels, protections, and the governance body's commitment to investigating good-faith reports; communication that makes reporting feel safe rather than theoretically available</div></div>
+          </div>
+          <div class="act-note">Process 11.5.2 — independent reporting channels — is the most important structural feature of whistleblower protection and the one most commonly absent or nominal. Reporting channels that go through the executive director or through HR staff who report to the executive director are not independent channels for reports about leadership behavior — they are channels that route reports back to the subject of the report. Genuine independence requires governance body members or an independent third party (an ethics hotline service, an ombudsman, or an independent audit committee) receiving reports that concern leadership directly. The investment in a truly independent channel is modest relative to the accountability value it provides, and its absence is the most reliable indicator that whistleblower protection exists as policy rather than as practice.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six institutional integrity failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in institutional integrity and equity practice</div>
+
+    <div class="fail-row">
+      <div class="fail-num">I1</div>
+      <div class="fail-content">
+        <div class="fail-name">Values as decoration — commitment without operationalization</div>
+        <div class="fail-desc">The institution has articulated values — typically equity, transparency, accountability, justice — with clarity and conviction, and has done nothing to operationalize them into specific, measurable behaviors and outcomes. The values are displayed in mission statements, invoked in fundraising, cited in governance discussions, and functionally irrelevant to the institutional decisions that most directly determine whether they are honored. Staff who believe in the values and observe the gap experience the specific moral injury of working in an institution that says it stands for what they care about while behaving differently.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution cannot describe what "equity" means in operational terms — what it looks like when achieved, what it looks like when not achieved, what data would reveal the difference. Values appear in mission documents and disappear in operational planning. Staff describe the gap between stated values and institutional behavior as "just how it is" without a pathway for addressing it.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">I2</div>
+      <div class="fail-content">
+        <div class="fail-name">Accountability theater — the governance that appears rigorous and functions leniently</div>
+        <div class="fail-desc">The institution has governance structures that appear to provide robust accountability — a finance committee, an audit committee, an executive performance review process, an annual strategic planning cycle — and whose substantive function is to ratify decisions already made by leadership rather than to provide independent assessment of institutional performance. Governance body members defer to the executive director's judgment on operational matters, to the finance committee's judgment on financial matters, and to the development committee's judgment on fundraising matters, concentrating effective institutional authority in staff leadership while maintaining the formal appearance of distributed governance.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Governance body meetings consistently approve executive director recommendations without substantive debate. Committee structures exist but committee members cannot describe specific decisions the committee made independently of staff recommendations. The governance body has never initiated a discussion item; all discussion items are initiated by staff. Governance body members describe their role as "supporting" rather than "overseeing" institutional leadership.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">I3</div>
+      <div class="fail-content">
+        <div class="fail-name">Equity without process — the diversity statement that produces no equity</div>
+        <div class="fail-desc">The institution has comprehensive equity commitments — in its mission statement, its strategic plan, its communications — and has not developed the equity auditing, root cause analysis, disparity response, and process equity assessment that would convert those commitments into operational changes. Equity gaps persist across all six domains, are visible in the institution's own data when examined, and are attributed to external factors rather than to the institutional design decisions that produce them.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution has not conducted an equity audit in the past three years or has not conducted one that disaggregates outcomes by demographic subgroup. Equity discussions center on representation (who is present) rather than equity of outcomes (who benefits). When equity gaps are identified, the institutional response is to restate the commitment more forcefully rather than to examine the design factors that produce the gap.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">I4</div>
+      <div class="fail-content">
+        <div class="fail-name">Conflict of interest without recusal — disclosed but undeterred</div>
+        <div class="fail-desc">Conflict of interest policies exist, annual disclosures are collected, and conflicts are identified — and the identified conflicts do not produce recusal. Governance members participate in votes on matters where they have disclosed financial interests. Related-party transactions proceed without the independent review that genuine recusal would require. The conflict of interest process functions as a documentation requirement rather than as a governance protection, creating a paper trail of disclosed conflicts that does not change institutional decision-making.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Annual disclosure forms are completed but their contents are not reviewed for decisions on related-party matters. Governance members vote on decisions involving entities with which they have disclosed financial relationships. Related-party transactions are common and are approved by governance bodies that include the related parties. Ethics audits reveal patterns of related-party transactions that were technically disclosed but not subjected to independent review.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">I5</div>
+      <div class="fail-content">
+        <div class="fail-name">Retaliation against reporters — accountability suppressed at the point of exposure</div>
+        <div class="fail-desc">Staff who raise concerns about institutional behavior — through formal ethics reporting, through informal channels, or through participation in governance processes — experience adverse employment consequences. The consequences are rarely explicit; they manifest as reduced responsibilities, exclusion from key discussions, performance review downgrading, or social marginalization within the institution. The pattern is visible to other staff and produces the most consequential chilling effect on institutional accountability: staff learn that raising concerns about institutional behavior is personally costly, and they stop raising them. Governance bodies receive less information, are less aware of institutional problems, and less able to hold leadership accountable.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff who have raised concerns describe experiencing adverse treatment following the report. Ethics reports are rare relative to organizational scale — too rare to reflect the genuine incidence of ethics concerns in any organization. Staff describe "knowing better than to raise certain things." Governance body members are not aware of reports that staff describe having made informally.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">I6</div>
+      <div class="fail-content">
+        <div class="fail-name">Hierarchy-selective accountability — accountability applied to the less powerful</div>
+        <div class="fail-desc">The institution applies accountability processes — performance review, ethics enforcement, grievance resolution, values-alignment assessment — consistently to staff and governance members at lower levels of the institutional hierarchy and inconsistently to senior leadership and high-status governance members. High performers and institutional favorites are exempt from accountability processes applied to others. The inconsistency is recognized by staff, who correctly interpret it as evidence that the stated accountability commitments are not genuine — that accountability is a governance tool applied to some and a governance aspiration applied to others.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Documented behavior that would produce disciplinary response for a lower-level staff member produces no response when exhibited by a senior leader. Ethics investigations that name senior leaders are handled differently from those that name junior staff. Governance body members describe themselves as "supporting" the executive director in terms that suggest personal loyalty rather than institutional accountability. Performance review processes do not apply equivalently across the institutional hierarchy.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — PolicyLink and the equity framework as governance architecture</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">PolicyLink — embedding equity in institutional decision-making architecture</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">PolicyLink is a national research and action institute focused on advancing economic and social equity. Its contribution to Category 11.0 is not primarily in its external advocacy work but in the internal institutional infrastructure it has developed for operationalizing equity commitments across its own governance and operations — demonstrating that equity can function as an operational design principle rather than a policy commitment that sits alongside standard institutional practice without structurally influencing it.</div>
+      <div class="case-text">PolicyLink's equity integration approach operationalizes several elements of process 11.1 in ways that are directly applicable to post-labor institutions. Its equity review process — applied to major institutional decisions including hiring, program design, budget allocation, and communications — asks specific equity questions at the point of decision rather than assessing equity compliance after decisions are made. The equity questions are not aspirational ("does this advance equity?") but diagnostic ("who benefits from this decision and who does not?", "what are the differential impacts by demographic group?", "what design changes would narrow any identified disparities?"). This approach integrates equity assessment into the standard decision-making process rather than adding it as a separate compliance layer — producing equity analysis at the point when it can still influence decisions rather than only documenting equity concerns after the fact.</div>
+      <div class="case-text">PolicyLink's approach to internal equity extends to its own workforce practices: the institution conducts regular pay equity analyses, makes its compensation philosophy transparent to staff, and assesses development investment equity by demographic subgroup. These internal practices operationalize the principle that institutions advocating for equity externally must demonstrate equity internally — not as a communications strategy but as a governance requirement.</div>
+      <div class="case-lesson"><strong>Category 11.0 lesson:</strong> PolicyLink's equity review process demonstrates the operational translation from process 11.1.1 (operational value definitions) to process 11.4.3 (equity improvement plans): equity commitment becomes equity process becomes equity measurement becomes equity accountability. The key design decision is embedding equity assessment in the standard decision-making process rather than treating it as a post-hoc compliance review. Institutions that review equity implications of decisions before they are made have the opportunity to change them; institutions that review equity implications after decisions are implemented have only the opportunity to document them.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Catalyst for Pay Equity and the internal accountability gap</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Nonprofit pay equity research — the accountability practices that close compensation gaps</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Research by Catalyst, the National Council of Nonprofits, and the Building Movement Project has documented a consistent pattern across the nonprofit and solidarity economy sector: organizations with explicit equity commitments — to racial equity, to gender equity, to pay equity — regularly maintain internal compensation disparities that contradict those commitments, and the disparities persist because they are not subjected to the accountability processes that the organizations apply to programmatic equity claims. The research does not document individual malfeasance; it documents systemic accountability gap: the equity audit framework and the accountability architecture that organizations apply to their external programs are not applied to their internal workforce practices.</div>
+      <div class="case-text">The Building Movement Project's Race to Lead reports are particularly instructive for process 11.4's workforce equity domain: they document that organizations led by people of color face higher funder scrutiny, lower compensation for equivalent roles, and higher governance scrutiny of financial decisions than organizations led by white executives — disparities that occur within organizations claiming equity commitments and are perpetuated by governance processes (hiring committees, compensation benchmarking, executive review) that have not been subjected to equity audit. The accountability gap is not only within organizations; it runs across the sector's governance infrastructure.</div>
+      <div class="case-lesson"><strong>Category 11.0 lesson:</strong> The workforce equity research demonstrates that process 11.4's equity auditing must be applied to internal institutional practices with the same rigor that institutions apply to their external program equity claims. Organizations that audit program equity without auditing workforce equity are applying accountability selectively — producing the hierarchy-selective accountability documented in failure mode I6 at the sector level. The accountability architecture of Category 11.0 must encompass the institution itself as fully as it encompasses the programs the institution delivers to the community.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>An institution that states values without operationalizing them is not hypocritical — it is simply incomplete. The values are real. The process for honoring them has not yet been built.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 11.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 11.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Values are articulated but not operationalized; no values-alignment indicators or assessment process exists</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Accountability is aspirational; no explicit accountability relationships, reporting requirements, or consequence structures for commitment gaps</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Conflict of interest policy exists on paper; disclosures collected but not reviewed; recusal procedures not consistently followed</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No equity audit has been conducted; equity commitments are not measured against outcomes data</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No whistleblower policy or independent reporting channel; staff who raise concerns face informal social consequences</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Values-alignment indicators developed for primary values; annual assessment beginning; findings reported to governance body</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Accountability relationships mapped for major roles; performance reporting against commitments developing; governance response protocols in development</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Conflict of interest disclosures reviewed; recusal procedures applied to major decisions; related-party transaction review developing</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">First equity audit conducted in one or two domains; disaggregated data collection beginning; findings presented to governance body</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Whistleblower policy adopted; reporting channels established; protections communicated to staff</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Annual values-alignment assessment conducted across all stated values; improvement plans for identified gaps adopted by governance body; trend data tracked year-over-year</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Accountability architecture fully designed with oversight, reporting, and consequence; executive accountability process genuine and annually conducted; community accountability mechanisms in place</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Conflict of interest governance fully implemented; related-party transaction audit conducted annually; ethics culture assessed and findings acted on</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Annual equity audit across all six domains; root cause analysis for disparities conducted; equity improvement plans implemented with governance accountability; equity findings published</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Independent whistleblower reporting channel operational; retaliation monitoring active; annual communication of protections; governance body review of report patterns</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Equity review embedded in standard decision-making processes — not post-hoc compliance review but equity assessment at the point of decision</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Equity gaps measurably narrowing across all six domains over a three-year trend; equity audit findings drive structural institutional redesign rather than incremental accommodation</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community accountability mechanisms produce genuine governance response — community members can observe and contest institutional performance against stated commitments</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Institutional integrity and equity frameworks contributed to peer institutions; recognized as an accountability practice resource in the solidarity economy</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Accountability architecture applies equivalently across institutional hierarchy — consistent standards for senior leadership and junior staff, for governance members and community members</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 11.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Values-alignment assessment score</div>
+      <div class="kpi-cell">Annual composite measure of institutional behavior against operationalized values indicators — the primary integrity outcome measure; trend improvement more important than absolute level</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Equity audit completion rate</div>
+      <div class="kpi-cell">Percentage of six equity domains assessed annually with disaggregated data — measures whether equity commitments are subject to systematic accountability</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Equity gap closure rate</div>
+      <div class="kpi-cell">Percentage of identified equity gaps showing measurable improvement year-over-year — the primary equity outcome measure; measures whether equity auditing produces change</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Related-party transaction audit rate</div>
+      <div class="kpi-cell">Percentage of related-party transactions receiving independent review — measures whether conflict of interest governance is substantive or nominal</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Ethics report rate</div>
+      <div class="kpi-cell">Number of ethics reports per 100 staff per year — very low rates may indicate suppressed reporting rather than absence of concerns; tracked alongside retaliation monitoring</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community accountability satisfaction score</div>
+      <div class="kpi-cell">Community member assessment of whether the institution performs as it claims — the accountability measure closest to the community the institution serves</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Recusal compliance rate</div>
+      <div class="kpi-cell">Percentage of decisions involving disclosed conflicts of interest where recusal procedures were followed — distinguishes substantive from nominal conflict of interest governance</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Staff trust in accountability systems</div>
+      <div class="kpi-cell">Anonymous staff survey measure of whether staff believe ethics reports will be investigated and protected — the leading indicator of whether whistleblower protection is genuine or nominal</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 11.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 11.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Operationalize the institution's most important stated value</div>
+          <div class="seq-desc">Select the one institutional value that is most central to the institution's identity and most frequently cited in its governance and communications. Convene a working group of staff, governance members, and community members to develop an operational definition: What does this value look like when fully honored? What does the institution do differently when this value is operative versus when it is not? What data would allow anyone to assess whether the value is being honored? The working group process will be uncomfortable — surfacing gaps between the stated value and current institutional behavior is the point. The output is not a better mission statement; it is a set of observable indicators that can be assessed annually.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Operational definition developed for one primary value; values-alignment indicators defined; first annual assessment conducted; findings presented to governance body with commitment to respond.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a focused equity audit in the domain with the largest gap</div>
+          <div class="seq-desc">Select the equity domain — service access, outcomes, workforce, governance, resource, or process — where the institution's equity gap is most likely to be significant based on available data and qualitative observation. Conduct a full equity audit in that domain with disaggregated analysis. Present the findings honestly to the governance body, including uncomfortable findings. Develop an equity improvement plan with time-bound commitments and governance accountability for implementation. Measure the gap at the same time next year. The purpose of starting with one domain is to build the organizational capacity and culture for equity auditing before expanding to all six — institutions that try to audit all six domains at once frequently produce superficial analysis in all of them.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Full equity audit conducted in one domain with disaggregated analysis; root cause analysis completed; equity improvement plan adopted by governance body with time-bound commitments; year-over-year measurement framework established.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement substantive conflict of interest governance</div>
+          <div class="seq-desc">Assess the current conflict of interest process — not whether disclosures are collected but whether identified conflicts actually produce recusal, whether related-party transactions are reviewed independently, and whether the conflict of interest process is perceived by governance members and staff as genuine rather than nominal. Redesign the process for the gaps identified: if recusal is not consistently followed, establish a clear decision protocol and document every recusal decision or non-recusal with rationale. Conduct the first related-party transaction audit. The test of whether conflict of interest governance is genuine is whether it has ever required a governance member or leader to recuse from a decision they wanted to participate in.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Recusal procedures documented and consistently followed; related-party transaction audit completed; at least one recusal from a contested decision documented and confirmed as genuine; ethics culture assessment conducted.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Establish an independent whistleblower reporting channel</div>
+          <div class="seq-desc">Implement a reporting channel that bypasses institutional leadership — routed to designated governance body members or to an independent third-party ethics hotline service. Communicate the channel and its protections to all staff, explicitly including protections against retaliation, in plain language. The test of whether the channel is genuine is whether it is actually used — very low usage rates in organizations above a minimal scale almost always indicate that staff do not believe reporting is safe or consequential. After implementing the channel, track usage and track outcomes for reporting individuals with sensitivity to any adverse patterns.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Independent reporting channel operational; protections communicated to all staff; governance body designees or third-party service receiving reports; retaliation monitoring active for previous reporters; first annual report to governance body on channel utilization.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Map accountability relationships and design governance response protocols</div>
+          <div class="seq-desc">Develop an explicit accountability map for the institution's primary commitments: for each commitment, who is accountable for delivering it, to whom are they accountable, what reporting demonstrates delivery, and what happens when delivery falls short? The map will reveal accountability gaps — commitments without a specific accountable role, reporting requirements without governance body review, or outcome gaps without designed institutional responses. Design the missing elements. Special attention to executive accountability: the governance body's process for assessing the executive director against stated institutional commitments, not only against financial and programmatic metrics.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Accountability map developed and reviewed by governance body; executive accountability process redesigned to include commitment-based assessment; governance response protocols documented for major commitment categories; community accountability mechanism implemented.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 11.0 and Category 1.0:</strong> Category 1.0 covers the design of governance strategy and collective vision — the processes through which the institution defines what it stands for and how it will be governed. Category 11.0 covers the accountability architecture that makes those commitments operative rather than aspirational. The relationship is the difference between deciding and doing: Category 1.0 is where the institution decides what it commits to; Category 11.0 is where it builds the infrastructure that makes the decision consequential. Institutions that develop Category 1.0 without Category 11.0 produce governance architecture without accountability architecture — structures that specify what should happen without mechanisms that ensure it does.</p>
+    <p><strong>On power analysis in equity work:</strong> Equity auditing as described in this chapter examines disparities in outcomes by demographic subgroup. Power analysis examines how institutional authority is distributed, exercised, and experienced — who has formal decision rights, who has informal influence, whose objections are heard, and whose preferences shape institutional choices without formal authority. These are related but distinct analyses: an institution can show improving equity outcomes in some domains while maintaining highly concentrated power structures that limit whose voices shape institutional direction. Category 11.0's equity framework is incomplete without explicit attention to governance equity — who has decision rights in the institution proportionate to their stake in its outcomes — which connects directly to Category 16.0's participatory democracy processes.</p>
+    <p><strong>On the limits of internal accountability:</strong> The accountability mechanisms described in this chapter are all internal — processes through which the institution holds itself accountable to its own stated commitments. Internal accountability is necessary and insufficient. It is necessary because external accountability alone produces compliance theater — the performance of accountability for external audiences without genuine internal accountability. It is insufficient because internal accountability systems are vulnerable to capture by the same power dynamics they are designed to check: a governance body that is captured by leadership cannot hold leadership accountable regardless of how well the accountability processes are designed. External accountability mechanisms — independent auditors, regulatory oversight, community accountability processes that extend beyond the institution's own governance structure — provide the external checks that internal accountability alone cannot. Category 11.0 is designed to maximize internal accountability; institutions whose accountability failures exceed what internal processes can address will require the external accountability mechanisms that Categories 12.0 and 16.0 address through inter-institutional relations and participatory democracy.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part IV · Chapter 18 · GPS 11.0</span>
+    <span class="close-next">Ch. 19 — Inter-institutional relations (GPS 12.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 2 — What institutions exist, and why they are insufficient</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504;
+    --bg-deep: #0c0a09;
+    --bg-primary: #141210;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.12);
+    --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3;
+    --text-secondary: #a09890;
+    --text-muted: #6b6560;
+    --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07);
+    --border-visible: rgba(201,169,110,0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 40px 120px;
+  }
+  .part-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .chapter-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.35;
+    margin-bottom: 44px;
+  }
+  .body-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--text-primary);
+  }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em;
+    font-weight: 300;
+    line-height: 0.75;
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+  }
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-visible);
+  }
+  .section-break-ornament {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+  .pullquote {
+    margin: 44px 0;
+    padding: 28px 32px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 6px 6px 0;
+  }
+  .pullquote p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .pullquote p::before { content: '\201C'; color: var(--accent); }
+  .pullquote p::after  { content: '\201D'; color: var(--accent); }
+
+  /* Institution audit cards */
+  .audit-block {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .audit-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .audit-row {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .audit-row:last-child { border-bottom: none; }
+  .audit-top {
+    display: flex;
+    align-items: stretch;
+  }
+  .audit-marker {
+    width: 6px;
+    min-width: 6px;
+    background: var(--accent);
+    opacity: 0.25;
+  }
+  .audit-content {
+    padding: 20px 22px;
+    flex: 1;
+  }
+  .audit-institution {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .audit-designed {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .audit-designed strong {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .audit-fails {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .audit-fails strong {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .audit-verdict {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.73rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* The five failure modes grid */
+  .failure-grid {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .failure-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .failure-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .failure-row:last-child { border-bottom: none; }
+  .failure-num {
+    width: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    border-right: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    opacity: 0.75;
+    padding: 18px 0;
+  }
+  .failure-content { padding: 18px 22px; flex: 1; }
+  .failure-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+  }
+  .failure-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.77rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .failure-example {
+    margin-top: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.71rem;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  /* What they share — synthesis block */
+  .synthesis-block {
+    margin: 40px 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-top: 2px solid var(--accent);
+    border-radius: 0 0 8px 8px;
+    padding: 28px 32px;
+  }
+  .synthesis-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    opacity: 0.8;
+  }
+  .synthesis-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .synthesis-list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .syn-dash {
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    color: var(--accent);
+    min-width: 14px;
+    padding-top: 2px;
+    opacity: 0.6;
+  }
+  .syn-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .syn-text strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .note-aside {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-visible);
+    border-radius: 0 6px 6px 0;
+  }
+  .note-aside p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 0.6em;
+  }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .close-next {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+  .page-number {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part I · The great decoupling</div>
+  <div class="chapter-eyebrow">Chapter 2</div>
+  <h1 class="chapter-title">What institutions exist, and why they are insufficient</h1>
+  <p class="chapter-subtitle">An honest audit of the forms of organization that have tried to do what markets will not — and where each breaks under the specific pressure of post-labor conditions</p>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>The institutions we need have not been built yet. But that statement, taken alone, overstates the emptiness of the landscape. There is no institutional vacuum. There is, instead, a rich and varied ecology of organizations that have spent decades — in some cases centuries — trying to do what markets systematically fail to do: distribute economic participation broadly, sustain communities through disruption, preserve democratic voice against concentrated economic power, and deliver services whose value cannot be captured by price. Worker cooperatives. Mutual aid networks. Nonprofit service organizations. Public sector institutions. Community land trusts. Credit unions. Solidarity economy networks. And, more recently, decentralized autonomous organizations experimenting with blockchain-based governance.</p>
+
+    <p>None of these are trivial. Each represents hard-won institutional knowledge about how to organize collective action, maintain accountability without hierarchy, and pursue social goals in the face of market pressure and political hostility. Each has produced real outcomes for real communities. The instinct to dismiss them — to treat the institutional design problem as starting from zero — is both historically illiterate and strategically wasteful. The accumulated knowledge inside these institutions is exactly the raw material from which better institutions can be built.</p>
+
+    <p>But an honest audit requires saying clearly where each form breaks — not as a verdict on the people who built and operate them, but as a diagnosis of the design constraints each was working within and the specific ways those constraints become liabilities under post-labor pressure. The institutions we have were designed for problems that are related to but not identical with the problems we now face. Understanding the gap between the design and the demand is the precondition for closing it.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The audit — six institutional forms</div>
+
+  <div class="audit-block">
+    <div class="audit-header">Institutional forms — design logic and post-labor failure modes</div>
+
+    <div class="audit-row">
+      <div class="audit-top">
+        <div class="audit-marker"></div>
+        <div class="audit-content">
+          <div class="audit-institution">The welfare state</div>
+          <div class="audit-designed">
+            <strong>Designed for</strong>
+            Built in the Fordist era to smooth the volatility of wage labor: unemployment insurance for temporary job loss, social security for post-employment retirement, healthcare and education as complements to workforce participation. The welfare state assumes that most adults spend most of their working lives in formal employment, that employment is the primary site of economic contribution, and that the disruptions requiring state support are temporary deviations from a stable baseline of full employment. Its revenue base — payroll taxes on wage income — is architecturally dependent on the very labor market participation it supports.
+          </div>
+          <div class="audit-fails">
+            <strong>Breaks when</strong>
+            Labor force participation falls structurally rather than cyclically. Gig, platform, and informal work erodes the contribution base. The worker-to-retiree ratio deteriorates as demographic aging compounds labor displacement. Benefits tied to employment history exclude those who were never stably employed — typically the populations already most economically vulnerable. The welfare state can be patched — decoupled from employment, funded by broader tax bases — but these are major structural reforms, not adjustments. The underlying architecture is employment-dependent in ways that require deliberate and politically contested redesign.
+          </div>
+          <div class="audit-verdict">What it gets right: the principle that collective insurance against economic risk is a legitimate public function. What it cannot currently do: function as that insurance when employment itself is the risk rather than the baseline.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="audit-row">
+      <div class="audit-top">
+        <div class="audit-marker"></div>
+        <div class="audit-content">
+          <div class="audit-institution">Worker cooperatives</div>
+          <div class="audit-designed">
+            <strong>Designed for</strong>
+            To democratize the firm: give workers ownership of the enterprise, a direct share in its profits, and a voice in its governance. The cooperative model addresses the power asymmetry between capital and labor by making workers the owners. It has produced some of the most durable and successful community-rooted enterprises in history — the Mondragon Corporation in the Basque Country, the Emilia-Romagna cooperative networks in Italy, REI, the John Lewis Partnership — organizations that have maintained worker ownership and democratic governance at significant scale over decades.
+          </div>
+          <div class="audit-fails">
+            <strong>Breaks when</strong>
+            The labor being organized is being replaced. The cooperative model assumes that human labor is the primary productive input and that organizing the workers who provide that input is the path to equitable distribution. When automation substitutes for member-labor, the cooperative faces a genuinely novel governance problem: should it resist automation to protect member employment? Should it automate and distribute the gains to a shrinking membership? Should it expand membership to workers whose labor is being eliminated elsewhere? None of these questions have settled answers within cooperative theory. The model also struggles with capitalization — unable to raise equity from external investors without diluting worker control — which limits its capacity to fund the technological investment that post-labor transition requires.
+          </div>
+          <div class="audit-verdict">What it gets right: democratic governance, profit distribution to workers, the alignment of institutional incentives with member welfare. What it cannot currently do: provide a clear model for distributing value when the members' labor is no longer the primary source of that value.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="audit-row">
+      <div class="audit-top">
+        <div class="audit-marker"></div>
+        <div class="audit-content">
+          <div class="audit-institution">Nonprofit service organizations</div>
+          <div class="audit-designed">
+            <strong>Designed for</strong>
+            To deliver services whose social value exceeds their market price — healthcare, education, arts, social services, community development — funded through philanthropy, government contracts, and fee-for-service revenue. The nonprofit sector operates at the intersection of market failure and public function, delivering goods and services that profit-seeking firms would underprovide and governments have either chosen not to provide directly or cannot provide at the necessary granularity and community specificity.
+          </div>
+          <div class="audit-fails">
+            <strong>Breaks when</strong>
+            Funders define the problem. The nonprofit model creates a structural accountability misalignment: the people who pay for the work (foundations, government agencies, major donors) and the people who receive the work (communities) are different. Over time, under the pressure of funding cycles and reporting requirements, the organization's definition of success drifts toward funder metrics rather than community outcomes. This is not a failure of individual integrity; it is a predictable result of the institutional design. The organization that cannot answer "did the community's life improve?" with rigor and honesty — because its measurement infrastructure is calibrated to funder deliverables rather than community wellbeing — is operating with a fundamental accountability gap that post-labor conditions will widen rather than narrow.
+          </div>
+          <div class="audit-verdict">What it gets right: the existence of a non-profit-seeking sector is essential. The scale and sophistication of social service delivery in many contexts. What it cannot currently do: maintain genuine accountability to communities rather than funders without structural reforms to its governance and measurement infrastructure.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="audit-row">
+      <div class="audit-top">
+        <div class="audit-marker"></div>
+        <div class="audit-content">
+          <div class="audit-institution">Mutual aid networks</div>
+          <div class="audit-designed">
+            <strong>Designed for</strong>
+            Solidarity-based direct support: community members helping each other through crisis without the mediation of institutional bureaucracy, professional credentials, or means-testing. Mutual aid operates on principles of reciprocity and abundance — the recognition that communities have resources that formal systems cannot see or access, and that direct peer-to-peer support is often more effective and more dignified than institutional service delivery. The COVID-19 pandemic demonstrated the extraordinary mobilization capacity of mutual aid networks: within weeks of the pandemic's onset, thousands of local networks had formed globally, distributing food, medicine, childcare, and practical support at a scale that formal systems could not match.
+          </div>
+          <div class="audit-fails">
+            <strong>Breaks when</strong>
+            The crisis becomes permanent. Mutual aid is extraordinarily effective at acute, bounded crisis response. It depends on a surge of volunteer energy that is sustainable for weeks or months but not for years or decades. The informal, non-hierarchical structure that makes mutual aid networks rapid and responsive also makes them institutionally fragile: they are vulnerable to key-person dependency, burnout, coordination failures at scale, and the attrition of founding energy without organizational succession. When the disruption requiring support is not a temporary emergency but a permanent structural condition — which is precisely what post-labor displacement represents — mutual aid networks require institutional infrastructure they were explicitly designed to avoid. The tension between mutual aid's anti-institutional ethos and its need for institutional durability is real and has not been resolved.
+          </div>
+          <div class="audit-verdict">What it gets right: direct community solidarity, peer-to-peer support, speed and responsiveness, the anti-bureaucratic instinct. What it cannot currently do: sustain itself as a permanent institution without the organizational infrastructure its ethos resists.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="audit-row">
+      <div class="audit-top">
+        <div class="audit-marker"></div>
+        <div class="audit-content">
+          <div class="audit-institution">Community land trusts and commons institutions</div>
+          <div class="audit-designed">
+            <strong>Designed for</strong>
+            Permanently affordable housing and community-controlled land. The community land trust (CLT) model removes land from the speculative market by placing it in a trust that holds it in perpetuity for community benefit, separating land value from housing value and allowing affordability to persist through resale restrictions. The CLT is one of the most sophisticated models for commons governance — it operationalizes Ostrom's principles of clear boundaries, graduated sanctions, and collective choice arrangements in a legally durable form. The broader commons institutional tradition — managing fisheries, water systems, forests, and urban spaces as shared resources — has produced some of the most resilient resource governance models in human history.
+          </div>
+          <div class="audit-fails">
+            <strong>Breaks when</strong>
+            Scale and political hostility intersect. CLTs are extraordinarily effective at the level of individual housing developments and small neighborhoods. They have not achieved the scale required to meaningfully counteract speculative land markets at the metropolitan or regional level, partly because their slow and deliberate governance processes are not designed for rapid scaling, and partly because they operate in persistent political tension with property owners and real estate interests whose economic stake in the speculative land market gives them strong incentives to constrain CLT expansion. The commons tradition more broadly struggles with the legal and regulatory infrastructure built around private property that treats collective ownership as exceptional rather than normal.
+          </div>
+          <div class="audit-verdict">What it gets right: permanent affordability, community governance, the principle that essential resources should be held in common. What it cannot currently do: scale to the level required to reshape housing and resource markets rather than simply carve out protected enclaves within them.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="audit-row">
+      <div class="audit-top">
+        <div class="audit-marker"></div>
+        <div class="audit-content">
+          <div class="audit-institution">Decentralized autonomous organizations (DAOs)</div>
+          <div class="audit-designed">
+            <strong>Designed for</strong>
+            Trustless coordination at scale: collective decision-making and resource allocation encoded in smart contracts on a blockchain, without the need for institutional trust in central authorities. The DAO represents an attempt to solve a genuine and difficult problem — how do you coordinate large groups of people toward collective goals without the agency costs, corruption risks, and power concentration that afflict conventional organizations? At their best, DAOs have demonstrated the capacity for rapid global coordination, transparent resource allocation, and governance that is genuinely resistant to capture by insiders.
+          </div>
+          <div class="audit-fails">
+            <strong>Breaks when</strong>
+            Governance becomes the product rather than the mechanism. The technical architecture of DAOs — token-weighted voting, smart contract execution, on-chain transparency — solves some coordination problems while creating others. Token concentration replicates plutocracy at blockchain speed. Voter apathy in token governance consistently produces outcomes controlled by small active minorities. The gap between on-chain governance (what the code executes) and off-chain governance (the social processes that actually shape decisions) is wide and poorly theorized. Most consequentially for post-labor contexts: DAOs are designed for communities of token holders with shared financial interests, not for communities of people with shared geographic, social, and material circumstances. The governance problems of a post-labor institution — how to include people without technical access, how to weigh the interests of members who contribute differently, how to make decisions that affect people who are not token holders — are precisely the problems that the DAO model has addressed least adequately.
+          </div>
+          <div class="audit-verdict">What it gets right: the transparency principle, the resistance to centralized capture, the capacity for rapid coordination across geography. What it cannot currently do: govern institutions that serve communities rather than coordinate token holders, or include people whose economic marginalization extends to digital access.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Five failure modes that cut across all of them</div>
+
+  <div class="body-text">
+    <p>The audit above describes institution-specific failures — the ways each form breaks under its particular design constraints. But reading across the six forms, five cross-cutting failure modes emerge that are present to some degree in all of them. These are not failures of individual institutions or of the people who built them. They are structural patterns produced by the design environment in which all post-labor-adjacent institutions have had to operate.</p>
+  </div>
+
+  <div class="failure-grid">
+    <div class="failure-header">Cross-cutting failure modes — present across all institutional forms</div>
+
+    <div class="failure-row">
+      <div class="failure-num">F1</div>
+      <div class="failure-content">
+        <div class="failure-name">Accountability to funders over communities</div>
+        <div class="failure-desc">When the people who pay for the institution's work and the people who receive it are different, measurement and governance drift toward funder preferences. This is not unique to nonprofits — it affects cooperatives dependent on external financing, mutual aid networks dependent on anchor institution support, and DAOs dependent on initial token distribution to early backers. The accountability gap is a structural feature of institutions that cannot fully fund themselves from the communities they serve.</div>
+        <div class="failure-example">Manifests as: impact reports calibrated to funder KPIs rather than community outcomes; program decisions made to satisfy grant requirements rather than expressed community need; governance structures that include funders as stakeholders but exclude community members as decision-makers.</div>
+      </div>
+    </div>
+
+    <div class="failure-row">
+      <div class="failure-num">F2</div>
+      <div class="failure-content">
+        <div class="failure-name">Institutional memory that lives in people, not systems</div>
+        <div class="failure-desc">Post-labor institutions characteristically lack the process infrastructure to capture, codify, and transfer institutional knowledge. The organization's capacity to function is concentrated in a small number of individuals who hold relationships, context, and operational knowledge in their heads. When those individuals leave — through burnout, which is endemic, or through the normal movement of people — the institution loses capabilities it cannot easily reconstruct. This is the organizational equivalent of the apprenticeship problem described in Chapter 1: the knowledge pipeline breaks.</div>
+        <div class="failure-example">Manifests as: founding team exhaustion producing capability loss disproportionate to headcount; repeated reinvention of processes that have been developed and lost multiple times; governance crises triggered by the departure of key individuals rather than by external pressure.</div>
+      </div>
+    </div>
+
+    <div class="failure-row">
+      <div class="failure-num">F3</div>
+      <div class="failure-content">
+        <div class="failure-name">Equity commitments without equity processes</div>
+        <div class="failure-desc">The institutions in this audit were largely built by people with explicit commitments to equity, inclusion, and anti-oppression. Those commitments are sincere. They are also frequently unimplemented at the process level — meaning they are held as values but not embedded in the operational decisions that determine who participates, who benefits, who governs, and who is accountable to whom. The gap between an equity statement and equity processes is a gap that post-labor conditions specifically widen: the communities most affected by labor displacement are also those most systematically excluded from the governance of the institutions being built in response to that displacement.</div>
+        <div class="failure-example">Manifests as: governance structures that formally include community members but practically concentrate decision-making among staff and founders; services designed for a generic "community member" that systematically underserve specific populations; leadership demographics that replicate the exclusions of mainstream institutions despite explicit commitments to do otherwise.</div>
+      </div>
+    </div>
+
+    <div class="failure-row">
+      <div class="failure-num">F4</div>
+      <div class="failure-content">
+        <div class="failure-name">Measuring activity instead of outcomes</div>
+        <div class="failure-desc">Institutional measurement in post-labor-adjacent organizations overwhelmingly tracks what the institution does rather than what changes in the lives of the people it serves. Meals served, people housed, trainings delivered, members enrolled, votes held. These are proxies. They can be optimized while outcomes deteriorate. They can be reported honestly while the institution fails its fundamental purpose. The measurement problem is not merely technical — it is philosophical. It requires an answer to the prior question: what are we actually for? That question is the subject of Chapter 22 (Human Flourishing). It cannot be answered by measurement infrastructure alone, but it cannot be operationalized without it.</div>
+        <div class="failure-example">Manifests as: annual reports documenting scale (numbers served) while unable to document change (lives improved); program evaluations that confirm process fidelity while leaving impact unanswered; strategic decisions made on the basis of activity data that say nothing about whether the institution's purpose is being achieved.</div>
+      </div>
+    </div>
+
+    <div class="failure-row">
+      <div class="failure-num">F5</div>
+      <div class="failure-content">
+        <div class="failure-name">Isolation and reinvention instead of federation and learning</div>
+        <div class="failure-desc">The institutions in this audit operate in remarkable isolation from each other given the similarity of the problems they face. Each develops its own governance model, its own financial systems, its own measurement frameworks, its own approach to member support and conflict resolution — largely from scratch, with minimal knowledge transfer from similar institutions that have already solved or failed to solve the same problems. The solidarity economy remains a set of individual islands rather than an archipelago with shared infrastructure. The knowledge that would allow any individual institution to learn from the collective experience of thousands is not systematically captured, organized, or distributed.</div>
+        <div class="failure-example">Manifests as: cooperatives discovering governance failure modes that other cooperatives have documented and addressed; mutual aid networks rebuilding coordination infrastructure that exists elsewhere; CLTs negotiating legal structures that community land trust associations have already developed standard templates for — but which individual organizations do not know exist or cannot easily access.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">What the audit reveals</div>
+
+  <div class="body-text">
+    <p>Reading this audit as condemnation would be a serious misreading. Every institutional form described here has produced real value — real housing secured, real communities sustained, real democratic participation enabled, real economic dignity preserved — in the face of market pressure, political hostility, and resource constraints that would have dissolved less committed organizations. The people who built these institutions were not naive about the difficulties they faced. They made reasonable design choices under real constraints.</p>
+    <p>What the audit reveals is not failure. It reveals design constraints that were acceptable when the problems being addressed were the margins of an otherwise functional labor market, and that become critical liabilities when those problems move to the center. An institution designed to help people navigate a welfare system is adequately built for a world where most people need it sometimes. It is structurally inadequate for a world where most people need it most of the time.</p>
+  </div>
+
+  <div class="pullquote">
+    <p>The institutions we have were built for the margins of a labor economy. Post-labor conditions move those margins to the center. The design constraints that were acceptable at the periphery become existential at scale.</p>
+  </div>
+
+  <div class="body-text">
+    <p>The audit also reveals something more hopeful: the raw material for better institutions already exists. The cooperative tradition contains the governance theory. The commons tradition contains the resource stewardship models. The mutual aid tradition contains the solidarity and trust infrastructure. The nonprofit sector contains the service delivery knowledge. What is missing is the synthesis — the systematic bringing together of what each tradition knows, into institutions with enough operational rigor to function at the scale and duration that post-labor conditions will require.</p>
+    <p>That synthesis is what the rest of this book attempts to describe. Not from scratch. Not by dismissing what has been built. But by taking it seriously enough to be honest about its limitations and ambitious enough to ask what it would take to exceed them.</p>
+  </div>
+
+  <div class="synthesis-block">
+    <div class="synthesis-label">What the existing traditions contribute to post-labor institutional design</div>
+    <ul class="synthesis-list">
+      <li>
+        <div class="syn-dash">—</div>
+        <div class="syn-text"><strong>From cooperatives:</strong> democratic governance, profit distribution to members, the alignment of institutional incentives with member welfare, the legal and organizational forms for collective ownership</div>
+      </li>
+      <li>
+        <div class="syn-dash">—</div>
+        <div class="syn-text"><strong>From the welfare state:</strong> the principle of collective insurance against risk, the legitimacy of public provision for universal needs, the administrative infrastructure for large-scale benefit delivery</div>
+      </li>
+      <li>
+        <div class="syn-dash">—</div>
+        <div class="syn-text"><strong>From mutual aid:</strong> solidarity as operational principle, peer-to-peer support as more effective and dignified than institutional service delivery, the trust infrastructure of community relationship</div>
+      </li>
+      <li>
+        <div class="syn-dash">—</div>
+        <div class="syn-text"><strong>From nonprofits:</strong> mission-driven service delivery at scale, the organizational forms for operating without profit motive, the grant and philanthropic funding ecosystems</div>
+      </li>
+      <li>
+        <div class="syn-dash">—</div>
+        <div class="syn-text"><strong>From community land trusts and commons institutions:</strong> the governance of collective ownership, permanent affordability mechanisms, Ostrom's principles for sustainable commons management</div>
+      </li>
+      <li>
+        <div class="syn-dash">—</div>
+        <div class="syn-text"><strong>From DAOs:</strong> transparent on-chain governance, resistance to insider capture, rapid global coordination infrastructure, programmable resource allocation</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The design gap, precisely stated</div>
+
+  <div class="body-text">
+    <p>With the audit complete, the design gap can be stated precisely. It is not a gap in theory — the theoretical resources for post-labor institutional design are substantial. It is not a gap in motivation — the people building these institutions are deeply committed. It is not even, primarily, a gap in funding, though that is a genuine constraint.</p>
+    <p>The gap is operational. It is the distance between institutions that exist and work at small scale or in bounded contexts, and institutions that can function reliably at the scale, duration, and complexity that post-labor conditions require. Closing that gap requires three things that the existing institutional landscape does not yet adequately provide.</p>
+    <p>First, a shared process vocabulary — a systematic account of all the things a post-labor institution needs to do, organized clearly enough that any institution can assess where it is and what developing each area requires. Without this, every institution is navigating without a map, reinventing the same processes, making the same mistakes, and unable to learn efficiently from the parallel experience of similar institutions.</p>
+    <p>Second, operational depth in the categories that existing frameworks have neglected — particularly AI governance, human flourishing as a measurable institutional objective, and participatory democracy as a designed system rather than an aspiration. These are not marginal concerns. They are definitional: institutions that cannot govern their AI systems, cannot measure whether they are improving human flourishing, and cannot operationalize democratic participation are not post-labor institutions in any meaningful sense. They are labor-era institutions with updated language.</p>
+    <p>Third, inter-institutional infrastructure — the systems, standards, and relationships that allow institutions to learn from each other, share operational knowledge, and build the federated networks that individual institutions cannot build alone. The isolation documented in failure mode F5 is not an accident. It is the predictable result of building institutions without the connective tissue that would allow them to function as a movement rather than a collection of individual experiments.</p>
+    <p>These three gaps are what the PLE Governance Process Standard is designed to address. Not completely — no single framework can. But systematically enough to meaningfully accelerate the work of the builders, thinkers, communities, and policymakers who are trying to close them.</p>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the institutions not covered:</strong> This chapter focuses on the forms most directly relevant to post-labor institutional design. It does not cover public sector institutions at length — government agencies, public utilities, state enterprises — because their design constraints and reform paths differ enough from the community-rooted institutions covered here to warrant separate treatment. The public sector's role as an enabler and infrastructure provider for post-labor institutions is addressed in Chapter 12 (Inter-Institutional Relations) and Chapter 24 (institutional archetypes and the role of the enabling state).</p>
+    <p><strong>On platform cooperatives:</strong> Platform cooperatives — cooperatively owned digital platforms that attempt to replicate the functionality of Uber, Airbnb, or Amazon Mechanical Turk under democratic governance — represent a hybrid form that combines cooperative ownership with platform economics. They are addressed as a distinct institutional archetype in Chapter 24. Their specific design challenges — the capitalization problem, the cold-start problem, and the governance complexity of large distributed membership — are significant enough to warrant dedicated treatment.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part I · Chapter 2</span>
+    <span class="close-next">Ch. 3 — The dual pyramids: prosperity and power →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 8 — Collective vision & governance strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504;
+    --bg-deep: #0c0a09;
+    --bg-primary: #141210;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.12);
+    --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3;
+    --text-secondary: #a09890;
+    --text-muted: #6b6560;
+    --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07);
+    --border-visible: rgba(201,169,110,0.14);
+    --civic: #1D9E75;
+    --civic-dim: rgba(29,158,117,0.08);
+    --civic-text: #4ecfa0;
+    --civic-border: rgba(29,158,117,0.25);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10);  --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow {
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+  }
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--civic-text);
+    margin-bottom: 20px; opacity: 0.85;
+  }
+  .chapter-title {
+    font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem);
+    font-weight: 300; line-height: 1.15; color: var(--text-primary);
+    margin-bottom: 10px; letter-spacing: -0.01em;
+  }
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300;
+    font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5;
+  }
+  .cat-meta {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; align-items: center;
+  }
+  .cat-pill {
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .cat-pill.civic { background: var(--civic-dim); color: var(--civic-text); border: 1px solid var(--civic-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--civic); opacity: 0.3; margin-bottom: 44px; }
+  .body-text {
+    font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400;
+    line-height: 1.85; color: var(--text-primary);
+  }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left;
+    margin: 0.06em 0.1em 0 0; color: var(--civic-text); font-family: 'Crimson Pro', serif;
+  }
+  .section-break {
+    display: flex; align-items: center; gap: 16px; margin: 48px 0;
+  }
+  .section-break::before, .section-break::after {
+    content: ''; flex: 1; height: 1px; background: var(--border-visible);
+  }
+  .section-break-ornament {
+    width: 6px; height: 6px; border: 1px solid var(--civic); transform: rotate(45deg); opacity: 0.4;
+  }
+  .section-heading {
+    font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text);
+    margin-bottom: 20px; opacity: 0.7;
+  }
+  .pullquote {
+    margin: 44px 0; padding: 28px 32px;
+    border-left: 2px solid var(--civic); background: var(--civic-dim);
+    border-radius: 0 6px 6px 0;
+  }
+  .pullquote p {
+    font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300;
+    font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0;
+  }
+  .pullquote p::before { content: '\201C'; color: var(--civic-text); }
+  .pullquote p::after  { content: '\201D'; color: var(--civic-text); }
+
+  /* Process group deep dive */
+  .process-block {
+    margin: 40px 0; border: 1px solid var(--border-subtle);
+    border-top: 2px solid var(--civic); border-radius: 0 0 8px 8px; overflow: hidden;
+  }
+  .proc-block-header {
+    padding: 12px 22px; background: var(--bg-secondary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--civic-text);
+    border-bottom: 1px solid var(--border-subtle); opacity: 0.8;
+  }
+  .proc-group {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header {
+    display: flex; align-items: stretch;
+  }
+  .proc-group-id {
+    width: 52px; min-width: 52px; display: flex; align-items: center;
+    justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px;
+    font-weight: 500; color: var(--civic-text); border-right: 1px solid var(--border-subtle);
+    background: var(--civic-dim); padding: 16px 0; opacity: 0.85;
+  }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name {
+    font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 5px; line-height: 1.3;
+  }
+  .proc-group-desc {
+    font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary);
+    line-height: 1.65; margin-bottom: 10px;
+  }
+  .proc-activities {
+    display: flex; flex-direction: column; gap: 0;
+    border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden;
+  }
+  .proc-activity {
+    display: flex; border-bottom: 1px solid var(--border-subtle);
+  }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id {
+    font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500;
+    color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px;
+    border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em;
+  }
+  .act-name {
+    font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary);
+    padding: 9px 12px; line-height: 1.5; flex: 1;
+  }
+  .act-note {
+    font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted);
+    padding: 7px 12px 9px; line-height: 1.5; font-style: italic;
+    border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary);
+  }
+
+  /* Governance models comparison */
+  .gov-models {
+    margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden;
+  }
+  .gov-header {
+    padding: 12px 22px; background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .gov-row {
+    display: grid; grid-template-columns: 140px 1fr 1fr; border-bottom: 1px solid var(--border-subtle);
+  }
+  .gov-row:last-child { border-bottom: none; }
+  .gov-row.head { background: var(--bg-secondary); }
+  .gov-cell {
+    padding: 12px 16px; font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem; color: var(--text-secondary); line-height: 1.55;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .gov-cell:last-child { border-right: none; }
+  .gov-cell.head {
+    font-size: 9px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+  .gov-cell.model-name {
+    font-family: 'Crimson Pro', serif; font-size: 0.95rem;
+    font-weight: 600; color: var(--text-primary);
+  }
+
+  /* The seven failure modes of governance */
+  .failure-block {
+    margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden;
+  }
+  .fail-header {
+    padding: 12px 22px; background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num {
+    width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500;
+    color: var(--civic-text); border-right: 1px solid var(--border-subtle);
+    background: var(--civic-dim); opacity: 0.7; padding: 18px 0;
+  }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name {
+    font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 4px;
+  }
+  .fail-desc {
+    font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary);
+    line-height: 1.65; margin-bottom: 8px;
+  }
+  .fail-signal {
+    font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted);
+    line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary);
+    border-radius: 4px; font-style: italic;
+  }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity indicators for this category */
+  .maturity-block {
+    margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden;
+  }
+  .mat-header {
+    padding: 12px 22px; background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge {
+    width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500;
+    border-right: 1px solid var(--border-subtle); padding: 16px 0;
+  }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name {
+    font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 4px;
+  }
+  .mat-indicators {
+    display: flex; flex-direction: column; gap: 4px; margin-top: 6px;
+  }
+  .mat-indicator {
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .ind-dot {
+    width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px;
+  }
+  .m1 .ind-dot { background: var(--m1t); }
+  .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); }
+  .m4 .ind-dot { background: var(--m4t); }
+  .ind-text {
+    font-family: 'Outfit', sans-serif; font-size: 0.72rem;
+    color: var(--text-muted); line-height: 1.55;
+  }
+
+  /* KPI reference block */
+  .kpi-block {
+    margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden;
+  }
+  .kpi-header {
+    padding: 12px 22px; background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .kpi-row {
+    display: grid; grid-template-columns: 1fr 1fr 80px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell {
+    padding: 11px 16px; font-family: 'Outfit', sans-serif;
+    font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head {
+    font-size: 9px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--text-muted);
+  }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type {
+    font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500;
+    padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase;
+    display: inline-block;
+  }
+  .kpi-type.leading  { background: var(--civic-dim); color: var(--civic-text); }
+  .kpi-type.lagging  { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study block */
+  .case-block {
+    margin: 40px 0; background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden;
+  }
+  .case-header {
+    padding: 14px 22px; background: var(--civic-dim);
+    border-bottom: 1px solid var(--civic-border);
+    display: flex; gap: 12px; align-items: baseline;
+  }
+  .case-label {
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--civic-text); opacity: 0.8;
+  }
+  .case-name {
+    font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600;
+    color: var(--text-primary);
+  }
+  .case-body { padding: 20px 22px; }
+  .case-text {
+    font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary);
+    line-height: 1.8; margin-bottom: 14px;
+  }
+  .case-lesson {
+    padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px;
+    font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .case-lesson strong { color: var(--civic-text); font-weight: 500; }
+
+  /* Implementation sequence */
+  .sequence-block {
+    margin: 40px 0; background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle); border-top: 2px solid var(--civic);
+    border-radius: 0 0 8px 8px; padding: 28px 32px;
+  }
+  .seq-label {
+    font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--civic-text);
+    margin-bottom: 20px; opacity: 0.8;
+  }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num {
+    font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500;
+    color: var(--civic-text); min-width: 24px; padding-top: 2px; opacity: 0.7;
+  }
+  .seq-content { flex: 1; }
+  .seq-title {
+    font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 4px;
+  }
+  .seq-desc {
+    font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .seq-milestone {
+    margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem;
+    color: var(--text-muted); font-style: italic; line-height: 1.5;
+  }
+  .seq-milestone strong { color: var(--civic-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside {
+    margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0;
+  }
+  .note-aside p {
+    font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7;
+    color: var(--text-muted); margin: 0 0 0.6em;
+  }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close {
+    margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .close-label {
+    font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .close-next {
+    font-family: 'Crimson Pro', serif; font-size: 0.95rem;
+    font-style: italic; color: var(--text-muted);
+  }
+  .page-number {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+    font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part III · Civic operating processes</div>
+  <div class="chapter-eyebrow">Chapter 8 · GPS Category 1.0</div>
+  <h1 class="chapter-title">Collective vision &amp; governance strategy</h1>
+  <p class="chapter-subtitle">Deciding together what we are for — and building the structures that hold the institution accountable to that decision across time, leadership change, and political pressure</p>
+  <div class="cat-meta">
+    <span class="cat-pill civic">Civic Operating</span>
+    <span class="cat-pill civic">Prosperity L3</span>
+    <span class="cat-pill civic">Power L3</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">23 processes</span>
+    <span class="cat-pill neutral">18 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Every institution has a governance system. The question is not whether the system exists but whether it was designed. The difference between a governance system that was designed and one that simply accumulated — through precedent, personality, and the path of least resistance — is the difference between an institution that can hold itself accountable to its stated purpose under pressure and one that cannot. Most solidarity economy institutions have governance systems of the second kind: emerged rather than designed, adequate in calm conditions, fragile under stress, and largely invisible until they fail in ways that surprise everyone except the people who were watching.</p>
+
+    <p>Category 1.0 is the process domain through which an institution makes its governance system deliberate. It contains five process groups — from defining purpose through setting strategy through managing performance — that together constitute the institutional infrastructure of collective self-determination. This is not administrative work. It is the most politically consequential work any post-labor institution does, because it determines who has power over what, how that power is exercised and constrained, and whether the institution's stated commitments survive contact with the pressures that will test them.</p>
+
+    <p>It is also, predictably, the work that institutions most often defer. Purpose feels obvious to founders, governance structures feel like bureaucracy when the institution is small and trust is high, and strategic planning feels like a luxury when resources are scarce. These intuitions are understandable. They are also, in the medium run, reliably costly. The institutions that skip Category 1.0 development tend to encounter its absence in the form of a governance crisis — a moment when a major decision reveals that the institution has no agreed-upon process for making it, that the founding assumptions about power and purpose are not shared, or that the charismatic founder whose personal authority held everything together has departed and taken the governance system with them.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Why governance is harder in post-labor institutions</div>
+
+  <div class="body-text">
+    <p>Governance is hard in every kind of institution. It is specifically harder in post-labor institutions for three reasons that do not apply — or apply less acutely — to enterprises.</p>
+    <p>First, purpose is contested in ways that market discipline obscures in enterprise institutions. An enterprise can defer philosophical questions about what it is ultimately for because profit provides a clear operational objective that, whatever one thinks of it as a terminal value, at least resolves most short-term decision conflicts. Post-labor institutions have no such resolution mechanism. When a mutual aid network debates whether to expand into a new neighborhood, whether to formalize its structure, or whether to accept a major grant that comes with conditions, there is no profit signal that settles the question. The question can only be settled by reference to stated purpose — and if that purpose is vague, or contested, or has not been revisited since it was first articulated in founding documents that no one reads anymore, the debate has no anchor.</p>
+    <p>Second, power is both more distributed and more opaque in post-labor institutions than in enterprises. Enterprise governance concentrates formal authority in ownership structures and management hierarchies that, whatever their limitations, are visible and legible. Post-labor institutions frequently aspire to distribute power broadly — through democratic governance, collective decision-making, and flat organizational structures — while in practice concentrating it in founding personalities, active minority members, and the informal authority that comes from institutional knowledge accumulated by long-tenured individuals. The gap between formal and actual power is present in all institutions; it is especially wide and especially consequential in institutions whose stated governance values make the gap particularly painful to acknowledge.</p>
+    <p>Third, accountability without hierarchy is a genuinely difficult design problem that enterprises do not face in the same way. Enterprise accountability flows through ownership to management to staff through a chain of authority that is coercive at its base: non-performance has consequences that are enforced. Post-labor institutions need accountability mechanisms that are equally real — that produce actual consequences for institutional underperformance — without the coercive employment relationship that makes enterprise accountability work. Designing those mechanisms is the central challenge of Category 1.0, and it is one that institutional design theory has addressed only partially.</p>
+  </div>
+
+  <div class="pullquote">
+    <p>The gap between formal and actual power is present in all institutions. It is especially consequential in institutions whose stated values make the gap most painful to acknowledge.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="body-text">
+    <p>Category 1.0 is organized into five process groups that follow a developmental logic: purpose must be defined before governance structures can be designed; governance structures must be in place before strategy can be set; strategy must exist before performance can be managed; and communication of vision runs throughout as the connective tissue between the institution and its stakeholders. An institution that develops these process groups out of sequence will typically find itself designing governance for an unclear purpose or managing performance against undefined strategy.</p>
+  </div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 1.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">1.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Define and steward institutional purpose, mission, and values</div>
+          <div class="proc-group-desc">The foundational work of articulating what the institution exists to do, what it will not do, and what principles will govern its behavior when values conflict with expedience. Purpose without stewardship becomes a founding document artifact. Stewardship without purpose becomes organizational conservatism dressed as principle. Both are common; neither is useful.</div>
+          <div class="proc-activities">
+            <div class="proc-activity">
+              <div class="act-id">1.1.1</div>
+              <div class="act-name">Facilitate community deliberation to articulate institutional purpose and mission</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.1.2</div>
+              <div class="act-name">Document mission statement in accessible, plain-language form with version control</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.1.3</div>
+              <div class="act-name">Develop and ratify institutional values with behavioral definitions — not just aspirational language</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.1.4</div>
+              <div class="act-name">Establish a regular mission and values review process — not perpetual revision, but scheduled honest reassessment</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.1.5</div>
+              <div class="act-name">Create mechanisms for members to raise concerns when institutional behavior appears misaligned with stated purpose</div>
+            </div>
+          </div>
+          <div class="act-note">The behavioral definitions requirement in 1.1.3 is critical and commonly skipped. "We value equity" is not a value statement — it is an aspiration. "When equity and efficiency conflict, equity takes priority" is a value statement. Only operational definitions can be used to evaluate institutional decisions against stated values.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">1.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Design and maintain governance structures and decision rights</div>
+          <div class="proc-group-desc">The architecture of how decisions get made and by whom. This process group is where the formal governance design happens: board or council structure, member governance rights, decision-making processes for different categories of decisions, quorum and voting requirements, and the mechanisms for resolving deadlocks. It is also where the formal governance design is stress-tested against actual decision patterns — because governance structures that look reasonable in calm conditions frequently fail under the conditions that matter most.</div>
+          <div class="proc-activities">
+            <div class="proc-activity">
+              <div class="act-id">1.2.1</div>
+              <div class="act-name">Design the primary governance body — structure, composition, election or selection process, terms, and removal procedures</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.2.2</div>
+              <div class="act-name">Define and document decision rights at each level — what decisions require full member vote, board approval, staff authority</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.2.3</div>
+              <div class="act-name">Design meeting protocols — frequency, quorum, agenda-setting rights, documentation standards, and access for non-board members</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.2.4</div>
+              <div class="act-name">Establish conflict of interest and recusal policies with enforcement mechanisms</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.2.5</div>
+              <div class="act-name">Conduct regular governance structure reviews — assess whether the structure is producing the governance the institution needs, and revise when it is not</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.2.6</div>
+              <div class="act-name">Design governance onboarding for new board or council members — not just orientation, but genuine preparation for the role</div>
+            </div>
+          </div>
+          <div class="act-note">Process 1.2.2 — the decision rights mapping — is the most commonly absent process in solidarity economy governance. Without it, every significant decision becomes a negotiation about who gets to decide, which produces the governance paralysis that looks like a values conflict but is actually a structural deficiency.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">1.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Set strategic direction and institutional priorities</div>
+          <div class="proc-group-desc">The process through which an institution makes coherent choices about where to invest its scarce resources over a defined time horizon. Strategic planning in post-labor institutions is frequently done either not at all — the institution responds to opportunity and funding rather than pursuing a deliberate agenda — or in ways that produce beautiful documents with no operational consequences. Neither extreme is useful. The goal is a strategic process that is genuine — that makes real choices, including choices about what the institution will not do — and that produces commitments specific enough to be evaluated.</div>
+          <div class="proc-activities">
+            <div class="proc-activity">
+              <div class="act-id">1.3.1</div>
+              <div class="act-name">Conduct environmental scanning — systematic assessment of how the institution's context is changing and what that means for its strategy</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.3.2</div>
+              <div class="act-name">Develop institutional theory of change — the causal argument for how the institution's activities produce community outcomes</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.3.3</div>
+              <div class="act-name">Facilitate community and member input into strategic priorities — not just leadership input, not just a survey</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.3.4</div>
+              <div class="act-name">Set three to five strategic priorities for a defined period — specific enough to guide resource allocation, few enough to be genuinely prioritized</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.3.5</div>
+              <div class="act-name">Develop annual operational plans derived from strategic priorities — the bridge between strategy and execution</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.3.6</div>
+              <div class="act-name">Establish a strategy adaptation process — how the institution modifies its strategy when significant environmental changes occur between planning cycles</div>
+            </div>
+          </div>
+          <div class="act-note">Process 1.3.2 — the theory of change — deserves extended attention. A theory of change is not a logic model in the grant-writing sense: inputs → activities → outputs → outcomes. It is a genuine causal argument: "We believe that if we do X, Y will happen in the community, because Z." Without it, the institution cannot evaluate whether its strategy is working or needs revision, because it has not articulated what mechanism it expects to produce change.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">1.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Manage institutional performance and strategic accountability</div>
+          <div class="proc-group-desc">The process through which an institution knows whether its strategy is working and holds itself accountable to the results. Performance management in post-labor institutions is not employee performance management — it is institutional performance management: the systematic assessment of whether the institution is achieving its strategic objectives, and the use of that assessment to make decisions about strategy, resource allocation, and governance priorities. Without this process group, strategic plans are aspirational documents with no feedback loop.</div>
+          <div class="proc-activities">
+            <div class="proc-activity">
+              <div class="act-id">1.4.1</div>
+              <div class="act-name">Define institutional KPIs aligned to strategic objectives — measure what matters, not what is easy to measure</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.4.2</div>
+              <div class="act-name">Establish regular performance review rhythm — quarterly reporting to governance body, annual comprehensive review</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.4.3</div>
+              <div class="act-name">Conduct annual strategic review — formal assessment of progress against objectives, environmental changes, and strategic adjustments required</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.4.4</div>
+              <div class="act-name">Develop member-facing performance reporting — accessible summaries of institutional performance for the community the institution serves</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.4.5</div>
+              <div class="act-name">Establish consequences for sustained underperformance — governance mechanisms that produce actual institutional responses to persistent failure to meet strategic objectives</div>
+            </div>
+          </div>
+          <div class="act-note">Process 1.4.5 is the hardest and most commonly absent. Accountability without consequences is not accountability — it is reporting. Designing institutional consequences for underperformance that are real without being punitive, and that trigger constructive response rather than defensive denial, is one of the most technically demanding governance design challenges in Category 1.0.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">1.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Communicate vision and strategy to stakeholders</div>
+          <div class="proc-group-desc">The process through which the institution keeps its members, community, partners, and funders informed about where it is going, how it is performing against its strategy, and how they can engage with its governance. This process group is frequently treated as marketing or outreach — managed by a communications function separate from governance. It belongs in Category 1.0 because its primary purpose is not promotion but accountability: keeping stakeholders informed enough to exercise meaningful oversight and participate meaningfully in governance.</div>
+          <div class="proc-activities">
+            <div class="proc-activity">
+              <div class="act-id">1.5.1</div>
+              <div class="act-name">Develop a stakeholder communication strategy — who receives what information, at what frequency, in what form</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.5.2</div>
+              <div class="act-name">Publish regular institutional updates in accessible formats — plain language, multiple modalities, translated where necessary</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.5.3</div>
+              <div class="act-name">Conduct annual community accountability sessions — public forums where institutional leadership presents performance and receives community input</div>
+            </div>
+            <div class="proc-activity">
+              <div class="act-id">1.5.4</div>
+              <div class="act-name">Manage governance transparency — publish board/council minutes, decision records, and financial summaries in accessible form</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Governance models — the real options</div>
+
+  <div class="body-text">
+    <p>There is no single correct governance model for post-labor institutions. The appropriate structure depends on the institution's size, legal form, community context, and the specific balance of speed and participation it needs to achieve. What follows is not an exhaustive taxonomy of governance models but a comparison of the five most commonly used in solidarity economy institutions, with an honest account of what each gets right and where each characteristically fails.</p>
+  </div>
+
+  <div class="gov-models">
+    <div class="gov-header">Governance models — strengths and failure modes for post-labor institutions</div>
+    <div class="gov-row head">
+      <div class="gov-cell head">Model</div>
+      <div class="gov-cell head">Core logic and strengths</div>
+      <div class="gov-cell head">Characteristic failure modes</div>
+    </div>
+    <div class="gov-row">
+      <div class="gov-cell model-name">Representative board democracy</div>
+      <div class="gov-cell">Members elect representatives to a board or council that holds institutional authority. Efficient for large organizations; creates clear accountability through electoral accountability. Well-understood legal form in most jurisdictions.</div>
+      <div class="gov-cell">Electoral capture by organized minorities; board disconnection from membership over time; the accountability relationship inverts — staff accountable to board, board not meaningfully accountable to members between elections.</div>
+    </div>
+    <div class="gov-row">
+      <div class="gov-cell model-name">Consensus decision-making</div>
+      <div class="gov-cell">Decisions require consent of all participants rather than majority approval. Ensures minority views cannot be overridden; produces decisions with broad buy-in; surfaces dissent before decisions rather than after. Works well at small scale.</div>
+      <div class="gov-cell">Does not scale beyond roughly 20 active participants without significant facilitation infrastructure; subject to blocking by individuals using consent rights for personal rather than principled reasons; produces decision paralysis under time pressure.</div>
+    </div>
+    <div class="gov-row">
+      <div class="gov-cell model-name">Sociocracy / consent-based governance</div>
+      <div class="gov-cell">Structured circle-based governance with consent decision-making within defined domains and double-linking between levels. Distributes authority across domains while maintaining coherence; designed to scale beyond pure consensus; integrates member voice at multiple levels.</div>
+      <div class="gov-cell">High facilitation and training overhead; terminology and process unfamiliarity creates access barriers; can produce governance complexity that replaces participatory culture with procedural complexity. Requires sustained investment in facilitator development.</div>
+    </div>
+    <div class="gov-row">
+      <div class="gov-cell model-name">Multi-stakeholder governance</div>
+      <div class="gov-cell">Governance body includes representatives of multiple stakeholder groups — workers, community members, funders, allied organizations — each with defined seats and decision rights. Prevents any single stakeholder group from capturing governance; designed for institutions serving multiple communities.</div>
+      <div class="gov-cell">Intergroup conflict can produce governance paralysis; designing fair representation across groups with different sizes and resources is genuinely difficult; transaction costs of multi-stakeholder coordination can be high. Requires explicit conflict resolution processes.</div>
+    </div>
+    <div class="gov-row">
+      <div class="gov-cell model-name">Liquid / delegative democracy</div>
+      <div class="gov-cell">Members can vote directly on any decision or delegate their vote to a trusted proxy, who can further delegate. Combines direct democracy participation for engaged members with representational efficiency for others. Theoretically scalable to any size.</div>
+      <div class="gov-cell">Vote concentration in highly engaged proxy chains replicates de facto representative governance; digital access requirements exclude members without technology access; proxy delegation is opaque unless carefully designed; most implementations require significant platform infrastructure.</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>The most important insight from this comparison is not which model is best but that all models fail characteristically — and that the failure modes are predictable from the model's design logic. An institution that chooses a governance model without understanding its characteristic failure modes has not really made a governance design choice; it has made a bet that the failure mode won't apply to them. It usually does. Building the monitoring processes (1.4) that identify when the characteristic failure is beginning to manifest, and the review processes (1.2.5) that allow the governance structure to be adapted before the failure becomes a crisis, is as important as the initial governance model choice.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Seven governance failure modes to design against</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Seven characteristic governance failures in post-labor institutions</div>
+
+    <div class="fail-row">
+      <div class="fail-num">G1</div>
+      <div class="fail-content">
+        <div class="fail-name">Founder authority without succession design</div>
+        <div class="fail-desc">The founding individual or small group holds institutional authority through relationships, history, and accumulated trust rather than through formal governance structures. Governance structures exist but defer to founding authority in practice. The institution cannot function at the level it has achieved if the founder departs.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Key decisions require founder sign-off regardless of formal governance process. Board members describe themselves as "supporting" the founder rather than governing the institution. New staff are onboarded by founders rather than by processes.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G2</div>
+      <div class="fail-content">
+        <div class="fail-name">Mission drift without accountability anchors</div>
+        <div class="fail-desc">The institution's actual activities gradually diverge from its stated mission, driven by funding availability, staff interests, or strategic opportunism. The drift happens incrementally — each individual decision seems reasonable — and becomes visible only when the accumulated divergence is large enough to be undeniable. By that point, the institution has significant programmatic investments in activities that are not its mission.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Strategic discussions reference what funders will fund rather than what the mission requires. New programs are justified by opportunity rather than by mission alignment. The theory of change has not been reviewed in more than two years.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G3</div>
+      <div class="fail-content">
+        <div class="fail-name">Active minority capture</div>
+        <div class="fail-desc">A small, organized subset of the membership disproportionately influences governance decisions — not through fraud or bad faith, but through the structural advantage that comes from consistent participation in governance processes while the majority of members are intermittently engaged. The capture is self-reinforcing: governance decisions made by the active minority tend to design governance structures that reward consistent participation, further concentrating influence.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The same five to ten names appear on every committee, in every vote, and in every governance discussion. Governance participation rates are falling. New members find governance inaccessible or already settled.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G4</div>
+      <div class="fail-content">
+        <div class="fail-name">Decision paralysis at scale</div>
+        <div class="fail-desc">Governance processes that functioned well at small scale become bottlenecks as the institution grows. Consensus decision-making that worked among fifteen people cannot scale to a hundred without redesign. Board oversight appropriate for a $200,000 budget is inappropriate for a $2 million budget. The institution's governance has not been deliberately redesigned for its current scale, producing delays, workarounds, and growing frustration with governance processes.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Routine operational decisions are being escalated to governance bodies because decision rights have not been redefined for current scale. Governance meetings are consistently longer than scheduled and frequently inconclusive. Staff are making significant decisions outside formal processes because the formal processes are too slow.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G5</div>
+      <div class="fail-content">
+        <div class="fail-name">Values as decoration</div>
+        <div class="fail-desc">Stated values are prominent in public communications and founding documents but have no operational definition, no process for evaluating institutional decisions against them, and no consequences when institutional behavior violates them. Values function as organizational identity rather than as governance criteria, which means they cannot be appealed to in actual decisions without being experienced as bad faith.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Governance discussions reference "our values" without specifying which value applies or how it informs the decision at hand. Decisions that visibly contradict stated values produce no institutional response. New members cannot describe what the values mean in operational terms.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G6</div>
+      <div class="fail-content">
+        <div class="fail-name">Governance captured by legal compliance</div>
+        <div class="fail-desc">The governance agenda is consumed by legal and regulatory requirements — filing deadlines, audit cycles, regulatory reporting — leaving insufficient time and attention for the strategic and community accountability functions that are governance's primary purpose. Legal compliance is necessary; treating it as the purpose of governance produces an institution that is legally valid and strategically rudderless.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Board meeting agendas are dominated by financial reporting and compliance updates. Strategic items are consistently deferred to "next meeting." Board members describe their role in compliance rather than strategic terms.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G7</div>
+      <div class="fail-content">
+        <div class="fail-name">Equity in name, exclusion in practice</div>
+        <div class="fail-desc">The institution holds explicit equity commitments in its governance design — diverse board composition requirements, multilingual meetings, rotating facilitation — while operating governance processes that systematically disadvantage the members whose equity the commitments are designed to protect. The form of equity is present; the substance is absent. This failure mode is particularly common in institutions whose founding membership is more privileged than the community it serves.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Governance participation demographics diverge significantly from service population demographics. Equity-focused governance changes produce compliance rather than genuine participation. Community members describe governance as inaccessible despite formal accessibility provisions.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Mondragon's governance evolution</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Mondragon Corporation — governing democratic ownership at scale</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Mondragon Corporation's governance architecture is the most extensively documented example of Category 1.0 development in the cooperative tradition. Founded in 1956 with six worker-owners and a shared commitment to democratic economic organization, Mondragon has navigated seven decades of growth, crisis, and adaptation while maintaining the fundamental governance principle that worker-owners hold ultimate institutional authority. Its current governance structure — the General Assembly of all worker-owners, the Governing Council elected by the Assembly, the Management Council of professional managers, and the Social Council representing labor relations — is not the original structure. It is the result of continuous governance redesign driven by the same process group 1.2.5 logic that the GPS framework articulates: regular governance review, honest assessment of how the structure is performing, and deliberate adaptation when it is not.</div>
+      <div class="case-text">The most instructive moment in Mondragon's governance history is the 1991 crisis, when its largest cooperative, Fagor, began a decline that would eventually require major restructuring. The governance processes that allowed this decline to become a crisis — the insufficient oversight of management by the Governing Council, the inadequate performance accountability mechanisms in process group 1.4, the mission-strategy misalignment between individual cooperative autonomy and network-level strategic coherence — were identified through the crisis itself rather than by anticipatory monitoring. Mondragon's subsequent governance reforms, which strengthened network-level oversight while preserving cooperative autonomy, are a case study in reactive governance redesign: the right direction, at significant cost, triggered by failure rather than anticipation.</div>
+      <div class="case-lesson"><strong>Category 1.0 lesson:</strong> Mondragon's governance evolution illustrates both the resilience of genuine democratic ownership and the cost of inadequate process group 1.4 (performance management and accountability). The network survived its governance failures because the foundational commitment — worker ownership as the terminal principle — was embedded deeply enough to survive significant institutional stress. Most institutions do not have Mondragon's seven decades of accumulated institutional identity to draw on. Building performance accountability processes before they are needed is substantially less expensive than building them in the aftermath of a crisis that made their absence undeniable.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Loomio and the governance software problem</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Loomio cooperative — when the institution is the governance tool</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Loomio is a worker cooperative that builds governance facilitation software — a tool designed specifically to support process groups 1.2 and 1.3 in distributed organizations. Its dual nature as both a post-labor institution and a provider of governance infrastructure for other post-labor institutions makes it an unusually self-reflective case. The cooperative's experience with its own governance development is documented with unusual candor: the early years of informal consensus-based decision-making that worked at small scale; the painful transition to more structured governance as the cooperative grew; the repeated discovery that building governance software for others is considerably easier than building functional governance for yourself; and the ongoing tension between the cooperative's values of distributed power and the operational reality that effective decision-making requires defined authority.</div>
+      <div class="case-text">Loomio's most significant Category 1.0 contribution is not its software but its public documentation of its own governance struggles — the acknowledgment that even an organization specifically focused on improving governance found its own governance hard to get right. Its experience of moving from informal consensus (Level 1 maturity in process group 1.2) through structured sociocracy-influenced governance (Level 2) toward a hybrid approach that balances member participation with operational effectiveness (Level 3 in progress) is a detailed case study in the development trajectory that the maturity model describes.</div>
+      <div class="case-lesson"><strong>Category 1.0 lesson:</strong> Governance sophistication in the product does not produce governance sophistication in the institution. Loomio's experience illustrates that the technical knowledge to design governance systems and the organizational knowledge to build them in a specific community context are genuinely different capabilities. Process group 1.2.5 — regular governance review — is the process that Loomio uses to bridge this gap: the recursive practice of applying to itself the same governance improvement logic it advocates for others.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 1.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 1.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Purpose is informally shared among founders but not documented or deliberately ratified by the broader community</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Governance decisions are made by whoever is present and willing to lead, with no formal decision rights framework</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Strategic direction is implicit — driven by funding availability and founder interests rather than deliberate choice</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Performance is assessed informally if at all; no regular reporting cadence exists</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Institutional communication is ad hoc and personality-driven rather than process-driven</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Mission statement exists and is publicly available; values are listed but not operationally defined</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Governance body is established with defined composition; decision-making processes are partially documented</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Strategic plan exists and has been through some community input process; may be outdated or aspirational rather than operational</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Some performance reporting exists, primarily financial; governance body reviews it but does not systematically act on it</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Regular communications to stakeholders exist but are inconsistent in frequency and accessibility</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Mission and values are documented with operational definitions; reviewed on a defined cycle with member participation</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Decision rights are mapped and documented; governance body follows consistent meeting protocols; new board members are systematically onboarded</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Theory of change is documented and current; strategic priorities are specific and time-bounded; annual operational plans exist and are followed</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">KPIs are defined and reviewed quarterly; governance body uses performance data in its deliberations; underperformance produces documented institutional response</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Regular accessible communications to stakeholders; annual community accountability session is held and documented</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Governance structure is regularly reviewed and deliberately adapted; the institution has made at least one significant governance redesign based on performance evidence rather than crisis</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">The institution contributes its governance knowledge to peer institutions — documented protocols, facilitation guides, or training</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Member participation in governance is measured, analyzed for equity gaps, and actively improved based on findings</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">The theory of change is tested empirically — not just stated but evaluated against evidence about whether it is producing the outcomes it predicts</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Performance accountability mechanisms have demonstrably changed institutional behavior — not just produced reports, but produced decisions</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 1.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Governance participation rate</div>
+      <div class="kpi-cell">Percentage of eligible members who participated in at least one governance decision or meeting in the past 12 months</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Governance participation equity gap</div>
+      <div class="kpi-cell">Difference in participation rates between demographic groups within the membership — a proxy for whether equity commitments are operationalized in governance access</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Strategic objective attainment rate</div>
+      <div class="kpi-cell">Percentage of stated strategic objectives met or substantially met at the end of the strategic planning period</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Decision reversal rate</div>
+      <div class="kpi-cell">Percentage of major governance decisions reversed within 12 months — a proxy for decision quality and stakeholder alignment</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Mission alignment score</div>
+      <div class="kpi-cell">Percentage of major institutional activities that can be directly linked to a stated strategic priority — a proxy for mission drift</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Governance body diversity index</div>
+      <div class="kpi-cell">Composite measure of demographic representation on the primary governance body relative to the community served</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Governance succession readiness</div>
+      <div class="kpi-cell">Percentage of governance roles with identified and developing successors — a proxy for institutional resilience to key person departure</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Member trust in governance score</div>
+      <div class="kpi-cell">Annual survey measure of member confidence that governance decisions reflect community values and are made through legitimate processes</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 1.0 from Level 1</div>
+
+  <div class="body-text">
+    <p>For institutions at Level 1 maturity in Category 1.0, the development path is predictable even if its specifics vary by institutional context. The sequence below reflects the developmental dependencies: later steps depend on earlier ones, and attempting to build performance management before purpose and governance structure are in place produces measurement infrastructure with nothing to measure against.</p>
+  </div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 1.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Ratify purpose and values with operational definitions</div>
+          <div class="seq-desc">Convene the founding community — not just leadership — to deliberately articulate and ratify the institution's purpose and values. This is not a drafting exercise; it is a political one. Surface the implicit disagreements about purpose before they surface in crisis. Document behavioral definitions for each value, not just aspirational language. Ratify through whatever process the community recognizes as legitimate.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Written purpose statement and values document, ratified by community, with operational definitions for each value.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Map and document actual decision rights</div>
+          <div class="seq-desc">Before redesigning governance structures, map how decisions are actually being made — not how the founding documents say they should be made. The gap between formal and actual decision-making is the first thing to understand. Then design a decision rights framework that reflects what the institution actually needs: which decisions require full member participation, which require board approval, which can be delegated to staff. Document it. Make it accessible.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Decision rights document covering all major decision categories, reviewed and endorsed by the primary governance body.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Develop a theory of change and strategic priorities</div>
+          <div class="seq-desc">Articulate the causal argument for how the institution produces community change. This is the hardest intellectual work in Category 1.0 — it requires genuine agreement about what the institution is trying to produce, which typically surfaces disagreements that the founding consensus papered over. From the theory of change, derive three to five strategic priorities for the next one to three years that are specific enough to guide resource allocation decisions.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Written theory of change, endorsed by governance body and shared with members; strategic priorities document with time horizon and success indicators.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Build a minimal performance monitoring system</div>
+          <div class="seq-desc">Define five to ten KPIs aligned to the strategic priorities. Establish a quarterly reporting cycle to the governance body. The monitoring system does not need to be sophisticated — it needs to be honest and regular. The goal at this stage is to establish the habit of looking at performance data before it is needed urgently. Add rigor over subsequent cycles.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Four quarters of governance body review of performance data; at least one documented governance decision that changed because of performance information.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct first formal governance review</div>
+          <div class="seq-desc">After twelve to eighteen months of operating under the defined governance structure, conduct a formal review: Is the governance producing the decisions the institution needs? Are participation rates acceptable? Are the characteristic failure modes of the chosen governance model beginning to appear? Use the review to make deliberate adjustments — not wholesale redesign, but evidence-based iteration. This is the practice of process group 1.2.5, and establishing it as a regular institutional habit is the defining move from Level 2 to Level 3.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> First formal governance review conducted and documented; at least one governance process changed based on review findings.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On governance and legal form:</strong> The governance structures described in this chapter are distinct from but interact with the institution's legal form. The legal form — nonprofit corporation, worker cooperative, LLC, unincorporated association — sets constraints on governance design that vary by jurisdiction. Category 1.0 process design must work within these legal constraints while pursuing the governance objectives that the institution's mission and values require. Legal counsel familiar with solidarity economy institutional forms is a necessary investment for any institution with significant assets or member relationships.</p>
+    <p><strong>On the politics of governance design:</strong> Governance design is never politically neutral. Every governance structure distributes power in ways that advantage some stakeholders and constrain others. The process of designing governance — who is in the room, whose values shape the design, who ratifies the result — is itself a governance decision with significant political stakes. Institutions that design governance in founding rooms dominated by founders and early members tend to produce governance structures that reflect founding team values and advantage engaged early participants. Designing governance with explicit attention to who is not yet in the room and how the design will serve them is one of the most important equity practices in Category 1.0.</p>
+    <p><strong>On the relationship to Category 16.0:</strong> Category 1.0 and Category 16.0 (Participatory Democracy) are closely related and should be developed in conversation with each other. Category 1.0 covers the strategic governance architecture — purpose, structure, strategy, and accountability. Category 16.0 covers the operational participation mechanisms — voting, deliberation, participatory budgeting, and democratic mandate renewal. The distinction is between the governance framework (1.0) and the democratic processes that operate within it (16.0).</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part III · Chapter 8 · GPS 1.0</span>
+    <span class="close-next">Ch. 9 — Design &amp; steward public goods (GPS 2.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

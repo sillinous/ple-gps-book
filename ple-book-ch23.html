@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 23 — Participatory Democracy (GPS 16.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --novel: #7F77DD; --novel-dim: rgba(127,119,221,0.08);
+    --novel-text: #b0aaf0; --novel-border: rgba(127,119,221,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(55,138,221,0.12); --m4t: #7ab8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.novel { background: var(--novel-dim); color: var(--novel-text); border: 1px solid var(--novel-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--novel); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--novel-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--novel); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--novel); background: var(--novel-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--novel-text); }
+  .pullquote p::after { content: '\201D'; color: var(--novel-text); }
+
+  /* Participation typology */
+  .participation-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .participation-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .participation-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .participation-row:last-child { border-bottom: none; }
+  .participation-level { width: 110px; min-width: 110px; padding: 14px 14px; border-right: 1px solid var(--border-subtle); background: var(--novel-dim); display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+  .pl-name { font-family: 'Crimson Pro', serif; font-size: 0.9rem; font-weight: 600; color: var(--novel-text); line-height: 1.2; }
+  .pl-tag { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; margin-top: 2px; }
+  .tag-consult { background: rgba(180,178,169,0.12); color: var(--m1t); }
+  .tag-influence { background: var(--m2); color: var(--m2t); }
+  .tag-power { background: rgba(29,158,117,0.1); color: var(--m3t); }
+  .tag-govern { background: var(--novel-dim); color: var(--novel-text); border: 1px solid var(--novel-border); }
+  .participation-content { padding: 14px 18px; flex: 1; border-right: 1px solid var(--border-subtle); }
+  .participation-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .participation-note { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .participation-note strong { color: var(--novel-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+  .participation-gps { width: 120px; min-width: 120px; padding: 14px 14px; }
+  .participation-gps-text { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); line-height: 1.55; }
+  .participation-gps-text strong { color: var(--novel-text); font-weight: 500; opacity: 0.85; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--novel); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--novel-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--novel-text); border-right: 1px solid var(--border-subtle); background: var(--novel-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--novel-text); border-right: 1px solid var(--border-subtle); background: var(--novel-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--novel-dim); color: var(--novel-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--novel-dim); border-bottom: 1px solid var(--novel-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--novel-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--novel-text); font-weight: 500; }
+
+  /* Sequence */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--novel); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--novel-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--novel-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  /* Part V close */
+  .part-close { margin-top: 64px; padding: 32px; border: 1px solid var(--novel-border); border-radius: 8px; background: var(--novel-dim); text-align: center; }
+  .part-close-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--novel-text); margin-bottom: 12px; opacity: 0.8; }
+  .part-close-title { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.4; }
+  .part-close-sub { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part V · Novel categories</div>
+  <div class="chapter-eyebrow">Chapter 23 · GPS Category 16.0</div>
+  <h1 class="chapter-title">Participatory democracy</h1>
+  <p class="chapter-subtitle">The institutions that govern themselves — the deliberative structures, decision rights, and power-sharing mechanisms that make community governance real rather than nominal, and that transform the people who pass through them</p>
+  <div class="cat-meta">
+    <span class="cat-pill novel">Novel Category</span>
+    <span class="cat-pill novel">Collective self-governance</span>
+    <span class="cat-pill novel">No APQC analog</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">22 processes</span>
+    <span class="cat-pill neutral">14 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>The GPS framework opens with Category 1.0 — Collective Vision and Governance Strategy — and closes here with Category 16.0 — Participatory Democracy. The symmetry is not accidental. Category 1.0 describes how institutions design the governance architecture through which decisions are made. Category 16.0 describes how the people those decisions affect become genuine participants in making them — not as a governance nicety or a communications strategy but as the fundamental institutional commitment that distinguishes post-labor institutions from the organizations they are designed to replace. Between these two categories lies the full apparatus of institutional life described in the preceding twenty-two chapters. Category 16.0 is where that apparatus becomes genuinely accountable to the communities it serves.</p>
+
+    <p>The word "participatory" in participatory democracy is doing real work. All democracies permit participation in the sense that citizens can vote, voice opinions, and occasionally influence decisions. Participatory democracy requires something more demanding: that the people most affected by institutional decisions have genuine, ongoing influence over those decisions — not periodic ratification of choices made by others, but active co-creation of the choices themselves. The distinction is not merely philosophical; it produces different institutional designs, different power distributions, and different outcomes for the people involved. Communities that are governed with rather than for develop different capacities, different relationships to institutions, and different experiences of their own agency than communities that receive well-designed services from institutions that consult them.</p>
+
+    <p>Category 16.0 is the final novel category in the GPS framework because it is, in a deep sense, the category that makes all the others post-labor rather than simply progressive. A post-labor institution could have excellent human development processes, robust financial stewardship, sophisticated AI governance, and a mature flourishing framework — and still be a benevolent institution governing a community rather than a community governing itself. The distinction matters because the goal of post-labor institutions is not only to deliver better services in a world after work. It is to build the civic infrastructure of a society that can organize itself democratically in conditions that no longer organize most social life around market employment. Category 16.0 is where that infrastructure is designed, built, and sustained.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The participation spectrum — from consultation to collective self-governance</div>
+
+  <div class="body-text">
+    <p>Participation is not binary — it exists on a spectrum from token consultation at one end to genuine collective self-governance at the other. Understanding where an institution sits on the spectrum, and what distinguishes each level from the others, is the prerequisite for designing genuine participatory democracy rather than its performance. The participation typology below draws on the ladder of participation frameworks developed by Sherry Arnstein, Roger Hart, and subsequent scholars in the participatory design and community governance traditions, adapted to the specific context of post-labor institutional governance.</p>
+  </div>
+
+  <div class="participation-block">
+    <div class="participation-header">The participation spectrum — six levels, what each means, and what GPS process groups develop them</div>
+
+    <div class="participation-row">
+      <div class="participation-level">
+        <div class="pl-name">Informing</div>
+        <div class="pl-tag tag-consult">Non-participatory</div>
+      </div>
+      <div class="participation-content">
+        <div class="participation-desc">Community members are told about decisions that affect them. Communication flows in one direction — from institution to community. There is no expectation of input, no mechanism for response, and no connection between community member awareness and institutional decision-making. Most institutional communications operate at this level.</div>
+        <div class="participation-note"><strong>Governance reality:</strong> Informing is necessary but insufficient. Community members who do not know what the institution is doing cannot hold it accountable or participate in its governance. Informing is the floor of transparency, not a form of participation.</div>
+      </div>
+      <div class="participation-gps">
+        <div class="participation-gps-text"><strong>GPS 3.3</strong> — community communications and outreach</div>
+      </div>
+    </div>
+
+    <div class="participation-row">
+      <div class="participation-level">
+        <div class="pl-name">Consulting</div>
+        <div class="pl-tag tag-consult">Tokenistic</div>
+      </div>
+      <div class="participation-content">
+        <div class="participation-desc">Community members are asked for their opinions about decisions that have already been substantially shaped by institutional staff. The consultation produces a record of community input and a nominal claim to community participation. The input rarely changes the decisions being made. The consultation is designed to legitimate decisions rather than to inform them.</div>
+        <div class="participation-note"><strong>Governance reality:</strong> The gap between consulting and genuine participation is the most consequential single gap in solidarity economy governance. Most institutions that describe their governance as participatory are consulting. Community members who experience the gap — who provide input and see no connection between their input and institutional decisions — become more skeptical of participation, not more engaged by it.</div>
+      </div>
+      <div class="participation-gps">
+        <div class="participation-gps-text"><strong>GPS 3.4</strong> — engagement design (at this level)</div>
+      </div>
+    </div>
+
+    <div class="participation-row">
+      <div class="participation-level">
+        <div class="pl-name">Collaborating</div>
+        <div class="pl-tag tag-influence">Influence</div>
+      </div>
+      <div class="participation-content">
+        <div class="participation-desc">Community members work alongside institutional staff on design and decision-making processes. Their knowledge, perspectives, and priorities genuinely shape institutional decisions — not by overriding professional expertise but by combining with it. Co-design processes, participatory planning processes, and collaborative governance models operate at this level. The institution shares design authority even when it retains final decision authority.</div>
+        <div class="participation-note"><strong>Governance reality:</strong> Collaboration is genuinely participatory in design but may not be participatory in power. Community members who collaborate with institutional staff may shape decisions without having the authority to make them. Collaboration that does not progress toward decision authority can produce engagement fatigue — the experience of contributing without effect that makes subsequent participation feel pointless.</div>
+      </div>
+      <div class="participation-gps">
+        <div class="participation-gps-text"><strong>GPS 1.2, 2.2, 5.1</strong> — co-design across categories</div>
+      </div>
+    </div>
+
+    <div class="participation-row">
+      <div class="participation-level">
+        <div class="pl-name">Co-deciding</div>
+        <div class="pl-tag tag-power">Power-sharing</div>
+      </div>
+      <div class="participation-content">
+        <div class="participation-desc">Community members have decision rights — formal authority over specific institutional decisions, not only influence over them. This may take the form of community member majority on governance bodies, community votes on specific decisions, participatory budgeting with real allocation authority, or citizen juries with binding recommendations. The institution shares decision authority, not only design authority.</div>
+        <div class="participation-note"><strong>Governance reality:</strong> Co-deciding requires the institutional design that makes formal decision rights genuinely accessible — accessible meeting structures, accessible information, accessible decision-making processes, and the organizational development processes that build community members' capacity to exercise decision rights effectively. Decision rights that are formally available but practically inaccessible are not co-deciding.</div>
+      </div>
+      <div class="participation-gps">
+        <div class="participation-gps-text"><strong>GPS 1.3, 16.2, 16.3</strong> — decision-sharing mechanisms</div>
+      </div>
+    </div>
+
+    <div class="participation-row">
+      <div class="participation-level">
+        <div class="pl-name">Community-led</div>
+        <div class="pl-tag tag-govern">Self-governance</div>
+      </div>
+      <div class="participation-content">
+        <div class="participation-desc">Community members initiate, design, and govern institutional activities with professional and institutional support rather than permission. The institution provides resources, expertise, and organizational infrastructure in service of community-determined priorities. Staff serve the governance rather than managing it. Community leadership sets direction; institutional capacity executes it.</div>
+        <div class="participation-note"><strong>Governance reality:</strong> Community-led governance requires the most institutional development — in community organizing capacity, in leadership development, in the distribution of institutional knowledge, and in the deliberate transfer of institutional authority from professional staff to community members. It also requires the most institutional trust: allowing genuine community governance means accepting community decisions that institutional leadership might have made differently.</div>
+      </div>
+      <div class="participation-gps">
+        <div class="participation-gps-text"><strong>GPS 16.4, 16.5</strong> — organizing and leadership development</div>
+      </div>
+    </div>
+
+    <div class="participation-row">
+      <div class="participation-level">
+        <div class="pl-name">Collective self-governance</div>
+        <div class="pl-tag tag-govern">Self-governance</div>
+      </div>
+      <div class="participation-content">
+        <div class="participation-desc">The community governs itself through democratic processes that the institution supports but does not control. Community members design the governance processes, hold the governance authority, and are accountable to each other rather than to external institutional stakeholders. The institution — its structures, staff, and resources — is a tool of community self-determination rather than an external organization delivering services to the community.</div>
+        <div class="participation-note"><strong>Governance reality:</strong> Collective self-governance is the terminal aspiration of post-labor institutional development — the institutional form that most fully operationalizes the Pyramid of Power's highest level. It requires building community civic capacity over years, not months. It requires institutional willingness to distribute rather than retain authority. And it requires community willingness to accept the responsibilities of self-governance alongside its benefits. It is achievable; it is not automatic.</div>
+      </div>
+      <div class="participation-gps">
+        <div class="participation-gps-text"><strong>GPS 16.0 full</strong> — all process groups</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>The difference between an institution that serves a community and an institution that is a community is the difference between governance done for people and governance done by them. Both can be excellent. Only one is what post-labor institutions are for.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 16.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">16.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Design and maintain deliberative governance structures and processes</div>
+          <div class="proc-group-desc">Deliberative governance structures are the architecture through which community members exercise genuine decision-making authority — not the formal governance body structures covered in Category 1.0 (which describe the institutional framework for governance) but the specific deliberative mechanisms through which community voice and community agency are translated into institutional direction. These mechanisms must be designed for the specific community the institution serves, not imported from generic governance templates: the deliberative processes appropriate for a worker cooperative, a community land trust, a mutual aid network, and a neighborhood organizing body differ substantially in their required accessibility, cultural context, and power-sharing design. The common requirement is that they produce genuine community agency over institutional direction rather than the performance of participation without its substance.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">16.1.1</div><div class="act-name">Design deliberative decision mechanisms calibrated to the institution's specific community — participatory budgeting, community assemblies, consensus decision-making, sociocracy, or hybrid models, chosen and adapted based on community culture, capacity, and governance purpose</div></div>
+            <div class="proc-activity"><div class="act-id">16.1.2</div><div class="act-name">Implement structured deliberation processes — facilitation practices, discussion protocols, and time allocations that produce genuine collective reasoning rather than dominated discussion or manufactured consensus</div></div>
+            <div class="proc-activity"><div class="act-id">16.1.3</div><div class="act-name">Design decision rights maps — explicit specifications of which decisions are made by which governance bodies at which levels of community participation; maps that are communicated to all community members, not only to governance participants</div></div>
+            <div class="proc-activity"><div class="act-id">16.1.4</div><div class="act-name">Build governance accessibility — scheduling, location, language, childcare, and the full range of access provisions that make governance participation possible for community members who would otherwise be excluded by the practical demands of participation</div></div>
+            <div class="proc-activity"><div class="act-id">16.1.5</div><div class="act-name">Manage governance conflict — the facilitated processes through which governance disagreements are worked through constructively rather than suppressed through premature consensus or allowed to escalate into institutional paralysis</div></div>
+          </div>
+          <div class="act-note">Process 16.1.3 — decision rights maps — is the governance design element that most directly distinguishes genuine participatory governance from its performance. An institution whose community members cannot describe which decisions they have authority over — as distinct from which decisions they are consulted on or informed about — has not built genuine participatory governance regardless of how many community members attend governance meetings. Decision rights maps that are published, accessible, and regularly reviewed create the governance transparency that makes participation meaningful: community members can identify which decisions affect them, whether they have decision rights over those decisions, and what the process is for exercising those rights.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">16.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Implement participatory budgeting and resource allocation governance</div>
+          <div class="proc-group-desc">Participatory budgeting — the process through which community members make direct decisions about the allocation of institutional resources — is the most concrete and most consequential form of participatory governance available to post-labor institutions. Where advisory participation asks community members what they think the institution should do, participatory budgeting gives them the authority to decide how institutional resources are allocated. It is also the governance mechanism that most directly tests whether the institution's stated commitment to community governance is genuine: real participatory budgeting transfers real decision authority over real resources, and the willingness to implement it authentically rather than nominally is the most reliable indicator of institutional commitment to power-sharing.</desc>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">16.2.1</div><div class="act-name">Design a participatory budgeting process appropriate to institutional scale and community capacity — with genuine resource scope (a meaningful percentage of discretionary budget), accessible deliberation, and binding decision authority</div></div>
+            <div class="proc-activity"><div class="act-id">16.2.2</div><div class="act-name">Develop budget literacy programming — accessible financial education that enables community members to participate meaningfully in budget decisions without requiring prior financial expertise</div></div>
+            <div class="proc-activity"><div class="act-id">16.2.3</div><div class="act-name">Implement community resource priority-setting — processes through which community members identify their highest-priority resource needs and direct institutional investment accordingly; ensuring that resource allocation reflects community priorities rather than only institutional planning assumptions</div></div>
+            <div class="proc-activity"><div class="act-id">16.2.4</div><div class="act-name">Track and report participatory budget implementation — ensuring that resources allocated through community decision are actually deployed as decided; closing the accountability loop between participatory decision and institutional action</div></div>
+            <div class="proc-activity"><div class="act-id">16.2.5</div><div class="act-name">Assess equity in participatory budgeting outcomes — monitoring whether participatory budgeting is directing resources toward the community's most marginalized members or being captured by the most engaged and least marginalized participants</div></div>
+          </div>
+          <div class="act-note">The genuine resource scope requirement in process 16.2.1 — that participatory budgeting cover a meaningful percentage of discretionary budget — is the test of whether the process is genuine or performative. Participatory budgeting over a small or marginal budget allocation (the proverbial planting-a-tree decision while building demolition is decided elsewhere) produces community engagement without community authority. The political challenge of expanding participatory budgeting scope is exactly proportional to its governance value: the larger the resource scope subject to community decision, the more genuinely the institution has shared governance authority, and the more consequential the community decisions become. Porto Alegre's participatory budgeting experiment, which covered a substantial share of the municipal capital budget, produced transformational changes in resource allocation toward previously underserved neighborhoods precisely because the scope was real.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">16.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Govern through citizen assemblies, community juries, and deliberative panels</div>
+          <div class="proc-group-desc">Citizen assemblies and deliberative panels are governance mechanisms that bring randomly selected or stratified samples of community members together for extended deliberation on specific institutional questions — providing the depth of engagement that representative governance bodies cannot and the breadth of perspective that staff-led planning processes do not. They are particularly valuable for decisions that are highly consequential, technically complex, or politically contested — where the institution needs genuine community deliberation rather than either expert decision or political compromise. The research on deliberative democracy consistently shows that citizens who engage in extended deliberation on complex questions develop more nuanced positions, are more willing to accept the positions of others, and produce more legitimate outcomes than either expert panels or unrestricted public comment processes.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">16.3.1</div><div class="act-name">Design and convene citizen assemblies for major strategic decisions — randomly or stratified-randomly selected community member panels that deliberate on institutional direction questions with genuine advisory or binding authority</div></div>
+            <div class="proc-activity"><div class="act-id">16.3.2</div><div class="act-name">Develop community jury processes for specific contested decisions — smaller panels (8–25 members) that hear expert testimony and community testimony and produce recommendations on specific institutional choices</div></div>
+            <div class="proc-activity"><div class="act-id">16.3.3</div><div class="act-name">Implement structured deliberation facilitation — professional facilitation of citizen assembly and jury processes that ensures all voices are heard, that information is balanced, and that discussion produces genuine reasoning rather than performed consensus</div></div>
+            <div class="proc-activity"><div class="act-id">16.3.4</div><div class="act-name">Connect deliberative panel outputs to institutional governance — designing the formal relationship between deliberative panel recommendations and institutional governance body decisions; establishing the accountability mechanism that ensures recommendations are seriously considered and that departures from recommendations are explained</div></div>
+            <div class="proc-activity"><div class="act-id">16.3.5</div><div class="act-name">Build deliberation capacity institutionally — developing the facilitation skills, process designs, and logistical infrastructure that make regular use of citizen assemblies and deliberative panels sustainable rather than exceptional</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">16.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Build civic capacity and community organizing infrastructure</div>
+          <div class="proc-group-desc">Participatory governance processes without the civic capacity to use them produce governance in name — meetings that are accessible but not meaningful, decision rights that are held but not exercised, deliberation that is structured but not substantive. Building the civic capacity that makes participatory democracy genuinely participatory requires deliberate investment in community members' governance skills, political knowledge, organizational experience, and the confidence and efficacy that comes from participation that has actually made a difference. This is not a soft complement to the technical governance processes — it is the prerequisite for those processes to produce genuine community agency rather than institutional performance of participation.</desc>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">16.4.1</div><div class="act-name">Develop civic education programming — making governance, public finance, rights, and political processes accessible and comprehensible to community members without political or professional backgrounds in these areas</div></div>
+            <div class="proc-activity"><div class="act-id">16.4.2</div><div class="act-name">Build community organizing capacity — the relational organizing skills, issue identification, power analysis, and collective action experience that enable community members to shape institutional direction proactively rather than only reactively</div></div>
+            <div class="proc-activity"><div class="act-id">16.4.3</div><div class="act-name">Develop governance leadership — investing in the development of community members who can facilitate deliberation, represent community perspectives in institutional governance bodies, and hold elected or appointed governance roles effectively</div></div>
+            <div class="proc-activity"><div class="act-id">16.4.4</div><div class="act-name">Create participation documentation and history — building the institutional memory of what community participation has produced — decisions made, changes achieved, governance improvements won — that demonstrates to community members that participation is consequential and builds the culture of civic efficacy that sustains it</div></div>
+            <div class="proc-activity"><div class="act-id">16.4.5</div><div class="act-name">Support community self-organization — providing resources and infrastructure for community members to organize around issues they identify as important, even when those issues are critical of the institution; genuine civic support extends to community organizing that challenges institutional direction</div></div>
+          </div>
+          <div class="act-note">Process 16.4.5 — supporting community self-organization that challenges institutional direction — is the most politically demanding element of Category 16.0 and the clearest test of whether participatory democracy is genuine. Institutions that support community participation when it affirms institutional decisions and suppress it when it challenges them are not practicing participatory democracy — they are practicing legitimacy management. Genuine participatory democracy requires the institutional confidence to allow community members to organize against institutional positions, to use institutional resources for advocacy that institutional leadership disagrees with, and to accept community-driven changes that staff and leadership would not have chosen. This institutional confidence is earned through genuine track record of responding to community organizing, not through policy statements about openness to challenge.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">16.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Govern power distribution and democratic accountability across the institution</div>
+          <div class="proc-group-desc">Category 16.5 is the governance process that ensures participatory democracy is a whole-institution commitment rather than a set of participation programs that exist alongside a hierarchical institutional culture. It asks: where does power actually reside in this institution, and does that distribution reflect the democratic governance commitments the institution claims? Power analysis in institutions is uncomfortable because it reveals the gap between formal governance structures and actual influence patterns — a gap that is present in virtually all institutions and that Category 16.5 is designed to surface, examine, and systematically reduce. The terminal aspiration of Category 16.5 is an institution whose power distribution is transparently visible, democratically legitimate, and continuously examined by the community members it affects.</desc>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">16.5.1</div><div class="act-name">Conduct power mapping — systematic analysis of where formal and informal power resides in the institution; who influences which decisions, whose relationships determine outcomes, and how far actual power distribution departs from formal governance structures</div></div>
+            <div class="proc-activity"><div class="act-id">16.5.2</div><div class="act-name">Design and implement power redistribution mechanisms — specific governance changes that address the power concentration revealed by mapping; not symbolic changes but structural redistribution that gives community members genuine authority in domains where they currently have none</div></div>
+            <div class="proc-activity"><div class="act-id">16.5.3</div><div class="act-name">Implement democratic accountability mechanisms — processes through which governance body members and institutional leadership are accountable to community members for the exercise of their governance authority; accountability that functions between elections and without requiring formal grievance processes</div></div>
+            <div class="proc-activity"><div class="act-id">16.5.4</div><div class="act-name">Govern the governance — regular assessment of whether participatory democracy processes are producing genuine community agency; community member assessment of governance quality as a governance performance indicator, not only community member satisfaction with institutional services</div></div>
+            <div class="proc-activity"><div class="act-id">16.5.5</div><div class="act-name">Manage governance succession — the processes through which governance authority transitions from one generation of community leaders to the next, with explicit commitment to broadening rather than concentrating governance power across each transition</div></div>
+          </div>
+          <div class="act-note">Process 16.5.1 — power mapping — is the most uncomfortable and most necessary governance process in Category 16.0. Power maps reveal what organizational charts conceal: that the person with formal decision authority often does not have the greatest influence over decisions; that informal networks, funder relationships, and staff expertise create power distributions that formal governance structures do not reflect; and that the communities most affected by institutional decisions frequently have the least power within the governance structures that make them. Conducting power mapping with community members rather than only with staff produces the most accurate picture of actual power distribution and creates the shared analysis that motivates and legitimates power redistribution.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six participatory democracy failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in participatory governance and civic power development</div>
+
+    <div class="fail-row">
+      <div class="fail-num">D1</div>
+      <div class="fail-content">
+        <div class="fail-name">Participation theater — the appearance of voice without the substance of power</div>
+        <div class="fail-desc">The institution conducts extensive community engagement — focus groups, surveys, community meetings, advisory committees — without creating any mechanism through which community input actually changes institutional decisions. The engagement is genuine in its execution and irrelevant in its effect. Community members who participate and observe no connection between their input and institutional decisions learn that participation is a performance required of them by the institution rather than an exercise of real agency. This learning, once established, is very difficult to reverse.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Community members describe feeling that their input is "heard but not listened to." The institution can document extensive community engagement but cannot trace specific institutional decisions to specific community input. The same decisions would have been made without the engagement process. Staff describe engagement processes as "communication" rather than as governance.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">D2</div>
+      <div class="fail-content">
+        <div class="fail-name">Participatory budgeting over symbolic resources — decision authority that doesn't matter</div>
+        <div class="fail-desc">The institution implements participatory budgeting over a small, marginal budget line — a community garden fund, a social event budget, a minor capital improvement allocation — while major resource allocation decisions remain entirely in staff and governance body control. The participatory budgeting is technically real and practically irrelevant. Community members who participate discover that the decisions they have authority over do not include the decisions that most affect their lives, and the process confirms rather than challenges the institutional power structure.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Participatory budgeting covers less than 5% of the institution's discretionary budget. The decisions available for community allocation do not include any of the institution's primary program investments. Staff describe the participatory budget as a "community engagement tool" rather than as a genuine resource allocation process. Community members who have participated cannot describe significant institutional changes resulting from their budget decisions.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">D3</div>
+      <div class="fail-content">
+        <div class="fail-name">Civic capacity gap — governance structures without community members who can use them</div>
+        <div class="fail-desc">The institution has sophisticated participatory governance structures — elected governance bodies, participatory budgeting processes, community assemblies — and has not invested in the civic capacity development that enables community members to use these structures effectively. Governance roles are held by community members who lack the governance literacy, organizational experience, and facilitation skills to exercise their authority, and governance structures are captured by the small number of community members with prior organizational backgrounds. The governance is formally democratic and substantively narrow.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The same small group of community members holds all governance roles across multiple election cycles. New governance participants describe feeling overwhelmed and underprepared. Governance body meetings are dominated by institutional staff presentation rather than community member deliberation. Community members without prior organizational experience consistently defer to those with it. No civic education or governance leadership development is offered.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">D4</div>
+      <div class="fail-content">
+        <div class="fail-name">Diversity without redistribution — representative demographics with concentrated power</div>
+        <div class="fail-desc">The institution has invested in diversifying its governance body — achieving demographic representation that reflects the community served — without redistributing the informal power that determines actual governance outcomes. The governance body is demographically diverse; the actual influence over institutional decisions remains concentrated among professional staff, long-tenured governance members, and the small number of community members with the organizational experience to navigate informal power networks. The diversity is real; the redistribution is absent.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Governance body composition is demographically diverse; governance meeting dynamics show that a small subset of governance members consistently shapes decisions while others defer. New governance members from underrepresented backgrounds describe feeling ineffective despite formal equality of governance rights. Power mapping reveals significant informal power concentration that formal governance structures do not reflect.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">D5</div>
+      <div class="fail-content">
+        <div class="fail-name">Participation fatigue — governance demands that exhaust rather than empower community members</div>
+        <div class="fail-desc">The institution requires so much participation from community members — so many meetings, so many consultations, so many governance roles, so much volunteer governance labor — that governance itself becomes a burden that limits participation to those with the most available time and the fewest competing demands. The governance structure implicitly selects for community members with the most resource privilege, and community members with the greatest institutional need experience governance as a tax on receiving services rather than as an empowering exercise of civic agency.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Community members describe governance participation requirements as excessive or unrealistic given their life circumstances. Governance participation rates are declining. The most economically marginalized community members are underrepresented in governance relative to those with more time flexibility. Governance events consistently exceed their scheduled duration, penalizing community members who cannot stay beyond scheduled times.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">D6</div>
+      <div class="fail-content">
+        <div class="fail-name">Manufactured consensus — deliberation designed to converge rather than to reason</div>
+        <div class="fail-desc">Deliberative processes are designed and facilitated to produce consensus rather than to produce genuine collective reasoning. Facilitators move discussion toward predetermined conclusions. Dissenting positions are managed rather than engaged. The deliberative process produces outcomes that look like collective decisions but reflect institutional preferences channeled through community process. Community members who notice the manufacturing become more cynical about participation than before it.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Deliberative processes consistently produce decisions that align with staff or leadership preferences. Dissenting voices in deliberation describe feeling managed rather than heard. Post-deliberation discussions among community members reveal that participants did not experience the process as genuinely open. The same facilitation approach is used regardless of the decision's substantive content, without design variation that would reflect genuine openness to different outcomes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Porto Alegre and participatory budgeting at scale</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Porto Alegre, Brazil — participatory budgeting as municipal transformation</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Porto Alegre's participatory budgeting experience, initiated in 1989 under the Workers' Party municipal government, remains the most extensively documented large-scale implementation of participatory budgeting and the primary reference point for the global participatory budgeting movement. Between 1989 and 2004, the Porto Alegre model produced documented transformation in municipal resource allocation — shifting investment from the wealthier central neighborhoods to the previously underserved periphery — and in civic participation, with tens of thousands of residents annually participating in neighborhood assemblies that had genuine decision authority over a significant share of the municipal capital budget.</div>
+      <div class="case-text">Porto Alegre's contribution to Category 16.0 is specifically in processes 16.2 and 16.4. The genuine resource scope of its participatory budgeting — covering a meaningful share of the capital budget, not a symbolic allocation — is the design decision that produced genuine community authority rather than community consultation. The civic capacity development that accompanied the participatory budgeting — neighborhood assemblies that built organizing skills, governance literacy, and political efficacy among residents with no prior political participation — operationalizes process 16.4 at municipal scale. The Porto Alegre experience demonstrates that participatory budgeting over genuine resource scope produces not only different resource allocation but different civic communities: residents who have exercised real budget authority develop different relationships to government institutions and different beliefs about their own political agency.</div>
+      <div class="case-text">Porto Alegre also illustrates the institutional preconditions for participatory budgeting at scale: genuine institutional commitment from leadership that is willing to accept community budget decisions that differ from staff preferences; transparent financial information that enables meaningful community deliberation; and facilitation capacity at the neighborhood level that makes participation accessible to residents without prior organizational experience. The model deteriorated when later municipal governments reduced the genuine resource scope and replaced authentic facilitation with managed consensus — demonstrating that participatory budgeting is sustained by institutional commitment, not by institutional structure alone.</div>
+      <div class="case-lesson"><strong>Category 16.0 lesson:</strong> Porto Alegre's experience demonstrates process 16.2.1's most important requirement: genuine resource scope is non-negotiable. The transformational effects of participatory budgeting — on resource allocation equity, on civic capacity, on community agency — were produced by the genuine decision authority over real resources. Participatory budgeting over symbolic resources produces symbolic participation. The institutional commitment to genuine scope is the governance decision that distinguishes the Porto Alegre model from the "lite" versions that have become common and that produce community engagement without community power.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Zapatista communities and autonomous self-governance</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Zapatista autonomous municipalities — collective self-governance in practice</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Zapatista autonomous municipalities of Chiapas, Mexico represent the most extensively developed contemporary experiment in collective self-governance at community scale — a network of indigenous communities that, following the 1994 uprising, progressively developed autonomous governance, economic, health, and educational institutions that operate outside and in many respects against the official Mexican state. The Zapatista communities are not a model for post-labor institutions to replicate — their specific conditions, political history, and cultural context are not transferable — but they are the clearest available demonstration of what the participation spectrum's highest level looks like as a sustained institutional reality.</desc>
+      <div class="case-text">The Zapatista governance principle of "mandar obedeciendo" — governing by obeying — operationalizes process 16.5's democratic accountability requirement in its most direct form: those who hold governance authority are obligated to execute the collective decisions of the community rather than to make decisions on the community's behalf. The Good Government Councils (Juntas de Buen Gobierno), which coordinate the autonomous municipalities, are composed of rotating community delegates — not elected representatives in the conventional sense, but community members who serve limited terms at the direction of their communities and return to ordinary community membership afterward. This design prevents the professionalization of governance that concentrates power in the hands of those who hold governance roles across multiple terms.</desc>
+      <div class="case-text">The Zapatista experience is most instructive for Category 16.0 in its demonstration that collective self-governance is not a destination but an ongoing practice — requiring constant attention, continuous community organizing, deliberate power redistribution, and the institutional culture that treats governance authority as a community resource rather than a personal asset. The communities have faced significant internal governance challenges — including the management of gender equity in governance, the relationship between formal governance structures and informal community power, and the tension between community autonomy and coordination with broader movement networks — that operationalize several of Category 16.0's failure modes at institutional scale.</desc>
+      <div class="case-lesson"><strong>Category 16.0 lesson:</strong> The Zapatista "mandar obedeciendo" principle is the most direct operationalization of process 16.5.3 (democratic accountability mechanisms): governance authority as a community mandate that governance holders must execute rather than a personal power that governance holders may exercise at their discretion. The rotating delegation model — short terms, no re-election, return to ordinary community membership — prevents the accumulation of governance power that concentrates authority in long-tenured governance members regardless of formal democratic structures. Post-labor institutions developing process 16.5 should examine the Zapatista governance model not as a political template but as a practical demonstration of how democratic accountability can be structurally enforced rather than culturally aspirational.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 16.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 16.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community participation is informing and occasional consulting; no mechanism through which community input changes institutional decisions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Budget decisions made entirely by staff and governance body without community participation; no participatory budgeting in any form</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No deliberative governance mechanisms beyond periodic community meetings with limited decision authority</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No civic capacity development; community members are not supported in developing governance skills or organizational capacity</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No power analysis; formal governance structures assumed to reflect actual power distribution; no democratic accountability mechanisms beyond elections</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Collaborative participation in some decision domains; decision rights beginning to be mapped; some community input demonstrably changing institutional decisions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Participatory budgeting piloted over a small resource scope; community members have genuine authority over at least one budget category</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">First citizen assembly or deliberative panel convened; facilitation skills developing; deliberative process beginning to be institutionalized</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Civic education offerings developed; governance leadership development beginning; some documentation of participation history</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Power mapping conducted at least once; some power redistribution initiatives underway; democratic accountability mechanisms developing</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Co-deciding in multiple governance domains; decision rights map published and current; community members hold genuine authority over decisions that significantly affect their lives</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Participatory budgeting over meaningful resource scope (10%+ of discretionary budget); accessible participation; equity monitoring of budgeting outcomes; full accountability for implementation</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Regular citizen assemblies or deliberative panels for major decisions; professional facilitation; formal connection between panel outputs and governance body decisions; facilitation capacity sustained institutionally</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Civic capacity development sustained across governance generations; governance leadership development pipeline operational; documentation of participation history maintained and celebrated</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Annual power mapping with community participation; documented power redistribution over time; democratic accountability mechanisms operational; governance succession planned deliberately</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community-led or collective self-governance in the institution's primary domains; institutional staff serve community governance rather than leading it</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Participatory budgeting covers the majority of discretionary budget; community priorities demonstrably shape institutional resource allocation; equity in budgeting outcomes measurably improving</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Deliberative democracy infrastructure is a recognized institutional asset; the institution is sought out as a model and resource for participatory governance practice in its sector</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community members support each other's organizing, including organizing that challenges the institution; genuine civic infrastructure beyond the institution itself has been built</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Power is measurably more distributed than three years ago; governance succession is routinely broadening rather than concentrating authority; the institution's governance practices are contributed to peer institutions as commons knowledge</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 16.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Participation spectrum level</div>
+      <div class="kpi-cell">The institution's assessed position on the participation spectrum for its primary governance domains — measures whether participation is nominal or genuine; tracked by governance domain, not as a single institutional score</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Participatory budget scope</div>
+      <div class="kpi-cell">Percentage of discretionary institutional budget subject to genuine community decision authority — the primary measure of whether participatory budgeting is real or symbolic; target above 10%, aspiration above 30%</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Decision-community attribution rate</div>
+      <div class="kpi-cell">Percentage of major institutional decisions that can be traced to specific community input — the most direct measure of whether participation is influencing decisions</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Governance demographic parity</div>
+      <div class="kpi-cell">Ratio of governance body demographic composition to community demographic composition — measures whether governance represents the community or only its most institutionally connected members</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Civic efficacy score</div>
+      <div class="kpi-cell">Community members' reported sense that their participation influences institutional decisions — the subjective measure of whether participatory governance is producing genuine civic agency</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Governance leadership pipeline diversity</div>
+      <div class="kpi-cell">Demographic and background diversity of community members developing toward governance roles — measures whether civic capacity development is broadening governance participation</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Power distribution index</div>
+      <div class="kpi-cell">Composite measure of power distribution across formal and informal governance channels — assessed through power mapping; improvement over time as the primary indicator</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Citizen assembly activation rate</div>
+      <div class="kpi-cell">Number of citizen assemblies or deliberative panels convened per year for major institutional decisions — measures whether deliberative democracy is a regular governance practice or an exceptional event</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 16.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 16.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Map current decision-making honestly — where does power actually reside?</div>
+          <div class="seq-desc">Before designing any new participation structures, conduct an honest power mapping of the institution as it currently operates: which decisions are actually made by whom, in what forums, with what community input, and with what connection between that input and the final decision? The mapping should include both formal governance processes and informal influence — the decisions made in hallway conversations, the funder relationships that constrain institutional direction, the staff expertise that shapes governance body decisions. Present the findings to the governance body and to a representative group of community members. The gap between formal governance structures and actual power distribution is typically larger than leadership expects, and seeing it honestly is the precondition for addressing it.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Power map completed with community member participation; formal and informal power distribution documented; primary power concentration points identified; governance body and community members have reviewed findings; top three power redistribution priorities identified.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Identify one high-stakes decision and design genuine community authority over it</div>
+          <div class="seq-desc">Select one institutional decision — a program design choice, a policy decision, a hiring decision — where community members' interests are directly affected and where genuine community decision authority would be meaningful. Design a process that gives community members real decision rights over that choice: not input that staff synthesize into a recommendation they make, but actual authority that community members exercise. Implement the process. Abide by the outcome even if it differs from what staff or leadership would have chosen. Document the decision and communicate how community input shaped the outcome. This first genuine transfer of decision authority is the institutional proof of concept that makes further participatory governance development credible.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> One high-stakes decision made through genuine community authority process; decision outcome documented; community member decision traced in implementation; community members describe the process as genuinely decisive; governance body has committed to extending the model to additional decision domains.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Launch participatory budgeting over a meaningful resource scope</div>
+          <div class="seq-desc">Design and launch a participatory budgeting process that covers a meaningful percentage of the institution's discretionary budget — at minimum 10% in the first cycle, with a commitment to expand scope in subsequent cycles. Develop accessible budget literacy materials. Ensure the participation process is accessible to community members without prior financial or organizational experience. Implement the community budget decisions as made — do not modify them after the fact. Publish the results: what was proposed, what was decided, and what was implemented. In the second cycle, expand scope based on what was learned in the first.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Participatory budgeting implemented over 10%+ of discretionary budget; accessible participation process with equity monitoring; community decisions implemented as made; results published; at least one community-prioritized investment that differs from what staff would have chosen; scope expansion plan for next cycle adopted.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Convene the first citizen assembly on a significant strategic question</div>
+          <div class="seq-desc">Select a significant strategic question — a major program decision, a governance structure question, a long-term direction choice — and design a citizen assembly process to deliberate on it. Randomly or stratified-randomly select participants from across the community's demographic composition. Provide balanced information from multiple perspectives. Invest in professional facilitation. Give the assembly genuine advisory or binding authority. Implement the assembly's recommendations and explain any departures. Use the experience to develop the institution's citizen assembly capacity for regular use. The first assembly is primarily a capacity-building exercise; subsequent assemblies should be a regular governance tool.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> First citizen assembly convened with genuine decision authority; demographically representative participation; professional facilitation; binding or strongly advisory outcome; governance body response to assembly recommendations documented and explained; facilitation capacity institutionalized for regular use.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Invest in civic capacity development as core institutional infrastructure</div>
+          <div class="seq-desc">Establish civic capacity development — governance literacy, organizing skills, leadership development — as a core institutional program rather than an occasional add-on. Design the programming with community members who have previously participated in governance and can speak to what prepared them and what they wish they had known. Create pathways from civic education into governance participation into governance leadership. Document participation history — decisions made, changes achieved — and share it with community members as evidence that participation produces results. Measure the civic efficacy score and use it as a governance performance indicator alongside service delivery metrics.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Civic capacity development programming established as ongoing institutional offering; governance leadership pipeline with community members in active development; participation history documented and celebrated; civic efficacy score baseline established and tracked annually; increase in civic efficacy score over 18-month period.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On Category 16.0 as the culmination of the GPS framework:</strong> The GPS framework begins with Category 1.0 (Collective Vision and Governance Strategy) because governance is the foundational institutional act — the act of deciding together how decisions will be made. It ends with Category 16.0 (Participatory Democracy) because participatory democracy is the terminal institutional aspiration — the governance form in which the people most affected by decisions are most active in making them. Every category between 1.0 and 16.0 provides some element of the institutional infrastructure through which this aspiration becomes operational: the civic operating processes that deliver services, the institutional support processes that sustain the organization, and the novel categories that address the governance challenges of the post-labor transition. Category 16.0 is where all of that infrastructure becomes accountable to the communities it serves — where the institution becomes answerable, genuinely and structurally, to the people who need it most.</p>
+    <p><strong>On the relationship between participatory democracy and post-labor economics:</strong> The post-labor economic transition does not only create material insecurity — it dissolves the primary institution through which most people in market societies have exercised meaningful voice over conditions that affect their daily lives. The workplace, for all its inadequacies as a democratic institution, was the domain in which most workers had some form of voice (through unions, through workplace culture, through the implicit power to withdraw labor) and some form of identity that connected them to something beyond their individual circumstances. As that institution weakens, the question of where people will exercise voice and build civic identity becomes urgent. Category 16.0 answers that question institutionally: post-labor institutions that build genuine participatory democracy create the civic space in which community members who are no longer organized primarily by market employment can organize themselves deliberately, exercise collective agency, and build the civic capacities that democratic self-governance requires.</p>
+    <p><strong>On scale and participatory democracy:</strong> The most common objection to participatory democracy as an institutional model is that it does not scale — that the deliberative processes appropriate for small communities become unworkable at large institutional scale. This objection is empirically well-founded in some respects: the intimate, face-to-face deliberation of a small community cannot be replicated at the scale of a large organization. But the objection proves too much if it is taken to mean that large institutions cannot be genuinely democratic. Porto Alegre's participatory budgeting operated at the scale of a city of more than a million people. The Zapatista autonomous governance operates across dozens of communities. The nested governance architectures of cooperatives like Mondragon organized democratic participation across tens of thousands of worker-owners. Scale requires the design of nested governance — different participation mechanisms at different scales, connected by representative structures that maintain accountability to the communities from which representatives are drawn. The design challenge is real; it is not a design impossibility.</p>
+  </div>
+
+  <div class="part-close">
+    <div class="part-close-label">End of Part V · Novel categories — End of main content</div>
+    <div class="part-close-title">Three categories. The governance of algorithms, the cultivation of flourishing, and the practice of collective self-determination.</div>
+    <div class="part-close-sub">Part VI closes the book — five institutional archetypes that show how the sixteen GPS categories assemble differently for different institutional forms. The community land trust, the worker cooperative, the mutual aid network, the community foundation, and the civic technology cooperative each operationalize the framework through a different governance architecture, a different financial structure, and a different theory of the relationship between institutional form and community power. Chapter 24: Five archetypes — where institutions begin and where they can go.</div>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part V · Chapter 23 · GPS 16.0</span>
+    <span class="close-next">Ch. 24 — Five archetypes: where institutions begin (Part VI) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

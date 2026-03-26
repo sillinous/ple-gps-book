@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P.1 — A map for unmapped territory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504;
+    --bg-deep: #0c0a09;
+    --bg-primary: #141210;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201, 169, 110, 0.12);
+    --accent-glow: rgba(201, 169, 110, 0.06);
+    --text-primary: #f0ebe3;
+    --text-secondary: #a09890;
+    --text-muted: #6b6560;
+    --text-ghost: #48443f;
+    --border-subtle: rgba(201, 169, 110, 0.07);
+    --border-visible: rgba(201, 169, 110, 0.14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 40px 120px;
+    position: relative;
+  }
+
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+
+  .chapter-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.35;
+    margin-bottom: 44px;
+  }
+
+  .body-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--text-primary);
+  }
+
+  .body-text p {
+    margin-bottom: 1.6em;
+  }
+
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em;
+    font-weight: 300;
+    line-height: 0.75;
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+  }
+
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
+
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-visible);
+  }
+
+  .section-break-ornament {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+
+  .pullquote {
+    margin: 44px 0;
+    padding: 28px 32px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .pullquote p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .pullquote p::before { content: '\201C'; color: var(--accent); }
+  .pullquote p::after  { content: '\201D'; color: var(--accent); }
+
+  .argument-block {
+    margin: 40px 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-top: 2px solid var(--accent);
+    border-radius: 0 0 8px 8px;
+    padding: 28px 32px;
+  }
+
+  .argument-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    opacity: 0.8;
+  }
+
+  .argument-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .argument-list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .arg-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 20px;
+    padding-top: 3px;
+    opacity: 0.7;
+  }
+
+  .arg-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .arg-text strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .note-aside {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-visible);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .note-aside p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .note-aside p strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .chapter-close {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .close-next {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  .page-number {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="chapter-eyebrow">Preface · P.1</div>
+
+  <h1 class="chapter-title">A map for unmapped territory</h1>
+  <p class="chapter-subtitle">On the difference between knowing where we're going and knowing how to build what we'll need when we get there</p>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>There is a particular kind of crisis that doesn't announce itself as a crisis. It arrives not as a single catastrophic rupture but as a slow divergence — two lines on a graph that were once parallel, now separating by a fraction each quarter, then each month, until the gap between them is too wide to pretend away. We are living inside that divergence now. The line representing economic output continues upward. The line representing the share of that output flowing to human labor tilts, almost imperceptibly at first, then unmistakably, toward the horizontal. The two lines are decoupling. They have been decoupling for decades. The process is accelerating.</p>
+
+    <p>This book is not about whether that decoupling is happening. The evidence is settled enough that debating it further is a form of avoidance. This book is about what comes next — not as prediction, but as design problem. If the institutions that have historically distributed the gains of economic production through wages are becoming structurally insufficient, what institutions replace them? Not someday. Now. What do they look like? How do they operate? How do you build one that actually works, that sustains itself, that improves over time, that remains accountable to the people it serves?</p>
+
+    <p>Those questions have been answered, provisionally and partially, in thousands of places — in cooperatives, commons, mutual aid networks, community land trusts, solidarity economy organizations, and the fragile experiments at the edges of mainstream economic life. The answers are real. But they are scattered, inconsistent, and almost entirely uncodified. Each organization that tries to build something new starts from near-scratch, reinventing governance structures that other organizations have already discovered, learned from, and improved. The knowledge exists. The map does not.</p>
+
+    <p>This book is an attempt to draw that map.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="section-heading">The design gap</div>
+
+  <div class="body-text">
+
+    <p>It is worth being precise about what kind of map this is, and what kind it is not. There is no shortage of books about post-labor economics as a policy question: what tax regimes should fund universal basic income, what regulatory frameworks should govern platform monopolies, what international agreements should distribute the gains from AI-driven productivity. These are important questions. Policy sets the conditions. But policy does not build the institutions that operate within those conditions. It does not tell you how to run a commons, how to make collective decisions without calcifying into oligarchy, how to deliver physical resources equitably without the price system as an allocation mechanism, or how to hold an AI system accountable when it makes a decision that affects a community member's access to housing.</p>
+
+    <p>The gap between knowing what kind of world we want and knowing how to build the organizations that would populate that world — this is the design gap. It is the gap this book is written to close, or at least to substantially narrow.</p>
+
+  </div>
+
+  <div class="pullquote">
+    <p>Policy tells you what should happen. Institution design tells you how to make it happen, sustain it, improve it, and hand it off to the next generation of stewards with more capability than you started with.</p>
+  </div>
+
+  <div class="body-text">
+
+    <p>The distinction matters because the skills required are different. Policy fluency requires understanding of incentive structures, political economy, and legislative mechanics. Institutional design requires something closer to engineering combined with ecology: you are designing systems that must function reliably under conditions of stress, that must adapt when those conditions change, that must survive the departure of founding members and the entry of new ones, that must maintain their integrity when power concentrates inside them — as it always will try to do.</p>
+
+    <p>These are not abstract organizational theory questions. They are intensely practical ones. How do we decide? Who is accountable for what? How do we know if we are doing what we said we would do? What do we do when we aren't? How do we improve? How do we stay honest? These questions are as old as human organization. What is new is the context in which they must be answered — and the urgency with which they must be answered well.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="section-heading">Why existing institutional frameworks are not enough</div>
+
+  <div class="body-text">
+
+    <p>The honest answer to the question "what institutions do we need?" begins with an honest audit of what we have. Worker cooperatives represent one of the most developed models for democratic economic organization. They have a century of practice behind them, a substantial body of research documenting their outcomes, and real examples of successful scale. They are genuinely better at distributing economic power than conventional firms. They are also designed, almost entirely, around the assumption that labor is the primary input and wages are the primary output. When that assumption no longer holds — when automation displaces the labor that cooperatives exist to organize — the cooperative model provides very little guidance on what comes next.</p>
+
+    <p>Mutual aid networks have demonstrated extraordinary capacity for community resilience, particularly in crisis conditions. They operate on principles of solidarity and reciprocity that are precisely the right principles for a post-labor context. They are also, by design, informal and non-institutional — their power comes partly from their resistance to bureaucratization. That resistance, which is a strength at small scale in crisis conditions, becomes a liability when the network needs to persist over decades, coordinate across geographies, and manage significant shared resources.</p>
+
+    <p>The nonprofit sector has evolved sophisticated models for delivering services without profit motive. It has also evolved, under the pressure of funding regimes built around deliverables and impact metrics defined by funders rather than communities, a deeply problematic relationship with accountability. Many nonprofits have become extraordinarily skilled at measuring the activities they perform and deeply unskilled at measuring whether those activities actually improve the lives of the people they serve.</p>
+
+    <p>These are not criticisms. They are observations about what each model was designed to do, and where those designs strain under conditions they weren't built for. The task is not to condemn existing institutions but to understand their design logic well enough to build from their strengths and address their limitations.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="section-heading">The wager this book makes</div>
+
+  <div class="body-text">
+
+    <p>This book rests on three arguments, stated plainly.</p>
+
+  </div>
+
+  <div class="argument-block">
+    <div class="argument-label">Central arguments</div>
+    <ul class="argument-list">
+      <li>
+        <div class="arg-num">01</div>
+        <div class="arg-text"><strong>The transition to post-labor economics is primarily an institutional design challenge, not a policy challenge.</strong> The policy questions matter, but they are upstream. Downstream, someone has to build the organizations that will actually deliver the future we are trying to create. The quality of that work will determine whether the transition goes well or catastrophically.</div>
+      </li>
+      <li>
+        <div class="arg-num">02</div>
+        <div class="arg-text"><strong>Institutional design can be systematized without being mechanized.</strong> There are patterns, processes, and frameworks that reliably produce better institutions — and the absence of a shared vocabulary for those patterns is itself a source of institutional failure. Naming the processes is not bureaucracy. It is the precondition for improvement.</div>
+      </li>
+      <li>
+        <div class="arg-num">03</div>
+        <div class="arg-text"><strong>Three things have no adequate institutional home in any existing framework: AI governance as a community right, human flourishing as a terminal metric, and participatory democracy as an operational process rather than an aspirational value.</strong> These are not additions to the existing institutional design literature. They are the categories that define post-labor institutions as fundamentally different from everything that came before.</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="body-text">
+
+    <p>The framework this book uses — the PLE Governance Process Standard — was built to make these arguments operational. It did not originate in theory. It originated in a practical question: if someone were trying to build a post-labor institution from scratch, and wanted to do a thorough job, what would a complete list of the operational processes they need to develop actually look like? What are the categories? What sits in each category? Where does one process end and another begin? What does maturity look like? What does failure look like?</p>
+
+    <p>The answer draws heavily on the APQC Process Classification Framework — the most rigorously developed organizational process taxonomy in existence, used by thousands of enterprises globally. The adaptation is not superficial. The civic operating categories have been rebuilt from the ground up to reflect community stewardship rather than market competition. The novel categories — AI governance, human flourishing, participatory democracy — have no enterprise analog and were developed from first principles. What the adaptation preserves is the discipline: the commitment to naming everything, to thinking carefully about where processes begin and end, to treating the question "how does this organization actually work?" as worthy of serious, systematic attention.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <div class="section-heading">What this book is and what it is not</div>
+
+  <div class="body-text">
+
+    <p>This is not a book that will tell you what kind of economic system we should have. That argument is elsewhere, and it is being made well by people whose work informs every chapter of what follows. This book begins where that argument lands — in the moment after someone decides to try to build something different — and asks what it actually takes to build it well.</p>
+
+    <p>This is also not a finished map. It cannot be. The territory it describes is being made as we walk through it. Sixty percent of the processes in the framework this book introduces have been developed with full implementation depth. The rest are defined, but not fully built out. That incompleteness is not a failure of ambition — it is an honest acknowledgment that institutional design for a post-labor world is a collective project, not a completed one. The map is an invitation to the cartographers as much as it is a guide for travelers.</p>
+
+    <p>What this book can do — what it is designed to do — is give anyone trying to build a post-labor institution a shared vocabulary for the work, a complete list of the questions they need to answer, a framework for assessing where they are and where they need to go, and a set of detailed process guides for the areas where the path is most clearly marked. That is enough to start. Starting, and starting better than we would have without the map, is the entire point.</p>
+
+    <p>The institutions we need have not been built yet. Some of them are being sketched in experiments scattered across the world. The urgency is not abstract — the divergence on that graph is widening every quarter. The window in which we have the political and social space to design these institutions thoughtfully, rather than improvising them in crisis, will not remain open indefinitely.</p>
+
+    <p>Let us use it well.</p>
+
+  </div>
+
+  <div class="note-aside">
+    <p><strong>A note on the framework:</strong> The PLE Governance Process Standard (PLE-GPS) is referenced throughout this book as both a conceptual tool and a practical instrument. The full taxonomy — 16 categories, 78 process groups, 272 processes, and 229 KPIs — is available in Appendix A. An interactive maturity assessment based on the framework is available at ple-gps.netlify.app. The framework is released under CC BY-SA 4.0 and is designed to be adapted, extended, and improved by the communities that use it.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Preface · P.1</span>
+    <span class="close-next">Next: P.2 — How to use this book →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

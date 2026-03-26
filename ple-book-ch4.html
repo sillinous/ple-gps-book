@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 4 — From policy to institution: the design gap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504;
+    --bg-deep: #0c0a09;
+    --bg-primary: #141210;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.12);
+    --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3;
+    --text-secondary: #a09890;
+    --text-muted: #6b6560;
+    --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07);
+    --border-visible: rgba(201,169,110,0.14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 40px 120px;
+  }
+  .part-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .chapter-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.35;
+    margin-bottom: 44px;
+  }
+  .body-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--text-primary);
+  }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em;
+    font-weight: 300;
+    line-height: 0.75;
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+  }
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-visible);
+  }
+  .section-break-ornament {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+  .pullquote {
+    margin: 44px 0;
+    padding: 28px 32px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 6px 6px 0;
+  }
+  .pullquote p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .pullquote p::before { content: '\201C'; color: var(--accent); }
+  .pullquote p::after  { content: '\201D'; color: var(--accent); }
+
+  /* Policy-to-institution spectrum */
+  .spectrum-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .spectrum-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .spectrum-row {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .spectrum-row:last-child { border-bottom: none; }
+  .spectrum-row.labels {
+    background: var(--bg-secondary);
+  }
+  .spec-cell {
+    padding: 14px 18px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .spec-cell.label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 10px 18px;
+  }
+  .spec-cell.policy strong { color: #8fa8c8; }
+  .spec-cell.institution strong { color: #c9a96e; }
+  .spec-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--border-subtle);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+  }
+
+  /* The five design disciplines */
+  .disciplines-block {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .disc-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .disc-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .disc-row:last-child { border-bottom: none; }
+  .disc-num {
+    width: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    border-right: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+    opacity: 0.75;
+    padding: 18px 0;
+  }
+  .disc-content { padding: 18px 22px; flex: 1; }
+  .disc-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+  }
+  .disc-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.77rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .disc-policy-gap {
+    margin-top: 8px;
+    padding: 9px 13px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.71rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .disc-policy-gap strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  /* What policy can and cannot do */
+  .can-cannot {
+    margin: 40px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+  }
+  .cc-col {
+    background: var(--bg-secondary);
+    padding: 0;
+  }
+  .cc-header {
+    padding: 12px 18px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .cc-header.can   { color: #8db89a; }
+  .cc-header.cannot { color: var(--text-muted); }
+  .cc-item {
+    display: flex;
+    gap: 10px;
+    padding: 11px 18px;
+    border-bottom: 1px solid var(--border-subtle);
+    align-items: flex-start;
+  }
+  .cc-item:last-child { border-bottom: none; }
+  .cc-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-top: 6px;
+    min-width: 5px;
+  }
+  .cc-dot.can    { background: #8db89a; }
+  .cc-dot.cannot { background: var(--text-ghost); }
+  .cc-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Three proximate causes of the gap */
+  .causes-block {
+    margin: 40px 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-top: 2px solid var(--accent);
+    border-radius: 0 0 8px 8px;
+    padding: 28px 32px;
+  }
+  .causes-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+  .causes-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .causes-list li {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .cause-marker {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 20px;
+    padding-top: 3px;
+    opacity: 0.7;
+  }
+  .cause-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .cause-text strong { color: var(--text-primary); font-weight: 600; }
+
+  /* GPS bridge block */
+  .bridge-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .bridge-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .bridge-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .bridge-row:last-child { border-bottom: none; }
+  .bridge-gap {
+    flex: 1;
+    padding: 16px 18px;
+    border-right: 1px solid var(--border-subtle);
+  }
+  .bridge-gps {
+    flex: 1;
+    padding: 16px 18px;
+  }
+  .bridge-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .bridge-label.gap-lbl  { color: var(--text-muted); }
+  .bridge-label.gps-lbl  { color: var(--accent); opacity: 0.8; }
+  .bridge-gap-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .bridge-gap-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .bridge-gps-resp {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .bridge-gps-resp strong { color: var(--accent); font-weight: 500; opacity: 0.9; }
+
+  .note-aside {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-visible);
+    border-radius: 0 6px 6px 0;
+  }
+  .note-aside p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 0.6em;
+  }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  /* Part close — special treatment since this ends Part I */
+  .part-close {
+    margin-top: 64px;
+    padding: 32px;
+    border: 1px solid var(--border-visible);
+    border-radius: 8px;
+    background: var(--bg-secondary);
+    text-align: center;
+  }
+  .part-close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .part-close-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .part-close-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .chapter-close {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .close-next {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+  .page-number {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part I · The great decoupling</div>
+  <div class="chapter-eyebrow">Chapter 4</div>
+  <h1 class="chapter-title">From policy to institution — the design gap</h1>
+  <p class="chapter-subtitle">Why knowing what needs to happen is not the same as being able to make it happen — and what the distance between those two things actually requires</p>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>There is a moment in most serious policy discussions where the argument reaches its natural conclusion — where the evidence is assembled, the mechanism is described, the intervention is named — and the conversation stops. Universal basic income would address income precarity. Community land trusts would permanently remove housing from speculative markets. Algorithmic transparency requirements would give communities meaningful oversight of automated decision systems. Worker ownership stakes would distribute the gains from automation rather than concentrating them. These are not naive proposals. Each is backed by substantial evidence, serious theoretical work, and real examples from jurisdictions that have implemented partial versions of them. The proposals are correct. And then the room goes quiet, because the hardest question has not been asked.</p>
+
+    <p>Who runs the community land trust? How does the worker cooperative handle its capitalization? What are the actual processes by which an algorithmic transparency requirement gets operationalized in a specific institution serving a specific community with specific technical infrastructure and specific governance structures? How does the participatory budgeting session get designed, facilitated, recorded, acted on, and evaluated? Who trains the next cohort of facilitators when the founders burn out?</p>
+
+    <p>These are not afterthoughts. They are the work. The gap between a policy that is correct and an institution that implements it reliably, sustainably, and with genuine accountability to the people it serves — this is the design gap. It is not a small gap. It is not bridged by goodwill or commitment or even by additional funding, though all three help. It is bridged by operational design: by the careful, systematic development of processes that can be executed, monitored, improved, and transmitted to the next generation of institutional stewards.</p>
+
+    <p>This chapter defines the design gap precisely. It examines why policy is necessary but insufficient. It describes the five disciplines of institutional design that policy cannot provide. And it ends where Part II begins: with the argument that a shared process vocabulary — a systematic, comprehensive account of everything a post-labor institution must do — is itself a form of infrastructure, as consequential as any legal framework or funding mechanism, and currently as absent.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">What policy does and what it cannot</div>
+
+  <div class="body-text">
+    <p>The relationship between policy and institution is not a hierarchy in which one is superior to the other. They operate in different registers, address different problems, and require different kinds of expertise. Confusing them — treating policy victories as institutional accomplishments, or treating institutional capacity as a substitute for the policy enabling conditions it requires — is one of the most reliable generators of wasted effort in the solidarity economy. The confusion runs in both directions, and both directions produce failure.</p>
+    <p>Treating policy as sufficient — believing that the right law, regulation, or funding mechanism will produce the institutional outcomes desired — is the technocrat's error. It assumes that institutions are mechanical: that the right incentive structure or legal mandate will automatically produce the right behavior. History furnishes endless counterexamples. Environmental regulations that are formally stringent and practically unenforced. Healthcare mandates that create coverage on paper and access barriers in practice. Worker protection laws that protect workers who can navigate the complaint system and leave unprotected those who cannot. The policy is real. The institution that would give it operational meaning does not exist or does not function.</p>
+    <p>Treating institutional capacity as sufficient — believing that building good organizations is enough regardless of the policy environment — is the community organizer's temptation. It produces institutions that are operationally sophisticated and politically isolated, unable to scale because the enabling conditions for scale have not been created, subject to legal and regulatory pressure that they lack the political relationships to resist. The institution is real. The policy environment that would allow it to grow does not exist.</p>
+    <p>The relationship is genuinely interdependent: policy sets conditions, institutions operationalize them, and the demonstrated performance of institutions shapes the political economy of future policy. Understanding this interdependence precisely — knowing what policy can do and what only institutions can do — is the precondition for using both effectively.</p>
+  </div>
+
+  <div class="can-cannot">
+    <div class="cc-col">
+      <div class="cc-header can">What policy can do</div>
+      <div class="cc-item">
+        <div class="cc-dot can"></div>
+        <div class="cc-text">Establish legal frameworks that make institutional forms possible — cooperative law, community land trust enabling legislation, commons governance statutes</div>
+      </div>
+      <div class="cc-item">
+        <div class="cc-dot can"></div>
+        <div class="cc-text">Create funding mechanisms — grants, tax incentives, public investment — that reduce the capitalization barriers institutions face</div>
+      </div>
+      <div class="cc-item">
+        <div class="cc-dot can"></div>
+        <div class="cc-text">Set minimum standards that prevent the worst outcomes — wage floors, safety requirements, anti-discrimination protections</div>
+      </div>
+      <div class="cc-item">
+        <div class="cc-dot can"></div>
+        <div class="cc-text">Shift relative costs and benefits through taxation, regulation, and procurement to make community-serving institutional forms more viable</div>
+      </div>
+      <div class="cc-item">
+        <div class="cc-dot can"></div>
+        <div class="cc-text">Generate political legitimacy for alternative institutional models by naming them, funding them, and measuring their outcomes in public accounting</div>
+      </div>
+      <div class="cc-item">
+        <div class="cc-dot can"></div>
+        <div class="cc-text">Protect institutional experiments from hostile legal and regulatory action long enough for them to demonstrate their value</div>
+      </div>
+    </div>
+    <div class="cc-col">
+      <div class="cc-header cannot">What policy cannot do</div>
+      <div class="cc-item">
+        <div class="cc-dot cannot"></div>
+        <div class="cc-text">Design the governance processes through which democratic decisions are actually made in specific institutions serving specific communities</div>
+      </div>
+      <div class="cc-item">
+        <div class="cc-dot cannot"></div>
+        <div class="cc-text">Build the operational systems — financial management, service delivery, member support, knowledge transfer — that keep institutions functioning across leadership transitions</div>
+      </div>
+      <div class="cc-item">
+        <div class="cc-dot cannot"></div>
+        <div class="cc-text">Create the measurement infrastructure that tells institutions whether they are achieving their stated purposes rather than their proximate outputs</div>
+      </div>
+      <div class="cc-item">
+        <div class="cc-dot cannot"></div>
+        <div class="cc-text">Develop the inter-institutional relationships, shared standards, and knowledge transfer systems that allow institutions to learn from each other</div>
+      </div>
+      <div class="cc-item">
+        <div class="cc-dot cannot"></div>
+        <div class="cc-text">Sustain institutional culture — the shared values, norms, and practices that hold organizations together through stress — across time and generational change</div>
+      </div>
+      <div class="cc-item">
+        <div class="cc-dot cannot"></div>
+        <div class="cc-text">Operationalize equity: convert an equity commitment in a mission statement into equitable processes in hiring, governance, service design, and outcome measurement</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five disciplines of institutional design</div>
+
+  <div class="body-text">
+    <p>What policy cannot do, institutional design must. But institutional design is not a single discipline. It is a cluster of five distinct capabilities, each addressing a different dimension of the gap between a policy that is correct and an institution that reliably delivers on it. The failure to distinguish these capabilities — treating "institution building" as a single undifferentiated activity — is one reason that well-resourced, well-intentioned institutional efforts so frequently underperform.</p>
+  </div>
+
+  <div class="disciplines-block">
+    <div class="disc-header">The five disciplines — what institutional design actually requires</div>
+
+    <div class="disc-row">
+      <div class="disc-num">D1</div>
+      <div class="disc-content">
+        <div class="disc-name">Process architecture</div>
+        <div class="disc-desc">The design of the operational processes through which the institution does its work: how decisions are made, how services are delivered, how resources are allocated, how members are supported, how quality is maintained, how performance is assessed. Process architecture is the most concrete dimension of institutional design and the one most systematically neglected. Institutions routinely develop programs without designing the processes that would sustain them, governance structures without designing the meeting formats and documentation practices that would make them function, and equity commitments without designing the hiring, promotion, and service design processes that would operationalize them.</div>
+        <div class="disc-policy-gap"><strong>Policy gap:</strong> No legislation specifies how a cooperative board meeting should be documented or how a mutual aid network should conduct case handoffs. These are institutional design questions, not policy questions. Their absence is the absence of operational capacity, not the absence of legal permission.</div>
+      </div>
+    </div>
+
+    <div class="disc-row">
+      <div class="disc-num">D2</div>
+      <div class="disc-content">
+        <div class="disc-name">Accountability infrastructure</div>
+        <div class="disc-desc">The systems through which an institution knows whether it is doing what it said it would do — and through which the people most affected by its decisions can hold it to account. Accountability infrastructure includes measurement systems, reporting practices, governance structures that give members genuine rather than nominal voice, grievance mechanisms that function without requiring institutional trust, and the audit processes that prevent the drift from stated mission to operational practice that characterizes so many mature institutions. Without this infrastructure, accountability is an aspiration rather than a function.</div>
+        <div class="disc-policy-gap"><strong>Policy gap:</strong> Regulatory reporting requirements create formal accountability to government funders but almost never create accountability to the communities institutions serve. The accountability direction — upward to funders rather than downward to beneficiaries — is set by institutional design choices, not by policy mandates.</div>
+      </div>
+    </div>
+
+    <div class="disc-row">
+      <div class="disc-num">D3</div>
+      <div class="disc-content">
+        <div class="disc-name">Knowledge architecture</div>
+        <div class="disc-desc">The systems through which an institution captures, codifies, transmits, and improves the knowledge required for its operation. This includes onboarding processes, documentation standards, succession planning, communities of practice, and the explicit mechanisms for learning from failure — the things that determine whether institutional knowledge lives in systems or in people, and whether the departure of key individuals is a manageable transition or an organizational crisis. Knowledge architecture is the institutional immune system: its absence becomes visible only when a threat arrives that the institution cannot recognize because no one who remembers the last one is still there.</div>
+        <div class="disc-policy-gap"><strong>Policy gap:</strong> Knowledge management is entirely internal to institutions. No policy framework mandates it, funds it, or measures it. Its absence is invisible to external accountability systems until the institution fails in ways that surprise everyone except the people who watched the knowledge walk out the door.</div>
+      </div>
+    </div>
+
+    <div class="disc-row">
+      <div class="disc-num">D4</div>
+      <div class="disc-content">
+        <div class="disc-name">Equity operationalization</div>
+        <div class="disc-desc">The translation of equity commitments — which most solidarity economy institutions hold sincerely — into operational processes that embed equity in decisions rather than aspirations. This requires knowing, specifically, where the institution's decisions affect equity outcomes: who gets hired and promoted, who participates in governance, who receives services and on what terms, whose interests are represented in strategic decisions, how the institution measures its own equity performance, and what happens when the measurement reveals underperformance. Equity operationalization is the discipline of making the stated values visible in the operational choices, not just in the mission language.</div>
+        <div class="disc-policy-gap"><strong>Policy gap:</strong> Anti-discrimination law sets minimum standards but does not create equity. The distance between legal compliance and genuine equity is enormous and is crossed only through institutional design: through the deliberate embedding of equity considerations in every significant operational process.</div>
+      </div>
+    </div>
+
+    <div class="disc-row">
+      <div class="disc-num">D5</div>
+      <div class="disc-content">
+        <div class="disc-name">Adaptive capacity</div>
+        <div class="disc-desc">The ability of an institution to recognize when its environment has changed, to learn from its own performance, and to redesign its processes in response without losing the institutional identity and accumulated knowledge that make it worth preserving. Adaptive capacity is the hardest discipline to build because it requires tolerating the discomfort of honest self-assessment and the organizational disruption of genuine change. Institutions without it become brittle: they continue executing processes designed for conditions that no longer exist, accumulating performance debt until the gap between what they do and what is needed becomes too large to ignore — at which point crisis-driven change destroys much of what should have been preserved.</div>
+        <div class="disc-policy-gap"><strong>Policy gap:</strong> Policy can require that institutions evaluate their programs. It cannot create the organizational culture and internal processes that make evaluation genuinely consequential — that create a genuine feedback loop between assessment and adaptation. That loop is built by institutional design or not at all.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Three proximate causes of the gap</div>
+
+  <div class="body-text">
+    <p>The design gap is not a mystery. The conditions that produce it are visible and, within limits, addressable. Three proximate causes account for most of the gap between the institutional capacity that exists and the institutional capacity that post-labor conditions will require.</p>
+  </div>
+
+  <div class="causes-block">
+    <div class="causes-label">Three proximate causes of the design gap</div>
+    <ul class="causes-list">
+      <li>
+        <div class="cause-marker">C1</div>
+        <div class="cause-text"><strong>The vocabulary problem.</strong> Institutional design requires a shared language for the work. Without it, practitioners cannot learn from each other, funders cannot assess institutional capacity, and institutions cannot benchmark their own development against any coherent standard of what maturity looks like. The enterprise sector solved this problem decades ago with process frameworks, management standards, and shared organizational vocabularies that allow any competent manager to walk into an unknown organization and understand what it is doing and what it is missing. The solidarity economy has no equivalent. Every institution invents its own vocabulary for its own processes, which means that the knowledge encoded in that vocabulary cannot be transferred, compared, or systematically improved. This is not a minor inefficiency. It is the primary mechanism by which the solidarity economy fails to accumulate organizational knowledge across its thousands of constituent institutions.</div>
+      </li>
+      <li>
+        <div class="cause-marker">C2</div>
+        <div class="cause-text"><strong>The funding misalignment problem.</strong> Institutional design is unfundable by most of the mechanisms through which solidarity economy institutions are resourced. Program funding pays for services delivered. Capital funding pays for physical assets. Grant funding pays for defined activities with measurable outputs. The process architecture, accountability infrastructure, knowledge systems, equity operationalization, and adaptive capacity that determine whether any of those funded activities will be sustained, improved, and transmitted to the next institutional generation — these are overhead. They are what funders cut when budgets tighten. They are what institutions underfund when forced to choose between services and systems. The result is a solidarity economy that is genuinely committed to its mission and structurally unable to build the organizational capacity its mission requires.</div>
+      </li>
+      <li>
+        <div class="cause-marker">C3</div>
+        <div class="cause-text"><strong>The isolation problem.</strong> The knowledge that would allow the solidarity economy to learn collectively — the accumulated experience of thousands of institutions navigating the same design challenges — is not shared. Institutions operate in isolation from each other, reinventing processes that have already been developed and sometimes abandoned elsewhere, making avoidable mistakes because the communities of practice that would transmit hard-won knowledge do not exist in adequate form. Where knowledge-sharing networks do exist — cooperative associations, mutual aid federations, community land trust networks — they typically operate at the legal and advocacy level rather than at the operational process level. They share information about policy environments and legal structures. They do not share process designs, governance protocols, measurement frameworks, or the operational knowledge that would allow institutions to improve without having to rediscover everything for themselves.</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The policy-to-institution spectrum</div>
+
+  <div class="body-text">
+    <p>The relationship between a policy objective and the institutional reality it aims to produce is not a single step but a spectrum of translations, each requiring different kinds of work. Seeing the whole spectrum makes visible where the design gap typically opens — and where the GPS framework intervenes.</p>
+  </div>
+
+  <div class="spectrum-block">
+    <div class="spectrum-header">The translation spectrum — from policy objective to operational reality</div>
+    <div class="spectrum-row labels">
+      <div class="spec-cell label policy">Policy domain</div>
+      <div class="spec-divider"></div>
+      <div class="spec-cell label institution">Institutional design requirement</div>
+    </div>
+    <div class="spectrum-row">
+      <div class="spec-cell policy"><strong>Universal basic income</strong> — every adult receives a guaranteed income floor regardless of employment status</div>
+      <div class="spec-divider">→</div>
+      <div class="spec-cell institution">Payment administration systems. Eligibility verification that doesn't recreate means-testing. Integration with existing benefit systems. Appeal and grievance processes. Fraud prevention without dignity violations. Member communication and financial literacy support.</div>
+    </div>
+    <div class="spectrum-row">
+      <div class="spec-cell policy"><strong>Community land trust</strong> — land held in perpetuity for community benefit, housing permanently affordable</div>
+      <div class="spec-divider">→</div>
+      <div class="spec-cell institution">Ground lease design and administration. Resale formula governance. Member education and counseling. Property maintenance systems. Stewardship fund management. Community governance of trust decisions. Equitable selection processes for residents.</div>
+    </div>
+    <div class="spectrum-row">
+      <div class="spec-cell policy"><strong>Algorithmic transparency</strong> — communities have the right to understand and contest automated decisions affecting them</div>
+      <div class="spec-divider">→</div>
+      <div class="spec-cell institution">AI audit processes and documentation standards. Plain-language explanation systems. Member complaint intake and review. Technical capacity for bias testing. Governance processes for AI system approval. Ongoing monitoring and drift detection. Remediation procedures when harm is identified.</div>
+    </div>
+    <div class="spectrum-row">
+      <div class="spec-cell policy"><strong>Participatory budgeting</strong> — community members directly decide how a portion of public or institutional resources is spent</div>
+      <div class="spec-divider">→</div>
+      <div class="spec-cell institution">Proposal intake and feasibility review. Deliberation facilitation design. Accessible voting mechanisms. Implementation tracking and accountability. Facilitator training and succession. Translation and accessibility infrastructure. Documentation and institutional memory for past cycles.</div>
+    </div>
+    <div class="spectrum-row">
+      <div class="spec-cell policy"><strong>Worker ownership mandate</strong> — firms above a certain size must offer workers an ownership stake</div>
+      <div class="spec-divider">→</div>
+      <div class="spec-cell institution">Ownership structure design and legal documentation. Governance rights associated with ownership. Financial education for new worker-owners. Profit distribution calculations and communication. Dispute resolution for ownership conflicts. Buyout mechanisms for departing members. Board governance with worker-owner representation.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The GPS as a bridge across the gap</div>
+
+  <div class="body-text">
+    <p>The Governance Process Standard introduced in Part II of this book is not the only possible response to the design gap. Improving funder practices, building practitioner communities of exchange, strengthening cooperative development infrastructure, and investing in operational capacity in solidarity economy institutions are all necessary and complementary. The GPS is one instrument in a larger toolkit.</p>
+    <p>But it is an instrument specifically designed for the three proximate causes identified above. It addresses the vocabulary problem by providing a comprehensive, shared taxonomy of institutional processes — a common language for the work of post-labor institution building that any institution can use to assess its own development, communicate its capacity to funders and partners, and benchmark against a coherent standard of what operational maturity looks like. It addresses the funding misalignment problem by making the process infrastructure visible: by naming and defining the categories of operational work that are currently treated as overhead, it creates the vocabulary for funders to value and invest in them deliberately rather than treating them as costs to be minimized. And it addresses the isolation problem by providing the shared infrastructure around which communities of practice can form — not just communities that share policy positions but communities that share operational knowledge, process designs, and the hard-won institutional wisdom that is currently lost at institutional boundaries.</p>
+  </div>
+
+  <div class="bridge-block">
+    <div class="bridge-header">How the GPS addresses each dimension of the design gap</div>
+
+    <div class="bridge-row">
+      <div class="bridge-gap">
+        <div class="bridge-label gap-lbl">Design gap dimension</div>
+        <div class="bridge-gap-text">No shared process vocabulary</div>
+        <div class="bridge-gap-desc">Each institution invents its own language for its own processes; knowledge cannot be transferred, compared, or systematically improved across institutions</div>
+      </div>
+      <div class="bridge-gps">
+        <div class="bridge-label gps-lbl">GPS response</div>
+        <div class="bridge-gps-resp">16 categories, 78 process groups, 272 named processes provide a comprehensive shared taxonomy. Any institution can locate its work within the framework, identify gaps, and communicate its capacity in terms others can understand. <strong>See: all 16 GPS categories</strong></div>
+      </div>
+    </div>
+
+    <div class="bridge-row">
+      <div class="bridge-gap">
+        <div class="bridge-label gap-lbl">Design gap dimension</div>
+        <div class="bridge-gap-text">Operational depth in novel categories</div>
+        <div class="bridge-gap-desc">AI governance, human flourishing as a measurable objective, and participatory democracy as an operational system are entirely absent from existing institutional frameworks</div>
+      </div>
+      <div class="bridge-gps">
+        <div class="bridge-label gps-lbl">GPS response</div>
+        <div class="bridge-gps-resp">Three entirely new categories with no enterprise analog: AI oversight, bias auditing, and consent frameworks; flourishing indicators and wellbeing measurement; democracy as designed operational process. <strong>See: GPS categories 14.0, 15.0, 16.0</strong></div>
+      </div>
+    </div>
+
+    <div class="bridge-row">
+      <div class="bridge-gap">
+        <div class="bridge-label gap-lbl">Design gap dimension</div>
+        <div class="bridge-gap-text">No inter-institutional learning infrastructure</div>
+        <div class="bridge-gap-desc">Institutions operate in isolation, reinventing processes already developed elsewhere, unable to learn systematically from the collective experience of similar institutions</div>
+      </div>
+      <div class="bridge-gps">
+        <div class="bridge-label gps-lbl">GPS response</div>
+        <div class="bridge-gps-resp">A common framework enables genuine comparison, knowledge sharing, and collective improvement. Category 12.0 specifically operationalizes inter-institutional relations. The CC BY-SA license makes the framework itself a commons. <strong>See: GPS category 12.0</strong></div>
+      </div>
+    </div>
+
+    <div class="bridge-row">
+      <div class="bridge-gap">
+        <div class="bridge-label gap-lbl">Design gap dimension</div>
+        <div class="bridge-gap-text">Accountability to funders over communities</div>
+        <div class="bridge-gap-desc">Measurement infrastructure calibrated to funder deliverables rather than community outcomes; the accountability direction runs upward rather than downward</div>
+      </div>
+      <div class="bridge-gps">
+        <div class="bridge-label gps-lbl">GPS response</div>
+        <div class="bridge-gps-resp">229 KPIs calibrated to community and institutional outcomes. Category 15.0 (Human Flourishing) specifically addresses the measurement of whether lives improve. Category 11.0 operationalizes accountability structures. <strong>See: GPS categories 11.0, 15.0 and KPI library</strong></div>
+      </div>
+    </div>
+
+    <div class="bridge-row">
+      <div class="bridge-gap">
+        <div class="bridge-label gap-lbl">Design gap dimension</div>
+        <div class="bridge-gap-text">Equity commitments without equity processes</div>
+        <div class="bridge-gap-desc">Equity stated as a value but not embedded in the operational decisions that determine who participates, who benefits, who governs, and who is accountable to whom</div>
+      </div>
+      <div class="bridge-gps">
+        <div class="bridge-label gps-lbl">GPS response</div>
+        <div class="bridge-gps-resp">Equity operationalization is embedded across all 16 categories — in access design (3.0), governance (1.0 and 16.0), service delivery (5.0 and 6.0), human development (7.0), and the dedicated integrity category. <strong>See: GPS category 11.0 and cross-category equity processes</strong></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The necessary humility of a process standard</div>
+
+  <div class="body-text">
+
+    <p>It would be a serious misreading of this chapter — and of the framework it introduces — to conclude that institutional design is merely technical: that the design gap is a problem of insufficient process knowledge, and that providing the process knowledge closes the gap. The design gap is a technical problem in the same way that building a house is a technical problem. The technical knowledge is necessary but entirely insufficient. The house is not built by the blueprint. It is built by the people who understand the materials, the site, the climate, the community's needs, and the hundred small decisions that no blueprint can anticipate. The blueprint is what makes those decisions coherent rather than arbitrary. It is not a substitute for judgment.</p>
+
+    <p>Post-labor institutions will be built by communities — by the specific people in specific places with specific histories and relationships and resource constraints, who are trying to address specific problems that no general framework can fully anticipate. The GPS is not a replacement for that local knowledge and judgment. It is a structure within which local knowledge and judgment can be applied more effectively: a shared vocabulary that allows practitioners to communicate, a comprehensive taxonomy that ensures no significant process category is forgotten, a maturity model that provides direction without prescribing the path, and a commons infrastructure around which the collective knowledge of the solidarity economy can accumulate rather than dissipating at institutional boundaries.</p>
+
+    <p>Part I of this book has established why the work is urgent, what exists and where it falls short, what the institutional design space looks like when organized clearly, and precisely what is meant by the gap between policy and institution. Part II introduces the instrument. The question that remains — and that the rest of this book attempts to answer, process by process, category by category — is not whether the gap exists, but what it concretely takes to close it.</p>
+
+  </div>
+
+  <div class="part-close">
+    <div class="part-close-label">End of Part I · The great decoupling</div>
+    <div class="part-close-title">The diagnosis is complete. The instrument is next.</div>
+    <div class="part-close-sub">Part II introduces the PLE Governance Process Standard — its origins, its structure, and how to use it as both a design tool and an ongoing institutional compass. Chapter 5 begins with the question that the enterprise sector answered decades ago and the solidarity economy still has not: what does a complete list of the things an institution must do actually look like?</div>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part I · Chapter 4</span>
+    <span class="close-next">Part II begins: Ch. 5 — What is a process standard →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

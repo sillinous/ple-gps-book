@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Institutions for a World After Work — PLE-GPS</title>
+<meta name="description" content="A complete guide to designing, operating, and evolving post-labor institutions using the PLE Governance Process Standard">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   BASE
+══════════════════════════════════════════ */
+:root {
+  --bg-void:#060504; --bg-deep:#0c0a09; --bg-primary:#141210;
+  --bg-secondary:#1c1917; --bg-tertiary:#242120; --bg-raised:#2a2724;
+  --text-primary:#f0ebe3; --text-secondary:#a09890;
+  --text-muted:#6b6560; --text-ghost:#48443f;
+  --border-hair:rgba(201,169,110,0.05);
+  --border-subtle:rgba(201,169,110,0.09);
+  --border-visible:rgba(201,169,110,0.16);
+  --gold:#c9a96e; --gold-bright:#d4b47a; --gold-dim:rgba(201,169,110,0.09);
+  --civic:#1D9E75; --civic-dim:rgba(29,158,117,0.09);
+  --civic-border:rgba(29,158,117,0.22); --civic-text:#4ecfa0;
+  --inst:#378ADD; --inst-dim:rgba(55,138,221,0.09);
+  --inst-border:rgba(55,138,221,0.22); --inst-text:#7ab8f0;
+  --novel:#7F77DD; --novel-dim:rgba(127,119,221,0.09);
+  --novel-border:rgba(127,119,221,0.22); --novel-text:#b0aaf0;
+  --sidebar-w:288px;
+  --topbar-h:46px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  background: var(--bg-void);
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  opacity: 0.013;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════
+   LAYOUT SHELL
+══════════════════════════════════════════ */
+.shell { display: flex; height: 100vh; overflow: hidden; }
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════ */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-deep);
+  border-right: 1px solid var(--border-subtle);
+  overflow: hidden;
+  position: relative;
+  z-index: 20;
+  flex-shrink: 0;
+  transition: transform .25s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── Sidebar brand ── */
+.sb-brand {
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border-hair);
+  cursor: pointer;
+  transition: background .12s;
+  flex-shrink: 0;
+}
+.sb-brand:hover { background: rgba(201,169,110,0.04); }
+.sb-brand-eyebrow {
+  font-size: 7.5px; font-weight: 600; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--text-ghost); margin-bottom: 5px;
+}
+.sb-brand-title {
+  font-family: 'Crimson Pro', serif; font-size: 1rem; font-weight: 600;
+  color: var(--text-primary); line-height: 1.25; margin-bottom: 3px;
+}
+.sb-brand-sub { font-size: .65rem; color: var(--text-muted); line-height: 1.4; }
+
+/* ── Search box ── */
+.sb-search {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-hair);
+  flex-shrink: 0;
+}
+.sb-search input {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 6px 10px 6px 28px;
+  font-family: 'Outfit', sans-serif;
+  font-size: .7rem;
+  color: var(--text-secondary);
+  outline: none;
+  transition: border-color .15s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2348443f' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 9px center;
+}
+.sb-search input::placeholder { color: var(--text-ghost); }
+.sb-search input:focus { border-color: rgba(201,169,110,.25); color: var(--text-primary); }
+
+/* ── Nav scroll area ── */
+.sb-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 70px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-raised) transparent;
+}
+.sb-nav::-webkit-scrollbar { width: 3px; }
+.sb-nav::-webkit-scrollbar-thumb { background: var(--bg-raised); border-radius: 2px; }
+
+/* ── Section groups ── */
+.sb-group { margin-bottom: 1px; }
+.sb-group-head {
+  padding: 10px 20px 4px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 7px; font-weight: 600; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--text-ghost);
+}
+.sb-group-head::after {
+  content: ''; flex: 1; height: 1px;
+  background: var(--border-hair);
+}
+.sb-group-head.tier-civic { color: rgba(78,207,160,.45); }
+.sb-group-head.tier-inst  { color: rgba(122,184,240,.45); }
+.sb-group-head.tier-novel { color: rgba(176,170,240,.45); }
+.sb-group-head.tier-ref   { color: rgba(201,169,110,.4); }
+
+/* ── Nav items ── */
+.sb-item {
+  display: flex; align-items: flex-start; gap: 0;
+  padding: 5.5px 20px 5.5px 16px;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background .1s, border-color .1s;
+  user-select: none;
+}
+.sb-item:hover { background: rgba(201,169,110,.04); }
+.sb-item.active {
+  background: rgba(201,169,110,.07);
+  border-left-color: var(--gold);
+}
+.sb-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px; font-weight: 500;
+  color: var(--text-ghost);
+  min-width: 36px; padding-top: 1px;
+  flex-shrink: 0; line-height: 1.5;
+}
+.sb-label { font-size: .695rem; color: var(--text-muted); line-height: 1.4; }
+.sb-item.active .sb-label { color: var(--text-primary); }
+.sb-item.active .sb-num { color: var(--gold); }
+.sb-item.tier-civic .sb-num { color: rgba(78,207,160,.38); }
+.sb-item.tier-civic.active .sb-num { color: var(--civic-text); }
+.sb-item.tier-inst .sb-num  { color: rgba(122,184,240,.38); }
+.sb-item.tier-inst.active .sb-num  { color: var(--inst-text); }
+.sb-item.tier-novel .sb-num { color: rgba(176,170,240,.38); }
+.sb-item.tier-novel.active .sb-num { color: var(--novel-text); }
+.sb-item.tier-ref .sb-num   { color: rgba(201,169,110,.38); }
+.sb-item.tier-ref.active .sb-num   { color: var(--gold-bright); }
+.sb-item.hidden { display: none; }
+
+/* ── Progress footer ── */
+.sb-footer {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: var(--bg-deep);
+  border-top: 1px solid var(--border-hair);
+  padding: 10px 16px 11px;
+}
+.sb-prog-meta {
+  display: flex; justify-content: space-between;
+  font-size: 7.5px; color: var(--text-ghost);
+  letter-spacing: .06em; margin-bottom: 5px;
+}
+.sb-prog-bar { height: 2px; background: var(--bg-raised); border-radius: 1px; }
+.sb-prog-fill {
+  height: 100%; border-radius: 1px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 100%);
+  transition: width .35s ease;
+}
+
+/* ══════════════════════════════════════════
+   MAIN PANEL
+══════════════════════════════════════════ */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+/* ── Topbar ── */
+.topbar {
+  height: var(--topbar-h); min-height: var(--topbar-h);
+  display: flex; align-items: center;
+  padding: 0 16px; gap: 10px;
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border-hair);
+  flex-shrink: 0;
+}
+.topbar-menu {
+  width: 30px; height: 30px; display: none;
+  align-items: center; justify-content: center;
+  background: var(--bg-secondary); border: 1px solid var(--border-subtle);
+  border-radius: 4px; cursor: pointer; color: var(--text-muted);
+  font-size: .9rem; flex-shrink: 0;
+}
+.topbar-crumb {
+  flex: 1; font-size: .72rem; color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  min-width: 0;
+}
+.topbar-crumb b { color: var(--text-secondary); font-weight: 500; }
+.topbar-sep { color: var(--text-ghost); font-size: .65rem; }
+.nav-btn {
+  height: 28px; padding: 0 11px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  font-family: 'Outfit', sans-serif;
+  font-size: .68rem; color: var(--text-muted);
+  cursor: pointer; white-space: nowrap;
+  display: flex; align-items: center; gap: 4px;
+  transition: background .1s, color .1s;
+  flex-shrink: 0;
+}
+.nav-btn:hover:not(:disabled) { background: var(--bg-tertiary); color: var(--text-primary); }
+.nav-btn:disabled { opacity: .28; cursor: default; pointer-events: none; }
+.topbar-home {
+  height: 28px; padding: 0 10px;
+  background: var(--gold-dim);
+  border: 1px solid var(--border-visible);
+  border-radius: 4px;
+  font-family: 'Outfit', sans-serif;
+  font-size: .68rem; color: var(--gold-bright);
+  cursor: pointer; white-space: nowrap;
+  display: flex; align-items: center; gap: 5px;
+  transition: background .1s;
+  flex-shrink: 0;
+}
+.topbar-home:hover { background: rgba(201,169,110,.14); }
+
+/* ── Content viewport ── */
+.viewport { flex: 1; position: relative; overflow: hidden; }
+#content-frame {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: none; background: var(--bg-void);
+  display: none;
+}
+#landing {
+  position: absolute; inset: 0;
+  overflow-y: auto;
+  background: var(--bg-void);
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-raised) transparent;
+}
+#landing::-webkit-scrollbar { width: 6px; }
+#landing::-webkit-scrollbar-thumb { background: var(--bg-raised); border-radius: 3px; }
+
+/* ══════════════════════════════════════════
+   LANDING PAGE
+══════════════════════════════════════════ */
+.land {
+  max-width: 800px; margin: 0 auto;
+  padding: 60px 44px 100px;
+}
+.land-eyebrow {
+  font-size: 8.5px; font-weight: 600; letter-spacing: .24em;
+  text-transform: uppercase; color: var(--text-ghost);
+  margin-bottom: 14px;
+}
+.land-title {
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300; color: var(--text-primary);
+  line-height: 1.08; margin-bottom: 14px;
+  letter-spacing: -.01em;
+}
+.land-subtitle {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.15rem; font-weight: 300; font-style: italic;
+  color: var(--text-secondary); margin-bottom: 32px; line-height: 1.5;
+}
+.land-rule { height: 1px; background: var(--border-visible); margin-bottom: 36px; }
+.land-desc {
+  font-size: .8rem; color: var(--text-muted);
+  line-height: 1.85; margin-bottom: 36px;
+  max-width: 620px;
+}
+.land-desc strong { color: var(--text-secondary); font-weight: 500; }
+
+/* Stats */
+.land-stats {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 1px; background: var(--border-hair);
+  border: 1px solid var(--border-subtle);
+  border-radius: 7px; overflow: hidden;
+  margin-bottom: 48px;
+}
+.stat {
+  background: var(--bg-secondary);
+  padding: 16px 12px; text-align: center;
+}
+.stat-n {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.9rem; font-weight: 300;
+  color: var(--text-primary); display: block; line-height: 1;
+}
+.stat-l {
+  font-size: .62rem; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-top: 3px; display: block;
+}
+
+/* TOC label */
+.toc-label {
+  font-size: 8.5px; font-weight: 600; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--gold);
+  opacity: .75; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.toc-label::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+
+/* TOC parts */
+.toc-part { margin-bottom: 20px; }
+.toc-part-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px 5px 0 0; border-bottom: none;
+}
+.toc-part-head.civic { background:rgba(29,158,117,.04); border-color:rgba(29,158,117,.14); }
+.toc-part-head.inst  { background:rgba(55,138,221,.04); border-color:rgba(55,138,221,.14); }
+.toc-part-head.novel { background:rgba(127,119,221,.04); border-color:rgba(127,119,221,.14); }
+.toc-part-head.ref   { background:var(--gold-dim); border-color:rgba(201,169,110,.14); }
+.toc-ph-part {
+  font-size: 7.5px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; min-width: 58px;
+  color: var(--text-ghost);
+}
+.toc-ph-part.civic  { color: rgba(78,207,160,.6); }
+.toc-ph-part.inst   { color: rgba(122,184,240,.6); }
+.toc-ph-part.novel  { color: rgba(176,170,240,.6); }
+.toc-ph-part.ref    { color: rgba(201,169,110,.6); }
+.toc-ph-title {
+  font-family: 'Crimson Pro', serif;
+  font-size: .92rem; font-weight: 600;
+  color: var(--text-primary); flex: 1;
+}
+.toc-ph-range { font-size: .66rem; color: var(--text-ghost); }
+
+.toc-items {
+  border: 1px solid var(--border-subtle);
+  border-radius: 0 0 5px 5px;
+  overflow: hidden;
+}
+.toc-row {
+  display: flex; align-items: flex-start; gap: 0;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border-hair);
+  cursor: pointer;
+  transition: background .1s;
+}
+.toc-row:last-child { border-bottom: none; }
+.toc-row:hover { background: var(--bg-secondary); }
+.toc-row.civic:hover .toc-row-title { color: var(--civic-text); }
+.toc-row.inst:hover .toc-row-title  { color: var(--inst-text); }
+.toc-row.novel:hover .toc-row-title { color: var(--novel-text); }
+.toc-row-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px; color: var(--text-ghost);
+  min-width: 54px; flex-shrink: 0; padding-top: 2px;
+}
+.toc-row-body { flex: 1; min-width: 0; }
+.toc-row-title {
+  font-size: .75rem; color: var(--text-secondary);
+  font-weight: 500; line-height: 1.4; transition: color .1s;
+}
+.toc-row-sub {
+  font-size: .67rem; color: var(--text-muted);
+  line-height: 1.4; margin-top: 2px;
+}
+
+/* Start button */
+.land-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 36px; padding: 12px 22px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,169,110,.28);
+  border-radius: 5px; cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: .78rem; font-weight: 500;
+  color: var(--gold-bright);
+  transition: background .15s;
+}
+.land-cta:hover { background: rgba(201,169,110,.14); }
+.land-front {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6px; margin-bottom: 20px;
+}
+.land-front-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 5px; cursor: pointer;
+  transition: background .1s;
+}
+.land-front-item:hover { background: var(--bg-tertiary); }
+.land-front-num { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--text-ghost); min-width: 54px; }
+.land-front-title { font-size: .74rem; color: var(--text-secondary); }
+
+/* ══════════════════════════════════════════
+   MOBILE
+══════════════════════════════════════════ */
+@media (max-width: 720px) {
+  .sidebar { position: fixed; left: 0; top: 0; bottom: 0; z-index: 50; transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,.5); }
+  .topbar-menu { display: flex; }
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 40; }
+  .overlay.show { display: block; }
+  .land { padding: 36px 24px 80px; }
+  .land-stats { grid-template-columns: repeat(3, 1fr); }
+  .land-front { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ════════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════ -->
+<nav class="sidebar" id="sidebar">
+
+  <div class="sb-brand" onclick="goHome()">
+    <div class="sb-brand-eyebrow">PLE Governance Process Standard</div>
+    <div class="sb-brand-title">Institutions for a World After Work</div>
+    <div class="sb-brand-sub">Post-Labor Economics · GPS Framework</div>
+  </div>
+
+  <div class="sb-search">
+    <input type="search" id="sb-search" placeholder="Search chapters…" oninput="filterNav(this.value)" autocomplete="off">
+  </div>
+
+  <div class="sb-nav" id="sb-nav">
+
+    <div class="sb-group">
+      <div class="sb-group-head">Front matter</div>
+      <div class="sb-item" data-i="0" data-f="ple-book-preface-p1.html" onclick="go(this)"><span class="sb-num">P.1</span><span class="sb-label">A map for unmapped territory</span></div>
+      <div class="sb-item" data-i="1" data-f="ple-book-preface-p2.html" onclick="go(this)"><span class="sb-num">P.2</span><span class="sb-label">How to use this book</span></div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-head">Part I — The Great Decoupling</div>
+      <div class="sb-item" data-i="2" data-f="ple-book-ch1.html" onclick="go(this)"><span class="sb-num">Ch. 1</span><span class="sb-label">The labor-value contract is ending</span></div>
+      <div class="sb-item" data-i="3" data-f="ple-book-ch2.html" onclick="go(this)"><span class="sb-num">Ch. 2</span><span class="sb-label">What institutions exist, and why they are insufficient</span></div>
+      <div class="sb-item" data-i="4" data-f="ple-book-ch3.html" onclick="go(this)"><span class="sb-num">Ch. 3</span><span class="sb-label">The dual pyramids — prosperity and power</span></div>
+      <div class="sb-item" data-i="5" data-f="ple-book-ch4.html" onclick="go(this)"><span class="sb-num">Ch. 4</span><span class="sb-label">From policy to institution — the design gap</span></div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-head">Part II — The GPS Framework</div>
+      <div class="sb-item" data-i="6" data-f="ple-book-ch5.html" onclick="go(this)"><span class="sb-num">Ch. 5</span><span class="sb-label">What is a process standard</span></div>
+      <div class="sb-item" data-i="7" data-f="ple-book-ch6.html" onclick="go(this)"><span class="sb-num">Ch. 6</span><span class="sb-label">The 16 categories — a guided tour</span></div>
+      <div class="sb-item" data-i="8" data-f="ple-book-ch7.html" onclick="go(this)"><span class="sb-num">Ch. 7</span><span class="sb-label">Using the maturity model</span></div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-head tier-civic">Part III — Civic Operating (GPS 1–6)</div>
+      <div class="sb-item tier-civic" data-i="9"  data-f="ple-book-ch8.html"  onclick="go(this)"><span class="sb-num">Ch. 8</span><span class="sb-label">GPS 1.0 — Collective Vision &amp; Governance</span></div>
+      <div class="sb-item tier-civic" data-i="10" data-f="ple-book-ch9.html"  onclick="go(this)"><span class="sb-num">Ch. 9</span><span class="sb-label">GPS 2.0 — Design &amp; Steward Public Goods</span></div>
+      <div class="sb-item tier-civic" data-i="11" data-f="ple-book-ch10.html" onclick="go(this)"><span class="sb-num">Ch. 10</span><span class="sb-label">GPS 3.0 — Facilitate Access &amp; Engagement</span></div>
+      <div class="sb-item tier-civic" data-i="12" data-f="ple-book-ch11.html" onclick="go(this)"><span class="sb-num">Ch. 11</span><span class="sb-label">GPS 4.0 — Deliver Physical Resources</span></div>
+      <div class="sb-item tier-civic" data-i="13" data-f="ple-book-ch12.html" onclick="go(this)"><span class="sb-num">Ch. 12</span><span class="sb-label">GPS 5.0 — Deliver Services &amp; Programs</span></div>
+      <div class="sb-item tier-civic" data-i="14" data-f="ple-book-ch13.html" onclick="go(this)"><span class="sb-num">Ch. 13</span><span class="sb-label">GPS 6.0 — Support Community Members</span></div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-head tier-inst">Part IV — Institutional Support (GPS 7–13)</div>
+      <div class="sb-item tier-inst" data-i="15" data-f="ple-book-ch14.html" onclick="go(this)"><span class="sb-num">Ch. 14</span><span class="sb-label">GPS 7.0 — Develop Human Potential</span></div>
+      <div class="sb-item tier-inst" data-i="16" data-f="ple-book-ch15.html" onclick="go(this)"><span class="sb-num">Ch. 15</span><span class="sb-label">GPS 8.0 — Technology &amp; AI Infrastructure</span></div>
+      <div class="sb-item tier-inst" data-i="17" data-f="ple-book-ch16.html" onclick="go(this)"><span class="sb-num">Ch. 16</span><span class="sb-label">GPS 9.0 — Steward Collective Resources</span></div>
+      <div class="sb-item tier-inst" data-i="18" data-f="ple-book-ch17.html" onclick="go(this)"><span class="sb-num">Ch. 17</span><span class="sb-label">GPS 10.0 — Manage Commons &amp; Shared Assets</span></div>
+      <div class="sb-item tier-inst" data-i="19" data-f="ple-book-ch18.html" onclick="go(this)"><span class="sb-num">Ch. 18</span><span class="sb-label">GPS 11.0 — Institutional Integrity &amp; Equity</span></div>
+      <div class="sb-item tier-inst" data-i="20" data-f="ple-book-ch19.html" onclick="go(this)"><span class="sb-num">Ch. 19</span><span class="sb-label">GPS 12.0 — Inter-Institutional Relations</span></div>
+      <div class="sb-item tier-inst" data-i="21" data-f="ple-book-ch20.html" onclick="go(this)"><span class="sb-num">Ch. 20</span><span class="sb-label">GPS 13.0 — Evolve Institutional Capabilities</span></div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-head tier-novel">Part V — Novel Categories (GPS 14–16)</div>
+      <div class="sb-item tier-novel" data-i="22" data-f="ple-book-ch21.html" onclick="go(this)"><span class="sb-num">Ch. 21</span><span class="sb-label">GPS 14.0 — AI Governance &amp; Algorithmic Accountability</span></div>
+      <div class="sb-item tier-novel" data-i="23" data-f="ple-book-ch22.html" onclick="go(this)"><span class="sb-num">Ch. 22</span><span class="sb-label">GPS 15.0 — Human Flourishing &amp; Wellbeing</span></div>
+      <div class="sb-item tier-novel" data-i="24" data-f="ple-book-ch23.html" onclick="go(this)"><span class="sb-num">Ch. 23</span><span class="sb-label">GPS 16.0 — Participatory Democracy</span></div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-head">Part VI — Applied Archetypes</div>
+      <div class="sb-item" data-i="25" data-f="ple-book-ch24.html" onclick="go(this)"><span class="sb-num">Ch. 24</span><span class="sb-label">Five archetypes — institution types and where to start</span></div>
+    </div>
+
+    <div class="sb-group">
+      <div class="sb-group-head tier-ref">Reference Appendices</div>
+      <div class="sb-item tier-ref" data-i="26" data-f="ple-book-appendix-a.html" onclick="go(this)"><span class="sb-num">App. A</span><span class="sb-label">Full GPS Process Taxonomy (L1–L4)</span></div>
+      <div class="sb-item tier-ref" data-i="27" data-f="ple-book-appendix-b.html" onclick="go(this)"><span class="sb-num">App. B</span><span class="sb-label">GPS KPI Library — 198 KPIs</span></div>
+      <div class="sb-item tier-ref" data-i="28" data-f="ple-book-appendix-c.html" onclick="go(this)"><span class="sb-num">App. C</span><span class="sb-label">GPS Maturity Assessment Tool</span></div>
+      <div class="sb-item tier-ref" data-i="29" data-f="ple-book-appendix-d.html" onclick="go(this)"><span class="sb-num">App. D</span><span class="sb-label">Recommended Resources by Category</span></div>
+      <div class="sb-item tier-ref" data-i="30" data-f="ple-book-appendix-e.html" onclick="go(this)"><span class="sb-num">App. E</span><span class="sb-label">Glossary — 42 key terms</span></div>
+    </div>
+
+  </div><!-- /sb-nav -->
+
+  <div class="sb-footer">
+    <div class="sb-prog-meta">
+      <span id="prog-loc">Cover</span>
+      <span id="prog-pct">—</span>
+    </div>
+    <div class="sb-prog-bar">
+      <div class="sb-prog-fill" id="prog-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+</nav><!-- /sidebar -->
+
+<!-- ════════════════════════════════════════
+     MAIN
+════════════════════════════════════════ -->
+<div class="main">
+
+  <div class="topbar">
+    <div class="topbar-menu" id="menu-btn" onclick="toggleSidebar()">☰</div>
+    <div class="topbar-crumb" id="crumb">
+      <b>Institutions for a World After Work</b>
+    </div>
+    <button class="nav-btn" id="btn-prev" onclick="step(-1)" disabled>← Prev</button>
+    <button class="nav-btn" id="btn-next" onclick="step(1)">Next →</button>
+    <div class="topbar-home" onclick="goHome()">⌂ Contents</div>
+  </div>
+
+  <div class="viewport">
+
+    <!-- LANDING -->
+    <div id="landing">
+    <div class="land">
+
+      <div class="land-eyebrow">Post-Labor Economics Governance Process Standard</div>
+      <div class="land-title">Institutions for a World After Work</div>
+      <div class="land-subtitle">A complete guide to designing, operating, and evolving post-labor institutions using the PLE Governance Process Standard</div>
+      <div class="land-rule"></div>
+
+      <div class="land-desc">
+        This book provides the first comprehensive process standard for solidarity economy institutions — drawing on the APQC Process Classification Framework and adapting it for the community benefit organizations, worker cooperatives, community land trusts, mutual aid networks, and civic technology cooperatives that will constitute the institutional backbone of post-labor economies. <strong>Sixteen GPS categories, eighty process groups, and approximately 1,400 institutional activities</strong> are organized across three tiers and assessed using a four-level maturity model, with a full KPI library, maturity assessment tool, recommended resources, and glossary.
+      </div>
+
+      <div class="land-stats">
+        <div class="stat"><span class="stat-n">24</span><span class="stat-l">Chapters</span></div>
+        <div class="stat"><span class="stat-n">16</span><span class="stat-l">GPS Categories</span></div>
+        <div class="stat"><span class="stat-n">80</span><span class="stat-l">Process Groups</span></div>
+        <div class="stat"><span class="stat-n">198</span><span class="stat-l">KPIs</span></div>
+        <div class="stat"><span class="stat-n">5</span><span class="stat-l">Appendices</span></div>
+      </div>
+
+      <div class="toc-label">Table of contents</div>
+
+      <!-- Front matter -->
+      <div class="land-front">
+        <div class="land-front-item" onclick="loadFile('ple-book-preface-p1.html')">
+          <span class="land-front-num">Preface 1</span><span class="land-front-title">A map for unmapped territory</span>
+        </div>
+        <div class="land-front-item" onclick="loadFile('ple-book-preface-p2.html')">
+          <span class="land-front-num">Preface 2</span><span class="land-front-title">How to use this book</span>
+        </div>
+      </div>
+
+      <!-- Part I -->
+      <div class="toc-part">
+        <div class="toc-part-head">
+          <span class="toc-ph-part">Part I</span>
+          <span class="toc-ph-title">The Great Decoupling</span>
+          <span class="toc-ph-range">Ch. 1–4</span>
+        </div>
+        <div class="toc-items">
+          <div class="toc-row" onclick="loadFile('ple-book-ch1.html')"><span class="toc-row-num">Ch. 1</span><div class="toc-row-body"><div class="toc-row-title">The labor-value contract is ending</div><div class="toc-row-sub">Economic analysis of technological labor displacement and its institutional implications</div></div></div>
+          <div class="toc-row" onclick="loadFile('ple-book-ch2.html')"><span class="toc-row-num">Ch. 2</span><div class="toc-row-body"><div class="toc-row-title">What institutions exist, and why they are insufficient</div><div class="toc-row-sub">Audit of existing solidarity economy institutions against post-labor economic requirements</div></div></div>
+          <div class="toc-row" onclick="loadFile('ple-book-ch3.html')"><span class="toc-row-num">Ch. 3</span><div class="toc-row-body"><div class="toc-row-title">The dual pyramids — prosperity and power</div><div class="toc-row-sub">How labor displacement simultaneously concentrates economic resources and governance authority</div></div></div>
+          <div class="toc-row" onclick="loadFile('ple-book-ch4.html')"><span class="toc-row-num">Ch. 4</span><div class="toc-row-body"><div class="toc-row-title">From policy to institution — the design gap</div><div class="toc-row-sub">Why policy responses are insufficient and what institutional design requires</div></div></div>
+        </div>
+      </div>
+
+      <!-- Part II -->
+      <div class="toc-part">
+        <div class="toc-part-head">
+          <span class="toc-ph-part">Part II</span>
+          <span class="toc-ph-title">The GPS Framework</span>
+          <span class="toc-ph-range">Ch. 5–7</span>
+        </div>
+        <div class="toc-items">
+          <div class="toc-row" onclick="loadFile('ple-book-ch5.html')"><span class="toc-row-num">Ch. 5</span><div class="toc-row-body"><div class="toc-row-title">What is a process standard</div><div class="toc-row-sub">Origins in the APQC PCF, the five-level taxonomy, and the adaptation logic for solidarity economy institutions</div></div></div>
+          <div class="toc-row" onclick="loadFile('ple-book-ch6.html')"><span class="toc-row-num">Ch. 6</span><div class="toc-row-body"><div class="toc-row-title">The 16 categories — a guided tour</div><div class="toc-row-sub">Overview of all sixteen GPS categories across three tiers, with entry points by institutional type</div></div></div>
+          <div class="toc-row" onclick="loadFile('ple-book-ch7.html')"><span class="toc-row-num">Ch. 7</span><div class="toc-row-body"><div class="toc-row-title">Using the maturity model</div><div class="toc-row-sub">Four-level maturity framework, self-assessment methodology, and development sequencing</div></div></div>
+        </div>
+      </div>
+
+      <!-- Part III -->
+      <div class="toc-part">
+        <div class="toc-part-head civic">
+          <span class="toc-ph-part civic">Part III</span>
+          <span class="toc-ph-title">Civic Operating Processes</span>
+          <span class="toc-ph-range">Ch. 8–13 · GPS 1.0–6.0</span>
+        </div>
+        <div class="toc-items">
+          <div class="toc-row civic" onclick="loadFile('ple-book-ch8.html')"><span class="toc-row-num">Ch. 8</span><div class="toc-row-body"><div class="toc-row-title">GPS 1.0 — Collective Vision &amp; Governance Strategy</div><div class="toc-row-sub">Mission development · governance architecture · decision rights · stakeholder engagement · governance health</div></div></div>
+          <div class="toc-row civic" onclick="loadFile('ple-book-ch9.html')"><span class="toc-row-num">Ch. 9</span><div class="toc-row-body"><div class="toc-row-title">GPS 2.0 — Design &amp; Steward Public Goods</div><div class="toc-row-sub">Ostrom's principles applied · commons governance · knowledge contribution · enclosure resistance</div></div></div>
+          <div class="toc-row civic" onclick="loadFile('ple-book-ch10.html')"><span class="toc-row-num">Ch. 10</span><div class="toc-row-body"><div class="toc-row-title">GPS 3.0 — Facilitate Access &amp; Engagement</div><div class="toc-row-sub">Six-type barrier removal · trust-building infrastructure · engagement spectrum · participation equity</div></div></div>
+          <div class="toc-row civic" onclick="loadFile('ple-book-ch11.html')"><span class="toc-row-num">Ch. 11</span><div class="toc-row-body"><div class="toc-row-title">GPS 4.0 — Deliver Physical Resources</div><div class="toc-row-sub">Procurement · allocation equity · dignity of distribution · supply chain resilience</div></div></div>
+          <div class="toc-row civic" onclick="loadFile('ple-book-ch12.html')"><span class="toc-row-num">Ch. 12</span><div class="toc-row-body"><div class="toc-row-title">GPS 5.0 — Deliver Services &amp; Programs</div><div class="toc-row-sub">Seven design principles · co-design · outcome equity · structural barrier documentation · evaluation</div></div></div>
+          <div class="toc-row civic" onclick="loadFile('ple-book-ch13.html')"><span class="toc-row-num">Ch. 13</span><div class="toc-row-body"><div class="toc-row-title">GPS 6.0 — Support Community Members</div><div class="toc-row-sub">Trauma-informed intake · caseload standards · crisis response · peer support · longitudinal outcomes</div></div></div>
+        </div>
+      </div>
+
+      <!-- Part IV -->
+      <div class="toc-part">
+        <div class="toc-part-head inst">
+          <span class="toc-ph-part inst">Part IV</span>
+          <span class="toc-ph-title">Institutional Support Processes</span>
+          <span class="toc-ph-range">Ch. 14–20 · GPS 7.0–13.0</span>
+        </div>
+        <div class="toc-items">
+          <div class="toc-row inst" onclick="loadFile('ple-book-ch14.html')"><span class="toc-row-num">Ch. 14</span><div class="toc-row-body"><div class="toc-row-title">GPS 7.0 — Develop Human Potential</div><div class="toc-row-sub">Equity-centered recruitment · leadership pipeline · pay equity · burnout prevention · organizational culture</div></div></div>
+          <div class="toc-row inst" onclick="loadFile('ple-book-ch15.html')"><span class="toc-row-num">Ch. 15</span><div class="toc-row-body"><div class="toc-row-title">GPS 8.0 — Technology &amp; AI Infrastructure</div><div class="toc-row-sub">Technology strategy · data sovereignty · community data governance · digital equity</div></div></div>
+          <div class="toc-row inst" onclick="loadFile('ple-book-ch16.html')"><span class="toc-row-num">Ch. 16</span><div class="toc-row-body"><div class="toc-row-title">GPS 9.0 — Steward Collective Resources</div><div class="toc-row-sub">Revenue diversification · indirect cost recovery · funder independence · reserves · transparency</div></div></div>
+          <div class="toc-row inst" onclick="loadFile('ple-book-ch17.html')"><span class="toc-row-num">Ch. 17</span><div class="toc-row-body"><div class="toc-row-title">GPS 10.0 — Manage Commons &amp; Shared Assets</div><div class="toc-row-sub">Asset stewardship · enclosure protection · intergenerational equity · cooperative capital structure</div></div></div>
+          <div class="toc-row inst" onclick="loadFile('ple-book-ch18.html')"><span class="toc-row-num">Ch. 18</span><div class="toc-row-body"><div class="toc-row-title">GPS 11.0 — Institutional Integrity &amp; Equity</div><div class="toc-row-sub">Values operationalization · six-domain equity audit · accountability architecture · whistleblower protection</div></div></div>
+          <div class="toc-row inst" onclick="loadFile('ple-book-ch19.html')"><span class="toc-row-num">Ch. 19</span><div class="toc-row-body"><div class="toc-row-title">GPS 12.0 — Inter-Institutional Relations</div><div class="toc-row-sub">Partnership equity · mutual aid · peer learning · policy coalitions · movement building</div></div></div>
+          <div class="toc-row inst" onclick="loadFile('ple-book-ch20.html')"><span class="toc-row-num">Ch. 20</span><div class="toc-row-body"><div class="toc-row-title">GPS 13.0 — Evolve Institutional Capabilities</div><div class="toc-row-sub">Double-loop learning · strategic renewal · innovation portfolio · GPS maturity assessment</div></div></div>
+        </div>
+      </div>
+
+      <!-- Part V -->
+      <div class="toc-part">
+        <div class="toc-part-head novel">
+          <span class="toc-ph-part novel">Part V</span>
+          <span class="toc-ph-title">Novel Categories</span>
+          <span class="toc-ph-range">Ch. 21–23 · GPS 14.0–16.0</span>
+        </div>
+        <div class="toc-items">
+          <div class="toc-row novel" onclick="loadFile('ple-book-ch21.html')"><span class="toc-row-num">Ch. 21</span><div class="toc-row-body"><div class="toc-row-title">GPS 14.0 — AI Governance &amp; Algorithmic Accountability</div><div class="toc-row-sub">Four-tier risk spectrum · equity impact assessment · contestability · human oversight · community AI governance</div></div></div>
+          <div class="toc-row novel" onclick="loadFile('ple-book-ch22.html')"><span class="toc-row-num">Ch. 22</span><div class="toc-row-body"><div class="toc-row-title">GPS 15.0 — Human Flourishing &amp; Wellbeing</div><div class="toc-row-sub">Seven flourishing dimensions · post-labor meaning crisis · community contribution pathways · wellbeing economy</div></div></div>
+          <div class="toc-row novel" onclick="loadFile('ple-book-ch23.html')"><span class="toc-row-num">Ch. 23</span><div class="toc-row-body"><div class="toc-row-title">GPS 16.0 — Participatory Democracy</div><div class="toc-row-sub">Participation spectrum · participatory budgeting · citizen assemblies · power mapping · mandar obedeciendo</div></div></div>
+        </div>
+      </div>
+
+      <!-- Part VI -->
+      <div class="toc-part">
+        <div class="toc-part-head">
+          <span class="toc-ph-part">Part VI</span>
+          <span class="toc-ph-title">Applied Archetypes</span>
+          <span class="toc-ph-range">Ch. 24</span>
+        </div>
+        <div class="toc-items">
+          <div class="toc-row" onclick="loadFile('ple-book-ch24.html')"><span class="toc-row-num">Ch. 24</span><div class="toc-row-body"><div class="toc-row-title">Five archetypes — institution types and where to start</div><div class="toc-row-sub">Community land trusts · worker cooperatives · mutual aid networks · community foundations · civic technology cooperatives</div></div></div>
+        </div>
+      </div>
+
+      <!-- Reference -->
+      <div class="toc-part">
+        <div class="toc-part-head ref">
+          <span class="toc-ph-part ref">Reference</span>
+          <span class="toc-ph-title">Appendices A–E</span>
+          <span class="toc-ph-range">Full reference suite</span>
+        </div>
+        <div class="toc-items">
+          <div class="toc-row" onclick="loadFile('ple-book-appendix-a.html')"><span class="toc-row-num">App. A</span><div class="toc-row-body"><div class="toc-row-title">Full GPS Process Taxonomy</div><div class="toc-row-sub">All 16 categories · 80 process groups · complete L1–L4 hierarchy · cross-reference index</div></div></div>
+          <div class="toc-row" onclick="loadFile('ple-book-appendix-b.html')"><span class="toc-row-num">App. B</span><div class="toc-row-body"><div class="toc-row-title">GPS KPI Library</div><div class="toc-row-sub">198 KPIs across 16 categories · 5 fields each · category health composites · measurement method index</div></div></div>
+          <div class="toc-row" onclick="loadFile('ple-book-appendix-c.html')"><span class="toc-row-num">App. C</span><div class="toc-row-body"><div class="toc-row-title">GPS Maturity Assessment Tool</div><div class="toc-row-sub">All 16 GPS categories with rubrics · scoring summary · development roadmap template · reassessment guidance</div></div></div>
+          <div class="toc-row" onclick="loadFile('ple-book-appendix-d.html')"><span class="toc-row-num">App. D</span><div class="toc-row-body"><div class="toc-row-title">Recommended Resources by GPS Category</div><div class="toc-row-sub">Foundational texts · organizations · peer networks · practical tools for all 16 categories</div></div></div>
+          <div class="toc-row" onclick="loadFile('ple-book-appendix-e.html')"><span class="toc-row-num">App. E</span><div class="toc-row-body"><div class="toc-row-title">Glossary</div><div class="toc-row-sub">42 key terms defined as used in the PLE-GPS framework</div></div></div>
+        </div>
+      </div>
+
+      <div class="land-cta" onclick="loadFile('ple-book-preface-p1.html')">
+        Begin reading &nbsp;→
+      </div>
+
+    </div><!-- /land -->
+    </div><!-- /landing -->
+
+    <!-- CONTENT IFRAME -->
+    <iframe id="content-frame" src="about:blank"></iframe>
+
+  </div><!-- /viewport -->
+</div><!-- /main -->
+
+</div><!-- /shell -->
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<script>
+/* ══════════════════════════════════════
+   MANIFEST
+══════════════════════════════════════ */
+const MANIFEST = [
+  {f:"ple-book-preface-p1.html", crumb:"Front Matter",  label:"Preface 1"},
+  {f:"ple-book-preface-p2.html", crumb:"Front Matter",  label:"Preface 2"},
+  {f:"ple-book-ch1.html",        crumb:"Part I",        label:"Ch. 1"},
+  {f:"ple-book-ch2.html",        crumb:"Part I",        label:"Ch. 2"},
+  {f:"ple-book-ch3.html",        crumb:"Part I",        label:"Ch. 3"},
+  {f:"ple-book-ch4.html",        crumb:"Part I",        label:"Ch. 4"},
+  {f:"ple-book-ch5.html",        crumb:"Part II",       label:"Ch. 5"},
+  {f:"ple-book-ch6.html",        crumb:"Part II",       label:"Ch. 6"},
+  {f:"ple-book-ch7.html",        crumb:"Part II",       label:"Ch. 7"},
+  {f:"ple-book-ch8.html",        crumb:"Part III · GPS 1.0",  label:"Ch. 8"},
+  {f:"ple-book-ch9.html",        crumb:"Part III · GPS 2.0",  label:"Ch. 9"},
+  {f:"ple-book-ch10.html",       crumb:"Part III · GPS 3.0",  label:"Ch. 10"},
+  {f:"ple-book-ch11.html",       crumb:"Part III · GPS 4.0",  label:"Ch. 11"},
+  {f:"ple-book-ch12.html",       crumb:"Part III · GPS 5.0",  label:"Ch. 12"},
+  {f:"ple-book-ch13.html",       crumb:"Part III · GPS 6.0",  label:"Ch. 13"},
+  {f:"ple-book-ch14.html",       crumb:"Part IV · GPS 7.0",   label:"Ch. 14"},
+  {f:"ple-book-ch15.html",       crumb:"Part IV · GPS 8.0",   label:"Ch. 15"},
+  {f:"ple-book-ch16.html",       crumb:"Part IV · GPS 9.0",   label:"Ch. 16"},
+  {f:"ple-book-ch17.html",       crumb:"Part IV · GPS 10.0",  label:"Ch. 17"},
+  {f:"ple-book-ch18.html",       crumb:"Part IV · GPS 11.0",  label:"Ch. 18"},
+  {f:"ple-book-ch19.html",       crumb:"Part IV · GPS 12.0",  label:"Ch. 19"},
+  {f:"ple-book-ch20.html",       crumb:"Part IV · GPS 13.0",  label:"Ch. 20"},
+  {f:"ple-book-ch21.html",       crumb:"Part V · GPS 14.0",   label:"Ch. 21"},
+  {f:"ple-book-ch22.html",       crumb:"Part V · GPS 15.0",   label:"Ch. 22"},
+  {f:"ple-book-ch23.html",       crumb:"Part V · GPS 16.0",   label:"Ch. 23"},
+  {f:"ple-book-ch24.html",       crumb:"Part VI",       label:"Ch. 24"},
+  {f:"ple-book-appendix-a.html", crumb:"Reference",     label:"App. A"},
+  {f:"ple-book-appendix-b.html", crumb:"Reference",     label:"App. B"},
+  {f:"ple-book-appendix-c.html", crumb:"Reference",     label:"App. C"},
+  {f:"ple-book-appendix-d.html", crumb:"Reference",     label:"App. D"},
+  {f:"ple-book-appendix-e.html", crumb:"Reference",     label:"App. E"},
+];
+
+/* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+let cur = -1; // -1 = landing
+
+/* ══════════════════════════════════════
+   CORE
+══════════════════════════════════════ */
+function go(el) {
+  const i = parseInt(el.dataset.i);
+  activate(i, MANIFEST[i].f);
+}
+
+function loadFile(file) {
+  const i = MANIFEST.findIndex(m => m.f === file);
+  if (i < 0) return;
+  activate(i, file);
+}
+
+function activate(i, file) {
+  cur = i;
+  const m = MANIFEST[i];
+
+  // Show iframe, hide landing
+  document.getElementById('landing').style.display = 'none';
+  const frame = document.getElementById('content-frame');
+  frame.style.display = 'block';
+  frame.src = file;
+
+  // Sidebar highlight
+  document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
+  const el = document.querySelector(`.sb-item[data-i="${i}"]`);
+  if (el) {
+    el.classList.add('active');
+    el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  // Topbar crumb
+  document.getElementById('crumb').innerHTML =
+    `<b>${m.crumb}</b> <span class="topbar-sep">›</span> ${m.label}`;
+
+  // Buttons
+  document.getElementById('btn-prev').disabled = (i <= 0);
+  document.getElementById('btn-next').disabled = (i >= MANIFEST.length - 1);
+
+  // Progress
+  const pct = Math.round(((i + 1) / MANIFEST.length) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-loc').textContent = m.label;
+  document.getElementById('prog-pct').textContent = pct + '%';
+
+  // Hash
+  history.replaceState(null, '', '#' + file);
+
+  // Mobile: close sidebar
+  closeSidebar();
+}
+
+function goHome() {
+  cur = -1;
+  document.getElementById('landing').style.display = 'block';
+  const frame = document.getElementById('content-frame');
+  frame.style.display = 'none';
+  frame.src = 'about:blank';
+
+  document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('crumb').innerHTML = '<b>Institutions for a World After Work</b>';
+  document.getElementById('btn-prev').disabled = true;
+  document.getElementById('btn-next').disabled = false;
+  document.getElementById('prog-fill').style.width = '0%';
+  document.getElementById('prog-loc').textContent = 'Contents';
+  document.getElementById('prog-pct').textContent = '—';
+
+  history.replaceState(null, '', window.location.pathname);
+  closeSidebar();
+}
+
+function step(dir) {
+  const next = cur + dir;
+  if (next < 0) { goHome(); return; }
+  if (next >= MANIFEST.length) return;
+  activate(next, MANIFEST[next].f);
+}
+
+/* ══════════════════════════════════════
+   SEARCH / FILTER
+══════════════════════════════════════ */
+function filterNav(q) {
+  const term = q.toLowerCase().trim();
+  document.querySelectorAll('.sb-item').forEach(item => {
+    if (!term) { item.classList.remove('hidden'); return; }
+    const text = item.textContent.toLowerCase();
+    item.classList.toggle('hidden', !text.includes(term));
+  });
+  // Hide empty groups
+  document.querySelectorAll('.sb-group').forEach(group => {
+    const visible = [...group.querySelectorAll('.sb-item')]
+      .some(el => !el.classList.contains('hidden'));
+    group.style.display = visible ? '' : 'none';
+  });
+}
+
+/* ══════════════════════════════════════
+   SIDEBAR TOGGLE
+══════════════════════════════════════ */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+/* ══════════════════════════════════════
+   KEYBOARD
+══════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') step(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp'   || e.key === 'PageUp')   step(-1);
+  if (e.key === 'Escape') {
+    if (document.getElementById('sb-search').value) {
+      document.getElementById('sb-search').value = '';
+      filterNav('');
+    } else {
+      goHome();
+    }
+  }
+});
+
+/* ══════════════════════════════════════
+   INIT — hash routing
+══════════════════════════════════════ */
+window.addEventListener('load', () => {
+  const hash = window.location.hash.slice(1);
+  if (hash && hash.endsWith('.html')) {
+    const i = MANIFEST.findIndex(m => m.f === hash);
+    if (i >= 0) { activate(i, hash); return; }
+  }
+  goHome();
+});
+</script>
+</body>
+</html>

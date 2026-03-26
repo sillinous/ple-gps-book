@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 6 — The 16 categories: a guided tour of the PLE-GPS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504;
+    --bg-deep: #0c0a09;
+    --bg-primary: #141210;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --accent-dim: rgba(201,169,110,0.12);
+    --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3;
+    --text-secondary: #a09890;
+    --text-muted: #6b6560;
+    --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07);
+    --border-visible: rgba(201,169,110,0.14);
+    --civic: #1D9E75;
+    --civic-dim: rgba(29,158,117,0.08);
+    --civic-text: #4ecfa0;
+    --inst: #378ADD;
+    --inst-dim: rgba(55,138,221,0.08);
+    --inst-text: #7ab8f0;
+    --novel: #7F77DD;
+    --novel-dim: rgba(127,119,221,0.10);
+    --novel-text: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-void);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.018;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 72px 40px 120px;
+  }
+  .part-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .chapter-eyebrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .chapter-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.9rem, 3.8vw, 2.85rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .chapter-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.35;
+    margin-bottom: 44px;
+  }
+  .body-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--text-primary);
+  }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter {
+    font-size: 3.8em;
+    font-weight: 300;
+    line-height: 0.75;
+    float: left;
+    margin: 0.06em 0.1em 0 0;
+    color: var(--accent);
+    font-family: 'Crimson Pro', serif;
+  }
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 48px 0;
+  }
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-visible);
+  }
+  .section-break-ornament {
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.5;
+  }
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+  .tier-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 40px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .tier-label.civic  { color: var(--civic-text); }
+  .tier-label.inst   { color: var(--inst-text); }
+  .tier-label.novel  { color: var(--novel-text); }
+  .tier-label-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tier-label.civic  .tier-label-dot { background: var(--civic); }
+  .tier-label.inst   .tier-label-dot { background: var(--inst); }
+  .tier-label.novel  .tier-label-dot { background: var(--novel); }
+  .tier-label-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    opacity: 0.6;
+    margin-left: auto;
+    text-transform: none;
+    font-style: italic;
+  }
+
+  /* Category cards */
+  .cat-card {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-subtle);
+  }
+  .cat-card.civic  { border-top: 2px solid rgba(29,158,117,0.4); }
+  .cat-card.inst   { border-top: 2px solid rgba(55,138,221,0.4); }
+  .cat-card.novel  { border-top: 2px solid rgba(127,119,221,0.5); }
+
+  .cat-top {
+    display: flex;
+    align-items: stretch;
+    background: var(--bg-secondary);
+  }
+  .cat-num {
+    width: 52px;
+    min-width: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    border-right: 1px solid var(--border-subtle);
+    padding: 18px 0;
+  }
+  .civic  .cat-num { color: var(--civic-text); background: var(--civic-dim); }
+  .inst   .cat-num { color: var(--inst-text);  background: var(--inst-dim);  }
+  .novel  .cat-num { color: var(--novel-text); background: var(--novel-dim); }
+
+  .cat-head { padding: 18px 20px; flex: 1; }
+  .cat-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+  .cat-tagline {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-bottom: 8px;
+  }
+  .cat-badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .cat-badge {
+    font-family: 'Outfit', sans-serif;
+    font-size: 8px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .civic  .cat-badge { background: var(--civic-dim);  color: var(--civic-text); }
+  .inst   .cat-badge { background: var(--inst-dim);   color: var(--inst-text);  }
+  .novel  .cat-badge { background: var(--novel-dim);  color: var(--novel-text); }
+  .cat-badge.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  .cat-body {
+    padding: 18px 20px;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-primary);
+  }
+  .cat-desc {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+  }
+  .cat-processes {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .proc-row {
+    display: flex;
+    border-bottom: 1px solid var(--border-subtle);
+    align-items: flex-start;
+  }
+  .proc-row:last-child { border-bottom: none; }
+  .proc-id {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--text-ghost);
+    min-width: 42px;
+    padding: 9px 10px 9px 12px;
+    border-right: 1px solid var(--border-subtle);
+    letter-spacing: 0.04em;
+  }
+  .proc-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.73rem;
+    color: var(--text-secondary);
+    padding: 9px 12px;
+    line-height: 1.5;
+    flex: 1;
+  }
+  .cat-example {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    padding: 10px 14px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    font-style: italic;
+  }
+  .cat-example strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-style: normal;
+  }
+  .cat-kpi-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .kpi-pill {
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    color: var(--text-muted);
+    padding: 3px 9px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    letter-spacing: 0.03em;
+  }
+
+  .pullquote {
+    margin: 44px 0;
+    padding: 28px 32px;
+    border-left: 2px solid var(--accent);
+    background: var(--accent-glow);
+    border-radius: 0 6px 6px 0;
+  }
+  .pullquote p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .pullquote p::before { content: '\201C'; color: var(--accent); }
+  .pullquote p::after  { content: '\201D'; color: var(--accent); }
+
+  /* Flow diagram — how categories connect */
+  .flow-block {
+    margin: 40px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .flow-header {
+    padding: 12px 22px;
+    background: var(--bg-tertiary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .flow-body { padding: 20px 22px; }
+  .flow-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .flow-row:last-child { margin-bottom: 0; }
+  .flow-pill {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .flow-pill.civic  { background: var(--civic-dim);  color: var(--civic-text); border: 1px solid rgba(29,158,117,0.2); }
+  .flow-pill.inst   { background: var(--inst-dim);   color: var(--inst-text);  border: 1px solid rgba(55,138,221,0.2); }
+  .flow-pill.novel  { background: var(--novel-dim);  color: var(--novel-text); border: 1px solid rgba(127,119,221,0.2); }
+  .flow-arrow {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    color: var(--text-ghost);
+    flex-shrink: 0;
+  }
+  .flow-note {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .note-aside {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--bg-tertiary);
+    border-left: 1px solid var(--border-visible);
+    border-radius: 0 6px 6px 0;
+  }
+  .note-aside p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin: 0 0 0.6em;
+  }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .close-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .close-next {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+  .page-number {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
+    color: var(--text-ghost);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part II · The governance process standard</div>
+  <div class="chapter-eyebrow">Chapter 6</div>
+  <h1 class="chapter-title">The 16 categories — a guided tour of the PLE-GPS</h1>
+  <p class="chapter-subtitle">A complete walkthrough of the taxonomy — what each category contains, why it is where it is, and what it looks like in real institutions</p>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>A taxonomy is a claim about what things belong together. The 16 categories of the PLE-GPS are not an arbitrary grouping of related activities — they are an argument about how the work of a post-labor institution is organized, what each domain of work is for, and how the domains relate to each other. This chapter is a guided tour of that argument: a complete walkthrough of all 16 categories that explains the reasoning behind each one, describes its key process groups, illustrates it with examples from real institutions, and connects it to the dual pyramid framework introduced in Chapter 3.</p>
+
+    <p>Each category in the chapters that follow Part II receives its own full treatment — theory, process depth, maturity model, case studies, and implementation guidance. This chapter is not a substitute for that depth. It is a map of the territory before you enter it: oriented, labeled, and legible enough that when you reach a specific category chapter, you already understand where it sits in relation to everything else. It is also, for the reader who needs to make decisions about priorities before reading the full chapters, a sufficient basis for that prioritization.</p>
+
+    <p>The 16 categories are organized in three tiers. The civic operating tier (categories 1–6) describes what institutions do for and with their communities: the visible, outward-facing work. The institutional support tier (categories 7–13) describes what institutions do to sustain themselves: the operational infrastructure beneath the surface. The novel PLE tier (categories 14–16) describes what post-labor institutions must do that no institutional framework has previously attempted to operationalize. Each tier has its own color register in this chapter and throughout the book: teal for civic operating, blue for institutional support, violet for the novel categories.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <!-- CIVIC OPERATING TIER -->
+  <div class="tier-label civic">
+    <div class="tier-label-dot"></div>
+    Civic operating processes · categories 1–6
+    <span class="tier-label-desc">What institutions do for and with communities</span>
+  </div>
+
+  <div class="body-text">
+    <p>The civic operating tier covers the work that communities can see. It is the front half of the institution: the processes through which purpose is translated into collective action, public goods are designed and maintained, people gain access to what the institution provides, resources and services are delivered, and members receive direct support. An institution can have excellent support infrastructure and still fail if these six categories are underdeveloped — because this is where the institution meets the world it exists to serve.</p>
+  </div>
+
+  <!-- Category 1.0 -->
+  <div class="cat-card civic">
+    <div class="cat-top">
+      <div class="cat-num">1.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Collective vision &amp; governance strategy</div>
+        <div class="cat-tagline">Defining purpose, establishing governance, and holding the institution accountable to what it said it would do</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Foundation</span>
+          <span class="cat-badge">Prosperity L3</span>
+          <span class="cat-badge">Power L3</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">Category 1.0 is the institution's north star — and its mirror. It contains the processes through which an institution decides what it is for, how decisions will be made and by whom, how performance against purpose will be measured, and how power within the institution will be organized, distributed, and held accountable. It sits at the peak of both pyramids simultaneously: it is where the Pyramid of Power's distributed governance aspiration is translated into specific governance architecture, and where the Pyramid of Prosperity's individual agency level is connected back to collective purpose. Without a developed Category 1.0, everything the institution builds is oriented toward an implicit rather than explicit goal — which means it cannot be evaluated, contested, or improved.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">1.1</div><div class="proc-name">Define and steward institutional purpose, mission, and values</div></div>
+        <div class="proc-row"><div class="proc-id">1.2</div><div class="proc-name">Design and maintain governance structures and decision rights</div></div>
+        <div class="proc-row"><div class="proc-id">1.3</div><div class="proc-name">Set strategic direction and institutional priorities</div></div>
+        <div class="proc-row"><div class="proc-id">1.4</div><div class="proc-name">Manage institutional performance and strategic accountability</div></div>
+        <div class="proc-row"><div class="proc-id">1.5</div><div class="proc-name">Communicate vision and strategy to stakeholders</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Mondragon Corporation's annual General Assembly, where worker-owners set strategic direction, approve financial plans, and elect governance bodies — this is Category 1.0 at scale. A small mutual aid network's monthly all-hands call, where the group decides whether to take on a new neighborhood, is Category 1.0 at its simplest. The processes are different; the function is identical.</div>
+      <div class="cat-kpi-row">
+        <span class="kpi-pill">Member participation in governance (%)</span>
+        <span class="kpi-pill">Strategic goal attainment rate</span>
+        <span class="kpi-pill">Decision reversal rate</span>
+        <span class="kpi-pill">Governance body diversity index</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 2.0 -->
+  <div class="cat-card civic">
+    <div class="cat-top">
+      <div class="cat-num">2.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Design &amp; steward public goods</div>
+        <div class="cat-tagline">Designing, deploying, and maintaining the commons — infrastructure, knowledge, and services that benefit everyone</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Core Output</span>
+          <span class="cat-badge">Prosperity L2</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">If Category 1.0 answers "what are we for," Category 2.0 answers "what do we actually make." It contains the processes through which an institution designs, builds, maintains, and improves the public goods and commons infrastructure at the center of its mission. This is not product management translated into community language — it is a fundamentally different design orientation. Where product management optimizes for customer value and revenue capture, public goods stewardship optimizes for collective benefit, durability, and equitable access. The processes are structurally analogous but teleologically opposed. Category 2.0 is where Elinor Ostrom's principles for sustainable commons governance — clear boundaries, collective choice arrangements, graduated sanctions, nested governance — become operational rather than theoretical.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">2.1</div><div class="proc-name">Identify, assess, and prioritize community needs and gaps</div></div>
+        <div class="proc-row"><div class="proc-id">2.2</div><div class="proc-name">Design and develop public goods and commons infrastructure</div></div>
+        <div class="proc-row"><div class="proc-id">2.3</div><div class="proc-name">Manage and maintain shared physical and digital infrastructure</div></div>
+        <div class="proc-row"><div class="proc-id">2.4</div><div class="proc-name">Steward knowledge commons and open intellectual resources</div></div>
+        <div class="proc-row"><div class="proc-id">2.5</div><div class="proc-name">Evaluate public goods for equity, access, and community impact</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Boston Community Land Trust designing a new affordable housing development — needs assessment, site design with community input, long-term stewardship planning — is Category 2.0 in depth. Wikipedia's content governance processes, including verifiability standards, editorial dispute resolution, and access policy, represent Category 2.0 applied to a knowledge commons at global scale.</div>
+      <div class="cat-kpi-row">
+        <span class="kpi-pill">Public goods utilization rate</span>
+        <span class="kpi-pill">Community needs coverage (%)</span>
+        <span class="kpi-pill">Infrastructure maintenance ratio</span>
+        <span class="kpi-pill">Equitable access index</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 3.0 -->
+  <div class="cat-card civic">
+    <div class="cat-top">
+      <div class="cat-num">3.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Facilitate access &amp; engagement</div>
+        <div class="cat-tagline">Ensuring that the people who most need what the institution provides can actually reach it</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Reach</span>
+          <span class="cat-badge">Power L1</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">An institution that exists but cannot be reached by the people it is meant to serve is not an institution — it is a document. Category 3.0 contains the processes through which institutions translate good intentions into genuine access: removing barriers, designing onboarding that works for the specific communities served, communicating in ways that reach rather than broadcast, and maintaining ongoing engagement that keeps members connected to governance and services over time. This category is systematically underdeveloped in most solidarity economy institutions, which invest heavily in designing what they offer and lightly in ensuring that those with the greatest need can navigate to it. The category maps to the foundation of the Power pyramid: transparency and access as the precondition for participation.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">3.1</div><div class="proc-name">Onboard and orient new members and community participants</div></div>
+        <div class="proc-row"><div class="proc-id">3.2</div><div class="proc-name">Identify and systematically remove barriers to participation</div></div>
+        <div class="proc-row"><div class="proc-id">3.3</div><div class="proc-name">Design and manage community communications and outreach</div></div>
+        <div class="proc-row"><div class="proc-id">3.4</div><div class="proc-name">Drive meaningful engagement with governance and programs</div></div>
+        <div class="proc-row"><div class="proc-id">3.5</div><div class="proc-name">Design targeted support for underserved and marginalized populations</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Dudley Street Neighborhood Initiative in Boston maintains extensive multilingual outreach, transportation support, and childcare provisions for all governance events — recognizing that participation without these supports is participation for those who already have resources. This is Category 3.0 operationalized as a budget line, not an aspiration.</div>
+      <div class="cat-kpi-row">
+        <span class="kpi-pill">Onboarding completion rate</span>
+        <span class="kpi-pill">Demographic participation equity gap</span>
+        <span class="kpi-pill">Barrier identification-to-removal time</span>
+        <span class="kpi-pill">Member retention at 12 months (%)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 4.0 -->
+  <div class="cat-card civic">
+    <div class="cat-top">
+      <div class="cat-num">4.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Deliver physical resources</div>
+        <div class="cat-tagline">Planning, procuring, and distributing the material things that make lives livable</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Operations</span>
+          <span class="cat-badge">Prosperity L1</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">Food, housing, tools, medical supplies, transportation, technology equipment — the physical layer of post-labor community support. Category 4.0 contains the processes through which institutions plan, procure, store, distribute, and maintain physical resources without the price system as an allocation mechanism. This is not supply chain management for an enterprise: there are no customers with purchasing power sorting themselves by willingness to pay, no market signal indicating where scarcity is most acute. Allocation decisions that the market makes automatically — and badly, from an equity standpoint — must be made deliberately, through community-determined criteria and processes that can be explained and contested. This requires specific process design that most institutions operating in this space have developed only partially and informally.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">4.1</div><div class="proc-name">Plan and manage physical resource procurement and supply</div></div>
+        <div class="proc-row"><div class="proc-id">4.2</div><div class="proc-name">Manage inventory, storage, and distribution logistics</div></div>
+        <div class="proc-row"><div class="proc-id">4.3</div><div class="proc-name">Deliver housing and shelter resources and stewardship</div></div>
+        <div class="proc-row"><div class="proc-id">4.4</div><div class="proc-name">Deliver food, nutrition, and related resources</div></div>
+        <div class="proc-row"><div class="proc-id">4.5</div><div class="proc-name">Maintain, repair, and renew physical assets for community use</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> Cooperation Jackson in Mississippi manages a network of urban farms, community land, and fabrication facilities — procuring inputs, maintaining equipment, and distributing outputs to members and the surrounding community. Their allocation protocols, developed through community deliberation, specify who receives what and how scarcity is managed when demand exceeds supply. This is Category 4.0 built with genuine operational rigor.</div>
+      <div class="cat-kpi-row">
+        <span class="kpi-pill">Resource distribution equity index</span>
+        <span class="kpi-pill">Unmet need rate (%)</span>
+        <span class="kpi-pill">Supply chain resilience score</span>
+        <span class="kpi-pill">Asset maintenance ratio</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 5.0 -->
+  <div class="cat-card civic">
+    <div class="cat-top">
+      <div class="cat-num">5.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Deliver services &amp; programs</div>
+        <div class="cat-tagline">Designing and iterating on the service offerings that address community needs over time</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Operations</span>
+          <span class="cat-badge">Prosperity L1</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">Where Category 4.0 delivers things, Category 5.0 delivers processes: education, skills development, health services, economic empowerment programs, legal aid, digital literacy, mediation, and the range of other service offerings through which institutions address community needs that cannot be met with physical goods alone. The design challenge in Category 5.0 is the feedback loop: post-labor institutions must design services that are responsive to expressed community need, must iterate on those designs as needs evolve and as service delivery reveals unforeseen gaps, and must do this in an environment without the market's blunt but responsive feedback mechanism of purchase and abandonment. The service design and iteration processes that replace the market signal are among the most important — and most often absent — processes in this category.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">5.1</div><div class="proc-name">Design, launch, and manage community programs and services</div></div>
+        <div class="proc-row"><div class="proc-id">5.2</div><div class="proc-name">Deliver educational and workforce development programs</div></div>
+        <div class="proc-row"><div class="proc-id">5.3</div><div class="proc-name">Deliver health, wellness, and prevention services</div></div>
+        <div class="proc-row"><div class="proc-id">5.4</div><div class="proc-name">Deliver economic empowerment and financial capability services</div></div>
+        <div class="proc-row"><div class="proc-id">5.5</div><div class="proc-name">Evaluate service outcomes and iterate on program design</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Highlander Research and Education Center designs and iterates on leadership development programs that have shaped social movements for nearly a century — with a feedback methodology that explicitly asks participants what changed in their communities, not what they learned in the program. Process 5.5 (evaluate and iterate) is the process that makes programs like Highlander's become more effective over time rather than calcifying around founding assumptions.</div>
+      <div class="cat-kpi-row">
+        <span class="kpi-pill">Participant outcome improvement rate</span>
+        <span class="kpi-pill">Service completion rate</span>
+        <span class="kpi-pill">Program iteration cycle time</span>
+        <span class="kpi-pill">Waitlist / unmet demand ratio</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 6.0 -->
+  <div class="cat-card civic">
+    <div class="cat-top">
+      <div class="cat-num">6.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Support community members</div>
+        <div class="cat-tagline">When the institution meets the individual — case management, crisis response, and the dignity of direct support</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Service</span>
+          <span class="cat-badge">Prosperity L1</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">The most personal category in the civic operating tier: the processes through which institutions engage with individual members facing specific difficulties, crises, or needs that require more than general services can provide. Case management, crisis intervention, peer support facilitation, grievance handling, and the tracking of individual outcomes over time — these are processes that require both operational rigor and profound attention to human dignity. The tension between systematizing support (which makes it consistent, accountable, and scalable) and individualizing it (which makes it responsive and dignified) is the central design challenge of Category 6.0. Institutions that resolve this tension poorly either produce dehumanizing bureaucratic case processing or unsustainable informal support that burns out the humans providing it.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">6.1</div><div class="proc-name">Provide direct member support and case management</div></div>
+        <div class="proc-row"><div class="proc-id">6.2</div><div class="proc-name">Manage grievances, appeals, and conflict resolution</div></div>
+        <div class="proc-row"><div class="proc-id">6.3</div><div class="proc-name">Deliver wraparound and crisis support services</div></div>
+        <div class="proc-row"><div class="proc-id">6.4</div><div class="proc-name">Facilitate peer support networks and mutual aid within the community</div></div>
+        <div class="proc-row"><div class="proc-id">6.5</div><div class="proc-name">Track and report on individual member outcomes and wellbeing</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Denver Basic Income Project discovered that their most important Category 6.0 processes were not their formal case management systems but the peer navigators — people with lived experience of homelessness who served as relationship-based guides for participants. The formal processes (6.1, 6.3) provided consistency; the peer support process (6.4) provided the trust without which the formal processes could not function. Both are required; neither is sufficient alone.</div>
+      <div class="cat-kpi-row">
+        <span class="kpi-pill">Case resolution rate and time</span>
+        <span class="kpi-pill">Grievance satisfaction rate (%)</span>
+        <span class="kpi-pill">Crisis response time</span>
+        <span class="kpi-pill">Member wellbeing trajectory index</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <!-- INSTITUTIONAL SUPPORT TIER -->
+  <div class="tier-label inst">
+    <div class="tier-label-dot"></div>
+    Institutional support processes · categories 7–13
+    <span class="tier-label-desc">How institutions sustain themselves</span>
+  </div>
+
+  <div class="body-text">
+    <p>The institutional support tier is what the civic operating tier stands on. These seven categories — human development, technology, finance, commons management, integrity, external relations, and continuous improvement — are the operational infrastructure that allows the visible work to happen consistently and improve over time. They are systematically underfunded and underdeveloped in post-labor institutions, because they are invisible when they function and catastrophic when they fail. A mutual aid network without Category 9.0 (collective resources) collapses when a grant ends. A cooperative without Category 11.0 (integrity) slides into insider governance without the founders noticing. A commons institution without Category 13.0 (capabilities) runs its founding program on autopilot while the community it serves moves on.</p>
+  </div>
+
+  <!-- Category 7.0 -->
+  <div class="cat-card inst">
+    <div class="cat-top">
+      <div class="cat-num">7.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Develop human potential</div>
+        <div class="cat-tagline">People are the institution — how to recruit, develop, and sustain them without competitive labor markets to do the work</div>
+        <div class="cat-badges">
+          <span class="cat-badge">People</span>
+          <span class="cat-badge">Prosperity L3</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">Post-labor institutions cannot compete on salary for talent in most domains. They compete on meaning, mission, community, and the quality of the work environment they create. Category 7.0 contains the processes through which institutions build these alternative forms of talent value: values-aligned recruitment, genuine skill development and advancement paths, peer recognition systems, cultures that sustain rather than consume the people who inhabit them, and succession planning that treats institutional knowledge as a commons to be preserved rather than a proprietary asset held by individuals. The burnout rate in solidarity economy organizations is a Category 7.0 failure above all else — it is the predictable result of institutions that recruit on mission and invest nothing in sustaining the humans who accepted the offer.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">7.1</div><div class="proc-name">Recruit and onboard mission-aligned staff and contributors</div></div>
+        <div class="proc-row"><div class="proc-id">7.2</div><div class="proc-name">Design and deliver skills development and advancement pathways</div></div>
+        <div class="proc-row"><div class="proc-id">7.3</div><div class="proc-name">Manage performance, recognition, and contribution acknowledgment</div></div>
+        <div class="proc-row"><div class="proc-id">7.4</div><div class="proc-name">Foster institutional culture, values, and psychological safety</div></div>
+        <div class="proc-row"><div class="proc-id">7.5</div><div class="proc-name">Manage succession, transitions, and knowledge transfer for departures</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> Organic Valley cooperative built a comprehensive peer mentorship and career development program specifically because they recognized that staff who could earn 30% more elsewhere were staying for something that compensation could not reproduce — and that protecting that something required active investment. Their Category 7.4 and 7.5 processes are as developed as their operational service delivery, which is unusual and intentional.</div>
+    </div>
+  </div>
+
+  <!-- Category 8.0 -->
+  <div class="cat-card inst">
+    <div class="cat-top">
+      <div class="cat-num">8.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Technology &amp; AI infrastructure</div>
+        <div class="cat-tagline">Digital systems, data stewardship, and AI tooling as commons infrastructure — serving members, not extracting from them</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Technology</span>
+          <span class="cat-badge">Power L1</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">Technology in post-labor institutions is not a support function — it is a governance question. Who controls the data? Whose interests does the technology serve? What happens when an AI system makes a decision that affects a member's access to services? These questions are not technical; they are political. Category 8.0 contains the processes through which institutions make technology serve members rather than extracting value from them: digital access equity, data governance for member benefit, cybersecurity as member protection, and — critically — AI tooling governance as a sub-process domain that has no enterprise precedent but is essential to any institution that uses algorithmic systems in its operations. The full AI governance framework lives in Category 14.0; Category 8.0 handles the operational technology management that enables and constrains how AI is deployed.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">8.1</div><div class="proc-name">Manage digital systems, platforms, and operational technology</div></div>
+        <div class="proc-row"><div class="proc-id">8.2</div><div class="proc-name">Govern data architecture, quality, and member data stewardship</div></div>
+        <div class="proc-row"><div class="proc-id">8.3</div><div class="proc-name">Manage cybersecurity and member privacy protection</div></div>
+        <div class="proc-row"><div class="proc-id">8.4</div><div class="proc-name">Deploy, manage, and evaluate AI and automation tooling</div></div>
+        <div class="proc-row"><div class="proc-id">8.5</div><div class="proc-name">Ensure equitable digital access for all members and participants</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Internet Archive's digital preservation infrastructure is Category 8.0 operating at institutional scale — managing petabytes of data as a knowledge commons with explicit data stewardship principles, access equity mandates, and governance processes that treat digital infrastructure as belonging to the public rather than to the organization that happens to be maintaining it.</div>
+    </div>
+  </div>
+
+  <!-- Category 9.0 -->
+  <div class="cat-card inst">
+    <div class="cat-top">
+      <div class="cat-num">9.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Steward collective resources</div>
+        <div class="cat-tagline">Financial management without the profit motive — when sustainability means sustaining the mission, not the balance sheet</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Finance</span>
+          <span class="cat-badge">Prosperity L2</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">Money is as politically charged inside solidarity economy institutions as anywhere else — perhaps more so, because the institutions cannot appeal to the neutral authority of shareholder value to depoliticize financial decisions. Category 9.0 contains the processes through which institutions manage this charged territory: participatory budgeting, mission-aligned treasury management, diversified community revenue development, and resource allocation through democratic rather than technocratic processes. The category is structurally similar to enterprise finance but fundamentally different in its objective function: not to maximize return on investment but to maximize mission impact within the constraint of institutional sustainability. The processes for doing this — particularly for participatory allocation and community wealth building — have no enterprise equivalent and require specific design.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">9.1</div><div class="proc-name">Develop and manage institutional budgets and financial strategy</div></div>
+        <div class="proc-row"><div class="proc-id">9.2</div><div class="proc-name">Manage accounting, financial reporting, and audit</div></div>
+        <div class="proc-row"><div class="proc-id">9.3</div><div class="proc-name">Steward treasury, reserves, and endowment for long-term sustainability</div></div>
+        <div class="proc-row"><div class="proc-id">9.4</div><div class="proc-name">Develop and diversify community revenue and resource flows</div></div>
+        <div class="proc-row"><div class="proc-id">9.5</div><div class="proc-name">Allocate resources through participatory and mission-aligned processes</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> Participatory budgeting in Porto Alegre, Brazil — where residents directly decide the allocation of a significant portion of the municipal budget — is Category 9.5 at governmental scale. At the institutional level, the Catalan Integral Cooperative's internal economy, which uses a mutual credit system to reduce dependence on the euro while keeping resource allocation transparent and member-governed, represents Category 9.0 built with genuine philosophical coherence.</div>
+    </div>
+  </div>
+
+  <!-- Category 10.0 -->
+  <div class="cat-card inst">
+    <div class="cat-top">
+      <div class="cat-num">10.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Manage commons &amp; shared assets</div>
+        <div class="cat-tagline">Governing what belongs to everyone — land, equipment, intellectual property, and the productive assets of the community</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Commons</span>
+          <span class="cat-badge">Prosperity L2</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">This category is the operational home of commons governance: the processes through which collectively owned assets — land, buildings, equipment, vehicles, tools, intellectual property, digital infrastructure — are managed in ways that sustain their availability for collective use over time. It is here that Ostrom's principles become operational procedures: defining who can access what and under what conditions, maintaining assets so they remain usable, resolving conflicts when access claims compete, and governing the addition of new assets to the commons. Category 10.0 is closely related to Category 2.0 (design and steward public goods), but where 2.0 focuses on the design and stewardship of goods and services, 10.0 focuses on the governance and maintenance of the physical and digital assets that those goods and services depend on.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">10.1</div><div class="proc-name">Govern collectively owned land, property, and real estate</div></div>
+        <div class="proc-row"><div class="proc-id">10.2</div><div class="proc-name">Manage shared equipment, tools, and productive assets</div></div>
+        <div class="proc-row"><div class="proc-id">10.3</div><div class="proc-name">Steward intellectual commons, open source, and shared IP</div></div>
+        <div class="proc-row"><div class="proc-id">10.4</div><div class="proc-name">Design and administer commons access protocols and usage rules</div></div>
+        <div class="proc-row"><div class="proc-id">10.5</div><div class="proc-name">Maintain, insure, and renew shared physical and digital assets</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Champlain Housing Trust in Burlington, Vermont — the largest community land trust in the United States — manages over 2,500 homes with governance processes for resale pricing, tenant selection, maintenance standards, and long-term stewardship that have been refined over four decades. Their Category 10.0 processes are among the most thoroughly documented in the solidarity economy.</div>
+    </div>
+  </div>
+
+  <!-- Category 11.0 -->
+  <div class="cat-card inst">
+    <div class="cat-top">
+      <div class="cat-num">11.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Institutional integrity &amp; equity</div>
+        <div class="cat-tagline">Accountability without hierarchy — how institutions stay honest when there is no external market to discipline them</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Governance</span>
+          <span class="cat-badge">Power L1</span>
+          <span class="cat-badge">Both pyramids</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">Every institution — regardless of its values, its governance structure, or its founding intentions — is subject to the concentration of power, the drift from stated mission, the gradual replacement of community accountability with insider accountability. Category 11.0 is the immune system: the processes through which institutions maintain the conditions necessary for their own integrity over time. Compliance and legal management, ethics oversight, equity auditing, public transparency, and the investigation and remediation of integrity violations — these are not external impositions on mission-driven institutions but the operational backbone without which any stated mission eventually hollows out. The history of the nonprofit sector and the cooperative movement is littered with institutions that articulated genuine values and failed to build the processes that would have held them to those values under pressure.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">11.1</div><div class="proc-name">Manage legal compliance, regulatory requirements, and fiduciary duties</div></div>
+        <div class="proc-row"><div class="proc-id">11.2</div><div class="proc-name">Conduct ethics oversight, anti-corruption controls, and code enforcement</div></div>
+        <div class="proc-row"><div class="proc-id">11.3</div><div class="proc-name">Perform equity auditing, bias review, and inclusion assessment</div></div>
+        <div class="proc-row"><div class="proc-id">11.4</div><div class="proc-name">Manage public transparency, disclosure, and community reporting</div></div>
+        <div class="proc-row"><div class="proc-id">11.5</div><div class="proc-name">Investigate and remediate integrity violations and grievances</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Cleveland Clinic's Office of Patient Experience is not a perfect analog, but its structure — independent investigation, mandatory reporting, and public disclosure of adverse outcomes — illustrates what Category 11.5 can look like when taken seriously. In solidarity economy contexts, worker cooperative federations like USFWC have developed ethics and conflict resolution protocols that serve a similar function across member institutions.</div>
+    </div>
+  </div>
+
+  <!-- Category 12.0 -->
+  <div class="cat-card inst">
+    <div class="cat-top">
+      <div class="cat-num">12.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Inter-institutional relations</div>
+        <div class="cat-tagline">No post-labor institution survives in isolation — the processes of federation, coalition, and mutual support</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Network</span>
+          <span class="cat-badge">Power L3</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">The solidarity economy is not a collection of individual institutions — it is a network, and its strength depends entirely on the quality of the connections between its nodes. Category 12.0 contains the processes through which individual institutions participate in that network: building partnerships, joining and contributing to federations and coalitions, managing relationships with government and enabling organizations, coordinating mutual support with peer institutions, and representing institutional interests in the broader movement. This category is the operational implementation of the third level of the Power pyramid — distributed governance — at the inter-institutional scale. Institutions that invest heavily in Categories 1–11 but neglect Category 12.0 build organizational strength that cannot compound through solidarity, and remain vulnerable to political and economic pressures that networked institutions can collectively resist.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">12.1</div><div class="proc-name">Build and steward strategic partnerships and coalition relationships</div></div>
+        <div class="proc-row"><div class="proc-id">12.2</div><div class="proc-name">Participate in and contribute to federated networks and alliances</div></div>
+        <div class="proc-row"><div class="proc-id">12.3</div><div class="proc-name">Manage government, regulatory, and enabling organization relationships</div></div>
+        <div class="proc-row"><div class="proc-id">12.4</div><div class="proc-name">Coordinate peer support, resource sharing, and mutual aid with allied institutions</div></div>
+        <div class="proc-row"><div class="proc-id">12.5</div><div class="proc-name">Represent institutional interests in movement politics and broader advocacy</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Emilia-Romagna cooperative network in northern Italy — where over 15,000 cooperatives participate in federated structures that share capital, provide technical assistance, and coordinate political advocacy — is the most developed example of Category 12.0 in operation. The network's resilience through economic crises that have devastated comparable private-sector economies is directly attributable to the inter-institutional processes that individual cooperatives could not have built alone.</div>
+    </div>
+  </div>
+
+  <!-- Category 13.0 -->
+  <div class="cat-card inst">
+    <div class="cat-top">
+      <div class="cat-num">13.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Evolve institutional capabilities</div>
+        <div class="cat-tagline">The institution that cannot learn cannot last — continuous improvement, R&amp;D, and knowledge stewardship</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Growth</span>
+          <span class="cat-badge">Both pyramids</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">Every institution is subject to the same force: the world changes faster than organizational practices do. Category 13.0 is the mechanism by which institutions respond — not reactively, in crisis, but continuously, through deliberate processes of learning, improvement, and adaptation. Continuous improvement methodology, internal research and development, knowledge management and documentation, organizational learning culture, and the processes for managing deliberate transformation — these are the processes that determine whether an institution improves over time or calcifies. Without Category 13.0, even institutions with excellent current processes slowly become less effective as conditions change and as the gap between institutional practice and community need quietly widens.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">13.1</div><div class="proc-name">Drive continuous improvement and process optimization</div></div>
+        <div class="proc-row"><div class="proc-id">13.2</div><div class="proc-name">Manage institutional research, development, and experimentation</div></div>
+        <div class="proc-row"><div class="proc-id">13.3</div><div class="proc-name">Capture, organize, and share institutional knowledge</div></div>
+        <div class="proc-row"><div class="proc-id">13.4</div><div class="proc-name">Facilitate organizational learning and adaptive culture</div></div>
+        <div class="proc-row"><div class="proc-id">13.5</div><div class="proc-name">Plan and manage deliberate institutional transformation</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Mondragon cooperatives' internal university (Mondragón Unibertsitatea) is Category 13.0 institutionalized at the network level — a mechanism for continuous workforce development, applied research, and organizational learning that treats improvement as a permanent institutional function rather than a response to crisis. At the individual institution level, the practice of retrospective review after every major program cycle — common in tech organizations and rare in the solidarity economy — is the simplest possible implementation of Category 13.4.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+
+  <!-- NOVEL PLE TIER -->
+  <div class="tier-label novel">
+    <div class="tier-label-dot"></div>
+    Novel PLE categories · categories 14–16
+    <span class="tier-label-desc">What only post-labor institutions need</span>
+  </div>
+
+  <div class="body-text">
+    <p>The three novel categories are not refinements of existing institutional thinking. They are the categories that mark post-labor institutions as genuinely different from every institutional form that preceded them. No enterprise framework, no nonprofit management standard, no cooperative development guide has attempted to operationalize these three domains as institutional processes. Their absence from the existing literature is not an oversight — it is a reflection of the fact that enterprises do not need them. Post-labor institutions do. And the distance between "having values about" these three domains and "having processes for" them is precisely the design gap this book was written to close.</p>
+  </div>
+
+  <!-- Category 14.0 -->
+  <div class="cat-card novel">
+    <div class="cat-top">
+      <div class="cat-num">14.0</div>
+      <div class="cat-head">
+        <div class="cat-name">AI governance &amp; algorithmic accountability</div>
+        <div class="cat-tagline">When the algorithm governs you — oversight, auditing, and member rights in an AI-mediated institution</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Novel</span>
+          <span class="cat-badge">Power L2</span>
+          <span class="cat-badge">No enterprise analog</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">Post-labor institutions will use AI systems extensively — for resource allocation, service eligibility determination, case management support, communication, governance facilitation, and an expanding range of functions. Each of these AI applications will make decisions, or support decisions, that affect members' lives. Category 14.0 is the process infrastructure for ensuring that those decisions are accountable to the members affected by them: ethics policy and oversight structures, bias and harm auditing, informed consent processes, ongoing monitoring for model drift, and governance mechanisms for approving or rejecting AI applications within the institution. This category sits at the second level of the Power pyramid because algorithmic accountability is fundamentally a democratic question — not a technical one. Who decides what the algorithm optimizes for? Who has the right to contest an algorithmic decision? Who is accountable when the system produces harmful outcomes? These are governance questions that require governance processes.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">14.1</div><div class="proc-name">Establish AI ethics policies, principles, and institutional oversight structures</div></div>
+        <div class="proc-row"><div class="proc-id">14.2</div><div class="proc-name">Audit AI and algorithmic systems for bias, harm, and fairness</div></div>
+        <div class="proc-row"><div class="proc-id">14.3</div><div class="proc-name">Manage informed consent for AI-influenced decisions affecting members</div></div>
+        <div class="proc-row"><div class="proc-id">14.4</div><div class="proc-name">Monitor AI system performance, drift, and unintended consequences</div></div>
+        <div class="proc-row"><div class="proc-id">14.5</div><div class="proc-name">Govern AI procurement, deployment, and member rights to explanation and appeal</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> No solidarity economy institution has yet developed Category 14.0 processes at full maturity — this is genuinely frontier work. The closest precedents are the AI auditing frameworks developed by civil society organizations (the Algorithmic Justice League, the AI Now Institute) and the emerging regulatory frameworks in the EU AI Act. The GPS translates these into institutional-level operational processes rather than external regulatory requirements.</div>
+      <div class="cat-kpi-row">
+        <span class="kpi-pill">AI audit completion rate</span>
+        <span class="kpi-pill">Algorithmic appeal uphold rate</span>
+        <span class="kpi-pill">Bias incident rate per 1,000 decisions</span>
+        <span class="kpi-pill">Member AI literacy score</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 15.0 -->
+  <div class="cat-card novel">
+    <div class="cat-top">
+      <div class="cat-num">15.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Human flourishing &amp; wellbeing</div>
+        <div class="cat-tagline">The terminal question — measuring and cultivating what post-labor institutions are ultimately for</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Novel</span>
+          <span class="cat-badge">Prosperity L3</span>
+          <span class="cat-badge">No enterprise analog</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">This is the most philosophically demanding category in the framework — and the most consequential. Category 15.0 asks post-labor institutions to do something no enterprise has ever been required to do: define what human flourishing means for their specific community, develop methods for measuring it, design programs that actively cultivate it, and hold themselves accountable to it as the terminal metric against which all other institutional activity is evaluated. This is not a wellness program or an employee assistance initiative. It is the institutional operationalization of the insight at the heart of post-labor economics: that the purpose of economic activity is human flourishing, that employment was always only a means to that end, and that in a world where employment as a means is becoming unreliable, the end must be addressed directly. The hardest process in this category is 15.1 — defining flourishing — because it requires the kind of community deliberation that produces genuine philosophical disagreement and cannot be resolved by measurement alone.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">15.1</div><div class="proc-name">Define and deliberate community-specific flourishing indicators and frameworks</div></div>
+        <div class="proc-row"><div class="proc-id">15.2</div><div class="proc-name">Design programs explicitly oriented toward meaning, purpose, and self-determination</div></div>
+        <div class="proc-row"><div class="proc-id">15.3</div><div class="proc-name">Build and maintain mental, emotional, and social health infrastructure</div></div>
+        <div class="proc-row"><div class="proc-id">15.4</div><div class="proc-name">Cultivate conditions for social connection, belonging, and community</div></div>
+        <div class="proc-row"><div class="proc-id">15.5</div><div class="proc-name">Measure, report on, and improve collective wellbeing outcomes</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> Bhutan's Gross National Happiness framework — which measures flourishing across nine domains including psychological wellbeing, cultural vitality, time use, and governance quality — is Category 15.0 at a national scale. At the institutional level, the Basic Income Earth Network's longitudinal research tracking wellbeing outcomes across multiple dimensions (not just income) is the closest precedent for what a well-developed 15.5 process looks like.</div>
+      <div class="cat-kpi-row">
+        <span class="kpi-pill">Composite flourishing index</span>
+        <span class="kpi-pill">Sense of purpose and meaning score</span>
+        <span class="kpi-pill">Social connection density</span>
+        <span class="kpi-pill">Mental health access and utilization rate</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category 16.0 -->
+  <div class="cat-card novel">
+    <div class="cat-top">
+      <div class="cat-num">16.0</div>
+      <div class="cat-head">
+        <div class="cat-name">Participatory democracy</div>
+        <div class="cat-tagline">Voice as infrastructure, not aspiration — designing and operating the systems through which members govern their institution</div>
+        <div class="cat-badges">
+          <span class="cat-badge">Novel</span>
+          <span class="cat-badge">Power L2</span>
+          <span class="cat-badge">No enterprise analog</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-body">
+      <div class="cat-desc">Participatory democracy is one of the most frequently stated values and least operationalized practices in the solidarity economy. Category 16.0 is the demand that this change: that democratic participation be treated as an operational process with designed systems, trained facilitators, documented procedures, performance measurement, and continuous improvement — not as a cultural aspiration that is realized whenever someone holds a vote or opens a comment period. The processes in this category — voting and consent mechanism design, deliberation infrastructure, participatory budgeting, citizen assembly management, and democratic mandate renewal — are the architectural elements of a self-governing institution. Together, they are the second level of the Power pyramid made operational. Without them, the distributed governance aspiration of the pyramid's third level remains permanently aspirational.</div>
+      <div class="cat-processes">
+        <div class="proc-row"><div class="proc-id">16.1</div><div class="proc-name">Design, implement, and manage member voting and consent mechanisms</div></div>
+        <div class="proc-row"><div class="proc-id">16.2</div><div class="proc-name">Facilitate structured deliberation and consensus-building processes</div></div>
+        <div class="proc-row"><div class="proc-id">16.3</div><div class="proc-name">Manage participatory budgeting and member resource decision processes</div></div>
+        <div class="proc-row"><div class="proc-id">16.4</div><div class="proc-name">Convene and facilitate citizen assemblies and community deliberative bodies</div></div>
+        <div class="proc-row"><div class="proc-id">16.5</div><div class="proc-name">Manage democratic mandate renewal, governance review, and legitimacy maintenance</div></div>
+      </div>
+      <div class="cat-example"><strong>In practice:</strong> The Irish Citizens' Assemblies — which produced the deliberative groundwork for Ireland's marriage equality and abortion referenda — are Category 16.4 at national scale. At the institutional level, the Loomio cooperative's governance software, developed specifically to enable asynchronous deliberation and consent-based decision-making in organizations of any size, represents the kind of process infrastructure that Category 16.1 and 16.2 require to function at scale without face-to-face meeting as the only mechanism.</div>
+      <div class="cat-kpi-row">
+        <span class="kpi-pill">Member governance participation rate (%)</span>
+        <span class="kpi-pill">Deliberation quality score</span>
+        <span class="kpi-pill">Minority voice representation index</span>
+        <span class="kpi-pill">Decision legitimacy rating</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">How the 16 categories flow together</div>
+
+  <div class="body-text">
+    <p>The categories are not isolated domains. They form a system: the civic operating tier depends on the institutional support tier for the infrastructure that makes its work sustainable; the novel categories permeate both tiers as oversight, measurement, and participation mechanisms that run through all 13 adapted categories. Understanding the most important inter-category flows is essential for diagnosing institutional underperformance — most institutional failures are produced not by weakness in a single category but by a break in a critical inter-category dependency.</p>
+  </div>
+
+  <div class="flow-block">
+    <div class="flow-header">Critical inter-category dependencies</div>
+    <div class="flow-body">
+
+      <div class="flow-row">
+        <div class="flow-pill civic">1.0 Vision</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-pill civic">2.0 Public goods</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-pill civic">5.0 Services</div>
+        <div class="flow-note">Strategy must precede design; design must precede delivery. Institutions that skip to delivery without strategy produce services that are not connected to any coherent community theory of change.</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-pill inst">9.0 Resources</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-pill civic">4.0 Physical</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-pill civic">6.0 Support</div>
+        <div class="flow-note">Resource stewardship enables delivery; delivery reaches members. An institution with strong service design but weak resource management will deliver inconsistently and inequitably.</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-pill inst">7.0 People</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-pill inst">13.0 Evolution</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-pill civic">all civic</div>
+        <div class="flow-note">Human capacity and institutional learning are the foundations beneath all civic output categories. Underdevelopment here is invisible until an institutional crisis makes it sudden and catastrophic.</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-pill novel">16.0 Democracy</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-pill inst">9.0 Resources</div>
+        <div class="flow-arrow">+</div>
+        <div class="flow-pill inst">11.0 Integrity</div>
+        <div class="flow-note">Participatory democracy without resource transparency and institutional integrity is procedural theater. Members can vote on a budget they cannot understand or trust.</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-pill novel">14.0 AI gov.</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-pill inst">8.0 Technology</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-pill civic">3.0 Access</div>
+        <div class="flow-note">AI governance sets the ethical and accountability framework; technology management implements it; access equity ensures the technology actually serves the members it is supposed to reach.</div>
+      </div>
+
+      <div class="flow-row">
+        <div class="flow-pill novel">15.0 Flourishing</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-pill civic">all civic</div>
+        <div class="flow-note">Flourishing measurement is the feedback signal that tells all civic operating categories whether they are achieving their ultimate purpose or optimizing their proximate outputs. Without it, the institution improves at doing what it measures rather than what it means.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>The 16 categories are not a checklist. They are an architecture — a claim about how the work of building a post-labor institution is organized, what each domain serves, and how the failure of any one creates pressure that eventually ruptures somewhere else in the system.</p>
+  </div>
+
+  <div class="body-text">
+    <p>The tour is complete. The chapters ahead go deep — one category at a time, with the theory, the process detail, the case studies, and the implementation guidance that a quick walkthrough cannot provide. But every deep dive in Parts III, IV, and V will make more sense for having first seen the whole. The map is drawn. The territory begins on the next page.</p>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the examples cited:</strong> All real institutions mentioned in this chapter are cited as illustrations of specific process domains, not as endorsements of the institution's overall approach or performance. Every institution has underdeveloped areas in the GPS framework, and the examples are selected to illustrate specific process strengths rather than to characterize any institution's overall quality.</p>
+    <p><strong>On the KPIs listed:</strong> The KPI examples in each category card are illustrative — drawn from the full 229-KPI library in Appendix B. A complete KPI set for any category includes both leading and lagging indicators, quantitative and qualitative measures, and member-facing and institutional metrics. The full library is the authoritative reference; the examples here are orientation only.</p>
+    <p><strong>On category boundaries:</strong> The boundaries between adjacent categories involve genuine judgment calls — the line between Category 2.0 (steward public goods) and Category 10.0 (manage commons assets) is real but porous; the line between Category 6.0 (support members) and Category 15.0 (human flourishing) is permeable by design. Where processes could legitimately belong to either of two adjacent categories, the placement reflects the dominant function — strategic stewardship in 2.0, operational asset governance in 10.0; direct individual support in 6.0, systemic flourishing measurement in 15.0. In practice, institutions will develop these adjacent categories in conversation with each other, and the exact boundary matters less than the question of whether both functions are being developed.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part II · Chapter 6</span>
+    <span class="close-next">Ch. 7 — Using the maturity model →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

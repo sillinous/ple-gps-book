@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 17 — Manage Commons & Shared Assets (GPS 10.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --inst: #378ADD; --inst-dim: rgba(55,138,221,0.08);
+    --inst-text: #7ab8f0; --inst-border: rgba(55,138,221,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.inst { background: var(--inst-dim); color: var(--inst-text); border: 1px solid var(--inst-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--inst); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--inst-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--inst); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--inst); background: var(--inst-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--inst-text); }
+  .pullquote p::after { content: '\201D'; color: var(--inst-text); }
+
+  /* Asset governance typology */
+  .typology-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .typology-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .typology-row { display: grid; grid-template-columns: 130px 1fr 1fr; border-bottom: 1px solid var(--border-subtle); }
+  .typology-row:last-child { border-bottom: none; }
+  .typology-row.head { background: var(--bg-secondary); }
+  .typology-cell { padding: 13px 16px; font-family: 'Outfit', sans-serif; font-size: 0.74rem; color: var(--text-secondary); line-height: 1.55; border-right: 1px solid var(--border-subtle); }
+  .typology-cell:last-child { border-right: none; }
+  .typology-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .typology-cell.asset-type { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
+
+  /* Accumulation vs extraction tension */
+  .ae-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .ae-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .ae-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+  .ae-row:last-child { border-bottom: none; }
+  .ae-cell { padding: 14px 18px; background: var(--bg-secondary); }
+  .ae-cell.alt { background: var(--bg-primary); }
+  .ae-label { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .ae-label.build { color: var(--inst-text); opacity: 0.85; }
+  .ae-label.risk { color: var(--m2t); opacity: 0.85; }
+  .ae-text { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--inst-dim); color: var(--inst-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--inst-dim); border-bottom: 1px solid var(--inst-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--inst-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--inst-text); font-weight: 500; }
+
+  /* Sequence */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part IV · Institutional support processes</div>
+  <div class="chapter-eyebrow">Chapter 17 · GPS Category 10.0</div>
+  <h1 class="chapter-title">Manage commons &amp; shared assets</h1>
+  <p class="chapter-subtitle">Ownership held on behalf of the future — the governance architecture, maintenance disciplines, and anti-extraction mechanisms that keep collectively-held assets genuinely collective across time and across the people who govern them</p>
+  <div class="cat-meta">
+    <span class="cat-pill inst">Institutional Support</span>
+    <span class="cat-pill inst">Ownership architecture</span>
+    <span class="cat-pill inst">Anti-extraction design</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">20 processes</span>
+    <span class="cat-pill neutral">14 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Ownership is not a state — it is a set of ongoing practices. Land held collectively is not collectively owned because a document says so; it is collectively owned to the extent that real people make real decisions about it collectively, that the processes for making those decisions are accessible to the people they affect, that the benefits flow to the community rather than accumulating to intermediaries, and that the institutional structures which hold title cannot convert collective ownership into private benefit when individuals with authority over them change their minds. The history of collective ownership is substantially a history of these protections failing — of common land enclosed, of cooperative assets privatized, of nonprofit endowments redirected, of indigenous land stripped through legal mechanisms that were never designed to honor the governance principles embedded in the ownership arrangements they displaced.</p>
+
+    <p>Category 10.0 is the process domain for preventing that history from repeating in post-labor institutions. It covers the governance, stewardship, and protection of collectively-held assets: land and buildings under community land trust or cooperative ownership, equipment and tool libraries held for shared use, digital infrastructure maintained as community commons, financial assets accumulated for collective benefit, and intellectual property held open for community building rather than enclosed for private benefit. These assets are held by the institution on behalf of current and future community members — a fiduciary relationship that imposes obligations quite different from those governing private property, and that requires governance processes specifically designed to honor those obligations.</p>
+
+    <p>The central design challenge of Category 10.0 is the anti-extraction imperative: ensuring that collectively-held assets cannot be converted to private benefit by whoever happens to hold institutional authority at a given moment. This is a governance design problem, not a character problem. The conversion of collective assets to private benefit typically does not happen through fraud or betrayal; it happens through the accumulation of small governance decisions — about how assets are used, who benefits from them, how their value is captured and distributed — that individually seem reasonable and collectively produce a transformation of ownership character that was never explicitly decided. Designing against this requires building the institutional structures — legal forms, governance processes, accountability mechanisms, and regular assessment practices — that make extraction difficult rather than depending on the good intentions of the people who happen to be in governance roles.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Asset governance typology — what institutions hold and what holding requires</div>
+
+  <div class="body-text">
+    <p>Different categories of collectively-held assets require different governance structures, different stewardship processes, and different anti-extraction protections. The typology below maps the primary asset types that post-labor institutions manage, the specific governance requirements each imposes, and the characteristic extraction vectors that each is vulnerable to. Understanding the typology is the prerequisite for building governance processes that are calibrated to specific asset types rather than applying generic oversight that is adequate for none of them.</p>
+  </div>
+
+  <div class="typology-block">
+    <div class="typology-header">Collectively-held asset types — governance requirements and extraction vulnerabilities</div>
+    <div class="typology-row head">
+      <div class="typology-cell head">Asset type</div>
+      <div class="typology-cell head">Governance requirements</div>
+      <div class="typology-cell head">Primary extraction vector</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell asset-type">Community land and real property</div>
+      <div class="typology-cell">Legal structures (community land trust, cooperative ownership, conservation easements) that encumber the property against privatization. Ground lease governance that separates land value from improvements. Clear stewardship obligations embedded in ownership documents. Community access governance that determines who benefits from the land and under what conditions.</div>
+      <div class="typology-cell">Sale to private buyers when institutional financial pressure is acute; conversion of affordable housing to market-rate through incremental changes in tenant selection or pricing; institutional dissolution that distributes land assets to leadership rather than to community successors; governance body decisions to encumber land for private benefit of related parties.</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell asset-type">Buildings and physical facilities</div>
+      <div class="typology-cell">Use agreements that specify community access and governance rights. Maintenance governance that ensures stewardship obligations are funded and executed. Capital renewal planning that preserves asset value across generations. Access governance that prevents de facto private control through informal occupancy patterns.</div>
+      <div class="typology-cell">Long-term exclusive occupation by specific groups that effectively privatizes communal facilities. Deferred maintenance that reduces asset value without triggering governance review. Capital improvement decisions that benefit specific users without community process. Lease terms that allow market-rate extraction from nominally community-held spaces.</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell asset-type">Equipment, tools, and shared material resources</div>
+      <div class="typology-cell">Access governance that ensures equitable use by all community members, not only those with the most institutional connections. Maintenance responsibilities that are distributed and enforced. Renewal planning that prevents gradual asset deterioration without replacement. Use monitoring that identifies inequitable access patterns before they calcify.</div>
+      <div class="typology-cell">Informal reservation systems that give de facto priority to specific users. Maintenance responsibility freeloading that degrades assets for all users. Theft or conversion of institutional equipment to personal use without governance process. Gradual obsolescence without renewal planning that produces a commons that exists on paper after the assets have deteriorated to unusability.</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell asset-type">Digital infrastructure and platforms</div>
+      <div class="typology-cell">Open source licensing or equivalent that prevents privatization of community-built digital assets. Data governance that protects community-generated data from commercial extraction. Platform governance that ensures community control over design decisions that affect community members. Access governance that prevents vendor lock-in from converting institutional infrastructure to commercial dependency.</div>
+      <div class="typology-cell">Commercial licensing of community-built tools without community consent. Platform vendor extraction of community data under terms that the adopting institution did not negotiate on behalf of community members. Governance capture by technical staff who hold decision authority over platforms that governance bodies cannot assess without technical expertise. Institutional dissolution that transfers digital assets to private successors rather than to community commons.</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell asset-type">Institutional financial assets and endowments</div>
+      <div class="typology-cell">Investment policy governance with community benefit requirements. Spending policy governance that balances current need against intergenerational equity. Restrictions on principal conversion that prevent consumption of endowment for operating needs. Successor organization requirements that direct assets to mission-aligned successors upon institutional dissolution.</div>
+      <div class="typology-cell">Investment decisions that optimize for financial return without community benefit requirements. Endowment raiding under financial pressure without governance discipline for replenishment. Institutional dissolution processes that distribute assets to leadership or governance members rather than to community successors. Mission drift in investment policy that treats endowment growth as the primary objective rather than community benefit.</div>
+    </div>
+    <div class="typology-row">
+      <div class="typology-cell asset-type">Intellectual property and knowledge commons</div>
+      <div class="typology-cell">Open licensing (Creative Commons, GPL, or equivalent) that keeps community-created knowledge accessible. Attribution governance that credits community contributors. Contribution governance that maintains the quality and currency of shared knowledge. Anti-privatization provisions that prevent commercial enclosure of community-built intellectual commons.</div>
+      <div class="typology-cell">Commercial licensing of community-created intellectual property for private benefit. Copyright assertion over community-generated works that effectively removes them from community access. Platform migration that transfers community-created content to platforms whose terms of service convert community content to commercial asset. Institutional dissolution without provisions for open licensing of accumulated institutional knowledge.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The accumulation-extraction tension — building collective wealth without enabling its capture</div>
+
+  <div class="body-text">
+    <p>The central governance design challenge of Category 10.0 can be framed as a tension between two desirable goals that pull in opposite directions: the institution wants to accumulate collective assets over time (building the wealth base that makes mission delivery durable and expanding) while simultaneously ensuring that accumulated assets cannot be captured by whoever holds institutional authority at any given moment. Accumulation without anti-extraction protections produces collective assets that are vulnerable to conversion to private benefit when institutional governance conditions change. Anti-extraction protections without accumulation produce institutions that cannot build the durable asset base that post-labor economic transition requires. The governance design must hold both.</p>
+  </div>
+
+  <div class="ae-block">
+    <div class="ae-header">Accumulation-extraction tension — building collective wealth while preventing its capture</div>
+
+    <div class="ae-row">
+      <div class="ae-cell">
+        <div class="ae-label build">What accumulation requires</div>
+        <div class="ae-text">Long time horizons — assets must be held and managed across multiple governance generations, with each generation of governance exercising stewardship rather than ownership. Deliberate surplus generation — institutions must be designed to accumulate assets beyond immediate operating needs rather than spending all available resources on current mission delivery. Strategic asset development — decisions about which assets to acquire, develop, and maintain must be guided by a long-term vision of community wealth rather than by immediate opportunity.</div>
+      </div>
+      <div class="ae-cell alt">
+        <div class="ae-label risk">What accumulation risks without protection</div>
+        <div class="ae-text">Governance capture — as assets become more valuable, the incentive for governance capture increases; without structural protections, accumulated collective wealth becomes a target for conversion to private benefit. Mission drift — asset-holding institutions face consistent pressure to optimize asset performance at the expense of community benefit requirements. Institutional dissolution extraction — institutions that have accumulated significant assets face the specific risk that dissolution processes transfer those assets to private beneficiaries rather than to community successors.</div>
+      </div>
+    </div>
+
+    <div class="ae-row">
+      <div class="ae-cell">
+        <div class="ae-label build">The structural protections required</div>
+        <div class="ae-text">Legal form that encumbers assets against privatization — community land trust ground leases, cooperative ownership structures, conservation easements, restricted endowment terms, and the full range of legal instruments that separate community benefit from private ownership rights. These are not supplementary protections that can be removed by governance vote; they are structural features of the ownership architecture that govern the institution independent of who is in governance roles.</div>
+      </div>
+      <div class="ae-cell alt">
+        <div class="ae-label risk">What protections risk without accumulation</div>
+        <div class="ae-text">Protections that encumber assets without building them — placing community benefit restrictions on assets the institution has not accumulated produces governance infrastructure for a wealth that does not yet exist. The protection infrastructure must be developed alongside the accumulation strategy, so that each new asset acquired enters the protected commons rather than being acquired and only later subjected to community benefit governance.</div>
+      </div>
+    </div>
+
+    <div class="ae-row">
+      <div class="ae-cell">
+        <div class="ae-label build">The governance processes that sustain both</div>
+        <div class="ae-text">Regular community benefit assessments that evaluate whether accumulated assets are serving the community purposes for which they were acquired. Succession planning for asset governance that ensures anti-extraction protections survive governance transitions. Transparency mechanisms that make asset governance visible to community members who are the ultimate beneficiaries of collective ownership. Annual asset governance reviews that surface encroachment on community benefit requirements before they become entrenched.</div>
+      </div>
+      <div class="ae-cell alt">
+        <div class="ae-label risk">The extraction vectors that governance must monitor</div>
+        <div class="ae-text">Incremental governance decisions that individually seem reasonable and collectively produce extraction — the salary for a director that slightly exceeds benchmarks, the sole-source contract with a board member's company, the facility use agreement that gives a specific organization preferential access. No single decision constitutes extraction; the pattern of decisions does. Asset governance requires monitoring patterns across time, not only reviewing individual decisions at the moment of approval.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 10.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">10.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Govern collectively-held assets and ownership structures</div>
+          <div class="proc-group-desc">Asset governance is the foundational process through which collective ownership is made real — through which the legal structures that protect assets from privatization are designed, implemented, and enforced over time. It is also the process through which the institution makes the most consequential decisions it will ever make: whether to acquire an asset, whether to encumber it with community benefit restrictions, whether to accept outside capital that imposes conditions on governance, and whether to dispose of an asset and under what terms. These decisions shape the institution's physical and financial character across generations, and they deserve governance processes whose formality and community engagement is proportional to their permanence.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">10.1.1</div><div class="act-name">Design asset ownership structures with anti-extraction protections built into legal form — not as governance policies that can be changed by vote but as legal encumbrances that require external consent to modify</div></div>
+            <div class="proc-activity"><div class="act-id">10.1.2</div><div class="act-name">Maintain a complete, current asset register — documenting all collectively-held assets, their governance conditions, their use restrictions, their maintenance status, and their renewal timelines</div></div>
+            <div class="proc-activity"><div class="act-id">10.1.3</div><div class="act-name">Govern asset acquisition decisions — formal processes for evaluating, approving, and structuring the acquisition of new collective assets, including community benefit assessment and governance condition design</div></div>
+            <div class="proc-activity"><div class="act-id">10.1.4</div><div class="act-name">Govern asset disposition decisions — the most consequential and highest-risk asset governance process; requiring community process, governance body approval, and successor organization requirements that direct assets to mission-aligned community successors</div></div>
+            <div class="proc-activity"><div class="act-id">10.1.5</div><div class="act-name">Conduct annual asset governance reviews — systematic assessment of whether each major asset is serving the community benefit purposes for which it was acquired, and whether encroachment on those purposes has occurred in the past year</div></div>
+          </div>
+          <div class="act-note">Process 10.1.4 — asset disposition governance — is the highest-stakes governance process in Category 10.0 and the one for which the most careful procedural protection is required. The dissolution of an institution that has accumulated significant collective assets is a moment when the accumulated wealth of decades can transfer to private beneficiaries in a single governance decision made under conditions of crisis, when community oversight is lowest and governance members may have personal financial interests in the outcome. Designing the disposition process before crisis — establishing the successor organization requirements, the community consent processes, and the legal encumbrances that make private distribution of collective assets impossible regardless of governance body preferences — is the most important single anti-extraction governance investment an institution can make.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">10.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Manage land, real property, and built environment</div>
+          <div class="proc-group-desc">Land and real property management in post-labor institutions covers the full stewardship lifecycle of the most significant and most permanent assets that institutions hold collectively. Real property is the category of collective asset with the highest long-term value, the strongest anti-extraction legal infrastructure (community land trust ground leases, conservation easements, and affordable housing deed restrictions are among the most robust collective asset protections available), and the most demanding maintenance and capital stewardship requirements. Institutions that hold real property without developing Category 10.2 processes are holding assets whose governance and stewardship complexity will inevitably exceed their capacity — producing the deferred maintenance, governance conflicts, and eventual asset loss that characterize under-governed collective land ownership across the history of the solidarity economy.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">10.2.1</div><div class="act-name">Manage property governance — tenant or occupant relations, use agreements, occupancy conditions, and the governance processes through which land use decisions are made with community input rather than by institutional staff alone</div></div>
+            <div class="proc-activity"><div class="act-id">10.2.2</div><div class="act-name">Develop and execute property maintenance plans — preventive maintenance schedules, capital improvement planning, contractor management, and the inspection and monitoring processes that detect deterioration before it becomes irreversible</div></div>
+            <div class="proc-activity"><div class="act-id">10.2.3</div><div class="act-name">Manage capital renewal for real property — the funding reserves and improvement plans that sustain asset value across the 20-50 year timeframes relevant to community land stewardship, not the 3-5 year timeframes of typical institutional planning</div></div>
+            <div class="proc-activity"><div class="act-id">10.2.4</div><div class="act-name">Assess and ensure legal compliance — zoning, building codes, environmental regulations, and the regulatory environment that governs land use and that changes across the long timeframes of collective land ownership</div></div>
+            <div class="proc-activity"><div class="act-id">10.2.5</div><div class="act-name">Conduct regular community benefit assessments of real property — asking whether each property is serving the community benefit purposes for which it was acquired, and whether the terms of access, affordability, and governance remain aligned with institutional mission</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">10.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Govern shared equipment, tool libraries, and material commons</div>
+          <div class="proc-group-desc">Shared equipment and tool libraries are the most accessible form of collective ownership for most community members — the shared workshop, the lending library, the community kitchen, the makerspace, the vehicle cooperative — and the form whose governance is most commonly under-designed relative to the governance demands it actually imposes. When ten people share a single piece of equipment, nine governance questions arise: who schedules it, who maintains it, who is responsible when it breaks, how costs are shared, who decides when to replace it, how disputes about priority use are resolved, and what happens to the equipment if the sharing arrangement ends. These questions seem trivial until they are not resolved and the equipment is not maintained and the sharing arrangement dissolves in acrimony — a pattern that characterizes most informal equipment sharing arrangements that do not develop the governance processes Category 10.3 describes.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">10.3.1</div><div class="act-name">Design access governance for shared equipment — scheduling systems, priority rules, accessibility standards, and the fairness principles that ensure equitable rather than relationship-dependent access</div></div>
+            <div class="proc-activity"><div class="act-id">10.3.2</div><div class="act-name">Implement maintenance accountability — distributed maintenance responsibilities with clear ownership, inspection schedules, and consequences for users who damage equipment without reporting or contribution to repair</div></div>
+            <div class="proc-activity"><div class="act-id">10.3.3</div><div class="act-name">Manage equipment inventory and condition monitoring — current, accurate records of all shared equipment with condition ratings, maintenance history, and replacement timeline projections</div></div>
+            <div class="proc-activity"><div class="act-id">10.3.4</div><div class="act-name">Design and implement sharing cost recovery — contribution mechanisms (dues, per-use fees, maintenance shares) that distribute the cost of shared equipment stewardship across users equitably and sustainably</div></div>
+            <div class="proc-activity"><div class="act-id">10.3.5</div><div class="act-name">Govern new equipment acquisition — community-input processes for deciding what new equipment to acquire, how to fund acquisition, and what governance conditions apply to newly acquired equipment</div></div>
+          </div>
+          <div class="act-note">Process 10.3.4 — sharing cost recovery — is the process most commonly avoided in informal sharing arrangements and most consequential for their long-term sustainability. Equipment that is shared without cost recovery is equipment whose maintenance is funded by whoever cares most — which is typically the person with the most time, the most financial resources, or the most personal investment in the equipment's continued functioning. This person eventually burns out or departs, leaving the equipment without a maintenance champion and the sharing arrangement without a funder. Designing explicit cost recovery from the beginning — even at minimal contribution levels — creates the shared financial stake that makes maintenance responsibility genuinely shared rather than silently imposed on the most committed.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">10.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Develop and protect intellectual property as community commons</div>
+          <div class="proc-group-desc">Intellectual property governance in post-labor institutions is the domain that most directly expresses the tension between the commons-building aspiration of the solidarity economy and the intellectual property regime of the market economy it is embedded in. The default in commercial contexts is proprietary intellectual property — content, code, and knowledge enclosed for private benefit. The post-labor default should be commons intellectual property — content, code, and knowledge held open for community benefit. Making that default real requires active governance: licensing choices, contribution policies, quality governance, and the anti-privatization provisions that prevent community-built intellectual commons from being commercially enclosed over time.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">10.4.1</div><div class="act-name">Develop institutional intellectual property policy — establishing the institution's default licensing approach (open licenses: Creative Commons, GPL, or equivalent), the conditions under which proprietary licensing may be appropriate, and the governance process for IP licensing decisions</div></div>
+            <div class="proc-activity"><div class="act-id">10.4.2</div><div class="act-name">Implement contribution governance for community-created knowledge — processes for recognizing contributor authorship, governing the quality of contributed content, and managing the collaborative knowledge development that produces institutional knowledge commons</div></div>
+            <div class="proc-activity"><div class="act-id">10.4.3</div><div class="act-name">Manage open source software and digital platform governance — decisions about platform architecture, feature development, and governance that affect community members should involve community members; technical governance should not be delegated entirely to technical staff</div></div>
+            <div class="proc-activity"><div class="act-id">10.4.4</div><div class="act-name">Design anti-enclosure provisions for institutional knowledge — ensuring that institutional dissolution, commercial partnership, or governance change cannot convert community-built knowledge commons to proprietary control; including successor organization IP transfer requirements that maintain open licensing</div></div>
+            <div class="proc-activity"><div class="act-id">10.4.5</div><div class="act-name">Assess and manage IP produced in partnership — when institutional knowledge is produced in collaboration with funders, partners, or contractors, governance of the resulting IP should be explicit in partnership agreements rather than defaulting to partner or contractor ownership</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">10.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Plan for intergenerational stewardship and long-horizon asset sustainability</div>
+          <div class="proc-group-desc">The defining characteristic of collective asset governance that distinguishes it from private asset management is its time horizon. Private asset managers optimize for returns within the planning horizon of their stakeholders — typically years or decades. Collective asset stewards are accountable to future community members who have no representation in current governance — a constituency whose interests must be represented through institutional design rather than through voice. Intergenerational stewardship is not sentimental commitment to the future; it is the specific governance processes through which current decision-makers are held accountable to community members who are not yet born and cannot speak for themselves in governance processes designed for present participants.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">10.5.1</div><div class="act-name">Develop intergenerational asset stewardship plans — multi-decade planning horizons for major assets that specify stewardship obligations, maintenance investments, and succession requirements across governance generations</div></div>
+            <div class="proc-activity"><div class="act-id">10.5.2</div><div class="act-name">Design governance mechanisms that represent future interests — future generations' advocates on governance bodies, long-term impact assessments for major asset decisions, and constitutional constraints on decisions that would foreclose future community options</div></div>
+            <div class="proc-activity"><div class="act-id">10.5.3</div><div class="act-name">Develop asset succession plans — explicit plans for how each major asset will be governed, maintained, and protected if the current institution is dissolved or significantly restructured; including identification of successor organizations and legal transfer mechanisms</div></div>
+            <div class="proc-activity"><div class="act-id">10.5.4</div><div class="act-name">Conduct community engagement on long-horizon stewardship — bringing community members into conversations about the long-term stewardship of collective assets, including the intergenerational trade-offs that stewardship decisions involve</div></div>
+            <div class="proc-activity"><div class="act-id">10.5.5</div><div class="act-name">Assess and report on intergenerational equity — annual reporting on whether the current generation of governance is enhancing, maintaining, or depleting the collective assets entrusted to it on behalf of future generations</div></div>
+          </div>
+          <div class="act-note">Process 10.5.2 — governance mechanisms that represent future interests — is the most institutionally innovative element of Category 10.0, addressing the hardest governance design problem: how do you represent people who don't exist yet in processes that are happening now? Several practical mechanisms exist. Future generations' advocates are governance body members whose explicit role is to raise the long-term implications of current decisions, asking "what would someone fifty years from now think about this?" Long-term impact assessments for major decisions — analogous to environmental impact assessments — require governance bodies to explicitly consider multi-decade consequences before making decisions whose effects will last that long. Constitutional protections — provisions in governance documents that require supermajority or external consent to change — create a form of future consent by making it procedurally difficult to reverse decisions that previous governance generations made on behalf of the future. None of these mechanisms is sufficient alone; together they create the structural accountability to future community members that intergenerational stewardship requires.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six commons governance failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in collective asset governance and stewardship</div>
+
+    <div class="fail-row">
+      <div class="fail-num">G1</div>
+      <div class="fail-content">
+        <div class="fail-name">Enclosure by increment — the governance decisions that collectively produce privatization</div>
+        <div class="fail-desc">No single governance decision converts collective assets to private benefit. Instead, a series of individually defensible decisions — a below-market lease to a board member's organization, a consulting arrangement with a staff member's company, a facility naming rights agreement, a partnership structure that gives a commercial entity preferential access — accumulates into a pattern of extraction that governance bodies did not decide and community members cannot easily see. By the time the pattern is visible, the interests that benefit from it have become institutional stakeholders whose influence makes reversing the pattern politically costly.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Sole-source contracts, related-party transactions, and preferential access arrangements have not been subject to conflict-of-interest review. The governance body reviews each transaction individually without reviewing the aggregate pattern of related-party relationships. No annual assessment of community benefit delivery from major assets is conducted. Community members are not aware of the financial relationships between the institution and its governance members.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G2</div>
+      <div class="fail-content">
+        <div class="fail-name">Dissolution extraction — collective assets distributed to private beneficiaries at institutional death</div>
+        <div class="fail-desc">The institution dissolves — through financial crisis, leadership departure, or strategic obsolescence — without having designed the successor organization requirements and legal protections that direct collective assets to community successors. Assets accumulated over decades through community investment are distributed to governance members, creditors, or the government rather than to the organizations that will continue the mission for the community. The dissolution is technically legal; the outcome is the permanent loss of collectively-built wealth from the community for which it was accumulated.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The institution's governing documents do not specify community-oriented successor organization requirements for asset distribution upon dissolution. No successor organization has been identified or developed. Governance members and leadership have personal financial interests in institution assets that have not been disclosed or managed. Financial pressure has created conversations about asset sale or dissolution that have not included community input.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G3</div>
+      <div class="fail-content">
+        <div class="fail-name">Maintenance neglect — collective assets that deteriorate to zero value</div>
+        <div class="fail-desc">Collectively-held assets — land, buildings, equipment, digital infrastructure — are maintained inadequately because maintenance investment is deferred in favor of current mission delivery, because maintenance responsibility is diffused across multiple users without clear accountability, or because the capital renewal funding that sustains assets across their lifecycle was never established. The assets deteriorate over time, their community benefit declines as their physical condition declines, and eventually they require capital investment far exceeding what systematic maintenance would have required — or they are lost entirely.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Major assets show visible deterioration that is acknowledged but not addressed. No capital renewal fund exists for major assets. Maintenance responsibilities are informally distributed without enforcement. Governance body receives no regular reports on asset condition. No asset condition assessment has been conducted in the past three years.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G4</div>
+      <div class="fail-content">
+        <div class="fail-name">Access capture — shared assets used primarily by the most connected, not the most needy</div>
+        <div class="fail-desc">Access to shared assets — community spaces, tool libraries, digital platforms, equipment libraries — is governed through informal norms that advantage the most institutionally connected community members over those with the greatest need. The most engaged community members, who have the most relationships with institutional staff and the most familiarity with institutional processes, consistently receive the best access. Community members who are newer, less connected, or less institutionally navigant receive worse access. The asset is nominally public; its effective distribution is by social hierarchy.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> The same community members dominate usage of shared assets over time, without a rotation or access equity mechanism. No data is collected on who uses shared assets. New community members describe difficulty accessing assets that existing members describe as easily available. Scheduling or reservation processes for shared assets advantage those with more institutional familiarity.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G5</div>
+      <div class="fail-content">
+        <div class="fail-name">Mission drift in asset use — assets optimized for revenue rather than community benefit</div>
+        <div class="fail-desc">Collectively-held assets — particularly real property and digital platforms — face consistent pressure to be used in ways that maximize revenue rather than community benefit. The community space that begins accepting market-rate event bookings to cover operating costs gradually transitions from a community-governed commons to an event venue that happens to offer discounted rates to community members. The platform that begins generating revenue from data licensing gradually transitions from a community tool to a commercial product. Each step seems defensible in financial terms; collectively they produce an asset portfolio in service of financial sustainability rather than community benefit.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Revenue generation from collective assets is growing faster than community access to them. Community access has been reduced or made less convenient to accommodate revenue-generating uses. The governance discussion about assets centers on revenue performance rather than community benefit delivery. Community members describe feeling like secondary users of assets nominally held on their behalf.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">G6</div>
+      <div class="fail-content">
+        <div class="fail-name">Temporal parochialism — present governance depleting future community's inheritance</div>
+        <div class="fail-desc">Current governance makes decisions about collectively-held assets that serve present community needs at the expense of future community interests — consuming capital reserves, deferring maintenance, encumbering assets with obligations that reduce their future value, or making irreversible asset use decisions without adequate consideration of their long-term consequences. The present governance generation is legitimate; its authority over decisions that bind future generations is not unlimited. Without governance mechanisms that require future-interest consideration, present governance will systematically underweight it.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Major asset decisions are evaluated only against current community needs without systematic assessment of long-term consequences. No intergenerational equity reporting exists. Capital reserves have been consistently below target for multiple years without a plan to restore them. Asset use decisions have been made with irreversible consequences — habitat destruction, structural modifications, rights encumbrances — without future-impact assessment.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Iroquois Confederacy and the seven-generation principle</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Haudenosaunee governance — the seven generations principle operationalized</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Haudenosaunee Confederacy — the political and governance union of the Mohawk, Onondaga, Cayuga, Oneida, Seneca, and Tuscarora nations — is among the oldest continuously operating governance systems in the world, with documented governance practices stretching back at least six hundred years. Its contribution to Category 10.0 is not primarily historical or cultural; it is operational: the Haudenosaunee governance tradition includes specific deliberative requirements for long-horizon decision-making that operationalize what process 10.5.2 describes as governance mechanisms that represent future interests.</div>
+      <div class="case-text">The "seventh generation" principle — the requirement to consider the impact of governance decisions on community members seven generations in the future — is often cited as an aspiration or a value. In Haudenosaunee governance practice, it is a deliberative process requirement: major decisions affecting collective resources require explicit deliberation about their consequences for people not yet born, and governance bodies include roles specifically charged with raising those long-term considerations in current deliberations. This is not romantic environmentalism — it is a specific institutional design response to the temporal parochialism problem: the tendency of any governance system to weigh present interests more heavily than future ones because present community members can attend meetings and future community members cannot.</div>
+      <div class="case-text">The Haudenosaunee practice is also instructive about the relationship between governance design and cultural sustainability. The institutions that have maintained collective land stewardship across the longest time horizons in human history have not done so through legal instruments alone — they have done so through governance cultures that treat stewardship as a fundamental identity commitment rather than an optional governance preference. Legal instruments protect assets from privatization when governance cultures fail; governance cultures sustain stewardship when legal instruments are challenged. Category 10.0 at its most mature level requires both.</div>
+      <div class="case-lesson"><strong>Category 10.0 lesson:</strong> The seven-generation principle operationalized as a deliberative process requirement — not as an aspiration but as a specific governance role and decision protocol — is the most concrete historical model available for process 10.5.2 (governance mechanisms that represent future interests). Post-labor institutions designing intergenerational stewardship governance should study Haudenosaunee deliberative practice as a living implementation of the principle, not as a historical artifact. The principle is accessible and actionable: before any major asset decision, ask explicitly what the consequences would be for community members seven generations hence, and designate a governance role responsible for raising that question.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Mondragon and the limits of cooperative governance</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Mondragon Corporation — collective asset governance under scale pressure</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">The Mondragon Corporation, the Basque cooperative conglomerate, is among the most extensively documented experiments in large-scale collective asset governance in the twentieth century — a network of worker-owned cooperatives, educational institutions, and financial infrastructure that at its peak employed over 80,000 worker-owners across 257 cooperative enterprises. Its contribution to Category 10.0 is primarily cautionary: Mondragon's evolution under competitive market pressure illustrates the failure modes that accumulate when collective asset governance does not maintain adequate anti-extraction protections as institutions scale and internationalize.</div>
+      <div class="case-text">Mondragon's expansion into global supply chains — particularly after Spain's accession to the European Union and the subsequent competitive pressure on manufacturing costs — required the adoption of employment structures that created a two-tier workforce: worker-owners in Spain's Basque country with full governance rights and financial stakes, and non-member employees in international subsidiaries and contract facilities with neither. By 2013, Mondragon employed more non-member workers globally than member worker-owners — a structural inversion of the cooperative governance principle that produced the governance failure Category 10.0 is designed to prevent: assets accumulated through collective ownership governed in ways that exclude most of the workers whose labor generates the assets from the governance rights and financial stakes of ownership.</div>
+      <div class="case-text">The Mondragon case is not a story of betrayal — it is a story of the incremental governance decisions that individually seemed necessary for competitive survival and collectively produced an institution structurally inconsistent with its founding governance principles. It illustrates failure mode G1 (enclosure by increment) at institutional scale and provides a specific historical warning about the governance protections that Category 10.0 must provide as institutions face competitive and scale pressures.</div>
+      <div class="case-lesson"><strong>Category 10.0 lesson:</strong> Mondragon's evolution demonstrates that governance protections for collective assets must be structural — embedded in legal form and governance constitution — rather than cultural, because culture can be eroded under competitive pressure while structural protections require explicit governance decisions to change. Process 10.1.1 (anti-extraction protections built into legal form) is the lesson directly: governance policies that can be changed by vote are governance policies that will be changed when competitive pressures make change seem necessary. Legal encumbrances that require external consent to modify — member supermajority requirements, regulatory approval for structural changes, ground lease provisions that restrict disposition — provide the structural protections that cultural commitment alone cannot sustain across decades of scale and competitive pressure.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>Collective ownership is not a document — it is a practice. The document records the intention; the practice determines whether future community members inherit an asset or a liability.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 10.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 10.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No asset register; governance body does not have a complete picture of collectively-held assets and their governance conditions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Asset acquisition and disposition decisions are made by leadership without formal governance process or community input</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No anti-extraction protections in legal form; collective assets could be converted to private benefit by governance body vote</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Shared equipment governance is entirely informal; maintenance responsibility is not assigned; access is relationship-dependent</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No intergenerational stewardship planning; asset decisions are made with short time horizons; no future-interest representation mechanisms</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Asset register maintained for major assets; governance body aware of primary collectively-held assets and their conditions</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Formal governance process for major asset acquisition and disposition; community input processes developing</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Some legal protections for primary assets; conflict-of-interest policy in place; related-party transactions reviewed</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Written access and maintenance governance for major shared equipment; cost recovery mechanisms developing</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Awareness of intergenerational stewardship obligations; capital renewal planning beginning; successor organization discussion initiated</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Complete asset register maintained and reviewed annually; governance body receives regular asset governance reports</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Anti-extraction protections in legal form for all major assets; disposition governance includes community process and successor organization requirements</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Annual community benefit assessment for all major assets; encroachment patterns monitored across time; related-party transaction audit conducted annually</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Shared equipment governance with equity access mechanisms, assigned maintenance accountability, and cost recovery; usage equity monitored</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Intergenerational stewardship plans for major assets; capital renewal funds established; at least one future-interest representation mechanism active in governance</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Asset governance frameworks contributed to peer institutions; institution recognized as a commons governance resource in the solidarity economy</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">All intellectual property under open licensing; anti-enclosure provisions embedded in institutional documents and partnership agreements</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Community members have genuine agency in asset governance decisions — not only input but decision rights for assets that primarily affect them</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Intergenerational equity reporting published annually; measurable improvement in collective asset value relative to community members served over time</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Successor organization requirements legally binding; dissolution would direct all assets to community successors regardless of governance body preferences</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 10.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Asset governance coverage rate</div>
+      <div class="kpi-cell">Percentage of major collective assets with documented governance structures, anti-extraction protections, and annual community benefit assessments — the primary governance completeness measure</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Anti-extraction protection rate</div>
+      <div class="kpi-cell">Percentage of major collective assets with legal anti-extraction protections embedded in ownership documents — measures structural governance quality, not just policy</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Community benefit delivery rate</div>
+      <div class="kpi-cell">Percentage of collective assets assessed as delivering the community benefit purposes for which they were acquired — the primary outcome measure for commons governance</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Asset maintenance ratio</div>
+      <div class="kpi-cell">Percentage of collective assets meeting current maintenance standards — measures whether stewardship obligations are being honored or deferred</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Shared asset access equity index</div>
+      <div class="kpi-cell">Distribution of shared asset access across demographic subgroups relative to community composition — measures whether access governance is producing equitable use</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Capital renewal fund adequacy rate</div>
+      <div class="kpi-cell">Capital renewal fund balance as a percentage of estimated 10-year capital needs — the primary intergenerational stewardship financial measure</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Related-party transaction disclosure rate</div>
+      <div class="kpi-cell">Percentage of related-party transactions disclosed and reviewed through conflict-of-interest process — the primary extraction monitoring measure</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Open licensing coverage rate</div>
+      <div class="kpi-cell">Percentage of institutional intellectual property under open licenses — measures progress toward the knowledge commons aspiration</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 10.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 10.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a collective asset inventory and governance assessment</div>
+          <div class="seq-desc">Before any governance development, establish a complete and accurate picture of what the institution collectively holds: all real property, all significant equipment, all digital infrastructure, all institutional intellectual property, all financial reserves. For each asset, assess whether anti-extraction legal protections exist and whether they are adequate, whether a community benefit assessment has been conducted recently, and whether maintenance is current. This inventory will typically reveal assets that the governance body did not know about, assets with inadequate legal protections, and assets whose deterioration has not triggered governance review. The inventory is the foundation for all subsequent Category 10.0 development.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Complete asset inventory maintained and reviewed by governance body; anti-extraction protection gaps identified for each major asset; top three governance development priorities identified.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Design and implement anti-extraction protections for the highest-risk assets</div>
+          <div class="seq-desc">Identify the institution's most valuable collective assets — typically real property and significant financial reserves — and assess whether the legal protections against privatization are adequate. For real property, work with a community land trust attorney to design ground lease provisions or deed restrictions that encumber the property against privatization independent of governance body decisions. For financial reserves and endowments, design restricted use provisions and successor organization requirements in governance documents. These are legal investments, not governance policy investments — they require legal expertise and create protections that survive governance changes.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Anti-extraction legal protections in place for all major real property assets; successor organization requirements in institutional governing documents; conflict-of-interest policy implemented and enforced.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement annual community benefit assessments for major assets</div>
+          <div class="seq-desc">Establish an annual process for assessing whether each major collective asset is serving the community benefit purposes for which it was acquired. The assessment should include community input — not only governance body review — and should surface encroachment patterns that individual transaction reviews miss. Present findings to the governance body with explicit accountability for response to any encroachment patterns identified. The assessment is the primary tool for detecting failure mode G1 (enclosure by increment) before it becomes entrenched.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Annual community benefit assessments conducted for all major assets; community input incorporated; governance body review of findings with documented responses; at least one encroachment pattern identified and addressed.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Design shared asset governance with equity access and maintenance accountability</div>
+          <div class="seq-desc">For major shared assets — community spaces, tool libraries, equipment — develop written governance protocols: access scheduling and priority rules, maintenance responsibility assignments with enforcement mechanisms, cost recovery mechanisms, and equity monitoring. Present the protocols to the community members who use the shared assets and revise based on their input. Implement the protocols and monitor access equity data to identify patterns of inequitable use that the protocols are not adequately addressing. Good shared asset governance is iterative — the first version will have gaps that usage data reveals.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Written governance protocols in place for all major shared assets; access equity data collected and reviewed quarterly; maintenance accountability enforced; at least one access equity issue identified and addressed through protocol revision.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Develop intergenerational stewardship plans and future-interest governance</div>
+          <div class="seq-desc">Develop multi-decade stewardship plans for the institution's most significant long-term assets — real property above all. The plan should specify maintenance investment requirements, capital renewal funding targets, and the governance conditions that must be sustained across governance generations. Establish at least one future-interest representation mechanism in governance — a designated role for raising long-term implications in major asset decisions, or a requirement for future-impact assessments for decisions with significant long-term consequences. These mechanisms are most credibly designed with community members who will be most affected by the long-term decisions being made.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Intergenerational stewardship plans for major long-term assets; capital renewal funds established with multi-decade targets; at least one future-interest representation mechanism active in governance; first intergenerational equity report published.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the boundary between Category 10.0 and Category 2.0:</strong> Category 2.0 (Design and Steward Public Goods) covers the design, development, and stewardship of the public goods and commons that the institution provides to the community — the services and resources delivered through public goods infrastructure. Category 10.0 covers the governance and stewardship of the assets that the institution holds collectively on behalf of the community — the ownership architecture and governance processes that protect those assets from privatization. The boundary is the distinction between what the institution does with assets (Category 2.0) and how it governs the ownership of assets (Category 10.0). In practice, the two categories must be developed in coordination: Category 2.0 stewardship processes are most effective when they operate within the asset governance architecture that Category 10.0 provides, and Category 10.0 governance is most meaningful when it is designed around the specific community benefit purposes that Category 2.0 operationalizes.</p>
+    <p><strong>On the limits of legal protection:</strong> Legal instruments are necessary but not sufficient for the long-term protection of collective assets. Ground leases can be challenged legally; governance documents can be amended through sufficiently supermajority processes; regulatory protection can be changed by legislatures. The Mondragon case demonstrates that legal structures designed for one competitive environment may be systematically eroded by the pressures of a different one. The most durable collective asset protection combines legal instruments with governance culture — the internal commitment to collective stewardship that makes legal challenges politically costly and governance erosion culturally unacceptable. Building that culture requires the kind of community ownership practices described throughout this chapter: community benefit assessments that involve community members, transparency about asset governance, and the explicit intergenerational stewardship commitments that make current governance body members accountable to communities that extend beyond their tenure.</p>
+    <p><strong>On the intellectual property commons and open licensing:</strong> The free software and open source movements have developed the most sophisticated intellectual property commons governance frameworks available, and post-labor institutions should draw on them actively rather than developing equivalent frameworks from scratch. The GPL (GNU General Public License) and its copyleft provisions, the Creative Commons licensing suite, the Open Data Commons licenses, and the emerging open source hardware licenses represent decades of legal and governance innovation specifically designed to solve the anti-enclosure problem in the knowledge commons domain. Process 10.4 is not asking institutions to reinvent this infrastructure — it is asking them to apply it consistently to the intellectual property they generate and to build the governance practices that maintain the commons they join through open licensing.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part IV · Chapter 17 · GPS 10.0</span>
+    <span class="close-next">Ch. 18 — Institutional integrity &amp; equity (GPS 11.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>

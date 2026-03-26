@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appendix A (cont.) — GPS 16.0 complete + Cross-Reference Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --gold: #c9a96e; --gold-dim: rgba(201,169,110,0.08);
+    --civic: #1D9E75;   --civic-dim: rgba(29,158,117,0.08);   --civic-border: rgba(29,158,117,0.2);   --civic-text: #4ecfa0;
+    --inst:  #378ADD;   --inst-dim:  rgba(55,138,221,0.08);   --inst-border:  rgba(55,138,221,0.2);   --inst-text:  #7ab8f0;
+    --novel: #7F77DD;   --novel-dim: rgba(127,119,221,0.08);  --novel-border: rgba(127,119,221,0.2);  --novel-text: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 13px; line-height: 1.6; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.016; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+
+  .page { max-width: 900px; margin: 0 auto; padding: 64px 40px 120px; }
+
+  /* Continuation notice */
+  .continuation { margin-bottom: 40px; padding: 16px 20px; background: var(--novel-dim); border: 1px solid var(--novel-border); border-radius: 6px; font-size: 0.75rem; color: var(--novel-text); opacity: 0.8; }
+  .continuation strong { font-weight: 500; }
+
+  /* Section headings */
+  .section-heading { font-size: 9px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin: 52px 0 20px; opacity: 0.8; display: flex; align-items: center; gap: 12px; }
+  .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+
+  /* Category block */
+  .cat-block { margin-bottom: 56px; }
+  .cat-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 6px 6px 0 0; border: 1px solid; border-bottom: none; }
+  .cat-header.novel { background: var(--novel-dim); border-color: var(--novel-border); }
+  .cat-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; min-width: 40px; }
+  .cat-num.novel { color: var(--novel-text); }
+  .cat-name { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 600; color: var(--text-primary); flex: 1; }
+  .cat-counts { display: flex; gap: 8px; }
+  .count-pill { font-size: 8px; font-weight: 500; padding: 2px 7px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .cat-body { border: 1px solid; border-top: none; border-radius: 0 0 6px 6px; overflow: hidden; }
+  .cat-body.novel { border-color: var(--novel-border); }
+
+  .scope-row { padding: 12px 18px; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); }
+  .scope-label { font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-ghost); margin-bottom: 5px; }
+  .scope-text { font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; }
+  .scope-text strong { color: var(--text-secondary); font-weight: 500; }
+
+  /* Process group */
+  .pg-block { border-bottom: 1px solid var(--border-subtle); }
+  .pg-block:last-child { border-bottom: none; }
+  .pg-header { display: flex; align-items: stretch; }
+  .pg-id { width: 56px; min-width: 56px; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 12px 0; }
+  .pg-id.novel { color: var(--novel-text); background: var(--novel-dim); }
+  .pg-info { padding: 10px 14px; flex: 1; background: var(--bg-primary); }
+  .pg-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+  .pg-desc { font-size: 0.71rem; color: var(--text-muted); line-height: 1.5; }
+
+  .proc-list { background: var(--bg-secondary); }
+  .proc-entry { border-top: 1px solid var(--border-subtle); }
+  .proc-row { display: flex; align-items: flex-start; }
+  .proc-id { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: var(--text-ghost); min-width: 64px; padding: 8px 0 8px 14px; border-right: 1px solid var(--border-subtle); white-space: nowrap; }
+  .proc-name { font-size: 0.73rem; color: var(--text-secondary); font-weight: 500; padding: 8px 12px; line-height: 1.45; flex: 1; }
+  .act-list { border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+  .act-row { display: flex; border-top: 1px solid var(--border-subtle); }
+  .act-row:first-child { border-top: none; }
+  .act-id { font-family: 'JetBrains Mono', monospace; font-size: 7.5px; color: var(--text-ghost); min-width: 72px; padding: 6px 0 6px 22px; border-right: 1px solid var(--border-subtle); white-space: nowrap; opacity: 0.7; }
+  .act-name { font-size: 0.69rem; color: var(--text-muted); padding: 6px 12px; line-height: 1.45; flex: 1; }
+
+  .interfaces-row { padding: 10px 18px; background: var(--bg-deep); border-top: 1px solid var(--border-subtle); display: flex; gap: 8px; align-items: flex-start; }
+  .iface-label { font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-ghost); white-space: nowrap; padding-top: 2px; min-width: 80px; }
+  .iface-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+  .iface-pill { font-size: 8px; font-weight: 500; padding: 2px 7px; border-radius: 3px; background: rgba(180,178,169,0.08); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+
+  /* Cross-reference index */
+  .xref-intro { font-size: 0.78rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; }
+  .xref-intro strong { color: var(--text-secondary); font-weight: 500; }
+
+  .xref-tier-label { font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border-subtle); }
+  .xref-tier-label.civic { color: var(--civic-text); }
+  .xref-tier-label.inst  { color: var(--inst-text); }
+  .xref-tier-label.novel { color: var(--novel-text); }
+
+  .xref-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+  .xref-table th { padding: 7px 10px; background: var(--bg-tertiary); font-size: 8px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-align: left; border-bottom: 1px solid var(--border-subtle); border-right: 1px solid var(--border-subtle); }
+  .xref-table th:last-child { border-right: none; }
+  .xref-table td { padding: 6px 10px; border-bottom: 1px solid var(--border-subtle); border-right: 1px solid var(--border-subtle); vertical-align: top; font-size: 0.69rem; color: var(--text-secondary); line-height: 1.45; }
+  .xref-table td:last-child { border-right: none; }
+  .xref-table tr:last-child td { border-bottom: none; }
+  .xref-table tr:hover td { background: var(--bg-secondary); }
+  .pg-id-cell { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500; white-space: nowrap; }
+  .pg-id-cell.civic { color: var(--civic-text); }
+  .pg-id-cell.inst  { color: var(--inst-text); }
+  .pg-id-cell.novel { color: var(--novel-text); }
+  .pg-name-cell { font-weight: 500; color: var(--text-primary); }
+  .ch-ref { font-size: 0.67rem; color: var(--text-muted); }
+  .ch-ref strong { color: var(--gold); font-weight: 500; }
+  .key-acts { font-size: 0.67rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* Closing */
+  .appendix-close { margin-top: 64px; padding: 28px 32px; background: var(--bg-secondary); border: 1px solid var(--border-visible); border-radius: 8px; }
+  .close-label { font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; opacity: 0.8; }
+  .close-title { font-family: 'Crimson Pro', serif; font-size: 1.1rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 8px; }
+  .close-body { font-size: 0.76rem; color: var(--text-muted); line-height: 1.7; }
+  .close-body strong { color: var(--text-secondary); font-weight: 500; }
+
+  .page-number { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="continuation">
+  <strong>Appendix A continuation</strong> — This file completes GPS 16.0 (picking up at process group 16.2.3) and contains the full Cross-Reference Index. Combine with the primary Appendix A file for the complete reference document.
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     GPS 16.0 COMPLETION — picking up at 16.2.3
+════════════════════════════════════════════════════ -->
+
+<div class="cat-block">
+  <div class="cat-header novel">
+    <span class="cat-num novel">GPS 16.0</span>
+    <span class="cat-name">Participatory Democracy (continued)</span>
+    <div class="cat-counts">
+      <span class="count-pill">5 process groups</span>
+      <span class="count-pill">22 processes</span>
+      <span class="count-pill">Novel Category</span>
+    </div>
+  </div>
+  <div class="cat-body novel">
+
+    <!-- 16.2 continuing from 16.2.3 -->
+    <div class="pg-block">
+      <div class="pg-header">
+        <div class="pg-id novel">16.2</div>
+        <div class="pg-info">
+          <div class="pg-name">Implement participatory budgeting and resource allocation governance (continued)</div>
+          <div class="pg-desc">Continuing from process 16.2.3 — equity assessment of participatory budgeting outcomes.</div>
+        </div>
+      </div>
+      <div class="proc-list">
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.2.3</div><div class="proc-name">Assess equity in participatory budgeting outcomes — monitoring whether PB directs resources toward most marginalized or is captured by most engaged participants</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.2.3.1</div><div class="act-name">Track participation demographics in PB processes and compare to overall community demographics</div></div>
+            <div class="act-row"><div class="act-id">16.2.3.2</div><div class="act-name">Assess whether funded priorities reflect needs of most marginalized community members or only most engaged participants</div></div>
+            <div class="act-row"><div class="act-id">16.2.3.3</div><div class="act-name">Design targeted recruitment for underrepresented populations in PB processes</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.2.4</div><div class="proc-name">Track and report participatory budget implementation — closing the accountability loop between community budget decisions and institutional action</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.2.4.1</div><div class="act-name">Publish implementation report for each PB cycle showing which community-decided investments were made and on what timeline</div></div>
+            <div class="act-row"><div class="act-id">16.2.4.2</div><div class="act-name">Report any departures from community budget decisions with explicit rationale and governance body accountability</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.2.5</div><div class="proc-name">Plan for participatory budget scope expansion — committing to increasing the resource percentage subject to community decision authority over time</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.2.5.1</div><div class="act-name">Adopt multi-year PB scope expansion plan with governance body commitment to increasing community authority</div></div>
+            <div class="act-row"><div class="act-id">16.2.5.2</div><div class="act-name">Assess institutional barriers to scope expansion (funder restrictions, legal constraints, staff resistance) and develop plans to address them</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16.3 -->
+    <div class="pg-block">
+      <div class="pg-header">
+        <div class="pg-id novel">16.3</div>
+        <div class="pg-info">
+          <div class="pg-name">Govern through citizen assemblies, community juries, and deliberative panels</div>
+          <div class="pg-desc">Processes for convening representative samples of community members for extended deliberation on significant institutional questions — providing the depth and breadth of engagement that neither representative governance bodies nor open public comment can achieve.</div>
+        </div>
+      </div>
+      <div class="proc-list">
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.3.1</div><div class="proc-name">Design and convene citizen assemblies for major strategic decisions — randomly or stratified-randomly selected panels with genuine advisory or binding authority</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.3.1.1</div><div class="act-name">Design participant selection methodology ensuring demographic representation of the community served</div></div>
+            <div class="act-row"><div class="act-id">16.3.1.2</div><div class="act-name">Develop information provision protocol presenting balanced perspectives from multiple sources</div></div>
+            <div class="act-row"><div class="act-id">16.3.1.3</div><div class="act-name">Specify in advance whether assembly output is binding, strongly advisory, or advisory and communicate this to participants and community</div></div>
+            <div class="act-row"><div class="act-id">16.3.1.4</div><div class="act-name">Compensate assembly participants for their time at a rate that makes participation accessible regardless of income</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.3.2</div><div class="proc-name">Develop community jury processes for specific contested decisions — smaller deliberative panels hearing testimony and producing recommendations</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.3.2.1</div><div class="act-name">Design jury process for contested institutional decisions (8–25 members, structured testimony, defined deliberation period)</div></div>
+            <div class="act-row"><div class="act-id">16.3.2.2</div><div class="act-name">Document governance body's formal response to jury recommendations within defined timeframe</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.3.3</div><div class="proc-name">Implement structured deliberation facilitation — professional facilitation ensuring all voices are heard and discussion produces genuine reasoning</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.3.3.1</div><div class="act-name">Engage professional facilitators with community governance experience for all citizen assemblies and juries</div></div>
+            <div class="act-row"><div class="act-id">16.3.3.2</div><div class="act-name">Design facilitation protocols that specifically counteract dominant-voice dynamics and ensure equitable participation</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.3.4</div><div class="proc-name">Connect deliberative panel outputs to institutional governance — formal relationship between panel recommendations and governance body decisions with accountability for departures</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.3.4.1</div><div class="act-name">Design formal protocol for governance body response to citizen assembly recommendations</div></div>
+            <div class="act-row"><div class="act-id">16.3.4.2</div><div class="act-name">Require public explanation of any governance body departure from assembly recommendations</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.3.5</div><div class="proc-name">Build deliberation capacity institutionally — developing the facilitation skills and logistical infrastructure for regular deliberative processes</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.3.5.1</div><div class="act-name">Train internal staff in deliberative facilitation as a sustained institutional capacity</div></div>
+            <div class="act-row"><div class="act-id">16.3.5.2</div><div class="act-name">Develop standard logistical infrastructure (venue, materials, compensation systems) for reusable assembly convening</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16.4 -->
+    <div class="pg-block">
+      <div class="pg-header">
+        <div class="pg-id novel">16.4</div>
+        <div class="pg-info">
+          <div class="pg-name">Build civic capacity and community organizing infrastructure</div>
+          <div class="pg-desc">Processes for developing the civic skills, governance literacy, organizing experience, and political efficacy that make participatory democracy substantive rather than nominal — investing in the human capacity that all participatory governance processes depend on.</div>
+        </div>
+      </div>
+      <div class="proc-list">
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.4.1</div><div class="proc-name">Develop civic education programming — making governance, public finance, rights, and political processes accessible to community members without prior political or organizational backgrounds</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.4.1.1</div><div class="act-name">Develop civic education curriculum covering institutional governance, financial literacy, rights, and advocacy in plain language</div></div>
+            <div class="act-row"><div class="act-id">16.4.1.2</div><div class="act-name">Offer civic education as ongoing institutional programming rather than prerequisite requirement for participation</div></div>
+            <div class="act-row"><div class="act-id">16.4.1.3</div><div class="act-name">Co-design civic education content with community members who have recently developed civic capacity</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.4.2</div><div class="proc-name">Build community organizing capacity — the relational organizing skills, issue identification, power analysis, and collective action experience that enable community members to shape institutional direction proactively</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.4.2.1</div><div class="act-name">Provide or connect to organizing training covering power mapping, relationship building, and collective action design</div></div>
+            <div class="act-row"><div class="act-id">16.4.2.2</div><div class="act-name">Support community members in applying organizing skills to issues they identify as important regardless of institutional alignment</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.4.3</div><div class="proc-name">Develop governance leadership — investing in community members who can facilitate deliberation, hold governance roles, and develop the next generation of civic leaders</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.4.3.1</div><div class="act-name">Develop governance leadership pipeline identifying and supporting community members across all demographic groups</div></div>
+            <div class="act-row"><div class="act-id">16.4.3.2</div><div class="act-name">Create mentorship relationships between experienced governance members and emerging community leaders</div></div>
+            <div class="act-row"><div class="act-id">16.4.3.3</div><div class="act-name">Provide stretch governance roles and facilitation opportunities for community members in leadership development</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.4.4</div><div class="proc-name">Create participation documentation and history — building the institutional memory of what community participation has produced as evidence of civic efficacy</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.4.4.1</div><div class="act-name">Document and celebrate specific decisions made, changes achieved, and resources allocated through community participation</div></div>
+            <div class="act-row"><div class="act-id">16.4.4.2</div><div class="act-name">Share participation history with community members as evidence that participation is consequential</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.4.5</div><div class="proc-name">Support community self-organization including organization that challenges institutional direction — providing resources and infrastructure for community organizing beyond institutionally approved priorities</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.4.5.1</div><div class="act-name">Provide institutional resources (space, printing, facilitation support) for community-initiated organizing regardless of whether it aligns with institutional positions</div></div>
+            <div class="act-row"><div class="act-id">16.4.5.2</div><div class="act-name">Assess institutional response to critical community organizing as a governance accountability indicator</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16.5 -->
+    <div class="pg-block">
+      <div class="pg-header">
+        <div class="pg-id novel">16.5</div>
+        <div class="pg-info">
+          <div class="pg-name">Govern power distribution and democratic accountability across the institution</div>
+          <div class="pg-desc">Processes for making power distribution visible, democratically legitimate, and continuously examined — including power mapping, structural power redistribution, democratic accountability mechanisms, and governance succession that broadens rather than concentrates authority.</div>
+        </div>
+      </div>
+      <div class="proc-list">
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.5.1</div><div class="proc-name">Conduct power mapping — systematic analysis of where formal and informal power resides in the institution, distinguishing actual influence from formal authority</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.5.1.1</div><div class="act-name">Design power mapping process involving community members, staff, and governance members as co-analysts rather than only subjects</div></div>
+            <div class="act-row"><div class="act-id">16.5.1.2</div><div class="act-name">Map formal decision authority alongside informal influence networks, funder relationships, and staff expertise authority</div></div>
+            <div class="act-row"><div class="act-id">16.5.1.3</div><div class="act-name">Conduct power mapping annually and compare year-over-year to assess power distribution trends</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.5.2</div><div class="proc-name">Design and implement power redistribution mechanisms — specific governance changes that address power concentration revealed by mapping</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.5.2.1</div><div class="act-name">Develop power redistribution plan from power mapping findings with time-bound governance commitments</div></div>
+            <div class="act-row"><div class="act-id">16.5.2.2</div><div class="act-name">Design structural redistribution (new governance roles, expanded decision scope, community veto rights) rather than only cultural aspirations</div></div>
+            <div class="act-row"><div class="act-id">16.5.2.3</div><div class="act-name">Track power distribution index year-over-year as a governance performance indicator</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.5.3</div><div class="proc-name">Implement democratic accountability mechanisms — processes through which governance authority holders are accountable to community members between elections and without formal grievance processes</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.5.3.1</div><div class="act-name">Design regular accountability sessions between governance members and their constituencies</div></div>
+            <div class="act-row"><div class="act-id">16.5.3.2</div><div class="act-name">Implement recall or removal mechanisms for governance members who fail community accountability standards</div></div>
+            <div class="act-row"><div class="act-id">16.5.3.3</div><div class="act-name">Design governance authority as a community mandate (mandar obedeciendo) rather than personal power through short terms, rotation, and return to ordinary membership</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.5.4</div><div class="proc-name">Govern the governance — regular community assessment of whether participatory democracy processes are producing genuine community agency</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.5.4.1</div><div class="act-name">Survey community members annually on civic efficacy — whether their participation influences institutional decisions</div></div>
+            <div class="act-row"><div class="act-id">16.5.4.2</div><div class="act-name">Present governance quality assessment to governance body with accountability for improving participation spectrum level</div></div>
+            <div class="act-row"><div class="act-id">16.5.4.3</div><div class="act-name">Assess participation spectrum position for each major governance domain annually</div></div>
+          </div>
+        </div>
+        <div class="proc-entry">
+          <div class="proc-row"><div class="proc-id">16.5.5</div><div class="proc-name">Manage governance succession toward broader authority distribution — designing transitions that widen rather than replicate existing power concentrations</div></div>
+          <div class="act-list">
+            <div class="act-row"><div class="act-id">16.5.5.1</div><div class="act-name">Assess governance succession plans against power distribution impact — succession that replicates existing demographics and networks is not neutral</div></div>
+            <div class="act-row"><div class="act-id">16.5.5.2</div><div class="act-name">Design succession processes that deliberately recruit from underrepresented community constituencies</div></div>
+            <div class="act-row"><div class="act-id">16.5.5.3</div><div class="act-name">Document governance authority transfer and assess whether each transition broadened or narrowed the distribution of institutional power</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="interfaces-row">
+      <span class="iface-label">Key interfaces</span>
+      <div class="iface-pills">
+        <span class="iface-pill">GPS 1.0 — governance design is the architecture; GPS 16.0 is its democratic activation</span>
+        <span class="iface-pill">GPS 11.0 — community accountability mechanisms are both GPS 11.2 and GPS 16.5</span>
+        <span class="iface-pill">GPS 15.4 — civic leadership development serves both flourishing and democratic participation</span>
+        <span class="iface-pill">GPS 12.4 — constituent voice development for advocacy connects to GPS 16.4 civic capacity</span>
+        <span class="iface-pill">GPS 13.3 — power mapping connects to assumption surfacing in strategic renewal</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     CROSS-REFERENCE INDEX
+════════════════════════════════════════════════════ -->
+<div class="section-heading">Cross-reference index — process groups to book chapters</div>
+
+<div class="xref-intro">
+  Use this index to locate the chapter where each GPS process group is discussed in depth. The index is organized by tier and category. Column definitions: <strong>GPS ID</strong> = process group number; <strong>Process group name</strong> = the L2 process group; <strong>Primary chapter</strong> = the chapter with the most extended treatment of this process group; <strong>Key activities discussed</strong> = the specific L4 activities that receive substantive treatment in the text. For activities not listed, the full L3/L4 hierarchy is in Appendix A; the activity is governed by the process group but not individually analyzed in the main text.
+</div>
+
+<!-- TIER I -->
+<div class="xref-tier-label civic">Tier I — Civic operating processes</div>
+
+<table class="xref-table">
+  <thead>
+    <tr>
+      <th style="width:68px">GPS ID</th>
+      <th style="width:220px">Process group name</th>
+      <th style="width:100px">Primary chapter</th>
+      <th>Key activities and concepts discussed in depth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="pg-id-cell civic">1.1</span></td>
+      <td class="pg-name-cell">Develop collective vision and mission</td>
+      <td class="ch-ref"><strong>Ch. 8</strong> (GPS 1.0)</td>
+      <td class="key-acts">Mission operationalization vs. aspiration; five governance model types; participatory vision development; theory of change as governance document</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">1.2</span></td>
+      <td class="pg-name-cell">Design and maintain governance architecture</td>
+      <td class="ch-ref"><strong>Ch. 8</strong> (GPS 1.0)</td>
+      <td class="key-acts">Governance body composition; term limits and succession; governance member development; the seven governance failure modes</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">1.3</span></td>
+      <td class="pg-name-cell">Govern policy and decision rights</td>
+      <td class="ch-ref"><strong>Ch. 8</strong> (GPS 1.0)</td>
+      <td class="key-acts">Decision authority mapping; bylaw development; policy framework maintenance; decision rights maps as accountability tool</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">1.4</span></td>
+      <td class="pg-name-cell">Manage stakeholder engagement</td>
+      <td class="ch-ref"><strong>Ch. 8</strong> (GPS 1.0)</td>
+      <td class="key-acts">Stakeholder mapping; funder relationship boundaries; constituent voice as distinct from stakeholder management</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">1.5</span></td>
+      <td class="pg-name-cell">Monitor governance health</td>
+      <td class="ch-ref"><strong>Ch. 8</strong> (GPS 1.0)</td>
+      <td class="key-acts">Governance self-assessment design; executive director performance review; governance reform processes</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">2.1</span></td>
+      <td class="pg-name-cell">Identify and define public goods</td>
+      <td class="ch-ref"><strong>Ch. 9</strong> (GPS 2.0)</td>
+      <td class="key-acts">Ostrom's eight principles as GPS specifications; commons boundary definition; commons health assessment</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">2.2</span></td>
+      <td class="pg-name-cell">Design access and eligibility</td>
+      <td class="ch-ref"><strong>Ch. 9</strong> (GPS 2.0)</td>
+      <td class="key-acts">CHT permanent affordability model; equity-preserving eligibility criteria; progressive eligibility design</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">2.3</span></td>
+      <td class="pg-name-cell">Steward and maintain the commons</td>
+      <td class="ch-ref"><strong>Ch. 9</strong> (GPS 2.0)</td>
+      <td class="key-acts">Commons enclosure risk; enclosure by increment failure mode; maintenance reserve design</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">2.4</span></td>
+      <td class="pg-name-cell">Share knowledge and contribute to commons</td>
+      <td class="ch-ref"><strong>Ch. 9</strong> (GPS 2.0)</td>
+      <td class="key-acts">Wikipedia epistemic equity tensions; knowledge commons as institutional obligation; open licensing decisions</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">2.5</span></td>
+      <td class="pg-name-cell">Govern public goods transitions</td>
+      <td class="ch-ref"><strong>Ch. 9</strong> (GPS 2.0)</td>
+      <td class="key-acts">Community consent requirements for disposition; asset protection requirements for commons transfers</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">3.1</span></td>
+      <td class="pg-name-cell">Identify and remove access barriers</td>
+      <td class="ch-ref"><strong>Ch. 10</strong> (GPS 3.0)</td>
+      <td class="key-acts">Six barrier taxonomy; trust-building infrastructure; peer connector vs. peer navigator distinction; DSNI case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">3.2</span></td>
+      <td class="pg-name-cell">Conduct outreach and recruitment</td>
+      <td class="ch-ref"><strong>Ch. 10</strong> (GPS 3.0)</td>
+      <td class="key-acts">Targeting underrepresented populations; warm referral protocols; engagement spectrum six levels</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">3.3</span></td>
+      <td class="pg-name-cell">Manage community communications</td>
+      <td class="ch-ref"><strong>Ch. 10</strong> (GPS 3.0)</td>
+      <td class="key-acts">Plain-language standards; multi-channel communication for connectivity variation; governance decision publication requirements</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">3.4</span></td>
+      <td class="pg-name-cell">Design engagement pathways</td>
+      <td class="ch-ref"><strong>Ch. 10</strong> (GPS 3.0)</td>
+      <td class="key-acts">Engagement spectrum from low-commitment to governance; volunteer infrastructure; peer roles that compensate community members</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">3.5</span></td>
+      <td class="pg-name-cell">Measure access and participation equity</td>
+      <td class="ch-ref"><strong>Ch. 10</strong> (GPS 3.0)</td>
+      <td class="key-acts">DBIP case; disaggregated participation tracking; engagement quality vs. engagement quantity distinction</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">4.1</span></td>
+      <td class="pg-name-cell">Source and procure physical resources</td>
+      <td class="ch-ref"><strong>Ch. 11</strong> (GPS 4.0)</td>
+      <td class="key-acts">Mission-aligned procurement; solidarity economy supplier preference; supply chain resilience design</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">4.2</span></td>
+      <td class="pg-name-cell">Manage inventory and supply chain</td>
+      <td class="ch-ref"><strong>Ch. 11</strong> (GPS 4.0)</td>
+      <td class="key-acts">Six-stage supply chain with equity risks; inventory management systems scaled to institutional size</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">4.3</span></td>
+      <td class="pg-name-cell">Operate distribution and allocation</td>
+      <td class="ch-ref"><strong>Ch. 11</strong> (GPS 4.0)</td>
+      <td class="key-acts">Five allocation mechanisms with equity risks; allocation framework documentation as most politically significant process; dignity of distribution design; Cooperation Jackson case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">4.4</span></td>
+      <td class="pg-name-cell">Maintain physical infrastructure</td>
+      <td class="ch-ref"><strong>Ch. 11</strong> (GPS 4.0)</td>
+      <td class="key-acts">Preventive maintenance programs; ADA audit requirements; MADR case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">4.5</span></td>
+      <td class="pg-name-cell">Govern resource equity and accountability</td>
+      <td class="ch-ref"><strong>Ch. 11</strong> (GPS 4.0)</td>
+      <td class="key-acts">Transparent allocation reporting; community resource priority-setting processes</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">5.1</span></td>
+      <td class="pg-name-cell">Design programs with community</td>
+      <td class="ch-ref"><strong>Ch. 12</strong> (GPS 5.0)</td>
+      <td class="key-acts">Seven design principles with contrasts; community needs assessment; co-design process; theory of change as program governance</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">5.2</span></td>
+      <td class="pg-name-cell">Develop participant capacity</td>
+      <td class="ch-ref"><strong>Ch. 12</strong> (GPS 5.0)</td>
+      <td class="key-acts">Adult learning principles; civic capacity as program function; pathway from program to governance participation</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">5.3</span></td>
+      <td class="pg-name-cell">Deliver direct services</td>
+      <td class="ch-ref"><strong>Ch. 12</strong> (GPS 5.0)</td>
+      <td class="key-acts">Six-phase program cycle with transition traps; quality standards co-designed with participants; mid-program feedback; Highlander case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">5.4</span></td>
+      <td class="pg-name-cell">Support economic empowerment</td>
+      <td class="ch-ref"><strong>Ch. 12</strong> (GPS 5.0)</td>
+      <td class="key-acts">Economic agency vs. deficit reduction distinction; Year Up case; structural barrier documentation for advocacy</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">5.5</span></td>
+      <td class="pg-name-cell">Evaluate programs and iterate</td>
+      <td class="ch-ref"><strong>Ch. 12</strong> (GPS 5.0)</td>
+      <td class="key-acts">Functional vs. dysfunctional feedback infrastructure; theory of change-aligned outcome measures; participant-led evaluation; disaggregated outcome equity</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">6.1</span></td>
+      <td class="pg-name-cell">Conduct intake and needs assessment</td>
+      <td class="ch-ref"><strong>Ch. 13</strong> (GPS 6.0)</td>
+      <td class="key-acts">Trauma-informed intake design; six trauma-informed care principles; dignity of intake; comprehensive vs. screening-focused assessment</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">6.2</span></td>
+      <td class="pg-name-cell">Provide individualized case support</td>
+      <td class="ch-ref"><strong>Ch. 13</strong> (GPS 6.0)</td>
+      <td class="key-acts">Caseload standard as evidence-based design requirement; co-created support plans; DBIP case; systematization tension grid</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">6.3</span></td>
+      <td class="pg-name-cell">Manage crisis response</td>
+      <td class="ch-ref"><strong>Ch. 13</strong> (GPS 6.0)</td>
+      <td class="key-acts">Practiced vs. designed crisis protocols; secondary traumatic stress as institutional design problem; staff care requirements</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">6.4</span></td>
+      <td class="pg-name-cell">Develop peer support networks</td>
+      <td class="ch-ref"><strong>Ch. 13</strong> (GPS 6.0)</td>
+      <td class="key-acts">Compensated peer work; peer supervision requirements; Strong Families case; peer support vs. professional services distinction</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell civic">6.5</span></td>
+      <td class="pg-name-cell">Track individual outcomes</td>
+      <td class="ch-ref"><strong>Ch. 13</strong> (GPS 6.0)</td>
+      <td class="key-acts">Longitudinal outcome tracking beyond engagement period; connection to GPS 15.1 flourishing assessment; disaggregated support effectiveness</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- TIER II -->
+<div class="xref-tier-label inst">Tier II — Institutional support processes</div>
+
+<table class="xref-table">
+  <thead>
+    <tr>
+      <th style="width:68px">GPS ID</th>
+      <th style="width:220px">Process group name</th>
+      <th style="width:100px">Primary chapter</th>
+      <th>Key activities and concepts discussed in depth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="pg-id-cell inst">7.1</span></td>
+      <td class="pg-name-cell">Recruit and onboard staff and volunteers</td>
+      <td class="ch-ref"><strong>Ch. 14</strong> (GPS 7.0)</td>
+      <td class="key-acts">Equity-centered recruitment; credential requirement audit; 90-day onboarding with mission context; Organic Valley case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">7.2</span></td>
+      <td class="pg-name-cell">Develop staff skills and build capacity</td>
+      <td class="ch-ref"><strong>Ch. 14</strong> (GPS 7.0)</td>
+      <td class="key-acts">Protected development time; individual development plans; leadership pipeline with demographic equity; Movement Generation case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">7.3</span></td>
+      <td class="pg-name-cell">Manage performance with accountability</td>
+      <td class="ch-ref"><strong>Ch. 14</strong> (GPS 7.0)</td>
+      <td class="key-acts">Hierarchy-equivalent performance standards; co-created performance expectations; five structural burnout causes</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">7.4</span></td>
+      <td class="pg-name-cell">Govern compensation and recognition</td>
+      <td class="ch-ref"><strong>Ch. 14</strong> (GPS 7.0)</td>
+      <td class="key-acts">Value proposition problem for mission institutions; compensation justice as equity argument; pay equity analysis requirements; transparent compensation philosophy</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">7.5</span></td>
+      <td class="pg-name-cell">Sustain organizational culture and wellbeing</td>
+      <td class="ch-ref"><strong>Ch. 14</strong> (GPS 7.0)</td>
+      <td class="key-acts">Burnout prevention as institutional design (not individual resilience); secondary traumatic stress; culture assessment; grievance infrastructure</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">8.1</span></td>
+      <td class="pg-name-cell">Govern technology strategy and portfolio</td>
+      <td class="ch-ref"><strong>Ch. 15</strong> (GPS 8.0)</td>
+      <td class="key-acts">Technology debt four-stage accumulation model; technology principles document; portfolio review; data sovereignty as justice question</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">8.2</span></td>
+      <td class="pg-name-cell">Build and maintain data infrastructure</td>
+      <td class="ch-ref"><strong>Ch. 15</strong> (GPS 8.0)</td>
+      <td class="key-acts">Community data governance framework; minimum data collection standard; NTEN case; evaluation-ready data system design</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">8.3</span></td>
+      <td class="pg-name-cell">Govern AI adoption for operations</td>
+      <td class="ch-ref"><strong>Ch. 15</strong> (GPS 8.0)</td>
+      <td class="key-acts">Administrative vs. community-facing AI distinction; GPS 8.0 / GPS 14.0 boundary governance; Benetech case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">8.4</span></td>
+      <td class="pg-name-cell">Manage technology security and resilience</td>
+      <td class="ch-ref"><strong>Ch. 15</strong> (GPS 8.0)</td>
+      <td class="key-acts">Cybersecurity proportionate to risk profile; technology continuity planning; backup and recovery protocols</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">8.5</span></td>
+      <td class="pg-name-cell">Support digital equity and community access</td>
+      <td class="ch-ref"><strong>Ch. 15</strong> (GPS 8.0)</td>
+      <td class="key-acts">Digital divide as access barrier; offline and low-bandwidth design requirements; digital literacy as program function</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">9.1</span></td>
+      <td class="pg-name-cell">Plan and manage the budget</td>
+      <td class="ch-ref"><strong>Ch. 16</strong> (GPS 9.0)</td>
+      <td class="key-acts">Budget-to-strategy alignment test; participatory budget development process; variance management with governance accountability</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">9.2</span></td>
+      <td class="pg-name-cell">Develop and diversify revenue</td>
+      <td class="ch-ref"><strong>Ch. 16</strong> (GPS 9.0)</td>
+      <td class="key-acts">Five financial health metrics; revenue diversification matrix; funder capture failure mode; indirect cost under-recovery as overhead subsidy problem; RSF Social Finance case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">9.3</span></td>
+      <td class="pg-name-cell">Manage accounting and financial controls</td>
+      <td class="ch-ref"><strong>Ch. 16</strong> (GPS 9.0)</td>
+      <td class="key-acts">Internal control framework design; audit management; grant compliance tracking systems</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">9.4</span></td>
+      <td class="pg-name-cell">Govern financial risk and reserves</td>
+      <td class="ch-ref"><strong>Ch. 16</strong> (GPS 9.0)</td>
+      <td class="key-acts">Financial risk assessment; reserve policy design; The Working World case; integrated capital framework</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">9.5</span></td>
+      <td class="pg-name-cell">Report financial performance and transparency</td>
+      <td class="ch-ref"><strong>Ch. 16</strong> (GPS 9.0)</td>
+      <td class="key-acts">Governance-member-accessible financial reporting; community financial transparency as accountability practice; financial health ratio benchmarks</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">10.1</span></td>
+      <td class="pg-name-cell">Identify and inventory collective assets</td>
+      <td class="ch-ref"><strong>Ch. 17</strong> (GPS 10.0)</td>
+      <td class="key-acts">Asset typology (six types); mission alignment assessment of asset portfolio; investment asset values-alignment</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">10.2</span></td>
+      <td class="pg-name-cell">Govern asset acquisition and disposition</td>
+      <td class="ch-ref"><strong>Ch. 17</strong> (GPS 10.0)</td>
+      <td class="key-acts">Community input requirements for significant acquisitions; asset transfer restrictions (deed, conservation easements, right of first refusal)</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">10.3</span></td>
+      <td class="pg-name-cell">Steward long-term asset health</td>
+      <td class="ch-ref"><strong>Ch. 17</strong> (GPS 10.0)</td>
+      <td class="key-acts">Multi-year capital planning; capital reserve funding proportional to replacement cost; ecological stewardship of physical assets</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">10.4</span></td>
+      <td class="pg-name-cell">Govern collective ownership structures</td>
+      <td class="ch-ref"><strong>Ch. 17</strong> (GPS 10.0)</td>
+      <td class="key-acts">Ownership as practice not document; enclosure by increment failure mode; cooperative capital accounts; Haudenosaunee seven-generation principle; Mondragon capital model</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">10.5</span></td>
+      <td class="pg-name-cell">Protect assets for future generations</td>
+      <td class="ch-ref"><strong>Ch. 17</strong> (GPS 10.0)</td>
+      <td class="key-acts">Intergenerational equity principles; seven-generation stewardship as process 10.5.2 operationalization; succession planning for stewardship obligations</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">11.1</span></td>
+      <td class="pg-name-cell">Operationalize values and assess alignment</td>
+      <td class="ch-ref"><strong>Ch. 18</strong> (GPS 11.0)</td>
+      <td class="key-acts">Operational value definitions as prerequisite for accountability; values-alignment indicators; annual assessment process; improvement plans vs. restated commitments</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">11.2</span></td>
+      <td class="pg-name-cell">Build and maintain accountability architecture</td>
+      <td class="ch-ref"><strong>Ch. 18</strong> (GPS 11.0)</td>
+      <td class="key-acts">Three-component accountability architecture (oversight + reporting + consequence); community accountability mechanisms as distinct from governance body oversight; executive accountability</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">11.3</span></td>
+      <td class="pg-name-cell">Govern conflict of interest and ethics</td>
+      <td class="ch-ref"><strong>Ch. 18</strong> (GPS 11.0)</td>
+      <td class="key-acts">Disclosure reviewed not merely filed; genuine recusal practices; related-party transaction audit; ethics culture assessment; hierarchy-selective accountability failure mode</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">11.4</span></td>
+      <td class="pg-name-cell">Implement equity auditing and disparity response</td>
+      <td class="ch-ref"><strong>Ch. 18</strong> (GPS 11.0)</td>
+      <td class="key-acts">Six-domain equity audit framework (access, outcomes, workforce, governance, resource, process); root cause analysis requirement; PolicyLink case; Building Movement Project research</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">11.5</span></td>
+      <td class="pg-name-cell">Protect whistleblowers and ethics reporting</td>
+      <td class="ch-ref"><strong>Ch. 18</strong> (GPS 11.0)</td>
+      <td class="key-acts">Independent reporting channels that bypass leadership; retaliation monitoring; very low report rates as suppression indicator; governance body designee as report recipient</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">12.1</span></td>
+      <td class="pg-name-cell">Develop and manage strategic partnerships</td>
+      <td class="ch-ref"><strong>Ch. 19</strong> (GPS 12.0)</td>
+      <td class="key-acts">Partnership inflation failure mode; asymmetric collaboration failure mode; partnership equity assessment; multi-level staff relationship building; relationship institutionalization</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">12.2</span></td>
+      <td class="pg-name-cell">Build mutual aid and resource-sharing</td>
+      <td class="ch-ref"><strong>Ch. 19</strong> (GPS 12.0)</td>
+      <td class="key-acts">Formalized vs. informal mutual aid; tabletop exercise for agreement activation; reciprocity management; inter-institutional resource pools</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">12.3</span></td>
+      <td class="pg-name-cell">Participate in peer learning networks</td>
+      <td class="ch-ref"><strong>Ch. 19</strong> (GPS 12.0)</td>
+      <td class="key-acts">Network extraction failure mode; knowledge contribution as requirement not option; staff role embedding; USFWC case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">12.4</span></td>
+      <td class="pg-name-cell">Build policy advocacy and coalition infrastructure</td>
+      <td class="ch-ref"><strong>Ch. 19</strong> (GPS 12.0)</td>
+      <td class="key-acts">Policy agenda development; constituent voice vs. institutional advocacy distinction; coalition equity principles; Right to the City case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">12.5</span></td>
+      <td class="pg-name-cell">Contribute to movement building</td>
+      <td class="ch-ref"><strong>Ch. 19</strong> (GPS 12.0)</td>
+      <td class="key-acts">Network extraction failure mode; sector body governance; movement vs. institution relationship; ecosystem development obligations</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">13.1</span></td>
+      <td class="pg-name-cell">Build institutional learning infrastructure</td>
+      <td class="ch-ref"><strong>Ch. 20</strong> (GPS 13.0)</td>
+      <td class="key-acts">Data-rich learning-poor failure mode; governance learning routines vs. passive receipt; performance-to-decision conversion rate; after-action reviews</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">13.2</span></td>
+      <td class="pg-name-cell">Govern strategic planning</td>
+      <td class="ch-ref"><strong>Ch. 20</strong> (GPS 13.0)</td>
+      <td class="key-acts">Strategic plan as shelf document failure mode; budget-strategy alignment test; decision-forcing plan design; quarterly strategy monitoring</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">13.3</span></td>
+      <td class="pg-name-cell">Drive strategic renewal and adaptation</td>
+      <td class="ch-ref"><strong>Ch. 20</strong> (GPS 13.0)</td>
+      <td class="key-acts">Six-phase strategic renewal cycle with characteristic traps; single-loop vs. double-loop learning; assumption surfacing with external facilitation; CDM case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">13.4</span></td>
+      <td class="pg-name-cell">Design and manage innovation</td>
+      <td class="ch-ref"><strong>Ch. 20</strong> (GPS 13.0)</td>
+      <td class="key-acts">Protected innovation capacity as fixed budget line; innovation theater failure mode; disciplined experimentation design; failure tolerance culture; Eileen Fisher case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell inst">13.5</span></td>
+      <td class="pg-name-cell">Manage change and transformation</td>
+      <td class="ch-ref"><strong>Ch. 20</strong> (GPS 13.0)</td>
+      <td class="key-acts">GPS maturity assessment as terminal Category 13.0 activity; organizational resilience infrastructure; change crisis failure mode; capability-strategy gap failure mode</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- TIER III -->
+<div class="xref-tier-label novel">Tier III — Novel categories</div>
+
+<table class="xref-table">
+  <thead>
+    <tr>
+      <th style="width:68px">GPS ID</th>
+      <th style="width:220px">Process group name</th>
+      <th style="width:100px">Primary chapter</th>
+      <th>Key activities and concepts discussed in depth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="pg-id-cell novel">14.1</span></td>
+      <td class="pg-name-cell">Govern AI adoption at community level</td>
+      <td class="ch-ref"><strong>Ch. 21</strong> (GPS 14.0)</td>
+      <td class="key-acts">Four-tier risk spectrum (administrative through high-stakes); equity impact assessment on deployment population not benchmarks; AI systems registry; vendor governance requirements</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">14.2</span></td>
+      <td class="pg-name-cell">Ensure transparency and explainability</td>
+      <td class="ch-ref"><strong>Ch. 21</strong> (GPS 14.0)</td>
+      <td class="key-acts">Plain-language explanation right for Tier 3+; black-box AI incompatibility with Tier 3/4 deployment; annual AI transparency reports; decision criteria documentation</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">14.3</span></td>
+      <td class="pg-name-cell">Monitor for equity and accuracy</td>
+      <td class="ch-ref"><strong>Ch. 21</strong> (GPS 14.0)</td>
+      <td class="key-acts">Post-deployment equity drift; model drift detection; suspension protocols with governance criteria; quarterly monitoring for Tier 3, monthly for Tier 4</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">14.4</span></td>
+      <td class="pg-name-cell">Ensure human oversight and contestability</td>
+      <td class="ch-ref"><strong>Ch. 21</strong> (GPS 14.0)</td>
+      <td class="key-acts">Contestation affirmation rate as oversight quality indicator (95% alert threshold); human review theater failure mode; algorithmic decision navigators; Allegheny AFST case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">14.5</span></td>
+      <td class="pg-name-cell">Engage community members in AI governance</td>
+      <td class="ch-ref"><strong>Ch. 21</strong> (GPS 14.0)</td>
+      <td class="key-acts">AI literacy programming co-designed with community; community governance authority vs. advisory status; participatory equity assessments; AJL case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">15.1</span></td>
+      <td class="pg-name-cell">Define, measure, and track flourishing</td>
+      <td class="ch-ref"><strong>Ch. 22</strong> (GPS 15.0)</td>
+      <td class="key-acts">Seven flourishing dimensions; validated instrument selection (ONS4, Purpose in Life Scale, UCLA Loneliness Scale); cultural appropriateness requirement; WEIRD critique of standard instruments; Bhutan GNH case</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">15.2</span></td>
+      <td class="pg-name-cell">Design programs for flourishing outcomes</td>
+      <td class="ch-ref"><strong>Ch. 22</strong> (GPS 15.0)</td>
+      <td class="key-acts">Flourishing-oriented vs. deficit-reduction program design distinction; social connection as designed program element; capability development as program function; sufficiency as success failure mode</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">15.3</span></td>
+      <td class="pg-name-cell">Cultivate social infrastructure and connection</td>
+      <td class="ch-ref"><strong>Ch. 22</strong> (GPS 15.0)</td>
+      <td class="key-acts">Social infrastructure as underprovided public good; third place literature; bridging connections across difference; community-generated vs. institutionally designed social infrastructure</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">15.4</span></td>
+      <td class="pg-name-cell">Address post-labor meaning crisis</td>
+      <td class="ch-ref"><strong>Ch. 22</strong> (GPS 15.0)</td>
+      <td class="key-acts">Community contribution pathways as primary post-labor institution function; purpose gap failure mode; cultural and creative infrastructure as genuine investment; recognition mechanisms as paycheck equivalent</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">15.5</span></td>
+      <td class="pg-name-cell">Govern the flourishing agenda</td>
+      <td class="ch-ref"><strong>Ch. 22</strong> (GPS 15.0)</td>
+      <td class="key-acts">Easterlin paradox institutional implications; flourishing without governance failure mode; WEAll case; community wellbeing report; policy advocacy connection from flourishing data</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">16.1</span></td>
+      <td class="pg-name-cell">Design deliberative governance structures</td>
+      <td class="ch-ref"><strong>Ch. 23</strong> (GPS 16.0)</td>
+      <td class="key-acts">Participation spectrum six levels; decision rights maps as governance transparency; participation theater failure mode; governance accessibility as access barrier removal</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">16.2</span></td>
+      <td class="pg-name-cell">Implement participatory budgeting</td>
+      <td class="ch-ref"><strong>Ch. 23</strong> (GPS 16.0)</td>
+      <td class="key-acts">Genuine resource scope as non-negotiable requirement; participatory budgeting over symbolic resources failure mode; budget literacy programming; Porto Alegre case; equity monitoring of PB outcomes</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">16.3</span></td>
+      <td class="pg-name-cell">Govern through citizen assemblies</td>
+      <td class="ch-ref"><strong>Ch. 23</strong> (GPS 16.0)</td>
+      <td class="key-acts">Random vs. stratified selection methodologies; compensation for participation; deliberation quality assessment; governance body response obligations; deliberation capacity as institutional infrastructure</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">16.4</span></td>
+      <td class="pg-name-cell">Build civic capacity and organizing</td>
+      <td class="ch-ref"><strong>Ch. 23</strong> (GPS 16.0)</td>
+      <td class="key-acts">Civic capacity gap failure mode; governance leadership pipeline with demographic equity; participation history documentation as civic efficacy evidence; supporting critical community organizing</td>
+    </tr>
+    <tr>
+      <td><span class="pg-id-cell novel">16.5</span></td>
+      <td class="pg-name-cell">Govern power distribution and accountability</td>
+      <td class="ch-ref"><strong>Ch. 23</strong> (GPS 16.0)</td>
+      <td class="key-acts">Power mapping with community co-analysis; structural redistribution vs. cultural aspiration; mandar obedeciendo operationalization; diversity without redistribution failure mode; Zapatista governance case</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Archetype GPS profile references -->
+<div class="xref-tier-label" style="color:var(--gold)">Archetype GPS profiles — Chapter 24 cross-reference</div>
+
+<table class="xref-table">
+  <thead>
+    <tr>
+      <th style="width:200px">Institutional archetype</th>
+      <th style="width:130px">Primary GPS categories (critical priority)</th>
+      <th style="width:130px">Secondary GPS categories (high priority)</th>
+      <th>Chapter 24 discussion location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="pg-name-cell">Community Land Trust</td>
+      <td class="ch-ref">GPS 2.0, 4.0, 9.0, 10.0</td>
+      <td class="ch-ref">GPS 1.0, 16.0, 11.0, 3.0</td>
+      <td class="key-acts"><strong>Ch. 24 Archetype 01</strong> — GPS priority mapping, strengths and vulnerabilities, five-step development sequence, CLT-specific where-to-start guidance</td>
+    </tr>
+    <tr>
+      <td class="pg-name-cell">Worker Cooperative</td>
+      <td class="ch-ref">GPS 7.0, 1.0, 9.0, 16.0</td>
+      <td class="ch-ref">GPS 11.0, 13.0, 5.0, 15.0</td>
+      <td class="key-acts"><strong>Ch. 24 Archetype 02</strong> — governance literacy gap as primary challenge; capital account structure design; pay ratio governance; democratic succession design</td>
+    </tr>
+    <tr>
+      <td class="pg-name-cell">Mutual Aid Network</td>
+      <td class="ch-ref">GPS 6.0, 4.0, 3.0, 12.0</td>
+      <td class="ch-ref">GPS 15.0, 16.0, 8.0, 11.0</td>
+      <td class="key-acts"><strong>Ch. 24 Archetype 03</strong> — volunteer burnout as primary sustainability threat; coordination technology before informal systems break; access equity audit; institutionalization governance decision</td>
+    </tr>
+    <tr>
+      <td class="pg-name-cell">Community Foundation</td>
+      <td class="ch-ref">GPS 9.0, 2.0, 11.0, 12.0</td>
+      <td class="ch-ref">GPS 10.0, 16.0, 13.0, 15.0</td>
+      <td class="key-acts"><strong>Ch. 24 Archetype 04</strong> — GPS 16.0 lowest score for most foundations; grantmaking equity audit; participatory grantmaking; post-labor institutional development capital strategy</td>
+    </tr>
+    <tr>
+      <td class="pg-name-cell">Civic Technology Cooperative</td>
+      <td class="ch-ref">GPS 8.0, 7.0, 2.0, 14.0</td>
+      <td class="ch-ref">GPS 1.0, 9.0, 11.0, 16.0</td>
+      <td class="key-acts"><strong>Ch. 24 Archetype 05</strong> — digital public goods framework before product launch; AI governance before first AI feature ships; revenue model for sustainability not launch viability; governance literacy for non-technical worker-members</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ═══════════════════════════════════════════════════
+     APPENDIX A CLOSE
+════════════════════════════════════════════════════ -->
+<div class="appendix-close">
+  <div class="close-label">End of Appendix A — GPS Process Taxonomy Reference</div>
+  <div class="close-title">Sixteen categories. Eighty process groups. Approximately 340 processes. Approximately 1,400 activities.</div>
+  <div class="close-body">
+    <strong>How to use this reference in practice:</strong> Begin with the Quick-Reference Summary Table to orient to the category structure. Use the category scope statements to confirm which category governs a specific institutional process. Navigate the process group hierarchy to locate the specific process or activity. Use the Key Interfaces row to identify related GPS categories that should be developed in parallel. Use the Cross-Reference Index to locate the chapter where the process group is discussed in depth, including its characteristic failure modes, maturity indicators, KPIs, and development sequence.<br><br>
+    <strong>On the completeness of the L4 activities:</strong> The activities listed for each process are representative rather than exhaustive — they describe the primary activities that constitute the process rather than every possible activity that could be included. Institutions adapting the GPS framework to their specific context should treat the L4 activities as a starting point for developing their own institution-specific activity lists. The process group and process level (L2 and L3) should be treated as the stable reference; the activity level (L4) is the most context-specific and appropriately variable across institutional forms, communities, and operational scales.<br><br>
+    <strong>Appendix B</strong> contains the complete KPI library (approximately 200 KPIs organized by GPS category). <strong>Appendix C</strong> contains the maturity assessment tool with scoring rubric. <strong>Appendix D</strong> contains recommended resources organized by GPS category. <strong>Appendix E</strong> is the glossary of key terms used throughout the framework.
+  </div>
+</div>
+
+</div>
+<div class="page-number">Institutions for a world after work · Appendix A</div>
+</body>
+</html>

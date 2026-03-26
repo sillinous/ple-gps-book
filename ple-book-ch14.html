@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch. 14 — Develop Human Potential (GPS 7.0)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-void: #060504; --bg-deep: #0c0a09; --bg-primary: #141210;
+    --bg-secondary: #1c1917; --bg-tertiary: #242120;
+    --accent: #c9a96e; --accent-glow: rgba(201,169,110,0.06);
+    --text-primary: #f0ebe3; --text-secondary: #a09890;
+    --text-muted: #6b6560; --text-ghost: #48443f;
+    --border-subtle: rgba(201,169,110,0.07); --border-visible: rgba(201,169,110,0.14);
+    --inst: #378ADD; --inst-dim: rgba(55,138,221,0.08);
+    --inst-text: #7ab8f0; --inst-border: rgba(55,138,221,0.22);
+    --m1: rgba(180,178,169,0.12); --m1t: #888780;
+    --m2: rgba(201,169,110,0.10); --m2t: #c9a96e;
+    --m3: rgba(29,158,117,0.10); --m3t: #4ecfa0;
+    --m4: rgba(127,119,221,0.12); --m4t: #b0aaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg-void); color: var(--text-primary); font-family: 'Outfit', sans-serif; font-size: 14px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; opacity: 0.018; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+  .page { max-width: 680px; margin: 0 auto; padding: 72px 40px 120px; }
+  .part-eyebrow { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .chapter-eyebrow { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.85; }
+  .chapter-title { font-family: 'Crimson Pro', serif; font-size: clamp(1.9rem, 3.8vw, 2.85rem); font-weight: 300; line-height: 1.15; color: var(--text-primary); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .chapter-subtitle { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .cat-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+  .cat-pill { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .cat-pill.inst { background: var(--inst-dim); color: var(--inst-text); border: 1px solid var(--inst-border); }
+  .cat-pill.neutral { background: rgba(180,178,169,0.1); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+  .divider { width: 48px; height: 1px; background: var(--inst); opacity: 0.3; margin-bottom: 44px; }
+  .body-text { font-family: 'Crimson Pro', serif; font-size: 1.15rem; font-weight: 400; line-height: 1.85; color: var(--text-primary); }
+  .body-text p { margin-bottom: 1.6em; }
+  .body-text p:first-child::first-letter { font-size: 3.8em; font-weight: 300; line-height: 0.75; float: left; margin: 0.06em 0.1em 0 0; color: var(--inst-text); font-family: 'Crimson Pro', serif; }
+  .section-break { display: flex; align-items: center; gap: 16px; margin: 48px 0; }
+  .section-break::before, .section-break::after { content: ''; flex: 1; height: 1px; background: var(--border-visible); }
+  .section-break-ornament { width: 6px; height: 6px; border: 1px solid var(--inst); transform: rotate(45deg); opacity: 0.4; }
+  .section-heading { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.7; }
+  .pullquote { margin: 44px 0; padding: 28px 32px; border-left: 2px solid var(--inst); background: var(--inst-dim); border-radius: 0 6px 6px 0; }
+  .pullquote p { font-family: 'Crimson Pro', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.65; color: var(--text-primary); margin: 0; }
+  .pullquote p::before { content: '\201C'; color: var(--inst-text); }
+  .pullquote p::after { content: '\201D'; color: var(--inst-text); }
+
+  /* Value proposition comparison */
+  .value-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .value-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .value-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+  .value-row:last-child { border-bottom: none; }
+  .value-cell { padding: 14px 18px; background: var(--bg-secondary); }
+  .value-cell.alt { background: var(--bg-primary); }
+  .value-label { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+  .value-label.market { color: var(--text-muted); }
+  .value-label.mission { color: var(--inst-text); opacity: 0.85; }
+  .value-text { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Process block */
+  .process-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; overflow: hidden; }
+  .proc-block-header { padding: 12px 22px; background: var(--bg-secondary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--inst-text); border-bottom: 1px solid var(--border-subtle); opacity: 0.8; }
+  .proc-group { border-bottom: 1px solid var(--border-subtle); }
+  .proc-group:last-child { border-bottom: none; }
+  .proc-group-header { display: flex; align-items: stretch; }
+  .proc-group-id { width: 52px; min-width: 52px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); padding: 16px 0; opacity: 0.85; }
+  .proc-group-content { padding: 16px 20px; flex: 1; }
+  .proc-group-name { font-family: 'Crimson Pro', serif; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; line-height: 1.3; }
+  .proc-group-desc { font-family: 'Outfit', sans-serif; font-size: 0.77rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+  .proc-activities { display: flex; flex-direction: column; border: 1px solid var(--border-subtle); border-radius: 5px; overflow: hidden; }
+  .proc-activity { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .proc-activity:last-child { border-bottom: none; }
+  .act-id { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; color: var(--text-ghost); min-width: 48px; padding: 9px 10px 9px 12px; border-right: 1px solid var(--border-subtle); letter-spacing: 0.04em; }
+  .act-name { font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); padding: 9px 12px; line-height: 1.5; flex: 1; }
+  .act-note { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); padding: 7px 12px 9px; line-height: 1.5; font-style: italic; border-top: 1px solid var(--border-subtle); background: var(--bg-tertiary); }
+
+  /* Burnout analysis */
+  .burnout-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .burnout-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .burnout-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .burnout-row:last-child { border-bottom: none; }
+  .burnout-cause { width: 120px; min-width: 120px; padding: 14px 14px; border-right: 1px solid var(--border-subtle); background: var(--inst-dim); display: flex; flex-direction: column; justify-content: center; }
+  .burnout-cause-name { font-family: 'Crimson Pro', serif; font-size: 0.88rem; font-weight: 600; color: var(--inst-text); line-height: 1.25; }
+  .burnout-content { padding: 14px 18px; flex: 1; border-right: 1px solid var(--border-subtle); }
+  .burnout-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px; }
+  .burnout-response { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 7px 11px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .burnout-response strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.85; }
+
+  /* Failure modes */
+  .failure-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .fail-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .fail-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .fail-row:last-child { border-bottom: none; }
+  .fail-num { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500; color: var(--inst-text); border-right: 1px solid var(--border-subtle); background: var(--inst-dim); opacity: 0.7; padding: 18px 0; }
+  .fail-content { padding: 18px 22px; flex: 1; }
+  .fail-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .fail-desc { font-family: 'Outfit', sans-serif; font-size: 0.76rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 8px; }
+  .fail-signal { font-family: 'Outfit', sans-serif; font-size: 0.71rem; color: var(--text-muted); line-height: 1.55; padding: 9px 13px; background: var(--bg-tertiary); border-radius: 4px; font-style: italic; }
+  .fail-signal strong { color: var(--text-secondary); font-weight: 500; font-style: normal; }
+
+  /* Maturity */
+  .maturity-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .mat-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .mat-row { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .mat-row:last-child { border-bottom: none; }
+  .mat-level-badge { width: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500; border-right: 1px solid var(--border-subtle); padding: 16px 0; }
+  .mat-row.m1 .mat-level-badge { background: var(--m1); color: var(--m1t); }
+  .mat-row.m2 .mat-level-badge { background: var(--m2); color: var(--m2t); }
+  .mat-row.m3 .mat-level-badge { background: var(--m3); color: var(--m3t); }
+  .mat-row.m4 .mat-level-badge { background: var(--m4); color: var(--m4t); }
+  .mat-content { padding: 16px 20px; flex: 1; }
+  .mat-level-name { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+  .mat-indicators { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .mat-indicator { display: flex; gap: 8px; align-items: flex-start; }
+  .ind-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 6px; min-width: 4px; }
+  .m1 .ind-dot { background: var(--m1t); } .m2 .ind-dot { background: var(--m2t); }
+  .m3 .ind-dot { background: var(--m3t); } .m4 .ind-dot { background: var(--m4t); }
+  .ind-text { font-family: 'Outfit', sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* KPI */
+  .kpi-block { margin: 40px 0; border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .kpi-header { padding: 12px 22px; background: var(--bg-tertiary); font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row { display: grid; grid-template-columns: 1fr 1fr 80px; border-bottom: 1px solid var(--border-subtle); }
+  .kpi-row:last-child { border-bottom: none; }
+  .kpi-row.head { background: var(--bg-secondary); }
+  .kpi-cell { padding: 11px 16px; font-family: 'Outfit', sans-serif; font-size: 0.73rem; color: var(--text-secondary); line-height: 1.5; border-right: 1px solid var(--border-subtle); }
+  .kpi-cell:last-child { border-right: none; }
+  .kpi-cell.head { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  .kpi-cell.name { font-weight: 500; color: var(--text-primary); }
+  .kpi-type { font-family: 'Outfit', sans-serif; font-size: 8px; font-weight: 500; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
+  .kpi-type.leading { background: var(--inst-dim); color: var(--inst-text); }
+  .kpi-type.lagging { background: rgba(180,178,169,0.1); color: var(--text-muted); }
+
+  /* Case study */
+  .case-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+  .case-header { padding: 14px 22px; background: var(--inst-dim); border-bottom: 1px solid var(--inst-border); display: flex; gap: 12px; align-items: baseline; }
+  .case-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--inst-text); opacity: 0.8; }
+  .case-name { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); }
+  .case-body { padding: 20px 22px; }
+  .case-text { font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .case-lesson { padding: 12px 16px; background: var(--bg-tertiary); border-radius: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-muted); line-height: 1.65; }
+  .case-lesson strong { color: var(--inst-text); font-weight: 500; }
+
+  /* Sequence */
+  .sequence-block { margin: 40px 0; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-top: 2px solid var(--inst); border-radius: 0 0 8px 8px; padding: 28px 32px; }
+  .seq-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--inst-text); margin-bottom: 20px; opacity: 0.8; }
+  .seq-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .seq-item { display: flex; gap: 16px; align-items: flex-start; }
+  .seq-num { font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 500; color: var(--inst-text); min-width: 24px; padding-top: 2px; opacity: 0.7; }
+  .seq-content { flex: 1; }
+  .seq-title { font-family: 'Crimson Pro', serif; font-size: 1.0rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .seq-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.65; }
+  .seq-milestone { margin-top: 6px; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--text-muted); font-style: italic; line-height: 1.5; }
+  .seq-milestone strong { color: var(--inst-text); font-weight: 500; font-style: normal; opacity: 0.8; }
+
+  .note-aside { margin: 32px 0; padding: 20px 24px; background: var(--bg-tertiary); border-left: 1px solid var(--border-visible); border-radius: 0 6px 6px 0; }
+  .note-aside p { font-family: 'Outfit', sans-serif; font-size: 0.82rem; line-height: 1.7; color: var(--text-muted); margin: 0 0 0.6em; }
+  .note-aside p:last-child { margin-bottom: 0; }
+  .note-aside p strong { color: var(--text-secondary); font-weight: 500; }
+
+  .chapter-close { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+  .close-label { font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.08em; text-transform: uppercase; }
+  .close-next { font-family: 'Crimson Pro', serif; font-size: 0.95rem; font-style: italic; color: var(--text-muted); }
+  .page-number { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); font-family: 'Outfit', sans-serif; font-size: 10px; color: var(--text-ghost); letter-spacing: 0.1em; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="part-eyebrow">Part IV · Institutional support processes</div>
+  <div class="chapter-eyebrow">Chapter 14 · GPS Category 7.0</div>
+  <h1 class="chapter-title">Develop human potential</h1>
+  <p class="chapter-subtitle">People are the institution — how to recruit, develop, sustain, and transmit the human capability that makes everything else possible, without the compensation advantages that market-facing organizations use to do the same work</p>
+  <div class="cat-meta">
+    <span class="cat-pill inst">Institutional Support</span>
+    <span class="cat-pill inst">Prosperity L3</span>
+    <span class="cat-pill inst">Sustainability foundation</span>
+    <span class="cat-pill neutral">5 process groups</span>
+    <span class="cat-pill neutral">24 processes</span>
+    <span class="cat-pill neutral">17 KPIs</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="body-text">
+
+    <p>Part III ended with a warning embedded in a transition: the chapter on supporting community members identified staff burnout as a system-level failure, and the Part III close noted that Part IV would begin with the category most directly determining whether the civic operating work is sustainable. Category 7.0 is that category. It is the foundation beneath the foundation — the institutional infrastructure that determines whether the people who do the visible work of Categories 1.0 through 6.0 can do it consistently, improve over time, and pass their capability to the next generation of institutional stewards. When Category 7.0 is underdeveloped, the institution is consuming its human capital faster than it is building it. The civic operating categories can function for a time on the accumulated human capital of a founding cohort, but they cannot function indefinitely on it, and when it depletes — through burnout, departure, and the failure to develop successors — the depletion is sudden and difficult to reverse.</p>
+
+    <p>The central challenge of Category 7.0 in post-labor institutions is the value proposition problem: these institutions cannot compete on compensation with the market-rate employers who will hire many of the same people. A social worker who could earn $80,000 at a hospital system and $52,000 at a mutual aid network is being asked to accept a $28,000 annual financial sacrifice for the privilege of working in mission-aligned organization. Some will make that sacrifice, and they are the people most solidarity economy institutions depend on. But the sacrifice model is fragile: it depends on the level of financial cushion that permits sacrifice (which correlates strongly with privilege and creates homogeneous workforces), it creates moral injury when the sacrifice feels unrecognized or when institutional values diverge from institutional practice, and it produces the high turnover that is the most consequential operational failure in Category 7.0.</p>
+
+    <p>Institutions that have developed Category 7.0 effectively have learned that the solution is not to close the compensation gap entirely — in most cases that is not financially possible — but to create a value proposition that makes working at the institution genuinely worth the financial differential for people whose life circumstances and values make that trade viable. That proposition is built from meaningful work with genuine autonomy, a culture of learning and development, relationships with peers who share values, an institution whose stated values are reflected in its actual behavior, and the specific category of professional development opportunity that market-rate employers rarely provide: the chance to be part of building something new. These are real and compelling compensating differentials. They are also active institutional designs, not automatic features of mission-driven organizations.</p>
+
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The value proposition — what post-labor institutions offer instead of compensation parity</div>
+
+  <div class="body-text">
+    <p>Understanding the value proposition is the prerequisite for designing recruitment, development, and retention processes that function — because value propositions that are not articulated cannot be communicated to candidates and cannot be delivered to staff. The comparison below is not a consolation exercise: it is an honest assessment of where post-labor institutions are genuinely competitive and where they are genuinely disadvantaged in the talent market, so that institutional investment in Category 7.0 can be directed where it has the highest leverage.</p>
+  </div>
+
+  <div class="value-block">
+    <div class="value-header">The talent market — where post-labor institutions compete and where they do not</div>
+    <div class="value-row">
+      <div class="value-cell">
+        <div class="value-label market">Where market employers win</div>
+        <div class="value-text">Base compensation — typically 20–40% higher than comparable roles in community organizations. Benefits depth — richer health coverage, retirement matching, professional development stipends. Job security — less vulnerability to grant cycle disruption. Career advancement — clearer and faster promotion paths in larger organizations.</div>
+      </div>
+      <div class="value-cell alt">
+        <div class="value-label mission">Where post-labor institutions can win</div>
+        <div class="value-text">Mission alignment — working toward outcomes that matter, with visible community impact that market roles rarely provide. Autonomy — smaller organizations typically offer more professional autonomy and decision-making authority at earlier career stages. Relationships — tighter teams with shared values, often producing deeper professional relationships than large institutional environments. Learning — proximity to leadership and the full institutional operation that large employers cannot provide to junior staff. Community — membership in a movement, not only employment at an organization.</div>
+      </div>
+    </div>
+    <div class="value-row">
+      <div class="value-cell">
+        <div class="value-label market">The compensation gap — honest accounting</div>
+        <div class="value-text">The compensation gap is real, material, and has equity implications: the capacity to accept below-market compensation correlates with access to family wealth, partner income, or inheritance — systematically disadvantaging candidates from low-income backgrounds. Any value proposition that ignores this creates a workforce homogenized by class background regardless of stated equity commitments.</div>
+      </div>
+      <div class="value-cell alt">
+        <div class="value-label mission">The institutional response — structural and cultural</div>
+        <div class="value-text">Narrow the gap as much as possible through pay equity frameworks, transparent salary bands, and annual cost-of-living adjustments. Build the non-compensation value proposition actively and authentically — it is real only if the culture is real. Create specific career development opportunities that market employers cannot provide. Prioritize retention investment over recruitment investment — the cost of turnover almost always exceeds the cost of keeping people.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The burnout problem — five structural causes and their institutional responses</div>
+
+  <div class="body-text">
+    <p>Burnout in post-labor institutions is systemically produced — not by individual weakness or insufficient commitment but by institutional design failures that create conditions in which burnout is the rational response to sustained exposure. Understanding the structural causes of burnout is the prerequisite for addressing it through institutional design rather than through individual coping strategies or wellness initiatives that treat a structural problem as a personal one. The five structural causes below account for the majority of burnout in direct service and community-facing roles; they are addressed through process groups 7.3, 7.4, and 7.5 and through the institutional culture work that runs across all five process groups.</p>
+  </div>
+
+  <div class="burnout-block">
+    <div class="burnout-header">Five structural causes of burnout and their Category 7.0 responses</div>
+
+    <div class="burnout-row">
+      <div class="burnout-cause"><div class="burnout-cause-name">Workload overload</div></div>
+      <div class="burnout-content">
+        <div class="burnout-desc">Chronic workload above sustainable capacity — not occasional peaks that recovery follows but sustained baseline overload that accumulates without relief. In post-labor institutions, workload overload is typically structural: the institution has committed to more community need than it has staffing capacity to serve, and the shortfall is filled by staff working beyond sustainable hours through personal commitment.</div>
+        <div class="burnout-response"><strong>Institutional response:</strong> Transparent workload standards with measurement; governance accountability for workload levels, not only for program delivery; explicit decisions about what the institution will and will not serve rather than accepting all need and distributing the resulting overload to staff.</div>
+      </div>
+    </div>
+
+    <div class="burnout-row">
+      <div class="burnout-cause"><div class="burnout-cause-name">Values mismatch</div></div>
+      <div class="burnout-content">
+        <div class="burnout-desc">The gap between the institution's stated values and its actual behavior — a gap that is uniquely injurious in mission-driven institutions because people accepted below-market compensation in exchange for values alignment, and discovering that the alignment is nominal rather than actual produces a specific form of betrayal that compounds burnout beyond what workload alone would produce.</div>
+        <div class="burnout-response"><strong>Institutional response:</strong> Operational value definitions (Category 1.0 process 1.1.3) that make values observable and contestable rather than aspirational; mechanisms for staff to raise values violations without career risk; leadership accountability for the gap between stated and lived institutional values.</div>
+      </div>
+    </div>
+
+    <div class="burnout-row">
+      <div class="burnout-cause"><div class="burnout-cause-name">Absence of fairness</div></div>
+      <div class="burnout-content">
+        <div class="burnout-desc">Perceived or actual unfairness in how work, recognition, compensation, and opportunity are distributed — including opaque salary structures, recognition that rewards visibility over contribution, advancement opportunities that are informal and relationship-dependent, and the persistent pattern in many solidarity economy organizations in which the most marginalized staff members perform the most difficult work and receive the fewest institutional rewards for it.</div>
+        <div class="burnout-response"><strong>Institutional response:</strong> Transparent salary bands with published criteria; formal recognition systems that include contributions invisible to leadership; advancement processes with explicit criteria and equity auditing; pay equity analysis conducted and published annually.</div>
+      </div>
+    </div>
+
+    <div class="burnout-row">
+      <div class="burnout-cause"><div class="burnout-cause-name">Lack of control</div></div>
+      <div class="burnout-content">
+        <div class="burnout-desc">The absence of meaningful agency over the conditions of one's work — over scheduling, over how tasks are approached, over the decisions that most directly affect one's daily experience. In post-labor institutions, this often manifests as decision-making that is nominally participatory but practically concentrated, or as governance structures that extend participation rights while retaining operational control in leadership, producing the specific frustration of promised autonomy that is not actually available.</div>
+        <div class="burnout-response"><strong>Institutional response:</strong> Explicit decision rights mapping (Category 1.0 process 1.2.2) that clarifies what staff actually control versus what governance bodies control; genuine autonomy in the domains where staff have decision rights; leadership development that distributes operational authority rather than concentrating it.</div>
+      </div>
+    </div>
+
+    <div class="burnout-row">
+      <div class="burnout-cause"><div class="burnout-cause-name">Insufficient reward</div></div>
+      <div class="burnout-content">
+        <div class="burnout-desc">The combination of financial under-compensation and insufficient non-financial recognition that leaves staff feeling that their contribution is not valued proportional to what they give. Non-financial recognition in post-labor institutions is frequently informal, relationship-dependent, and distributed according to leadership's awareness and relationship networks — which means that staff in roles with less leadership visibility, including many direct service roles, receive less recognition despite often doing the most demanding work.</div>
+        <div class="burnout-response"><strong>Institutional response:</strong> Formal recognition systems that reach roles without natural leadership visibility; non-financial rewards designed with staff rather than for them (what counts as recognition varies significantly by person and culture); compensation increases structured to reduce the accumulation of financial sacrifice over time even when parity is not achievable.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">The five process groups — in depth</div>
+
+  <div class="process-block">
+    <div class="proc-block-header">Category 7.0 — process groups and L4 activities</div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">7.1</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Recruit and onboard mission-aligned staff and contributors</div>
+          <div class="proc-group-desc">Recruitment in post-labor institutions is a specific craft: attracting people for whom the value proposition described above is genuinely compelling, assessing whether candidates' skills and mission alignment match the institution's actual needs, and creating the onboarding experience that converts candidates who are excited about the mission into staff who understand the institution well enough to contribute effectively to it. The most common recruitment failures are hiring for enthusiasm without assessing for skill, or assessing for skill without assessing for the values alignment that determines whether someone can sustain their contribution through the institutional difficulties that all mission-driven organizations encounter.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">7.1.1</div><div class="act-name">Develop inclusive job descriptions that prioritize genuine competencies over credential proxies — degrees and certifications that substitute for actual skills create both inequity and poor hiring decisions</div></div>
+            <div class="proc-activity"><div class="act-id">7.1.2</div><div class="act-name">Design structured interview processes with consistent evaluation criteria applied across all candidates — unstructured interviews systematically advantage candidates with cultural proximity to interviewers</div></div>
+            <div class="proc-activity"><div class="act-id">7.1.3</div><div class="act-name">Conduct equity auditing of hiring outcomes — track who applies, who advances, and who is hired by demographic subgroup; investigate and address disparities at each stage</div></div>
+            <div class="proc-activity"><div class="act-id">7.1.4</div><div class="act-name">Design and implement a structured onboarding program — not document delivery but a designed experience that connects new staff to the mission, the community, their colleagues, and their specific role context over 60–90 days</div></div>
+            <div class="proc-activity"><div class="act-id">7.1.5</div><div class="act-name">Implement a buddy or mentor system for new staff — the relational onboarding that document-based onboarding cannot provide and that substantially improves 90-day retention</div></div>
+            <div class="proc-activity"><div class="act-id">7.1.6</div><div class="act-name">Track 90-day and 12-month retention by demographic subgroup and role type — early attrition patterns reveal recruitment or onboarding failures before they become organizational norms</div></div>
+          </div>
+          <div class="act-note">Process 7.1.1 — inclusive job descriptions — deserves specific design attention because credential requirements in job postings are one of the most powerful and least examined equity barriers in solidarity economy hiring. A requirement for a master's degree in social work for a role that a skilled community member with a bachelor's degree and five years of lived experience could fill better is not a neutral quality standard — it is an exclusion of candidates whose pathways to expertise did not run through graduate education. Auditing credential requirements against actual job tasks, and replacing credential proxies with competency assessments wherever possible, produces both more equitable hiring and better hires.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">7.2</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Design and deliver skills development and advancement pathways</div>
+          <div class="proc-group-desc">Professional development in post-labor institutions serves two simultaneous purposes: it builds institutional capability by developing the skills the institution needs, and it builds individual capability in ways that are genuinely valuable to staff's careers regardless of whether they stay at the institution forever. Both purposes matter. Institutions that design development only for institutional benefit — providing training in proprietary institutional systems that are not transferable — extract value from staff's development time without providing proportional value in return. Institutions that design development primarily for individual benefit without connecting it to institutional strategic needs produce well-developed staff who leave for roles that better use their new capabilities.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">7.2.1</div><div class="act-name">Develop individual development plans for all staff — co-created with staff members to connect individual growth aspirations with institutional capability needs</div></div>
+            <div class="proc-activity"><div class="act-id">7.2.2</div><div class="act-name">Create internal learning infrastructure — peer learning communities, lunch-and-learn sessions, mentoring programs, and communities of practice that build capability without requiring external training budgets</div></div>
+            <div class="proc-activity"><div class="act-id">7.2.3</div><div class="act-name">Invest in external learning opportunities — professional development stipends, conference participation, external training access — as a genuine retention and development tool, not as a benefit that exists on paper but is consistently deferred for budget reasons</div></div>
+            <div class="proc-activity"><div class="act-id">7.2.4</div><div class="act-name">Design explicit career pathways — visible advancement routes within the institution with specific competency requirements for each level; staff need to be able to see a future at the institution to invest in developing within it</div></div>
+            <div class="proc-activity"><div class="act-id">7.2.5</div><div class="act-name">Audit development access by demographic subgroup — who receives development investment, who is sponsored for advancement, and who is identified as "high potential" are all influenced by proximity to leadership and must be actively managed for equity</div></div>
+          </div>
+          <div class="act-note">Career pathway design (7.2.4) is the most consequential development infrastructure investment for retention in post-labor institutions. Staff who cannot see where their career goes within the institution will go elsewhere to find out. The absence of visible advancement paths is experienced not as a neutral organizational feature but as an institutional statement that the institution does not value staff's long-term development — which, for staff who accepted below-market compensation partly in exchange for development opportunity, is a contract violation. Designing career pathways requires confronting the question of how many advancement opportunities the institution can genuinely offer, which requires honesty about organizational size and growth trajectory.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">7.3</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Manage performance, recognition, and contribution acknowledgment</div>
+          <div class="proc-group-desc">Performance management in post-labor institutions is complicated by two features that do not apply to enterprise performance management. First, many contributions are intrinsically difficult to measure — the case manager who builds the relationship that prevents a family crisis, the community organizer whose trust-building work makes a governance breakthrough possible three years later — and performance systems calibrated to measurable outputs will systematically undervalue these contributions while overvaluing contributions that are visible but less consequential. Second, the power dynamics of performance review in organizations with explicit equity commitments are particularly charged: performance assessments that reflect bias — conscious or unconscious — in institutions that claim to be equity-committed produce a specific betrayal that is more damaging than in organizations without that claim.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">7.3.1</div><div class="act-name">Design performance review processes with explicit, observable criteria — assessed against defined competencies rather than subjective leadership impressions</div></div>
+            <div class="proc-activity"><div class="act-id">7.3.2</div><div class="act-name">Implement 360-degree feedback mechanisms — incorporating peer, community member, and supervisor perspectives rather than only hierarchical assessment</div></div>
+            <div class="proc-activity"><div class="act-id">7.3.3</div><div class="act-name">Conduct bias review of performance outcomes — audit performance rating distributions by demographic subgroup; investigate and address patterns that reflect bias rather than differential contribution</div></div>
+            <div class="proc-activity"><div class="act-id">7.3.4</div><div class="act-name">Design formal recognition systems that reach all role types — peer-nominated recognition, community member-sourced appreciation, and structured acknowledgment of contributions that leadership cannot directly observe</div></div>
+            <div class="proc-activity"><div class="act-id">7.3.5</div><div class="act-name">Align compensation decisions with performance review — ensuring that performance information actually influences compensation rather than performing as a separate process with no operational consequence</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">7.4</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Foster institutional culture, values, and psychological safety</div>
+          <div class="proc-group-desc">Culture is the set of shared assumptions, norms, and practices that determine how the institution actually works — as distinct from how its policies say it works. In post-labor institutions, the gap between stated culture and lived culture is among the most consequential and least examined failure modes: institutions that articulate values of equity, collaboration, and psychological safety while operating cultures of hierarchy, competition, and fear of consequences for dissent produce the specific exhaustion of sustained cognitive dissonance. The institution says one thing and does another, and staff spend significant energy managing the gap. Culture development is not an HR function — it is a governance and leadership function, because culture is shaped most powerfully by what leaders model, what leadership teams reward, what behaviors receive consequences, and what the institution does when stated values and operational pressures conflict.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">7.4.1</div><div class="act-name">Conduct regular culture assessments — anonymous staff surveys that surface the gap between stated and lived culture; reviewed by governance body, not only by leadership</div></div>
+            <div class="proc-activity"><div class="act-id">7.4.2</div><div class="act-name">Design explicit psychological safety practices — structures that make it possible for staff to raise concerns, disagree with leadership, identify institutional failures, and challenge organizational direction without career risk</div></div>
+            <div class="proc-activity"><div class="act-id">7.4.3</div><div class="act-name">Create structured spaces for cross-role connection — institutional life that builds relationships across the organization rather than only within role-based siloes</div></div>
+            <div class="proc-activity"><div class="act-id">7.4.4</div><div class="act-name">Manage leadership modeling actively — explicit attention to what senior staff model in their behavior, because culture is learned observationally more than it is learned from policy documents</div></div>
+            <div class="proc-activity"><div class="act-id">7.4.5</div><div class="act-name">Address toxic behavior explicitly and consistently — cultures that tolerate harmful interpersonal behavior from high performers signal clearly to all staff that institutional values are conditional</div></div>
+          </div>
+          <div class="act-note">Process 7.4.2 — psychological safety practices — is the most foundational culture intervention available to institutions, because psychological safety determines whether all other culture investments actually produce the institutional learning and honesty they are designed for. Amy Edmondson's research demonstrates that psychological safety is the primary predictor of team learning and performance improvement — more predictive than team composition, individual ability, or task design. Institutions where staff do not feel safe raising concerns and disagreeing with leadership are institutions where leadership receives curated information about institutional performance, which is the precondition for the strategic failures that most damage mission-driven organizations.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proc-group">
+      <div class="proc-group-header">
+        <div class="proc-group-id">7.5</div>
+        <div class="proc-group-content">
+          <div class="proc-group-name">Manage succession, transitions, and knowledge transfer for departures</div>
+          <div class="proc-group-desc">Succession planning in post-labor institutions addresses the knowledge management failure mode identified in Chapter 4 as one of the three primary causes of the design gap: institutional knowledge that lives in people rather than in systems, making every departure a capability loss rather than a manageable transition. The process group operationalizes the specific practices that convert personal institutional knowledge into organizational knowledge — practices that most institutions invest in only when a crisis departure makes the absence of those practices acutely visible. By then, the knowledge has typically left with the person.</div>
+          <div class="proc-activities">
+            <div class="proc-activity"><div class="act-id">7.5.1</div><div class="act-name">Identify and develop successors for all critical roles — not only leadership but also the operational roles whose knowledge is most concentrated and least documented</div></div>
+            <div class="proc-activity"><div class="act-id">7.5.2</div><div class="act-name">Implement knowledge documentation practices — regular capture of institutional knowledge in formats accessible to successors; not only formal documentation but structured knowledge transfer conversations</div></div>
+            <div class="proc-activity"><div class="act-id">7.5.3</div><div class="act-name">Design transition protocols for planned departures — overlap periods, structured knowledge handoffs, and the specific conversations and documentation that make transitions manageable rather than chaotic</div></div>
+            <div class="proc-activity"><div class="act-id">7.5.4</div><div class="act-name">Develop leadership succession planning — not only for executive roles but for the full leadership pipeline; institutions that plan leadership succession only when the executive director announces their departure have waited too long</div></div>
+            <div class="proc-activity"><div class="act-id">7.5.5</div><div class="act-name">Manage departure relationships — exit interviews conducted genuinely (not defensively), alumni relationships maintained, and the institutional knowledge that departing staff carry treated as a community asset worth preserving through relationship rather than as a threat to be managed</div></div>
+          </div>
+          <div class="act-note">Process 7.5.5 — departure relationship management — is the least commonly practiced succession process and the one with the highest long-term leverage. Alumni of solidarity economy institutions often remain in the movement, often in roles where they can provide resources, partnerships, and knowledge to their former institutions. Institutions that treat departures as losses and cut relational ties accordingly forfeit the ongoing value of those relationships. Institutions that maintain alumni relationships actively — through intentional outreach, inclusion in institutional events, and recognition of alumni contributions — build the extended network that supports the institution across leadership and staff transitions.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Six human potential failure modes</div>
+
+  <div class="failure-block">
+    <div class="fail-header">Characteristic failures in human development and institutional culture</div>
+
+    <div class="fail-row">
+      <div class="fail-num">H1</div>
+      <div class="fail-content">
+        <div class="fail-name">Mission-as-compensation — the unacknowledged sacrifice model</div>
+        <div class="fail-desc">The institution treats staff commitment to the mission as a substitute for adequate compensation, development investment, and working conditions — implicitly requiring staff to finance institutional programs through below-market employment without acknowledging the sacrifice or investing proportionally in the non-compensation value proposition that makes the sacrifice reasonable. The model produces a workforce that is genuinely committed to the mission and genuinely unsustainably compensated — a combination that produces high turnover among those who exhaust their capacity for sacrifice and homogeneity among those who can afford to sustain it.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Compensation benchmarking against market rates is not conducted. Non-compensation retention investments are chronically underfunded. Leadership attributes staff turnover to the "nature of this work" without examining the institutional design factors that make the work unsustainable. The workforce is demographically homogeneous in ways that correlate with the capacity to accept below-market compensation.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">H2</div>
+      <div class="fail-content">
+        <div class="fail-name">Invisible career ladder — no visible path forward</div>
+        <div class="fail-desc">The institution has no articulated career pathways — no visible advancement routes with specific competency requirements. Staff who want to grow must grow laterally (into other organizations) rather than upward, producing the pattern of high turnover among the most ambitious and capable staff while retaining the least ambitious. This pattern is particularly damaging because it inverts the retention priority: the people the institution most wants to keep are the ones leaving, and the people it is retaining are those with fewer external options.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff describe learning about advancement opportunities "through the grapevine" rather than through institutional processes. Promotion decisions are perceived as relationship-based rather than competency-based. The most capable junior staff depart within two to three years for organizations with clearer advancement paths. Leadership is recruited externally rather than developed internally because no pipeline exists.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">H3</div>
+      <div class="fail-content">
+        <div class="fail-name">Stated versus lived culture — the psychological safety gap</div>
+        <div class="fail-desc">The institution articulates values of equity, collaboration, and open communication while operating a culture in which hierarchy is enforced informally, dissent is unwelcome, and the consequences for raising concerns are real even if unstated. Staff learn the gap quickly and respond by performing the stated culture in institutional contexts while actually operating according to the lived culture. The result is an institution that appears to have excellent culture in leadership-observed settings and significantly worse culture in leadership-unobserved ones — a gap that produces the specific exhaustion of sustained performance.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Anonymous staff surveys produce significantly more negative responses than named surveys or direct conversations with leadership. Staff describe "knowing what to say" in certain institutional contexts. Concerns raised in all-staff meetings are different from concerns raised in small-group or private settings. High-performing staff describe walking on eggshells in ways that leadership is surprised to learn about.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">H4</div>
+      <div class="fail-content">
+        <div class="fail-name">Founder succession failure — the institution that cannot survive its founder</div>
+        <div class="fail-desc">The institution was built around a founding individual whose personal authority, relationships, and knowledge constitute a significant portion of the institution's operational capability. No succession planning has occurred. When the founder departs — which they inevitably will — the institution loses the capabilities that were located in the founder rather than in the institution, producing capability collapse at exactly the moment when stable leadership is most needed.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Key institutional relationships are held by the founder personally rather than by institutional roles. Major decisions consistently await the founder's input regardless of formal governance structure. No senior staff member could plausibly perform the founder's functions without extensive new learning. The organization does not have a written succession plan or a developed internal successor candidate.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">H5</div>
+      <div class="fail-content">
+        <div class="fail-name">Development theater — training that doesn't develop</div>
+        <div class="fail-desc">Professional development exists on paper — training budgets, conference attendance, professional development days — but does not produce measurable capability development because it is disconnected from organizational needs, not reinforced in practice, and not connected to advancement or recognition. Staff complete development activities and return to the same conditions without the opportunity to apply new skills, producing the demoralization of investment without return.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Staff cannot describe specific ways that professional development activities have changed their day-to-day work. Training events are evaluated on participant satisfaction rather than on skill application or outcome change. Development activities are selected based on availability and cost rather than on connection to individual development plans. No mechanism exists for applying learning from development activities in institutional contexts.</div>
+      </div>
+    </div>
+
+    <div class="fail-row">
+      <div class="fail-num">H6</div>
+      <div class="fail-content">
+        <div class="fail-name">Equity in hiring, inequity in development — the inside opportunity gap</div>
+        <div class="fail-desc">The institution has invested in equitable hiring practices — diverse candidate pools, structured interviews, bias training for hiring committees — but has not extended the same intentionality to development, advancement, and recognition inside the institution. The result is a diverse entry-level workforce and a homogeneous senior leadership cohort, because the internal processes that determine who advances, who receives development investment, and who is identified as leadership-ready are as biased as the external hiring processes that have been reformed.</div>
+        <div class="fail-signal"><strong>Early signal:</strong> Entry-level staff demographics are more diverse than senior staff demographics. Internal advancement decisions are less structured and less audited than external hiring decisions. Development investment is unevenly distributed by demographic subgroup without explanation or accountability. Staff from underrepresented groups describe hitting informal advancement barriers that are not visible in official policies.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Organic Valley and the culture of retention</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Organic Valley cooperative — building retention through authentic culture investment</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Organic Valley is one of the largest farmer-owned organic food cooperatives in the United States, with over 2,000 farmer-members and approximately 1,000 employees. Its Category 7.0 practices are instructive not because they involve unlimited resources — the cooperative operates in competitive market conditions with real financial constraints — but because they reflect a deliberate and sustained investment in the non-compensation value proposition that characterizes effective human development in mission-driven organizations.</div>
+      <div class="case-text">Organic Valley's retention strategy centers on what it calls "the Organic Valley difference" — a specific articulation of what it offers that market employers cannot: meaningful work in support of sustainable agriculture, participation in a genuinely democratic enterprise, a culture of transparency about organizational performance, and professional development opportunities calibrated to employees' career aspirations rather than only to institutional needs. Critically, these are not marketing language — they are designed institutional practices. The transparency commitment means that all employees have access to the same financial performance data that the board reviews. The democratic participation commitment means that employees have formal representation in governance, not only farmers. The development commitment means that the professional development budget is treated as a fixed institutional cost rather than a variable one — it does not disappear in tight financial years.</div>
+      <div class="case-text">Organic Valley's turnover rate in roles comparable to those at similar-sized conventional food companies is approximately half the industry average. This is not attributable to compensation parity — Organic Valley competes on some compensation elements and accepts disadvantage on others. It is attributable to the investment in the non-compensation value proposition: culture, transparency, participation, and development that produces retention among staff for whom those elements genuinely matter. The investment required for this retention is substantially lower than the cost of the turnover it prevents.</div>
+      <div class="case-lesson"><strong>Category 7.0 lesson:</strong> Organic Valley demonstrates that the non-compensation value proposition is not a consolation prize for institutions that cannot match market compensation — it is a genuine and sustainable competitive advantage for people whose values and life circumstances make mission alignment, democratic participation, and organizational transparency genuinely worth something. The investment required is real and sustained; it cannot be delivered through mission language alone. But for institutions whose governance and culture genuinely reflect their stated values, the return on that investment in retention is measurable and substantial.</div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Case study — Movement Generation and the culture of learning</div>
+
+  <div class="case-block">
+    <div class="case-header">
+      <span class="case-label">Case study</span>
+      <span class="case-name">Movement Generation Justice &amp; Ecology Project — developing people as the primary strategy</span>
+    </div>
+    <div class="case-body">
+      <div class="case-text">Movement Generation Justice and Ecology Project in Oakland, California is a small but influential organization working at the intersection of economic and ecological justice. Its Category 7.0 practices are distinguished by an explicit organizational commitment that most solidarity economy organizations state aspirationally and rarely operationalize: the development of staff as a primary organizational strategy, not a secondary benefit. Movement Generation treats investment in staff learning as the mechanism through which organizational capability is built — not a cost of operation but the primary productive activity of the organization.</div>
+      <div class="case-text">Movement Generation's learning culture is operationalized through several specific practices that distinguish it from organizations with similar stated commitments. First, 20% of staff time is explicitly dedicated to learning — not squeezed in alongside full workloads but scheduled, protected from meeting creep, and treated as legitimate organizational time rather than personal development. Second, learning goals are integrated into strategic planning — the organization asks not only "what do we want to accomplish" but "what must we learn to accomplish it," and resources both. Third, individual development plans are not annual HR documents but living documents that are reviewed in one-on-ones and inform task allocation — connecting learning and working rather than treating them as separate activities.</div>
+      <div class="case-lesson"><strong>Category 7.0 lesson:</strong> Movement Generation's model demonstrates that learning culture is an operational design — not a cultural aspiration that spontaneously emerges from good intentions, but a set of specific practices (protected time, integration with strategy, living development plans) that require institutional commitment to maintain. The 20% time investment is the most visible element, but it is the integration of learning into strategic planning and individual work that makes the time investment productive rather than performative. Organizations that protect learning time without integrating it into work produce the well-rested employees who don't know more than when they started.</div>
+    </div>
+  </div>
+
+  <div class="pullquote">
+    <p>When Category 7.0 is underdeveloped, the institution is consuming its human capital faster than it is building it. The civic operating categories run on borrowed time — and the debt comes due.</p>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Maturity indicators for Category 7.0</div>
+
+  <div class="maturity-block">
+    <div class="mat-header">Category 7.0 maturity indicators — what each level looks like</div>
+
+    <div class="mat-row m1">
+      <div class="mat-level-badge">1</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Absent or informal</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Recruitment is informal and network-dependent; no structured interview process; equity auditing of hiring outcomes does not occur</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Professional development is unstructured and individually pursued; no institutional investment or development plans</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Performance review is annual, informal, and not connected to compensation or advancement; recognition is ad hoc</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Culture is unexamined; no assessment of gap between stated and lived values; psychological safety is assumed rather than designed</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">No succession planning; departures are crises; institutional knowledge lives in individuals and departs with them</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m2">
+      <div class="mat-level-badge">2</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Defined and developing</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Structured recruitment process exists with defined criteria; some equity auditing beginning; onboarding program in place though inconsistently implemented</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Development investment exists; individual development plans developing; some internal learning infrastructure; external training budget allocated</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Formal performance review process with documented criteria; some connection to advancement; recognition system developing</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Culture assessment conducted; psychological safety recognized as an issue; some practices in place to address it</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Succession planning exists for executive role; key role knowledge documentation beginning; departure protocols developing</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m3">
+      <div class="mat-level-badge">3</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Consistent and managed</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Structured, equitably audited recruitment; inclusive job descriptions; consistent onboarding with buddy system; 90-day retention tracked by subgroup</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Individual development plans for all staff; protected development time; career pathways documented with explicit competency requirements; development access audited for equity</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">360-degree performance review with explicit criteria; bias review of outcomes; formal recognition system reaching all role types; compensation aligned with review</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Regular anonymous culture assessment with governance review; psychological safety practices designed and operational; toxic behavior addressed consistently</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Succession planning for all critical roles; knowledge documentation practices embedded; transition protocols established; departure relationships actively maintained</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-row m4">
+      <div class="mat-level-badge">4</div>
+      <div class="mat-content">
+        <div class="mat-level-name">Optimizing and learning</div>
+        <div class="mat-indicators">
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Recruitment practices contributed to peer institutions; institution recognized as an equity-in-hiring resource in the field</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Learning culture integrated into strategic planning; development investment treated as fixed cost; staff development contributes to institutional capability systematically</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Compensation equity achieved across demographic subgroups within institutional constraints; gap between institutional compensation and market rate is narrowing through deliberate strategy</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Culture assessment drives institutional improvement; stated and lived values gap measurably narrowing over time; institution is recognized by staff as genuinely living its values</div></div>
+          <div class="mat-indicator"><div class="ind-dot"></div><div class="ind-text">Leadership pipeline produces internal successors for all roles; institution has never experienced a capability crisis from a single departure in the past three years</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Key performance indicators</div>
+
+  <div class="kpi-block">
+    <div class="kpi-header">Category 7.0 KPI reference — selected from the full library (Appendix B)</div>
+    <div class="kpi-row head">
+      <div class="kpi-cell head">KPI</div>
+      <div class="kpi-cell head">What it measures</div>
+      <div class="kpi-cell head">Type</div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Annual staff turnover rate</div>
+      <div class="kpi-cell">Percentage of staff who departed in the past 12 months — the primary lagging indicator of human development effectiveness; benchmarked by role type and demographic subgroup</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">90-day and 12-month retention</div>
+      <div class="kpi-cell">Percentage of new hires still employed at 90 days and 12 months — leading indicator of onboarding and early culture experience quality</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Individual development plan coverage</div>
+      <div class="kpi-cell">Percentage of staff with current, co-created individual development plans — measures whether development investment is systematic or ad hoc</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Development investment equity index</div>
+      <div class="kpi-cell">Distribution of professional development investment across demographic subgroups relative to representation — measures whether development opportunity is equitably distributed</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Psychological safety score</div>
+      <div class="kpi-cell">Anonymous staff survey measure of whether staff feel safe raising concerns, disagreeing with leadership, and acknowledging mistakes — the primary culture health indicator</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Internal promotion rate</div>
+      <div class="kpi-cell">Percentage of senior and leadership roles filled through internal advancement rather than external hiring — measures whether career pathways are real or nominal</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Succession readiness index</div>
+      <div class="kpi-cell">Percentage of critical roles with identified and developing internal successors — measures institutional resilience to key person departures</div>
+      <div class="kpi-cell"><span class="kpi-type leading">Leading</span></div>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-cell name">Compensation equity ratio</div>
+      <div class="kpi-cell">Median compensation by demographic subgroup relative to overall median — measures whether pay equity commitments are reflected in actual compensation outcomes</div>
+      <div class="kpi-cell"><span class="kpi-type lagging">Lagging</span></div>
+    </div>
+  </div>
+
+  <div class="section-break"><div class="section-break-ornament"></div></div>
+  <div class="section-heading">Development sequence — building Category 7.0 from Level 1</div>
+
+  <div class="sequence-block">
+    <div class="seq-label">Recommended development sequence — Category 7.0 from Level 1 to Level 3</div>
+    <ul class="seq-list">
+      <li class="seq-item">
+        <div class="seq-num">01</div>
+        <div class="seq-content">
+          <div class="seq-title">Measure turnover, its demographics, and its cost</div>
+          <div class="seq-desc">Before investing in any specific human development process, establish a clear picture of the institution's current turnover: overall annual turnover rate, turnover by role type and demographic subgroup, average tenure before departure, primary departure reasons from exit interviews, and estimated cost of turnover (recruitment, onboarding, knowledge loss, coverage costs). This data converts the abstract "we have turnover problems" into a specific and costed institutional challenge that can be addressed through targeted investment. In most solidarity economy organizations, the cost of a single experienced staff departure — when fully loaded — exceeds the annual investment required to meaningfully improve retention conditions.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Turnover data collected and analyzed by role type and demographic subgroup; departure cost estimated; primary turnover drivers identified through exit interview analysis; findings presented to governance body with investment recommendations.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">02</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a compensation and career pathway audit</div>
+          <div class="seq-desc">Benchmark current compensation against market rates for comparable roles. Assess pay equity across demographic subgroups within the institution. Assess the availability and visibility of career advancement pathways. Identify the two or three compensation or career pathway gaps most likely to be driving turnover. Develop a multi-year plan for addressing the compensation gap — not necessarily to market parity, but to a position where the non-compensation value proposition is a credible trade-off for the financial differential. Design and document career pathways for the roles with the highest turnover.</div>
+          <div class="seq-milestone"><strong>Level 2 milestone:</strong> Compensation benchmarked; pay equity assessed; career pathways designed and documented for high-turnover roles; multi-year compensation improvement plan adopted by governance body.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">03</div>
+        <div class="seq-content">
+          <div class="seq-title">Implement individual development plans and structured onboarding</div>
+          <div class="seq-desc">Create individual development plans for all staff — co-developed with each staff member to connect their aspirations with institutional needs. Allocate and protect a realistic development budget that is not subject to elimination when financial pressure increases. Simultaneously, redesign the onboarding experience with the specific elements that research most strongly predicts 12-month retention: peer buddy assignment from day one, structured integration into the mission and community context, and 30- and 90-day check-ins with a defined owner. Both investments address different stages of the retention challenge — IDPs address mid-tenure development, onboarding addresses early attrition.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> IDPs for all staff; development budget protected across one full budget cycle; onboarding redesign implemented; 90-day retention rate improved by at least 15% from baseline over 18-month measurement period.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">04</div>
+        <div class="seq-content">
+          <div class="seq-title">Conduct a culture assessment and address the highest-priority culture gaps</div>
+          <div class="seq-desc">Commission an anonymous staff culture survey that specifically assesses psychological safety, the gap between stated and lived values, fairness perceptions, and workload sustainability. Share findings with the governance body, not only with leadership — culture assessments that are reviewed only by the leadership whose behavior they describe are unlikely to produce the accountability that culture change requires. Identify the two or three highest-priority culture gaps and develop specific, institutional (not individual) responses to them. Repeat the assessment annually to track change.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Annual anonymous culture assessment established; findings reviewed by governance body; at least two institutional culture improvements implemented based on assessment; year-over-year improvement in psychological safety scores.</div>
+        </div>
+      </li>
+      <li class="seq-item">
+        <div class="seq-num">05</div>
+        <div class="seq-content">
+          <div class="seq-title">Build succession planning for the three most critical roles</div>
+          <div class="seq-desc">Identify the three roles whose departure would most damage the institution's operational capability. For each, develop a succession plan: who is the current internal successor candidate, what development is needed to prepare them, what knowledge must be documented before the current role-holder departs, and what transition protocol would make the departure manageable. Implement the knowledge documentation and successor development plans. Review succession readiness annually as a governance accountability item, not as an HR exercise.</div>
+          <div class="seq-milestone"><strong>Level 3 milestone:</strong> Succession plans documented for three critical roles; successor candidates identified and development plans active; knowledge documentation completed for at least one critical role; succession readiness reviewed annually by governance body.</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="note-aside">
+    <p><strong>On the relationship between Category 7.0 and Category 6.0:</strong> The staff sustainability failure mode identified in Category 6.0 (C6 — staff sacrifice) is a Category 7.0 failure. The structural burnout causes identified in this chapter — workload overload, values mismatch, absence of fairness, lack of control, insufficient reward — are the operating conditions that produce the burnout visible in Category 6.0 direct support roles. Category 7.0 is the upstream process that determines whether Category 6.0 is sustainable: institutions that do not develop the human potential infrastructure described in this chapter will experience escalating burnout in their direct support roles regardless of how well those roles are designed. The dependency is one-directional — Category 7.0 must be developed for Category 6.0 to remain viable at quality — and it is the primary inter-category dependency in the institutional support tier.</p>
+    <p><strong>On volunteer management:</strong> Many post-labor institutions rely substantially on volunteer contributors — people who provide labor without compensation. Category 7.0's process groups apply to volunteers with modifications: recruitment and onboarding apply with adapted value propositions; development and recognition apply with different mechanisms; succession and knowledge transfer apply with particular urgency because volunteer relationships are more fragile than employment relationships and departures are more frequent and less predictable. Institutions that develop robust volunteer management practices as an extension of Category 7.0 processes produce volunteer cohorts that are more capable, more retained, and more likely to transition into other forms of institutional contribution. Institutions that treat volunteer management as separate from people development consistently underdevelop the most flexible component of their human resource base.</p>
+    <p><strong>On compensation justice in the solidarity economy:</strong> The compensation gap between solidarity economy organizations and market employers is not only a retention problem — it is an equity problem. The capacity to accept below-market compensation in exchange for mission alignment is distributed unequally across the population, correlating strongly with access to family wealth, partner income, and other financial cushions that are less available to people from low-income backgrounds, first-generation professionals, and members of historically marginalized groups. Solidarity economy organizations that sustain their workforce through the sacrifice model are not only experiencing high turnover — they are systematically excluding from their workforces the people whose lived experience is most valuable to their missions. The compensation justice argument for closing the gap is as strong as the retention argument, and institutions that genuinely hold equity commitments should be making it to their funders and governance bodies alongside the operational case.</p>
+  </div>
+
+  <div class="chapter-close">
+    <span class="close-label">Part IV · Chapter 14 · GPS 7.0</span>
+    <span class="close-next">Ch. 15 — Technology &amp; AI infrastructure (GPS 8.0) →</span>
+  </div>
+
+</div>
+<div class="page-number">Institutions for a world after work</div>
+</body>
+</html>
